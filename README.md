@@ -18,4 +18,4 @@ Later...
 
 ### Journal
 
-[Link to the peer feedback form](Journal.md)
+[Link to the journal](Journal.md)
