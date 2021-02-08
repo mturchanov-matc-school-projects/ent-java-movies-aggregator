@@ -19,6 +19,7 @@ Tasks Completed:
  2/7/2021 ~ 2.5 hours
  
  Tasks Completed:
+ 
   * simple implementation of IMDB API
   * simple db/tables created
   * simple DAO initialized
@@ -31,11 +32,12 @@ Tasks Completed:
    2/8/2021 ~ 2 hours
    
    Tasks Completed:
-    * simple DAO implemented
-    * simple crud (no update) is working
-    * can add movies to your movie list
-    * fixed json parse (rating from int/double to string because json result had string type)
+   * simple DAO implemented  
+   * simple crud (no update) is working
+   * can add movies to your movie list 
+   * fixed json parse (rating from int/double to string because json result had string type)
     
+
   
   
  
