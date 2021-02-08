@@ -16,7 +16,7 @@ Tasks Completed:
  
  ### Week 3
  
- 2/8/2021 ~ 2.5 hours
+ 2/7/2021 ~ 2.5 hours
  
  Tasks Completed:
   * simple implementation of IMDB API
