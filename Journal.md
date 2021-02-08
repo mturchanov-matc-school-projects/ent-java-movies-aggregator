@@ -20,8 +20,9 @@ Tasks Completed:
  
  Tasks Completed:
   * simple implementation of IMDB API
-  * simple DAO
-  * movies json parsed
-  * simple search by movie name
+  * simple db/tables created
+  * simple DAO initialized
+  * movies json was parsed
+  * simple search by a movie name
   * result page with movies + rating from 6 sources (provided by imdb API) 
  
