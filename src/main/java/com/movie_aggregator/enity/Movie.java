@@ -1,4 +1,4 @@
-package enity;
+package com.movie_aggregator.enity;
 
 import javax.persistence.*;
 
@@ -159,5 +159,23 @@ public class Movie {
 
     public void setYear(String year) {
         this.year = year;
+    }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", imdbId='" + imdbId + '\'' +
+                ", description='" + description + '\'' +
+                ", imdbRating=" + imdbRating +
+                ", metacriticRating=" + metacriticRating +
+                ", theMovieDbRating=" + theMovieDbRating +
+                ", rottenTomatoesRating=" + rottenTomatoesRating +
+                ", tV_comRating=" + tV_comRating +
+                ", filmAffinityRating=" + filmAffinityRating +
+                ", image='" + image + '\'' +
+                ", year='" + year + '\'' +
+                '}';
     }
 }

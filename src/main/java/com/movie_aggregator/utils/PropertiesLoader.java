@@ -1,4 +1,4 @@
-package utils;
+package com.movie_aggregator.utils;
 
 import java.io.IOException;
 import java.util.Properties;

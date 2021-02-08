@@ -1,10 +1,9 @@
-package utils;
+package com.movie_aggregator.utils;
 
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
-import com.squareup.okhttp.ResponseBody;
-import enity.Movie;
+import com.movie_aggregator.enity.Movie;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -1,7 +1,7 @@
-package controller;
+package com.movie_aggregator.controller;
 
-import enity.Movie;
-import utils.ImdbApiReader;
+import com.movie_aggregator.enity.Movie;
+import com.movie_aggregator.utils.ImdbApiReader;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
