@@ -13,3 +13,15 @@ Tasks Completed:
  * Created this repository 
  * Started documenting the project journal
  
+ 
+ ### Week 3
+ 
+ 2/8/2021 ~ 2.5 hours
+ 
+ Tasks Completed:
+  * simple implementation of IMDB API
+  * simple DAO
+  * movies json parsed
+  * simple search by movie name
+  * result page with movies + rating from 6 sources (provided by imdb API) 
+ 
