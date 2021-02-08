@@ -25,4 +25,17 @@ Tasks Completed:
   * movies json was parsed
   * simple search by a movie name
   * result page with movies + rating from 6 sources (provided by imdb API) 
+  
+   ### Week 4
+   
+   2/8/2021 ~ 2 hours
+   
+   Tasks Completed:
+    * simple DAO implemented
+    * simple crud (no update) is working
+    * can add movies to your movie list
+    * fixed json parse (rating from int/double to string because json result had string type)
+    
+  
+  
  
