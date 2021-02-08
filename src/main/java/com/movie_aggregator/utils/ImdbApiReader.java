@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Properties;
 
 /**
+ * The type Imdb api reader.
+ *
  * @author mturchanov
  */
 public class ImdbApiReader implements PropertiesLoader {
@@ -22,11 +24,24 @@ public class ImdbApiReader implements PropertiesLoader {
     private String movieToSearch;
     private Properties properties;
 
+    /**
+     * Instantiates a new Imdb api reader.
+     *
+     * @param movieToSearch the movie to search
+     */
     public ImdbApiReader(String movieToSearch) {
         this.movieToSearch = movieToSearch;
         properties = loadProperties("/api_keys.properties");
     }
 
+    /**
+     * Gets results.
+     *
+     * @param searchCategory the search category
+     * @param movieId        the movie id
+     * @return the results
+     * @throws IOException the io exception
+     */
     public String getResults(String searchCategory, String movieId) throws IOException {
         String imdbApi = properties.getProperty("imdb_api_key");
         OkHttpClient client = new OkHttpClient();
@@ -51,6 +66,12 @@ public class ImdbApiReader implements PropertiesLoader {
     }
 
 
+    /**
+     * Parse json movies list.
+     *
+     * @param JSONMovies the json movies
+     * @return the list
+     */
     public List<Movie> parseJSONMovies(String JSONMovies) {
         ArrayList<Movie> movies = new ArrayList<>();
         try {
@@ -68,12 +89,12 @@ public class ImdbApiReader implements PropertiesLoader {
                 String year = movieRatingsObj.getString("year");
                 String title = movieRatingsObj.getString("title");
 
-                double imdbRating = movieRatingsObj.getDouble("imDb");
-                int metacriticRating = movieRatingsObj.getInt("metacritic");
-                double theMovieDbRating = movieRatingsObj.getDouble("theMovieDb");
-                int rottenTomatoesRating = movieRatingsObj.getInt("rottenTomatoes");
-                double tV_comRating = movieRatingsObj.getDouble("tV_com");
-                double filmAffinityRating = movieRatingsObj.getDouble("filmAffinity");
+                String imdbRating = movieRatingsObj.getString("imDb");
+                String metacriticRating = movieRatingsObj.getString("metacritic");
+                String theMovieDbRating = movieRatingsObj.getString("theMovieDb");
+                String rottenTomatoesRating = movieRatingsObj.getString("rottenTomatoes");
+                String tV_comRating = movieRatingsObj.getString("tV_com");
+                String filmAffinityRating = movieRatingsObj.getString("filmAffinity");
 
 
                 Movie movie = new Movie(name, imdb_id, imdbRating, metacriticRating, theMovieDbRating, rottenTomatoesRating, tV_comRating,
@@ -89,8 +110,12 @@ public class ImdbApiReader implements PropertiesLoader {
     }
 
 
-
-
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     * @throws IOException the io exception
+     */
     public static void main(String[] args) throws IOException {
 //        System.out.println(new ImdbApiReader().getResults("Inception"));
 //        System.out.println(new ImdbApiReader().parseJSONBooks("ads"));

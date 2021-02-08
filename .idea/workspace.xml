@@ -28,24 +28,36 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b4add5ff-e70d-4f2b-bb88-aba2066d226f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/movies_aggregator.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/dao/MovieDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/dao/MovieDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/493f7f40-b9b7-4aeb-8d89-9837232d7f73.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/493f7f40-b9b7-4aeb-8d89-9837232d7f73.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/MyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/controller/MyController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dao/MovieDAO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dao/MovieDAOImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/enity/Movie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/enity/Movie.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utils/ImdbApiReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/utils/ImdbApiReader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utils/PropertiesLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/utils/PropertiesLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controller/MyController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dao/MovieDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dao/MovieDAOImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/enity/Movie.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/utils/ImdbApiReader.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/utils/PropertiesLoader.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/movies_aggregator.iml" beforeDir="false" afterPath="$PROJECT_DIR$/movies_aggregator.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/controller/MyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/controller/SearchMovieServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/dao/MovieDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/dao/MovieDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/dao/MovieDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/dao/MovieDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/enity/Movie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/enity/Movie.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/utils/ImdbApiReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/utils/ImdbApiReader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/utils/SessionFactoryProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/utils/SessionFactoryProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/result.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/result.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject.war" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject.war" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/controller/MyController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/dao/MovieDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/dao/MovieDAOImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/enity/Movie.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/utils/ImdbApiReader.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/utils/PropertiesLoader.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/index.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/result.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/result.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/controller/MyController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/dao/MovieDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/dao/MovieDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/dao/MovieDAOImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/dao/MovieDAOImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/enity/Movie.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/enity/Movie.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/utils/ImdbApiReader.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/utils/ImdbApiReader.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/utils/SessionFactoryProvider.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/utils/SessionFactoryProvider.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/hibernate.cfg.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,7 +100,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../GoogleBooks/src/main/java/modal/utils/NetworkUtils.java" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Problems" />
     <property name="project.structure.proportion" value="0.0" />
@@ -103,7 +115,7 @@
       <recent name="$PROJECT_DIR$/src/main/resources" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.MovieDAOImpl">
+  <component name="RunManager" selected="TomEE Server.TomEE 9.0.37">
     <configuration name="ImdbApiReader" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.movie_aggregator.utils.ImdbApiReader" />
       <module name="movies_aggregator" />
@@ -303,7 +315,7 @@
       <workItem from="1611792466574" duration="590000" />
       <workItem from="1611797173875" duration="760000" />
       <workItem from="1611868358481" duration="1262000" />
-      <workItem from="1612757526953" duration="20029000" />
+      <workItem from="1612757526953" duration="29222000" />
     </task>
     <servers />
   </component>
@@ -331,72 +343,76 @@
       <screen x="67" y="27" width="1101" height="933" />
     </state>
     <state x="75" y="150" width="1084" height="798" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1101.933@67.27.1101.933" timestamp="1612768724586" />
-    <state x="425" y="213" width="565" height="562" key="#com.intellij.ide.util.MemberChooser" timestamp="1612784613171">
-      <screen x="67" y="27" width="1101" height="941" />
-    </state>
-    <state x="425" y="211" width="565" height="562" key="#com.intellij.ide.util.MemberChooser/67.27.1101.933@67.27.1101.933" timestamp="1612768764582" />
-    <state x="425" y="213" key="#com.intellij.ide.util.MemberChooser/67.27.1101.941@67.27.1101.941" timestamp="1612784613171" />
-    <state x="485" y="241" width="374" height="504" key="FileChooserDialogImpl" timestamp="1612765359701">
+    <state x="313" y="294" width="599" height="396" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1612818201431">
       <screen x="67" y="27" width="1101" height="933" />
     </state>
-    <state x="485" y="241" width="374" height="504" key="FileChooserDialogImpl/67.27.1101.933@67.27.1101.933" timestamp="1612765359701" />
+    <state x="313" y="294" width="599" height="396" key="#com.intellij.fileTypes.FileTypeChooser/67.27.1101.933@67.27.1101.933" timestamp="1612818201431" />
+    <state x="425" y="211" width="374" height="585" key="#com.intellij.ide.util.MemberChooser" timestamp="1612818971525">
+      <screen x="67" y="27" width="1101" height="933" />
+    </state>
+    <state x="425" y="211" width="565" height="562" key="#com.intellij.ide.util.MemberChooser/67.27.1101.933@67.27.1101.933" timestamp="1612818971525" />
+    <state x="425" y="213" width="374" height="585" key="#com.intellij.ide.util.MemberChooser/67.27.1101.941@67.27.1101.941" timestamp="1612785679971" />
+    <state x="485" y="241" width="374" height="504" key="FileChooserDialogImpl" timestamp="1612815278068">
+      <screen x="67" y="27" width="1101" height="933" />
+    </state>
+    <state x="485" y="241" width="374" height="504" key="FileChooserDialogImpl/67.27.1101.933@67.27.1101.933" timestamp="1612815278068" />
     <state x="770" y="245" width="424" height="513" key="FileChooserDialogImpl/67.27.1851.951@67.27.1851.951" timestamp="1611871483704" />
-    <state width="1055" height="242" key="GridCell.Tab.0.bottom" timestamp="1612785525912">
-      <screen x="67" y="27" width="1101" height="941" />
+    <state width="918" height="372" key="GridCell.Tab.0.bottom" timestamp="1612820155145">
+      <screen x="67" y="27" width="1101" height="933" />
     </state>
     <state width="1047" height="241" key="GridCell.Tab.0.bottom/67.27.1093.941@67.27.1093.941" timestamp="1611787851584" />
-    <state width="1055" height="240" key="GridCell.Tab.0.bottom/67.27.1101.933@67.27.1101.933" timestamp="1612769814698" />
-    <state width="1055" height="242" key="GridCell.Tab.0.bottom/67.27.1101.941@67.27.1101.941" timestamp="1612785525912" />
-    <state width="1055" height="242" key="GridCell.Tab.0.center" timestamp="1612785525912">
-      <screen x="67" y="27" width="1101" height="941" />
+    <state width="918" height="372" key="GridCell.Tab.0.bottom/67.27.1101.933@67.27.1101.933" timestamp="1612820155145" />
+    <state width="1055" height="242" key="GridCell.Tab.0.bottom/67.27.1101.941@67.27.1101.941" timestamp="1612785873730" />
+    <state width="918" height="372" key="GridCell.Tab.0.center" timestamp="1612820155143">
+      <screen x="67" y="27" width="1101" height="933" />
     </state>
     <state width="1047" height="241" key="GridCell.Tab.0.center/67.27.1093.941@67.27.1093.941" timestamp="1611787851584" />
-    <state width="1055" height="240" key="GridCell.Tab.0.center/67.27.1101.933@67.27.1101.933" timestamp="1612769814697" />
-    <state width="1055" height="242" key="GridCell.Tab.0.center/67.27.1101.941@67.27.1101.941" timestamp="1612785525912" />
-    <state width="1055" height="242" key="GridCell.Tab.0.left" timestamp="1612785525912">
-      <screen x="67" y="27" width="1101" height="941" />
+    <state width="918" height="372" key="GridCell.Tab.0.center/67.27.1101.933@67.27.1101.933" timestamp="1612820155143" />
+    <state width="1055" height="242" key="GridCell.Tab.0.center/67.27.1101.941@67.27.1101.941" timestamp="1612785873729" />
+    <state width="918" height="372" key="GridCell.Tab.0.left" timestamp="1612820155141">
+      <screen x="67" y="27" width="1101" height="933" />
     </state>
     <state width="1047" height="241" key="GridCell.Tab.0.left/67.27.1093.941@67.27.1093.941" timestamp="1611787851584" />
-    <state width="1055" height="240" key="GridCell.Tab.0.left/67.27.1101.933@67.27.1101.933" timestamp="1612769814697" />
-    <state width="1055" height="242" key="GridCell.Tab.0.left/67.27.1101.941@67.27.1101.941" timestamp="1612785525912" />
-    <state width="1055" height="242" key="GridCell.Tab.0.right" timestamp="1612785525912">
-      <screen x="67" y="27" width="1101" height="941" />
+    <state width="918" height="372" key="GridCell.Tab.0.left/67.27.1101.933@67.27.1101.933" timestamp="1612820155141" />
+    <state width="1055" height="242" key="GridCell.Tab.0.left/67.27.1101.941@67.27.1101.941" timestamp="1612785873728" />
+    <state width="918" height="372" key="GridCell.Tab.0.right" timestamp="1612820155144">
+      <screen x="67" y="27" width="1101" height="933" />
     </state>
     <state width="1047" height="241" key="GridCell.Tab.0.right/67.27.1093.941@67.27.1093.941" timestamp="1611787851584" />
-    <state width="1055" height="240" key="GridCell.Tab.0.right/67.27.1101.933@67.27.1101.933" timestamp="1612769814698" />
-    <state width="1055" height="242" key="GridCell.Tab.0.right/67.27.1101.941@67.27.1101.941" timestamp="1612785525912" />
-    <state width="717" height="239" key="GridCell.Tab.1.bottom" timestamp="1612769722151">
+    <state width="918" height="372" key="GridCell.Tab.0.right/67.27.1101.933@67.27.1101.933" timestamp="1612820155144" />
+    <state width="1055" height="242" key="GridCell.Tab.0.right/67.27.1101.941@67.27.1101.941" timestamp="1612785873730" />
+    <state width="918" height="372" key="GridCell.Tab.1.bottom" timestamp="1612820155150">
       <screen x="67" y="27" width="1101" height="933" />
     </state>
-    <state width="717" height="239" key="GridCell.Tab.1.bottom/67.27.1101.933@67.27.1101.933" timestamp="1612769722151" />
-    <state width="717" height="239" key="GridCell.Tab.1.center" timestamp="1612769722150">
+    <state width="918" height="372" key="GridCell.Tab.1.bottom/67.27.1101.933@67.27.1101.933" timestamp="1612820155150" />
+    <state width="918" height="372" key="GridCell.Tab.1.center" timestamp="1612820155149">
       <screen x="67" y="27" width="1101" height="933" />
     </state>
-    <state width="717" height="239" key="GridCell.Tab.1.center/67.27.1101.933@67.27.1101.933" timestamp="1612769722150" />
-    <state width="717" height="239" key="GridCell.Tab.1.left" timestamp="1612769722147">
+    <state width="918" height="372" key="GridCell.Tab.1.center/67.27.1101.933@67.27.1101.933" timestamp="1612820155149" />
+    <state width="918" height="372" key="GridCell.Tab.1.left" timestamp="1612820155149">
       <screen x="67" y="27" width="1101" height="933" />
     </state>
-    <state width="717" height="239" key="GridCell.Tab.1.left/67.27.1101.933@67.27.1101.933" timestamp="1612769722147" />
-    <state width="717" height="239" key="GridCell.Tab.1.right" timestamp="1612769722151">
+    <state width="918" height="372" key="GridCell.Tab.1.left/67.27.1101.933@67.27.1101.933" timestamp="1612820155149" />
+    <state width="918" height="372" key="GridCell.Tab.1.right" timestamp="1612820155150">
       <screen x="67" y="27" width="1101" height="933" />
     </state>
-    <state width="717" height="239" key="GridCell.Tab.1.right/67.27.1101.933@67.27.1101.933" timestamp="1612769722151" />
-    <state width="717" height="239" key="GridCell.Tab.2.bottom" timestamp="1612769722154">
+    <state width="918" height="372" key="GridCell.Tab.1.right/67.27.1101.933@67.27.1101.933" timestamp="1612820155150" />
+    <state width="918" height="372" key="GridCell.Tab.2.bottom" timestamp="1612820155148">
       <screen x="67" y="27" width="1101" height="933" />
     </state>
-    <state width="717" height="239" key="GridCell.Tab.2.bottom/67.27.1101.933@67.27.1101.933" timestamp="1612769722154" />
-    <state width="717" height="239" key="GridCell.Tab.2.center" timestamp="1612769722153">
+    <state width="918" height="372" key="GridCell.Tab.2.bottom/67.27.1101.933@67.27.1101.933" timestamp="1612820155148" />
+    <state width="918" height="372" key="GridCell.Tab.2.center" timestamp="1612820155147">
       <screen x="67" y="27" width="1101" height="933" />
     </state>
-    <state width="717" height="239" key="GridCell.Tab.2.center/67.27.1101.933@67.27.1101.933" timestamp="1612769722152" />
-    <state width="717" height="239" key="GridCell.Tab.2.left" timestamp="1612769722152">
+    <state width="918" height="372" key="GridCell.Tab.2.center/67.27.1101.933@67.27.1101.933" timestamp="1612820155147" />
+    <state width="918" height="372" key="GridCell.Tab.2.left" timestamp="1612820155145">
       <screen x="67" y="27" width="1101" height="933" />
     </state>
-    <state width="717" height="239" key="GridCell.Tab.2.left/67.27.1101.933@67.27.1101.933" timestamp="1612769722152" />
-    <state width="717" height="239" key="GridCell.Tab.2.right" timestamp="1612769722153">
+    <state width="918" height="372" key="GridCell.Tab.2.left/67.27.1101.933@67.27.1101.933" timestamp="1612820155145" />
+    <state width="918" height="372" key="GridCell.Tab.2.right" timestamp="1612820155148">
       <screen x="67" y="27" width="1101" height="933" />
     </state>
-    <state width="717" height="239" key="GridCell.Tab.2.right/67.27.1101.933@67.27.1101.933" timestamp="1612769722153" />
+    <state width="918" height="372" key="GridCell.Tab.2.right/67.27.1101.933@67.27.1101.933" timestamp="1612820155148" />
     <state x="150" y="150" width="924" height="684" key="Maven.ArtifactSearchDialog" timestamp="1612762684553">
       <screen x="67" y="27" width="1101" height="933" />
     </state>
@@ -409,5 +425,9 @@
       <screen x="67" y="27" width="1851" height="951" />
     </state>
     <state x="487" y="205" width="1000" height="592" key="new project wizard/67.27.1851.951@67.27.1851.951" timestamp="1611818722729" />
+    <state x="450" y="250" width="325" height="485" key="refactoring.ChangeSignatureDialog" timestamp="1612815127836">
+      <screen x="67" y="27" width="1101" height="933" />
+    </state>
+    <state x="450" y="250" width="325" height="485" key="refactoring.ChangeSignatureDialog/67.27.1101.933@67.27.1101.933" timestamp="1612815127836" />
   </component>
 </project>

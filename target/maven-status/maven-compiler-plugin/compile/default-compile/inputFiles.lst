@@ -1,6 +1,10 @@
-/home/student/Desktop/java_ent_2021/movies_aggregator/src/main/java/controller/MyController.java
-/home/student/Desktop/java_ent_2021/movies_aggregator/src/main/java/dao/MovieDAO.java
-/home/student/Desktop/java_ent_2021/movies_aggregator/src/main/java/utils/ImdbApiReader.java
-/home/student/Desktop/java_ent_2021/movies_aggregator/src/main/java/dao/MovieDAOImpl.java
-/home/student/Desktop/java_ent_2021/movies_aggregator/src/main/java/utils/PropertiesLoader.java
-/home/student/Desktop/java_ent_2021/movies_aggregator/src/main/java/enity/Movie.java
+/home/student/Desktop/java_ent_2021/movies_aggregator/src/main/java/com/movie_aggregator/controller/AddMovieServlet.java
+/home/student/Desktop/java_ent_2021/movies_aggregator/src/main/java/com/movie_aggregator/controller/GetMyMoviesServlet.java
+/home/student/Desktop/java_ent_2021/movies_aggregator/src/main/java/com/movie_aggregator/dao/MovieDAOImpl.java
+/home/student/Desktop/java_ent_2021/movies_aggregator/src/main/java/com/movie_aggregator/utils/SessionFactoryProvider.java
+/home/student/Desktop/java_ent_2021/movies_aggregator/src/main/java/com/movie_aggregator/dao/MovieDAO.java
+/home/student/Desktop/java_ent_2021/movies_aggregator/src/main/java/com/movie_aggregator/controller/SearchMovieServlet.java
+/home/student/Desktop/java_ent_2021/movies_aggregator/src/main/java/com/movie_aggregator/utils/PropertiesLoader.java
+/home/student/Desktop/java_ent_2021/movies_aggregator/src/main/java/com/movie_aggregator/enity/Movie.java
+/home/student/Desktop/java_ent_2021/movies_aggregator/src/main/java/com/movie_aggregator/utils/ImdbApiReader.java
+/home/student/Desktop/java_ent_2021/movies_aggregator/src/main/java/com/movie_aggregator/controller/DeleteMyMovieServlet.java

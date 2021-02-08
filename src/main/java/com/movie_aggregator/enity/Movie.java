@@ -3,9 +3,10 @@ package com.movie_aggregator.enity;
 import javax.persistence.*;
 
 /**
+ * The type Movie.
+ *
  * @author mturchanov
  */
-
 @Entity(name = "Movie")
 @Table(name = "movies")
 public class Movie {
@@ -24,22 +25,22 @@ public class Movie {
     private String description;
 
     @Column(name = "imdb_rating")
-    private double imdbRating;
+    private String imdbRating;
 
     @Column(name = "metacritic_rating")
-    private int metacriticRating;
+    private String metacriticRating;
 
     @Column(name = "movie_db_rating")
-    private double theMovieDbRating;
+    private String theMovieDbRating;
 
     @Column(name = "rotten_tomatoes_rating")
-    private int rottenTomatoesRating;
+    private String rottenTomatoesRating;
 
     @Column(name = "tv_com_rating")
-    private double tV_comRating;
+    private String tV_comRating;
 
     @Column(name = "film_affinity_rating")
-    private double filmAffinityRating;
+    private String filmAffinityRating;
 
     @Column
     private String image;
@@ -47,12 +48,29 @@ public class Movie {
     @Column(name = "year")
     private String year;
 
+    /**
+     * Instantiates a new Movie.
+     */
     public Movie() {
     }
 
-    public Movie(String name, String imdbId, double imdbRating,
-                 int metacriticRating, double theMovieDbRating, int rottenTomatoesRating, double tV_comRating,
-                 double filmAffinityRating, String image, String year) {
+    /**
+     * Instantiates a new Movie.
+     *
+     * @param name                 the name
+     * @param imdbId               the imdb id
+     * @param imdbRating           the imdb rating
+     * @param metacriticRating     the metacritic rating
+     * @param theMovieDbRating     the the movie db rating
+     * @param rottenTomatoesRating the rotten tomatoes rating
+     * @param tV_comRating         the t v com rating
+     * @param filmAffinityRating   the film affinity rating
+     * @param image                the image
+     * @param year                 the year
+     */
+    public Movie(String name, String imdbId, String imdbRating,
+                 String metacriticRating, String theMovieDbRating, String rottenTomatoesRating, String tV_comRating,
+                 String filmAffinityRating, String image, String year) {
         this.name = name;
         this.imdbId = imdbId;
         this.imdbRating = imdbRating;
@@ -65,98 +83,218 @@ public class Movie {
         this.year = year;
     }
 
+    /**
+     * Gets id.
+     *
+     * @return the id
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * Sets id.
+     *
+     * @param id the id
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Sets name.
+     *
+     * @param name the name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Gets imdb id.
+     *
+     * @return the imdb id
+     */
     public String getImdbId() {
         return imdbId;
     }
 
+    /**
+     * Sets imdb id.
+     *
+     * @param imdbId the imdb id
+     */
     public void setImdbId(String imdbId) {
         this.imdbId = imdbId;
     }
 
+    /**
+     * Gets description.
+     *
+     * @return the description
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     * Sets description.
+     *
+     * @param description the description
+     */
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public double getImdbRating() {
+    /**
+     * Gets imdb rating.
+     *
+     * @return the imdb rating
+     */
+    public String getImdbRating() {
         return imdbRating;
     }
 
-    public void setImdbRating(double imdbRating) {
+    /**
+     * Sets imdb rating.
+     *
+     * @param imdbRating the imdb rating
+     */
+    public void setImdbRating(String imdbRating) {
         this.imdbRating = imdbRating;
     }
 
-    public int getMetacriticRating() {
+    /**
+     * Gets metacritic rating.
+     *
+     * @return the metacritic rating
+     */
+    public String getMetacriticRating() {
         return metacriticRating;
     }
 
-    public void setMetacriticRating(int metacriticRating) {
+    /**
+     * Sets metacritic rating.
+     *
+     * @param metacriticRating the metacritic rating
+     */
+    public void setMetacriticRating(String metacriticRating) {
         this.metacriticRating = metacriticRating;
     }
 
-    public double getTheMovieDbRating() {
+    /**
+     * Gets the movie db rating.
+     *
+     * @return the the movie db rating
+     */
+    public String getTheMovieDbRating() {
         return theMovieDbRating;
     }
 
-    public void setTheMovieDbRating(double theMovieDbRating) {
+    /**
+     * Sets the movie db rating.
+     *
+     * @param theMovieDbRating the the movie db rating
+     */
+    public void setTheMovieDbRating(String theMovieDbRating) {
         this.theMovieDbRating = theMovieDbRating;
     }
 
-    public int getRottenTomatoesRating() {
+    /**
+     * Gets rotten tomatoes rating.
+     *
+     * @return the rotten tomatoes rating
+     */
+    public String getRottenTomatoesRating() {
         return rottenTomatoesRating;
     }
 
-    public void setRottenTomatoesRating(int rottenTomatoesRating) {
+    /**
+     * Sets rotten tomatoes rating.
+     *
+     * @param rottenTomatoesRating the rotten tomatoes rating
+     */
+    public void setRottenTomatoesRating(String rottenTomatoesRating) {
         this.rottenTomatoesRating = rottenTomatoesRating;
     }
 
-    public double gettV_comRating() {
+    /**
+     * Gets v com rating.
+     *
+     * @return the v com rating
+     */
+    public String gettV_comRating() {
         return tV_comRating;
     }
 
-    public void settV_comRating(double tV_comRating) {
+    /**
+     * Sets v com rating.
+     *
+     * @param tV_comRating the t v com rating
+     */
+    public void settV_comRating(String tV_comRating) {
         this.tV_comRating = tV_comRating;
     }
 
-    public double getFilmAffinityRating() {
+    /**
+     * Gets film affinity rating.
+     *
+     * @return the film affinity rating
+     */
+    public String getFilmAffinityRating() {
         return filmAffinityRating;
     }
 
-    public void setFilmAffinityRating(double filmAffinityRating) {
+    /**
+     * Sets film affinity rating.
+     *
+     * @param filmAffinityRating the film affinity rating
+     */
+    public void setFilmAffinityRating(String filmAffinityRating) {
         this.filmAffinityRating = filmAffinityRating;
     }
 
+    /**
+     * Gets image.
+     *
+     * @return the image
+     */
     public String getImage() {
         return image;
     }
 
+    /**
+     * Sets image.
+     *
+     * @param image the image
+     */
     public void setImage(String image) {
         this.image = image;
     }
 
+    /**
+     * Gets year.
+     *
+     * @return the year
+     */
     public String getYear() {
         return year;
     }
 
+    /**
+     * Sets year.
+     *
+     * @param year the year
+     */
     public void setYear(String year) {
         this.year = year;
     }

@@ -44,6 +44,26 @@
                         <h4 class="mt-0 mb-1"><c:out value="tVcom Rating ${movie.tV_comRating}" /> </h4>
                         <h4 class="mt-0 mb-1"><c:out value="film Affinity Rating ${movie.filmAffinityRating}" /> </h4>
                     </div>
+
+                    <form action="${pageContext.request.contextPath}/addMovie" method="post">
+                        <input type="submit" value="Add">
+                        <input type="hidden" name="movieToAdd" value="${movie}" />
+                        <input type="hidden" name="movieName" value="${movie.name}" />
+                        <input type="hidden" name="movieYear" value="${movie.year}" />
+                        <input type="hidden" name="movieImdbId" value="${movie.imdbId}" />
+                        <input type="hidden" name="movieImdbRating" value="${movie.imdbRating}" />
+                        <input type="hidden" name="movieMetacriticRating" value="${movie.metacriticRating}" />
+                        <input type="hidden" name="movieRottenTomatoesRating" value="${movie.rottenTomatoesRating}" />
+                        <input type="hidden" name="movieTheMovieDbRating" value="${movie.theMovieDbRating}" />
+                        <input type="hidden" name="movieTV_comRating" value="${movie.tV_comRating}" />
+                        <input type="hidden" name="movieFilmAffinityRating" value="${movie.filmAffinityRating}" />
+                        <input type="hidden" name="movieImage" value="${movie.image}" />
+                    </form>
+
+                    <form action="${pageContext.request.contextPath}/deleteMovie" method="post">
+                        <input type="submit" value="Delete">
+                        <input type="hidden" name="movieId" value="${movie.id}" />
+                    </form>
                 </li>
             </ul>
         </div>

@@ -7,17 +7,18 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import com.movie_aggregator.utils.SessionFactoryProvider;
-
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import java.util.List;
 
 /**
+ * The type Movie dao.
+ *
  * @author mturchanov
  */
 public class MovieDAOImpl implements MovieDAO{
     private final Logger logger = LogManager.getLogger(this.getClass());
+    /**
+     * The Session factory.
+     */
     SessionFactory sessionFactory = SessionFactoryProvider.getSessionFactory();
 
 
@@ -27,7 +28,9 @@ public class MovieDAOImpl implements MovieDAO{
      */
     public void saveOrUpdate(Movie movie) {
         Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
         session.saveOrUpdate(movie);
+        transaction.commit();
         session.close();
         logger.info(movie);
 
@@ -36,11 +39,11 @@ public class MovieDAOImpl implements MovieDAO{
     @Override
     public List<Movie> getAllMovies() {
         Session session = sessionFactory.openSession();
-
-        CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery<Movie> query = builder.createQuery( Movie.class );
-        Root<Movie> root = query.from( Movie.class );
-        List<Movie> movies = session.createQuery("from Movies").getResultList();
+        Transaction transaction = session.beginTransaction();
+        List<Movie> movies = session
+                .createQuery("from com.movie_aggregator.enity.Movie", Movie.class)
+                .getResultList();
+        transaction.commit();
 
         logger.debug("The list of movies " + movies);
 
@@ -60,10 +63,25 @@ public class MovieDAOImpl implements MovieDAO{
         session.close();
     }
 
+    @Override
+    public Movie getMovieByID(int id) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        Movie movie = session.get(Movie.class, id);
+        transaction.commit();
+        session.close();
+        return movie;
+    }
 
+
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
     public static void main(String[] args) {
-        Movie m1 = new Movie("testName", "imdbID", 7.54, 66, 6.54, 54, 5.54, 4.45, "https://media.wired.com/photos/598e35994ab8482c0d6946e0/master/w_2560%2Cc_limit/phonepicutres-TA.jpg",
-                "1234");
-        new MovieDAOImpl().saveOrUpdate(m1);
+//        Movie m1 = new Movie("testName", "imdbID", 7.54, 66, 6.54, 54, 5.54, 4.45, "https://media.wired.com/photos/598e35994ab8482c0d6946e0/master/w_2560%2Cc_limit/phonepicutres-TA.jpg",
+//                "1234");
+//        new MovieDAOImpl().saveOrUpdate(m1);
     }
 }

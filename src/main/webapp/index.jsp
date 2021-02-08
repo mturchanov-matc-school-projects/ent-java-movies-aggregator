@@ -9,6 +9,10 @@
 </head>
 <body>
 <h1>Search</h1>
+
+<a href="${pageContext.request.contextPath}/myMovies">Go to My Movies</a>
+
+
 <form action="${pageContext.request.contextPath}/searchMovie"
       method="get">
     <label for="search">
@@ -16,5 +20,7 @@
     </label>
     <input type="submit" value="Search">
 </form>
+
+
 </body>
 </html>

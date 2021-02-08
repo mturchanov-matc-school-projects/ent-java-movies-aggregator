@@ -1,6 +1,10 @@
-controller/MyController.class
-dao/MovieDAO.class
-dao/MovieDAOImpl.class
-utils/PropertiesLoader.class
-utils/ImdbApiReader.class
-enity/Movie.class
+com/movie_aggregator/utils/PropertiesLoader.class
+com/movie_aggregator/utils/SessionFactoryProvider.class
+com/movie_aggregator/dao/MovieDAO.class
+com/movie_aggregator/utils/ImdbApiReader.class
+com/movie_aggregator/dao/MovieDAOImpl.class
+com/movie_aggregator/controller/SearchMovieServlet.class
+com/movie_aggregator/controller/GetMyMoviesServlet.class
+com/movie_aggregator/enity/Movie.class
+com/movie_aggregator/controller/DeleteMyMovieServlet.class
+com/movie_aggregator/controller/AddMovieServlet.class
