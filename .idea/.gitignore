@@ -36,6 +36,9 @@
 /log/
 /lib/
 
+# api keys
+/src/main/resources/api_keys.properties
+
 # mpeltonen/sbt-idea plugin
 .idea_modules/
 

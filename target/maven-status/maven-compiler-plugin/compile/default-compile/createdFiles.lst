@@ -1,0 +1,6 @@
+controller/MyController.class
+dao/MovieDAO.class
+dao/MovieDAOImpl.class
+utils/PropertiesLoader.class
+utils/ImdbApiReader.class
+enity/Movie.class
