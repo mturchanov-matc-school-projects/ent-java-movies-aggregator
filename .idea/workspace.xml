@@ -28,36 +28,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b4add5ff-e70d-4f2b-bb88-aba2066d226f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/movies_aggregator.iml" beforeDir="false" afterPath="$PROJECT_DIR$/movies_aggregator.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/controller/MyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/controller/SearchMovieServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/dao/MovieDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/dao/MovieDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/dao/MovieDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/dao/MovieDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/enity/Movie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/enity/Movie.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/utils/ImdbApiReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/utils/ImdbApiReader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/utils/SessionFactoryProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/utils/SessionFactoryProvider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/result.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/result.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject.war" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject.war" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/controller/MyController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/dao/MovieDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/dao/MovieDAOImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/enity/Movie.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/utils/ImdbApiReader.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/utils/PropertiesLoader.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/index.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/result.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/result.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/controller/MyController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/dao/MovieDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/dao/MovieDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/dao/MovieDAOImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/dao/MovieDAOImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/enity/Movie.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/enity/Movie.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/utils/ImdbApiReader.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/utils/ImdbApiReader.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/utils/SessionFactoryProvider.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/utils/SessionFactoryProvider.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/hibernate.cfg.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,7 +73,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../GoogleBooks/src/main/java/modal/utils/NetworkUtils.java" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../student" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Problems" />
     <property name="project.structure.proportion" value="0.0" />
@@ -138,17 +111,6 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -291,9 +253,9 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="TomEE Server.TomEE 9.0.37" />
       <item itemvalue="Application.ImdbApiReader" />
       <item itemvalue="Application.MovieDAOImpl" />
+      <item itemvalue="TomEE Server.TomEE 9.0.37" />
     </list>
     <recent_temporary>
       <list>
@@ -316,6 +278,8 @@
       <workItem from="1611797173875" duration="760000" />
       <workItem from="1611868358481" duration="1262000" />
       <workItem from="1612757526953" duration="29222000" />
+      <workItem from="1612843918995" duration="2426000" />
+      <workItem from="1612909695460" duration="34000" />
     </task>
     <servers />
   </component>
@@ -352,10 +316,11 @@
     </state>
     <state x="425" y="211" width="565" height="562" key="#com.intellij.ide.util.MemberChooser/67.27.1101.933@67.27.1101.933" timestamp="1612818971525" />
     <state x="425" y="213" width="374" height="585" key="#com.intellij.ide.util.MemberChooser/67.27.1101.941@67.27.1101.941" timestamp="1612785679971" />
-    <state x="485" y="241" width="374" height="504" key="FileChooserDialogImpl" timestamp="1612815278068">
-      <screen x="67" y="27" width="1101" height="933" />
+    <state x="485" y="241" width="374" height="504" key="FileChooserDialogImpl" timestamp="1612909730999">
+      <screen x="67" y="27" width="1102" height="931" />
     </state>
     <state x="485" y="241" width="374" height="504" key="FileChooserDialogImpl/67.27.1101.933@67.27.1101.933" timestamp="1612815278068" />
+    <state x="485" y="241" key="FileChooserDialogImpl/67.27.1102.931@67.27.1102.931" timestamp="1612909730999" />
     <state x="770" y="245" width="424" height="513" key="FileChooserDialogImpl/67.27.1851.951@67.27.1851.951" timestamp="1611871483704" />
     <state width="918" height="372" key="GridCell.Tab.0.bottom" timestamp="1612820155145">
       <screen x="67" y="27" width="1101" height="933" />

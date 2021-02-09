@@ -1,4 +1,3 @@
-
 <hibernate-configuration>
 <session-factory>
     <property name="connection.url">jdbc:mysql://localhost:3306/ent_java_indiv_proj?useSSL=false&amp;serverTimezone=UTC</property>

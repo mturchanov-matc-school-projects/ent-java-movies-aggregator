@@ -13,15 +13,21 @@ moreover, such a movie could be absent.
 #### Solution
 A website that gathers a rating of searched movie from different movie source platforms
 
-#### Extension or possible second or third release:
-...
-
 #### Pages and functionality:
-...
+######Index
+* searchbar
+* check movies
+* add movies to my_list if logged
+* delete movies from my_list if logged
+
+######Login/Signup
+* login/signup to access my_list
+
+
 
 ### Supporting Materials
-...
-
+* imdb api that provide basic movie search + bunch of ratings
+* other apis may be added based on availability, time. I don't want to overpromise 
 ### Journal
 
 [Link to the journal](Journal.md)

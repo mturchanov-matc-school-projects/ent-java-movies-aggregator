@@ -1,13 +1,10 @@
 package com.movie_aggregator.utils;
 
-import com.fasterxml.classmate.AnnotationConfiguration;
-import com.movie_aggregator.enity.Movie;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
 
 
 /**
@@ -37,8 +34,6 @@ public class SessionFactoryProvider {
                 new StandardServiceRegistryBuilder()
                         .configure()
                         .build();
-
-//        sessionFactory = new MetadataSources(standardRegistry).buildMetadata().buildSessionFactory();
         Metadata metaData =
                 new MetadataSources(standardRegistry)
                         .getMetadataBuilder()
