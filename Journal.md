@@ -42,13 +42,21 @@ Tasks Completed:
    ### Week 5
    
    2/18/2021 - 2/20/2021 ~ 12 hours  
+   Comments: 
+   * In the end of the day HTML-kinopoisk-parser and limitations for imdb/kinopoisk apis  
+     pushed the project to refactoring. Because of html parser search-results loaded at least 10sec;   
+     in addition, limited free requests from apis were not enough for testing. That's why all implemented  
+     parsers/apis were rejected fpr better ones. Fortunately, implementing new apis/parsers did not cause issues
+      
+   
    Tasks Completed:
    * Jumping on Spring framework
    * finishing fixing restful service
    * finishing fixing DAO
-   * implemented HTML-kinopoisk parser
-   * implemented kinopoisk-api
-   * implemented imdb-api
+   * finishing implementing HTML-kinopoisk parser
+   * switching from implemented apis/parsers to new ones
+   * starting implementing kinopoisk-api
+   * starting implementing imdb-api
    * Switching from HTML-kinopoisk parser, kinopoisk-api, imdb-api to omdb-api, kinopoisUnofficialApi  
       because old ones had too low free requests call limitation(100) + kinopoisk-html-parser causes speed issues 
     
