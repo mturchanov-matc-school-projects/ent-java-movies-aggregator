@@ -38,6 +38,28 @@ Tasks Completed:
    * individual project checkpoint 1
    * user stories added
    * simple prototype created
+   
+   ### Week 5
+   
+   2/18/2021 - 2/20/2021 ~ 12 hours  
+   Tasks Completed:
+   * Jumping on Spring framework
+   * finishing fixing restful service
+   * finishing fixing DAO
+   * implemented HTML-kinopoisk parser
+   * implemented kinopoisk-api
+   * implemented imdb-api
+   * Switching from HTML-kinopoisk parser, kinopoisk-api, imdb-api to omdb-api, kinopoisUnofficialApi  
+      because old ones had too low free requests call limitation(100) + kinopoisk-html-parser causes speed issues 
+    
+
+### Week 6
+   
+   2/22/2021 ~ 4 hours  
+   Tasks Completed:
+   * Refactoring/fixing implemented new apis 
+    
+   
       
     
 
