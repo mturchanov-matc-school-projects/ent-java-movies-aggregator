@@ -13,10 +13,13 @@
 - [x] Add screens/wireframe of project
 
 ### Future
-- [ ] Refactor to Spring
-- [ ] Write REST service (less headache with crud operations)
+- [X] Refactor to Spring
+  - [] connect imdb searching functionality 
+- [X] Write REST service (less headache with crud operations)  
+  - [] modifty REST service that would work based on user info
+- [ ] Create user table
+  - [] use Spring security as auth
 - [ ] Connect other apis(kinopoisk,mal,etc)
-- [ ] Users functionality + Implement Spring security
  
 
 

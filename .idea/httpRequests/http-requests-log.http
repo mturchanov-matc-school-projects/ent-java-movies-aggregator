@@ -1,0 +1,21 @@
+GET http://localhost:8080/yourindieproject_war_exploded/api/movies/11
+Accept: application/json
+
+<> 2021-02-18T232732.200.json
+
+###
+
+GET http://localhost:80/api/item?id=99
+Accept: application/json
+
+<> 2021-02-18T232702.404.html
+
+###
+
+GET http://localhost:80/api/movies
+Accept: application/json
+
+<> 2021-02-18T232635.404.html
+
+###
+

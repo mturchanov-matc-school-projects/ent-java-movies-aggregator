@@ -1,0 +1,14 @@
+{
+  "id": 11,
+  "name": "testName",
+  "imdbId": "imdbID",
+  "description": null,
+  "imdbRating": "7.54",
+  "metacriticRating": "66",
+  "theMovieDbRating": "6.54",
+  "rottenTomatoesRating": "54",
+  "tV_comRating": "5.54",
+  "filmAffinityRating": "4.45",
+  "image": "https://media.wired.com/photos/598e35994ab8482c0d6946e0/master/w_2560%2Cc_limit/phonepicutres-TA.jpg",
+  "year": "1234"
+}
