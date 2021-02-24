@@ -11,23 +11,24 @@ on a special platform(e.g eastern movies-kinopoisk, anime-mal, polish movies-fil
 moreover, such a movie could be absent.
 
 #### Solution
-A website that gathers a rating of searched movie from different movie source platforms
+A website that gathers a rating of searched movie from different movie source platforms + general info(frames,actors, etc) + useful links(reviews)
 
 #### Pages and functionality:
-######Index
+###### Index
 * searchbar
 * check movies
 * add movies to my_list if logged
 * delete movies from my_list if logged
+* add a note/review regarding a moview
 
-######Login/Signup
-* login/signup to access my_list
+###### Login/Signup
+* login/signup to access my movie list
 
 
 
 ### Supporting Materials
-* imdb api that provide basic movie search + bunch of ratings
-* other apis may be added based on availability, time. I don't want to overpromise 
+* omdb api - http://www.omdbapi.com/
+* unofficail kinopoisk api - https://kinopoiskapiunofficial.tech/
 ### Journal
 
 [Link to the journal](Journal.md)
