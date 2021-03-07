@@ -1,9 +1,6 @@
 package com.movie_aggregator.controller;
 
 import com.movie_aggregator.entity.Movie;
-import com.movie_aggregator.service.MovieServiceImpl;
-import com.movie_aggregator.service.SearchService;
-import com.movie_aggregator.service.MovieService;
 import com.movie_aggregator.service.GenericService;
 import com.movie_aggregator.utils.MovieApisReader;
 import org.springframework.beans.factory.annotation.Autowired;
