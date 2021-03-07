@@ -6,6 +6,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
@@ -17,14 +18,13 @@ import java.util.Set;
  * @author mturchanov
  */
 @Repository
-public class MovieDAOImpl implements MovieDAO{
+public class MovieDAOImpl implements MovieDAO {
 
     @Autowired
     private SessionFactory sessionFactory;
 
-    @Override
+    //@Override
     public List<Movie> getAllMovies() {
-
         Session session = sessionFactory.getCurrentSession();
         List<Movie> allMovies = session
                 .createQuery("from Movie", Movie.class)
@@ -35,20 +35,21 @@ public class MovieDAOImpl implements MovieDAO{
         return allMovies;
     }
 
-    @Override
+    //@Override
+    @Transactional
     public void saveMovie(Movie Movie) {
         Session session = sessionFactory.getCurrentSession();
         session.saveOrUpdate(Movie);
     }
 
-    @Override
+    //@Override
     public Movie getMovie(int id) {
         Session session = sessionFactory.getCurrentSession();
         Movie Movie = session.get(Movie.class, id);
         return Movie;
     }
 
-    @Override
+    //@Override
     public void deleteMovie(int id) {
         Session session = sessionFactory.getCurrentSession();
         Query<Movie> query = session.createQuery("delete from Movie "
@@ -57,7 +58,7 @@ public class MovieDAOImpl implements MovieDAO{
         query.executeUpdate();
     }
 
-    @Override
+    //@Override
     public void updateMovie(int id, Movie movie) {
         Movie updatedMovie = getMovie(id);
         if (movie.getName() != null) {
@@ -65,10 +66,10 @@ public class MovieDAOImpl implements MovieDAO{
             updatedMovie.setName(name);
         }
         //TODO: write conditional updates
-        return ;
+
     }
 
-    @Override
+    //@Override
     public Set<String> getColumnProperties(String column) {
         Session session = sessionFactory.getCurrentSession();
         List<Movie> movies = session.createQuery("select imdb_id from Movie")

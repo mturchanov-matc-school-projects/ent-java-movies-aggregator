@@ -24,7 +24,7 @@
 </form>
 
 <script>
-    console.log($( "#content" ).load( "ajax/https://api.jquery.com/load/ nav#main" ));
+    //console.log($( "#content" ).load( "ajax/https://api.jquery.com/load/ nav#main" ));
 
 </script>
 </body>

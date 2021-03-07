@@ -1,23 +1,45 @@
 package com.movie_aggregator.service;
 
 import com.movie_aggregator.entity.Movie;
+import com.movie_aggregator.repository.GenericDao;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author mturchanov
  */
-public interface MovieService {
-    public List<Movie> getAllMovies();
+@Service
+public class MovieService  {
+    @Autowired
+    private GenericDao dao;
 
-    public void saveMovie(Movie movie);
+    //@Transactional(readOnly = true)
+    public List<Movie> getAll() {
 
-    public Movie getMovie(int id);
+        return dao.getAll(Movie.class);
+    }
 
-    public void deleteMovie(int id);
+    public void delete(Movie movie, Integer id) {
+        dao.delete(movie.getClass(), id);
+    }
 
-    Movie updateMovie(int id, Movie movie);
+    /***/
+    public Movie get(Movie movie, Integer id) {
+        return dao.get(movie.getClass(), id);
+    }
 
-    Set<String> getColumnProperties(String column);
+    /***/
+    public Movie merge(Movie movie) {
+        return dao.merge(movie);
+    }
+
+    /***/
+    public void saveOrUpdate(Movie movie) {
+        dao.saveOrUpdate(movie);
+    }
+
+
+
 }

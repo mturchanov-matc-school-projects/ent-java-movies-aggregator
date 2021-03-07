@@ -14,20 +14,18 @@ import java.util.Set;
  */
 //TODO: write custom exeptions with appropriatre response (404/400)
 @Service
-public class MovieServiceImpl implements MovieService{
+public class MovieServiceImpl {
     @Autowired
     private MovieDAO movieDAO;
-//    @Autowired
-//    private MovieRepository movieRepository;
 
-    @Override
+    //@Override
     @Transactional
     public List<Movie> getAllMovies() {
 //        return movieRepository.findAll();
         return movieDAO.getAllMovies();
     }
 
-    @Override
+    //@Override
     @Transactional
     public void saveMovie(Movie movie) {
 
@@ -35,7 +33,7 @@ public class MovieServiceImpl implements MovieService{
 //        movieRepository.save(movie);
     }
 
-    @Override
+    //@Override
     @Transactional
     public Movie getMovie(int id) {
 //        Movie movie = null;
@@ -47,7 +45,7 @@ public class MovieServiceImpl implements MovieService{
         return movieDAO.getMovie(id);
     }
 
-    @Override
+    //@Override
     @Transactional
     public void deleteMovie(int id) {
 
@@ -55,7 +53,7 @@ public class MovieServiceImpl implements MovieService{
 //        movieRepository.deleteById(id);
     }
 
-    @Override
+    //@Override
     public Movie updateMovie(int id, Movie movie) {
         Movie updatedMovie = getMovie(id);
         if (movie.getName() != null) {
@@ -66,7 +64,7 @@ public class MovieServiceImpl implements MovieService{
 //        return movieRepository.save(updatedMovie);
     }
 
-    @Override
+    //@Override
     public Set<String> getColumnProperties(String column) {
         return movieDAO.getColumnProperties(column);
     }

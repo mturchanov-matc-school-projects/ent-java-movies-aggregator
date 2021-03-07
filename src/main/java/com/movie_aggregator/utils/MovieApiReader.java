@@ -7,8 +7,14 @@ import com.squareup.okhttp.Response;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 /**
@@ -27,6 +33,7 @@ public class MovieApiReader implements PropertiesLoader {
 
 
     public String getJSONFromApi(String searchType, String searchVal) throws IOException {
+        searchVal =  URLEncoder.encode(searchVal, StandardCharsets.UTF_8);
         OkHttpClient client = new OkHttpClient();
         String requestURL = null;
         Request request = null;
@@ -46,11 +53,14 @@ public class MovieApiReader implements PropertiesLoader {
                 requestURL = String.format("%s%s%s%s", KINOPOISK_ROOT, "search-by-keyword?keyword=", searchVal, "&page=1");
                 break;
             }
+            case "kinopoiskSpecificSearch": {
+                requestURL = String.format("%s%s", KINOPOISK_ROOT, searchVal);
+                break;
+            }
         }
 
         if (searchType.contains("kinopoisk")) {
             String apiKey = properties.getProperty("kinopoisk_unofficial_api");
-            System.out.println("X-API:" + apiKey);
             request = new Request.Builder()
                     .url(requestURL)
                     .addHeader("X-API-KEY", apiKey)
@@ -133,7 +143,7 @@ public class MovieApiReader implements PropertiesLoader {
         return movies;
     }
 
-    public List<Movie> parseJSONKinopoiskMovies(String JSONMovies) throws IOException {
+    public List<Movie> parseJSONKinopoiskMovies(String JSONMovies, String searchVal) throws IOException {
         ArrayList<Movie> movies = new ArrayList<>();
 
         JSONObject obj = new JSONObject(JSONMovies);
@@ -144,20 +154,40 @@ public class MovieApiReader implements PropertiesLoader {
             String filmId = String.valueOf(movieJSON.getInt("filmId"));
             String nameRu = movieJSON.getString("nameRu");
             String nameEn = movieJSON.getString("nameEn");
-            String year = movieJSON.getString("year");
+            String shortDesc = movieJSON.getString("description");
+
+            if (!nameRu.contains(searchVal) || nameRu.contains("(сериал)") || shortDesc.contains("короткометражка")) {
+                continue;
+            }
+            String duration = movieJSON.has("filmLength")
+                    ? movieJSON.getString("filmLength")
+                    : "n/a";
+            String year = movieJSON.has("year")
+                    ? movieJSON.getString("year")
+                    : "n/a";
+            String kVotes = movieJSON.has("ratingVoteCount")
+                    ? String.valueOf(movieJSON.getInt("ratingVoteCount"))
+                    : "n/a";
 
             String rating = movieJSON.has("rating")
                     ? movieJSON.getString("rating")
                     : "";
-//            String rating = !movieJSON.getString("rating").isEmpty() ? movieJSON.getString("rating") : "n/a";
-            Movie newMovie = new Movie(nameEn, filmId, nameRu, rating, year);
-            movies.add(newMovie);
+
+            String movieDetails = getJSONFromApi("kinopoiskSpecificSearch", filmId);
+            JSONObject movieDetailsJSON = new JSONObject(movieDetails);
+            JSONObject movieDataJSON = movieDetailsJSON.getJSONObject("data");
+            String image = movieDataJSON.getString("posterUrlPreview");
+            String description = movieJSON.has("description")
+                    ? movieJSON.getString("description")
+                    : "n/a";
+            //Movie newMovie = new Movie(filmId, nameEn, nameRu, shortDesc, duration,  description, year, kVotes, rating, image);
+            //movies.add(newMovie);
         }
+
         return movies;
     }
 
     private List<Movie> mergeMovieLists(List<Movie> imdbMovieList, List<Movie> kinopoiskMovieList) {
-
         Map<String, Movie> map = new HashMap<>();
         for (Movie m : imdbMovieList) {
             String key = m.getName() + m.getYear();
@@ -174,38 +204,55 @@ public class MovieApiReader implements PropertiesLoader {
                 map.get(key).setEasternName(m.getEasternName());
             }
         }
-        return new ArrayList<>(map.values());
+
+        //setting a unique id for each movie based on imdb+kinoopoisk ids
+        List<Movie> mergedMovies = new ArrayList<>(map.values());
+        for (Movie movie : mergedMovies) {
+
+            String strImdbId = movie.getImdbId();
+            String strKinopoiskId = movie.getKinopoiskId();
+            if (strImdbId != null) {
+                movie.setId(Integer.parseInt(strImdbId.replaceAll("\\D", "")));
+                continue;
+            }
+            if (strKinopoiskId != null) {
+                movie.setId(Integer.parseInt(strKinopoiskId));
+            }
+        }
+        return mergedMovies;
     }
 
     public List<Movie> getMovieListFromApis(String searchVal) throws IOException {
         String omdbJSON = getJSONFromApi("omdbGeneralSearch", searchVal);
         String kinopoiskJSON = getJSONFromApi("kinopoiskGeneralSearch", searchVal);
         List<Movie> imdbMovies = parseJSONOmdbMovies(omdbJSON); //limit 100 -> use only for special occasions
-        List<Movie> kinopoiskMovies = parseJSONKinopoiskMovies(kinopoiskJSON);
+        List<Movie> kinopoiskMovies = parseJSONKinopoiskMovies(kinopoiskJSON, searchVal);
         if (imdbMovies.isEmpty()) {
             return kinopoiskMovies;
         }
         return mergeMovieLists(imdbMovies, kinopoiskMovies);
     }
 
-
     public static void main(String[] args) throws IOException {
         MovieApiReader reader = new MovieApiReader();
         //String json = reader.getJSONFromApi("omdbGeneralSearch", "The Lord of the Rings: The Return of the King");
 //        System.out.println(reader.parseJSONOmdbMovies(json));
-        String kJson = reader.getJSONFromApi("kinopoiskGeneralSearch", "Брат");
-        System.out.println(reader.parseJSONKinopoiskMovies(kJson));
+       // String kJson = reader.getJSONFromApi("kinopoiskGeneralSearch", "Брат");
+        //System.out.println(reader.parseJSONKinopoiskMovies(kJson));
 
 
 
 //        System.out.println(reader.getJSONFromApi("kinopoiskGeneralSearch", "Django"));
-//        String kinopoiskJSON = "{\"keyword\":\"The Lord of the Rings  The Return of the King\",\"pagesCount\":1,\"films\":[{\"filmId\":3498,\"nameRu\":\"Властелин колец: Возвращение Короля\",\"nameEn\":\"The Lord of the Rings: The Return of the King\",\"type\":\"UNKNOWN\",\"year\":\"2003\",\"description\":\"Новая Зеландия, Питер Джексон(фэнтези)\",\"filmLength\":\"3:21\",\"countries\":[{\"country\":\"Новая Зеландия\"},{\"country\":\"США\"}],\"genres\":[{\"genre\":\"фэнтези\"},{\"genre\":\"приключения\"},{\"genre\":\"драма\"}],\"rating\":\"8.6\",\"ratingVoteCount\":445330,\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/3498.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/3498.jpg\"},{\"filmId\":581525,\"nameRu\":\"НГО: За кадром – Властелин колец: Возвращение Короля (ТВ)\",\"nameEn\":\"National Geographic: Beyond the Movie - The Lord of the Rings: Return of the King\",\"type\":\"UNKNOWN\",\"year\":\"2003\",\"description\":\"США(документальный)\",\"filmLength\":\"0:52\",\"countries\":[{\"country\":\"США\"}],\"genres\":[{\"genre\":\"документальный\"}],\"rating\":\"7.0\",\"ratingVoteCount\":214,\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/581525.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/581525.jpg\"}],\"searchFilmsCountResult\":2}";
-        //List<Movie> kMovies = reader.parseJSONKinopoiskMovies(reader.getJSONFromApi("kinopoiskGeneralSearch", "Брат"));
-        //List<Movie> iMovies = reader.parseJSONOmdbMovies(reader.getJSONFromApi("omdbGeneralSearch", "Брат"));
-//
-        //List<Movie> finalMovies = reader.mergeMovieLists(iMovies, kMovies);
+        String kinopoiskJSON = "{\"keyword\":\"The Lord of the Rings  The Return of the King\",\"pagesCount\":1,\"films\":[{\"filmId\":3498,\"nameRu\":\"Властелин колец: Возвращение Короля\",\"nameEn\":\"The Lord of the Rings: The Return of the King\",\"type\":\"UNKNOWN\",\"year\":\"2003\",\"description\":\"Новая Зеландия, Питер Джексон(фэнтези)\",\"filmLength\":\"3:21\",\"countries\":[{\"country\":\"Новая Зеландия\"},{\"country\":\"США\"}],\"genres\":[{\"genre\":\"фэнтези\"},{\"genre\":\"приключения\"},{\"genre\":\"драма\"}],\"rating\":\"8.6\",\"ratingVoteCount\":445330,\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/3498.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/3498.jpg\"},{\"filmId\":581525,\"nameRu\":\"НГО: За кадром – Властелин колец: Возвращение Короля (ТВ)\",\"nameEn\":\"National Geographic: Beyond the Movie - The Lord of the Rings: Return of the King\",\"type\":\"UNKNOWN\",\"year\":\"2003\",\"description\":\"США(документальный)\",\"filmLength\":\"0:52\",\"countries\":[{\"country\":\"США\"}],\"genres\":[{\"genre\":\"документальный\"}],\"rating\":\"7.0\",\"ratingVoteCount\":214,\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/581525.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/581525.jpg\"}],\"searchFilmsCountResult\":2}";
+        List<Movie> kMovies = reader.parseJSONKinopoiskMovies(kinopoiskJSON, "Lord of the Rings");
+        System.out.println(kMovies);
+        //System.out.println(reader.getJSONFromApi("kinopoiskSpecificSearch", "233634"));
+        //List<Movie> iMovies = reader.parseJSONOmdbMovies(reader.getJSONFromApi("omdbGeneralSearch", "Django"));
+
+       // List<Movie> finalMovies = reader.mergeMovieLists(iMovies, kMovies);
         //for (Movie m : finalMovies) {
-        //    System.out.println("kinopoisk id: " + m.getKinopoiskId() + "/imdb id: " + m.getImdbId());
+        //    System.out.println("kinopoisk id: " + m.getKinopoiskId() + "/imdb id: "
+        //            + m.getImdbId() + ", id: " + m.getId());
         //}
 //        System.out.println("km:" + kMovies);
 //        System.out.println("im:" + iMovies);

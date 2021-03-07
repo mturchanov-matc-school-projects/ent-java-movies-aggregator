@@ -1,6 +1,9 @@
 package com.movie_aggregator.entity;
 
+import org.hibernate.engine.internal.Cascade;
+
 import javax.persistence.*;
+import java.util.*;
 
 /**
  * The type Movie.
@@ -12,11 +15,22 @@ import javax.persistence.*;
 public class Movie {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column
     private String name;
+
+
+   // @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+
+    @JoinTable(
+            name = "movie_search",
+            joinColumns = @JoinColumn(name = "movie_id"), //write how bridge table get connected with this source table/entity
+            inverseJoinColumns = @JoinColumn(name = "search_id") //write how bridge table get connected with other target table/entity
+    )
+    private List<Search> searches;
 
     @Column(name = "imdb_id")
     private String imdbId;
@@ -84,6 +98,9 @@ public class Movie {
     @Column
     private String year;
 
+    @Column(name = "kinopoisk_votes")
+    private String kinopoiskVotes;
+
     /**
      * Instantiates a new Movie.
      */
@@ -98,34 +115,7 @@ public class Movie {
         this.year = year;
     }
 
-    /**
-     * Instantiates a new Movie.
-     *
-     * @param name                 the name
-     * @param imdbId               the imdb id
-     * @param imdbRating           the imdb rating
-     * @param metacriticRating     the metacritic rating
-     * @param theMovieDbRating     the the movie db rating
-     * @param rottenTomatoesRating the rotten tomatoes rating
-     * @param tV_comRating         the t v com rating
-     * @param filmAffinityRating   the film affinity rating
-     * @param image                the image
-     * @param year                 the year
-     */
-    public Movie(String name, String imdbId, String imdbRating,
-                 String metacriticRating, String theMovieDbRating, String rottenTomatoesRating, String tV_comRating,
-                 String filmAffinityRating, String image, String year) {
-        this.name = name;
-        this.imdbId = imdbId;
-        this.imdbRating = imdbRating;
-        this.metacriticRating = metacriticRating;
-        this.theMovieDbRating = theMovieDbRating;
-        this.rottenTomatoesRating = rottenTomatoesRating;
-        this.tV_comRating = tV_comRating;
-        this.filmAffinityRating = filmAffinityRating;
-        this.image = image;
-        this.year = year;
-    }
+
 
     public Movie(String name, String imdbId, String description, String imdbRating,
                  String imdbVotes, String boxOffice, String duration, String genre,
@@ -146,6 +136,29 @@ public class Movie {
         this.metascore = metascore;
         this.image = image;
         this.year = year;
+    }
+    public Movie(String nameEn, String nameRu, String imdbId, String filmId, String shortDesc, String duration, String year, String kVotes, String rating, String image, String description) {
+        this.name = nameEn;
+        this.imdbId = imdbId;
+        this.kinopoiskId = filmId;
+        this.director = shortDesc;
+        this.description = description;
+        this.easternName = nameRu;
+        this.kinopoiskRating = rating;
+        this.duration = duration;
+        this.image = image;
+        this.year = year;
+        this.kinopoiskVotes = kVotes;
+    }
+
+
+
+    public String getKinopoiskVotes() {
+        return kinopoiskVotes;
+    }
+
+    public void setKinopoiskVotes(String kinopoiskVotes) {
+        this.kinopoiskVotes = kinopoiskVotes;
     }
 
     public int getId() {
@@ -338,6 +351,26 @@ public class Movie {
 
     public void setYear(String year) {
         this.year = year;
+    }
+
+    public void addSearchToMovie(Search search) {
+        if(searches == null) {
+            searches = new ArrayList<>();
+        }
+        searches.add(search);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Movie movie = (Movie) o;
+        return id == movie.id && Objects.equals(name, movie.name) && Objects.equals(searches, movie.searches) && Objects.equals(imdbId, movie.imdbId) && Objects.equals(kinopoiskId, movie.kinopoiskId) && Objects.equals(description, movie.description) && Objects.equals(imdbRating, movie.imdbRating) && Objects.equals(imdbVotes, movie.imdbVotes) && Objects.equals(metacriticRating, movie.metacriticRating) && Objects.equals(theMovieDbRating, movie.theMovieDbRating) && Objects.equals(rottenTomatoesRating, movie.rottenTomatoesRating) && Objects.equals(tV_comRating, movie.tV_comRating) && Objects.equals(filmAffinityRating, movie.filmAffinityRating) && Objects.equals(easternName, movie.easternName) && Objects.equals(kinopoiskRating, movie.kinopoiskRating) && Objects.equals(boxOffice, movie.boxOffice) && Objects.equals(duration, movie.duration) && Objects.equals(genre, movie.genre) && Objects.equals(director, movie.director) && Objects.equals(actors, movie.actors) && Objects.equals(language, movie.language) && Objects.equals(country, movie.country) && Objects.equals(metascore, movie.metascore) && Objects.equals(image, movie.image) && Objects.equals(year, movie.year) && Objects.equals(kinopoiskVotes, movie.kinopoiskVotes);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, searches, imdbId, kinopoiskId, description, imdbRating, imdbVotes, metacriticRating, theMovieDbRating, rottenTomatoesRating, tV_comRating, filmAffinityRating, easternName, kinopoiskRating, boxOffice, duration, genre, director, actors, language, country, metascore, image, year, kinopoiskVotes);
     }
 
     @Override

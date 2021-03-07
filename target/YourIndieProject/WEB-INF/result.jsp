@@ -63,7 +63,7 @@
 <%--                        <input type="submit" value="Delete">--%>
 <%--                        <input type="hidden" name="movieId" value="${movie.id}" />--%>
 <%--                    </form>--%>
-                    <a href="${pageContext.request.contextPath}/movie?id=${movie.id}">
+                    <a href="${pageContext.request.contextPath}/movie?movie=${movie}">
                         <button type="button" class="btn btn-info">More Info</button>
                     </a>
                 </li>

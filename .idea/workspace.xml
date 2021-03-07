@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="movies_aggregator:war exploded" />
+      <artifact name="yourindieproject:war" />
     </artifacts-to-build>
   </component>
   <component name="AutoImportSettings">
@@ -28,76 +28,46 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b4add5ff-e70d-4f2b-bb88-aba2066d226f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/configuration/MyConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/configuration/MySecurityConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/configuration/MySecurityInitializer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/configuration/MyWebInitializer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/controller/MyController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/controller/MyRestController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/repository/MovieDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/repository/MovieDAOImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/repository/MovieRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/movies_aggregator.iml" beforeDir="false" afterPath="$PROJECT_DIR$/movies_aggregator.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projectPlan.md" beforeDir="false" afterPath="$PROJECT_DIR$/projectPlan.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/controller/AddMovieServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/controller/AddMovieServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/controller/DeleteMyMovieServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/controller/DeleteMyMovieServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/controller/GetMyMoviesServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/controller/GetMyMoviesServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/controller/SearchMovieServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/controller/SearchMovieServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/dao/MovieDAO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/dao/MovieDAOImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/enity/Movie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/entity/Movie.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/configuration/MyConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/configuration/MyConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/controller/MyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/controller/MyController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/controller/MyRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/controller/MyRestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/entity/Movie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/entity/Movie.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/repository/MovieDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/repository/MovieDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/repository/MovieRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/repository/MovieRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/service/MovieService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/service/MovieService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/service/MovieServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/service/MovieServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/utils/ImdbApiReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/utils/ImdbApiReader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/api_keys.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/api_keys.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/index.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/result.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/result.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/utils/MovieApiReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/utils/MovieApiReader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/index.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/movie.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/movie.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/result.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/result.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/YourIndieProject.war" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject.war" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/api_keys.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/api_keys.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/controller/AddMovieServlet.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/controller/DeleteMyMovieServlet.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/controller/GetMyMoviesServlet.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/controller/SearchMovieServlet.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/dao/MovieDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/dao/MovieDAOImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/enity/Movie.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/configuration/MyConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/configuration/MyConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/controller/MyController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/controller/MyController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/controller/MyRestController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/entity/Movie.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/entity/Movie.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/repository/MovieDAOImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/repository/MovieDAOImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/service/MovieService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/service/MovieService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/service/MovieServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/service/MovieServiceImpl.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/utils/ImdbApiReader.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/utils/ImdbApiReader.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/utils/SessionFactoryProvider.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/utils/SessionFactoryProvider.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/utils/MovieApiReader.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/utils/MovieApiReader.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/hibernate.cfg.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/lib/byte-buddy-1.9.11.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/lib/c3p0-0.9.5.3.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/lib/classmate-1.3.4.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/lib/dom4j-2.1.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/lib/hibernate-c3p0-5.4.4.Final.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/lib/hibernate-commons-annotations-5.1.0.Final.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/lib/hibernate-core-5.4.4.Final.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/lib/jandex-2.0.5.Final.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/lib/javaee-web-api-7.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/lib/javassist-3.24.0-GA.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/lib/jboss-logging-3.3.2.Final.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/lib/log4j-api-2.10.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/lib/log4j-core-2.10.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/lib/mchange-commons-java-0.2.15.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/lib/mysql-connector-java-8.0.16.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/lib/protobuf-java-3.6.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/index.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/result.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/api_keys.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/api_keys.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/controller/AddMovieServlet.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/controller/DeleteMyMovieServlet.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/controller/GetMyMoviesServlet.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/controller/SearchMovieServlet.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/dao/MovieDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/dao/MovieDAOImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/enity/Movie.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/index.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/movie.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/movie.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/result.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/result.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/configuration/MyConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/configuration/MyConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/controller/MyController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/controller/MyController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/controller/MyRestController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/entity/Movie.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/entity/Movie.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/repository/MovieDAOImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/repository/MovieDAOImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/service/MovieService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/service/MovieService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/service/MovieServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/service/MovieServiceImpl.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/utils/ImdbApiReader.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/utils/ImdbApiReader.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/utils/SessionFactoryProvider.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/utils/SessionFactoryProvider.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/utils/MovieApiReader.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/utils/MovieApiReader.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/hibernate.cfg.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,7 +85,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main-dev" />
+        <entry key="$PROJECT_DIR$" value="test" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -135,13 +105,6 @@
     <option name="FILTER_DEBUG" value="true" />
     <option name="CUSTOM_FILTER" />
   </component>
-  <component name="MavenImportPreferences">
-    <option name="generalSettings">
-      <MavenGeneralSettings>
-        <option name="mavenHome" value="$APPLICATION_HOME_DIR$/plugins/maven/lib/maven3" />
-      </MavenGeneralSettings>
-    </option>
-  </component>
   <component name="ProjectId" id="1nfiojXiJiRkzp59tIcu1BwSA5r" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
@@ -160,7 +123,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../week-5-hibernate-exercise-mih9898" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../week2-display-exercise" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
@@ -240,23 +203,10 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.MovieApiReader">
-    <configuration name="ImdbApiReader" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.movie_aggregator.utils.ImdbApiReader" />
-      <module name="movies_aggregator" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.movie_aggregator.utils.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Tomcat Server.Tomcat 9.0.41">
     <configuration name="MovieApiReader" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.movie_aggregator.utils.MovieApiReader" />
-      <module name="movies_aggregator" />
+      <module name="yourindieproject" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.movie_aggregator.utils.*" />
@@ -267,12 +217,51 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Server" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.movie_aggregator.utils.Server" />
-      <module name="movies_aggregator" />
+    <configuration name="MovieApisReader" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.movie_aggregator.utils.MovieApisReader" />
+      <module name="yourindieproject" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.movie_aggregator.utils.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SearchService" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.movie_aggregator.service.SearchService" />
+      <module name="yourindieproject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.movie_aggregator.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Test (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.movie_aggregator.Test" />
+      <module name="yourindieproject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.movie_aggregator.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.spring.hibernate_many_to_many.Test" />
+      <module name="yourindieproject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.spring.hibernate_many_to_many.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -289,95 +278,6 @@
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TomEE 9.0.371" type="TomeeConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="TomEE 9.0.371" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
-      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8080/movies_aggregator_war_exploded/" />
-      <option name="UPDATING_POLICY" value="restart-server" />
-      <deployment>
-        <artifact name="movies_aggregator:war exploded">
-          <settings>
-            <option name="CONTEXT_PATH" value="/movies_aggregator_war_exploded" />
-          </settings>
-        </artifact>
-      </deployment>
-      <server-settings>
-        <option name="BASE_DIRECTORY_NAME" value="Unnamed_movies_aggregator_5" />
-      </server-settings>
-      <predefined_log_file enabled="true" id="Tomcat" />
-      <predefined_log_file enabled="true" id="Tomcat Catalina" />
-      <predefined_log_file id="Tomcat Manager" />
-      <predefined_log_file id="Tomcat Host Manager" />
-      <predefined_log_file id="Tomcat Localhost Access" />
-      <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="40809" />
-      </RunnerSettings>
-      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
-        <option name="USE_ENV_VARIABLES" value="true" />
-        <STARTUP>
-          <option name="USE_DEFAULT" value="true" />
-          <option name="SCRIPT" value="" />
-          <option name="VM_PARAMETERS" value="" />
-          <option name="PROGRAM_PARAMETERS" value="" />
-        </STARTUP>
-        <SHUTDOWN>
-          <option name="USE_DEFAULT" value="true" />
-          <option name="SCRIPT" value="" />
-          <option name="VM_PARAMETERS" value="" />
-          <option name="PROGRAM_PARAMETERS" value="" />
-        </SHUTDOWN>
-      </ConfigurationWrapper>
-      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Debug">
-        <option name="USE_ENV_VARIABLES" value="true" />
-        <STARTUP>
-          <option name="USE_DEFAULT" value="true" />
-          <option name="SCRIPT" value="" />
-          <option name="VM_PARAMETERS" value="" />
-          <option name="PROGRAM_PARAMETERS" value="" />
-        </STARTUP>
-        <SHUTDOWN>
-          <option name="USE_DEFAULT" value="true" />
-          <option name="SCRIPT" value="" />
-          <option name="VM_PARAMETERS" value="" />
-          <option name="PROGRAM_PARAMETERS" value="" />
-        </SHUTDOWN>
-      </ConfigurationWrapper>
-      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Profile">
-        <option name="USE_ENV_VARIABLES" value="true" />
-        <STARTUP>
-          <option name="USE_DEFAULT" value="true" />
-          <option name="SCRIPT" value="" />
-          <option name="VM_PARAMETERS" value="" />
-          <option name="PROGRAM_PARAMETERS" value="" />
-        </STARTUP>
-        <SHUTDOWN>
-          <option name="USE_DEFAULT" value="true" />
-          <option name="SCRIPT" value="" />
-          <option name="VM_PARAMETERS" value="" />
-          <option name="PROGRAM_PARAMETERS" value="" />
-        </SHUTDOWN>
-      </ConfigurationWrapper>
-      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
-        <option name="USE_ENV_VARIABLES" value="true" />
-        <STARTUP>
-          <option name="USE_DEFAULT" value="true" />
-          <option name="SCRIPT" value="" />
-          <option name="VM_PARAMETERS" value="" />
-          <option name="PROGRAM_PARAMETERS" value="" />
-        </STARTUP>
-        <SHUTDOWN>
-          <option name="USE_DEFAULT" value="true" />
-          <option name="SCRIPT" value="" />
-          <option name="VM_PARAMETERS" value="" />
-          <option name="PROGRAM_PARAMETERS" value="" />
-        </SHUTDOWN>
-      </ConfigurationWrapper>
-      <method v="2">
-        <option name="Maven.BeforeRunTask" enabled="true" file="$PROJECT_DIR$/pom.xml" goal="clean" />
-        <option name="Maven.BeforeRunTask" enabled="true" file="$PROJECT_DIR$/pom.xml" goal="install" />
-        <option name="BuildArtifacts" enabled="true">
-          <artifact name="movies_aggregator:war exploded" />
-        </option>
       </method>
     </configuration>
     <configuration default="true" type="TomeeConfiguration" factoryName="Local" ALTERNATIVE_JRE_ENABLED="false">
@@ -457,6 +357,94 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Tomcat 9.0.41" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.41" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
+      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8080/yourindieproject_war/" />
+      <option name="UPDATING_POLICY" value="restart-server" />
+      <deployment>
+        <artifact name="yourindieproject:war">
+          <settings>
+            <option name="CONTEXT_PATH" value="/yourindieproject_war" />
+          </settings>
+        </artifact>
+      </deployment>
+      <server-settings>
+        <option name="BASE_DIRECTORY_NAME" value="8af48272-8480-4298-9b12-427f30cdeffb" />
+      </server-settings>
+      <predefined_log_file enabled="true" id="Tomcat" />
+      <predefined_log_file enabled="true" id="Tomcat Catalina" />
+      <predefined_log_file id="Tomcat Manager" />
+      <predefined_log_file id="Tomcat Host Manager" />
+      <predefined_log_file id="Tomcat Localhost Access" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="40321" />
+      </RunnerSettings>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Debug">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Profile">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <method v="2">
+        <option name="Make" enabled="true" />
+        <option name="BuildArtifacts" enabled="true">
+          <artifact name="yourindieproject:war" />
+        </option>
+      </method>
+    </configuration>
     <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" ALTERNATIVE_JRE_ENABLED="false">
       <option name="UPDATING_POLICY" value="restart-server" />
       <deployment />
@@ -521,16 +509,20 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.ImdbApiReader" />
-      <item itemvalue="Application.Server" />
       <item itemvalue="Application.MovieApiReader" />
-      <item itemvalue="TomEE Server.TomEE 9.0.371" />
+      <item itemvalue="Application.MovieApisReader" />
+      <item itemvalue="Application.SearchService" />
+      <item itemvalue="Application.Test" />
+      <item itemvalue="Application.Test (1)" />
+      <item itemvalue="Tomcat Server.Tomcat 9.0.41" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Test (1)" />
+        <item itemvalue="Application.Test" />
+        <item itemvalue="Application.SearchService" />
+        <item itemvalue="Application.MovieApisReader" />
         <item itemvalue="Application.MovieApiReader" />
-        <item itemvalue="Application.ImdbApiReader" />
-        <item itemvalue="Application.Server" />
       </list>
     </recent_temporary>
   </component>
@@ -556,7 +548,15 @@
       <workItem from="1613414227537" duration="3091000" />
       <workItem from="1613711823882" duration="21396000" />
       <workItem from="1613852868117" duration="39719000" />
-      <workItem from="1614122220007" duration="5512000" />
+      <workItem from="1614122220007" duration="10438000" />
+      <workItem from="1614299010026" duration="618000" />
+      <workItem from="1614309764281" duration="4227000" />
+      <workItem from="1614628062116" duration="21377000" />
+      <workItem from="1614725905073" duration="1751000" />
+      <workItem from="1614834254298" duration="4077000" />
+      <workItem from="1614908522214" duration="14865000" />
+      <workItem from="1615054948822" duration="48000" />
+      <workItem from="1615055452504" duration="5583000" />
     </task>
     <servers />
   </component>
@@ -575,175 +575,12 @@
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
-  <component name="WindowStateProjectService">
-    <state x="698" y="547" width="552" height="219" key="#Assign_Data_Sources" timestamp="1614058060326">
-      <screen x="67" y="27" width="1459" height="1261" />
-    </state>
-    <state x="698" y="547" width="552" height="219" key="#Assign_Data_Sources/67.27.1459.1261@67.27.1459.1261" timestamp="1614058060326" />
-    <state x="389" y="283" width="450" height="243" key="#TomEE_Server" timestamp="1613854187038">
-      <screen x="67" y="27" width="1101" height="755" />
-    </state>
-    <state x="389" y="283" width="450" height="243" key="#TomEE_Server/67.27.1101.755@67.27.1101.755" timestamp="1613854187038" />
-    <state x="67" y="27" width="1101" height="755" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1613854468163">
-      <screen x="67" y="27" width="1101" height="755" />
-    </state>
-    <state x="67" y="27" width="1101" height="755" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1101.755@67.27.1101.755" timestamp="1613854468163" />
-    <state x="792" y="550" width="374" height="562" key="#com.intellij.ide.util.MemberChooser" timestamp="1614110062522">
-      <screen x="67" y="27" width="1413" height="1261" />
-    </state>
-    <state x="792" y="550" width="374" height="562" key="#com.intellij.ide.util.MemberChooser/67.27.1413.1261@67.27.1413.1261" timestamp="1614110062522" />
-    <state x="604" y="343" width="565" height="626" key="#com.intellij.ide.util.MemberChooser/67.27.1459.1261@67.27.1459.1261" timestamp="1614104293519" />
-    <state x="397" y="148" width="424" height="513" key="FileChooserDialogImpl" timestamp="1613855269992">
-      <screen x="67" y="27" width="1101" height="755" />
-    </state>
-    <state x="397" y="148" width="424" height="513" key="FileChooserDialogImpl/67.27.1101.755@67.27.1101.755" timestamp="1613855269992" />
-    <state width="1285" height="259" key="GridCell.Tab.0.bottom" timestamp="1614126866197">
-      <screen x="67" y="27" width="1331" height="1261" />
-    </state>
-    <state width="1055" height="133" key="GridCell.Tab.0.bottom/67.27.1101.755@67.27.1101.755" timestamp="1613854626218" />
-    <state width="1200" height="442" key="GridCell.Tab.0.bottom/67.27.1246.1261@67.27.1246.1261" timestamp="1614031314282" />
-    <state width="1285" height="259" key="GridCell.Tab.0.bottom/67.27.1331.1261@67.27.1331.1261" timestamp="1614126866197" />
-    <state width="1367" height="259" key="GridCell.Tab.0.bottom/67.27.1413.1261@67.27.1413.1261" timestamp="1614121263967" />
-    <state width="1413" height="259" key="GridCell.Tab.0.bottom/67.27.1459.1261@67.27.1459.1261" timestamp="1614103862675" />
-    <state width="1285" height="259" key="GridCell.Tab.0.center" timestamp="1614126866196">
-      <screen x="67" y="27" width="1331" height="1261" />
-    </state>
-    <state width="1055" height="133" key="GridCell.Tab.0.center/67.27.1101.755@67.27.1101.755" timestamp="1613854626217" />
-    <state width="1200" height="442" key="GridCell.Tab.0.center/67.27.1246.1261@67.27.1246.1261" timestamp="1614031314280" />
-    <state width="1285" height="259" key="GridCell.Tab.0.center/67.27.1331.1261@67.27.1331.1261" timestamp="1614126866196" />
-    <state width="1367" height="259" key="GridCell.Tab.0.center/67.27.1413.1261@67.27.1413.1261" timestamp="1614121263967" />
-    <state width="1413" height="259" key="GridCell.Tab.0.center/67.27.1459.1261@67.27.1459.1261" timestamp="1614103862675" />
-    <state width="1285" height="259" key="GridCell.Tab.0.left" timestamp="1614126866195">
-      <screen x="67" y="27" width="1331" height="1261" />
-    </state>
-    <state width="1055" height="133" key="GridCell.Tab.0.left/67.27.1101.755@67.27.1101.755" timestamp="1613854626217" />
-    <state width="1200" height="442" key="GridCell.Tab.0.left/67.27.1246.1261@67.27.1246.1261" timestamp="1614031314280" />
-    <state width="1285" height="259" key="GridCell.Tab.0.left/67.27.1331.1261@67.27.1331.1261" timestamp="1614126866195" />
-    <state width="1367" height="259" key="GridCell.Tab.0.left/67.27.1413.1261@67.27.1413.1261" timestamp="1614121263967" />
-    <state width="1413" height="259" key="GridCell.Tab.0.left/67.27.1459.1261@67.27.1459.1261" timestamp="1614103862675" />
-    <state width="1285" height="259" key="GridCell.Tab.0.right" timestamp="1614126866196">
-      <screen x="67" y="27" width="1331" height="1261" />
-    </state>
-    <state width="1055" height="133" key="GridCell.Tab.0.right/67.27.1101.755@67.27.1101.755" timestamp="1613854626217" />
-    <state width="1200" height="442" key="GridCell.Tab.0.right/67.27.1246.1261@67.27.1246.1261" timestamp="1614031314281" />
-    <state width="1285" height="259" key="GridCell.Tab.0.right/67.27.1331.1261@67.27.1331.1261" timestamp="1614126866196" />
-    <state width="1367" height="259" key="GridCell.Tab.0.right/67.27.1413.1261@67.27.1413.1261" timestamp="1614121263967" />
-    <state width="1413" height="259" key="GridCell.Tab.0.right/67.27.1459.1261@67.27.1459.1261" timestamp="1614103862675" />
-    <state width="933" height="456" key="GridCell.Tab.1.bottom" timestamp="1614124180382">
-      <screen x="67" y="27" width="1331" height="1261" />
-    </state>
-    <state width="762" height="222" key="GridCell.Tab.1.bottom/67.27.1101.755@67.27.1101.755" timestamp="1613854626180" />
-    <state width="870" height="222" key="GridCell.Tab.1.bottom/67.27.1246.1261@67.27.1246.1261" timestamp="1614026730414" />
-    <state width="933" height="456" key="GridCell.Tab.1.bottom/67.27.1331.1261@67.27.1331.1261" timestamp="1614124180382" />
-    <state width="994" height="456" key="GridCell.Tab.1.bottom/67.27.1413.1261@67.27.1413.1261" timestamp="1614120784476" />
-    <state width="1028" height="531" key="GridCell.Tab.1.bottom/67.27.1459.1261@67.27.1459.1261" timestamp="1614063174572" />
-    <state width="933" height="456" key="GridCell.Tab.1.center" timestamp="1614124180377">
-      <screen x="67" y="27" width="1331" height="1261" />
-    </state>
-    <state width="762" height="222" key="GridCell.Tab.1.center/67.27.1101.755@67.27.1101.755" timestamp="1613854626179" />
-    <state width="870" height="222" key="GridCell.Tab.1.center/67.27.1246.1261@67.27.1246.1261" timestamp="1614026730413" />
-    <state width="933" height="456" key="GridCell.Tab.1.center/67.27.1331.1261@67.27.1331.1261" timestamp="1614124180377" />
-    <state width="994" height="456" key="GridCell.Tab.1.center/67.27.1413.1261@67.27.1413.1261" timestamp="1614120784476" />
-    <state width="1028" height="531" key="GridCell.Tab.1.center/67.27.1459.1261@67.27.1459.1261" timestamp="1614063174571" />
-    <state width="933" height="456" key="GridCell.Tab.1.left" timestamp="1614124180376">
-      <screen x="67" y="27" width="1331" height="1261" />
-    </state>
-    <state width="762" height="222" key="GridCell.Tab.1.left/67.27.1101.755@67.27.1101.755" timestamp="1613854626178" />
-    <state width="870" height="222" key="GridCell.Tab.1.left/67.27.1246.1261@67.27.1246.1261" timestamp="1614026730412" />
-    <state width="933" height="456" key="GridCell.Tab.1.left/67.27.1331.1261@67.27.1331.1261" timestamp="1614124180376" />
-    <state width="994" height="456" key="GridCell.Tab.1.left/67.27.1413.1261@67.27.1413.1261" timestamp="1614120784475" />
-    <state width="1028" height="531" key="GridCell.Tab.1.left/67.27.1459.1261@67.27.1459.1261" timestamp="1614063174571" />
-    <state width="933" height="456" key="GridCell.Tab.1.right" timestamp="1614124180382">
-      <screen x="67" y="27" width="1331" height="1261" />
-    </state>
-    <state width="762" height="222" key="GridCell.Tab.1.right/67.27.1101.755@67.27.1101.755" timestamp="1613854626179" />
-    <state width="870" height="222" key="GridCell.Tab.1.right/67.27.1246.1261@67.27.1246.1261" timestamp="1614026730414" />
-    <state width="933" height="456" key="GridCell.Tab.1.right/67.27.1331.1261@67.27.1331.1261" timestamp="1614124180382" />
-    <state width="994" height="456" key="GridCell.Tab.1.right/67.27.1413.1261@67.27.1413.1261" timestamp="1614120784476" />
-    <state width="1028" height="531" key="GridCell.Tab.1.right/67.27.1459.1261@67.27.1459.1261" timestamp="1614063174572" />
-    <state width="933" height="456" key="GridCell.Tab.2.bottom" timestamp="1614124180386">
-      <screen x="67" y="27" width="1331" height="1261" />
-    </state>
-    <state width="762" height="222" key="GridCell.Tab.2.bottom/67.27.1101.755@67.27.1101.755" timestamp="1613854626182" />
-    <state width="870" height="222" key="GridCell.Tab.2.bottom/67.27.1246.1261@67.27.1246.1261" timestamp="1614026730416" />
-    <state width="933" height="456" key="GridCell.Tab.2.bottom/67.27.1331.1261@67.27.1331.1261" timestamp="1614124180386" />
-    <state width="994" height="456" key="GridCell.Tab.2.bottom/67.27.1413.1261@67.27.1413.1261" timestamp="1614120784478" />
-    <state width="1028" height="531" key="GridCell.Tab.2.bottom/67.27.1459.1261@67.27.1459.1261" timestamp="1614063174574" />
-    <state width="933" height="456" key="GridCell.Tab.2.center" timestamp="1614124180383">
-      <screen x="67" y="27" width="1331" height="1261" />
-    </state>
-    <state width="762" height="222" key="GridCell.Tab.2.center/67.27.1101.755@67.27.1101.755" timestamp="1613854626181" />
-    <state width="870" height="222" key="GridCell.Tab.2.center/67.27.1246.1261@67.27.1246.1261" timestamp="1614026730415" />
-    <state width="933" height="456" key="GridCell.Tab.2.center/67.27.1331.1261@67.27.1331.1261" timestamp="1614124180383" />
-    <state width="994" height="456" key="GridCell.Tab.2.center/67.27.1413.1261@67.27.1413.1261" timestamp="1614120784477" />
-    <state width="1028" height="531" key="GridCell.Tab.2.center/67.27.1459.1261@67.27.1459.1261" timestamp="1614063174574" />
-    <state width="933" height="456" key="GridCell.Tab.2.left" timestamp="1614124180382">
-      <screen x="67" y="27" width="1331" height="1261" />
-    </state>
-    <state width="762" height="222" key="GridCell.Tab.2.left/67.27.1101.755@67.27.1101.755" timestamp="1613854626180" />
-    <state width="870" height="222" key="GridCell.Tab.2.left/67.27.1246.1261@67.27.1246.1261" timestamp="1614026730414" />
-    <state width="933" height="456" key="GridCell.Tab.2.left/67.27.1331.1261@67.27.1331.1261" timestamp="1614124180382" />
-    <state width="994" height="456" key="GridCell.Tab.2.left/67.27.1413.1261@67.27.1413.1261" timestamp="1614120784477" />
-    <state width="1028" height="531" key="GridCell.Tab.2.left/67.27.1459.1261@67.27.1459.1261" timestamp="1614063174573" />
-    <state width="933" height="456" key="GridCell.Tab.2.right" timestamp="1614124180383">
-      <screen x="67" y="27" width="1331" height="1261" />
-    </state>
-    <state width="762" height="222" key="GridCell.Tab.2.right/67.27.1101.755@67.27.1101.755" timestamp="1613854626182" />
-    <state width="870" height="222" key="GridCell.Tab.2.right/67.27.1246.1261@67.27.1246.1261" timestamp="1614026730415" />
-    <state width="933" height="456" key="GridCell.Tab.2.right/67.27.1331.1261@67.27.1331.1261" timestamp="1614124180383" />
-    <state width="994" height="456" key="GridCell.Tab.2.right/67.27.1413.1261@67.27.1413.1261" timestamp="1614120784478" />
-    <state width="1028" height="531" key="GridCell.Tab.2.right/67.27.1459.1261@67.27.1459.1261" timestamp="1614063174574" />
-    <state width="1028" height="531" key="GridCell.Tab.6.bottom" timestamp="1614060715995">
-      <screen x="67" y="27" width="1459" height="1261" />
-    </state>
-    <state width="918" height="284" key="GridCell.Tab.6.bottom/67.27.1101.755@67.27.1101.755" timestamp="1613854270680" />
-    <state width="1028" height="531" key="GridCell.Tab.6.bottom/67.27.1459.1261@67.27.1459.1261" timestamp="1614060715995" />
-    <state width="1028" height="531" key="GridCell.Tab.6.center" timestamp="1614060715995">
-      <screen x="67" y="27" width="1459" height="1261" />
-    </state>
-    <state width="918" height="284" key="GridCell.Tab.6.center/67.27.1101.755@67.27.1101.755" timestamp="1613854270680" />
-    <state width="1028" height="531" key="GridCell.Tab.6.center/67.27.1459.1261@67.27.1459.1261" timestamp="1614060715995" />
-    <state width="1028" height="531" key="GridCell.Tab.6.left" timestamp="1614060715994">
-      <screen x="67" y="27" width="1459" height="1261" />
-    </state>
-    <state width="918" height="284" key="GridCell.Tab.6.left/67.27.1101.755@67.27.1101.755" timestamp="1613854270680" />
-    <state width="1028" height="531" key="GridCell.Tab.6.left/67.27.1459.1261@67.27.1459.1261" timestamp="1614060715994" />
-    <state width="1028" height="531" key="GridCell.Tab.6.right" timestamp="1614060715995">
-      <screen x="67" y="27" width="1459" height="1261" />
-    </state>
-    <state width="918" height="284" key="GridCell.Tab.6.right/67.27.1101.755@67.27.1101.755" timestamp="1613854270680" />
-    <state width="1028" height="531" key="GridCell.Tab.6.right/67.27.1459.1261@67.27.1459.1261" timestamp="1614060715995" />
-    <state width="1028" height="531" key="GridCell.Tab.7.bottom" timestamp="1614060716965">
-      <screen x="67" y="27" width="1459" height="1261" />
-    </state>
-    <state width="918" height="284" key="GridCell.Tab.7.bottom/67.27.1101.755@67.27.1101.755" timestamp="1613854270175" />
-    <state width="1028" height="531" key="GridCell.Tab.7.bottom/67.27.1459.1261@67.27.1459.1261" timestamp="1614060716965" />
-    <state width="1028" height="531" key="GridCell.Tab.7.center" timestamp="1614060716964">
-      <screen x="67" y="27" width="1459" height="1261" />
-    </state>
-    <state width="918" height="284" key="GridCell.Tab.7.center/67.27.1101.755@67.27.1101.755" timestamp="1613854270174" />
-    <state width="1028" height="531" key="GridCell.Tab.7.center/67.27.1459.1261@67.27.1459.1261" timestamp="1614060716964" />
-    <state width="1028" height="531" key="GridCell.Tab.7.left" timestamp="1614060716964">
-      <screen x="67" y="27" width="1459" height="1261" />
-    </state>
-    <state width="918" height="284" key="GridCell.Tab.7.left/67.27.1101.755@67.27.1101.755" timestamp="1613854270174" />
-    <state width="1028" height="531" key="GridCell.Tab.7.left/67.27.1459.1261@67.27.1459.1261" timestamp="1614060716964" />
-    <state width="1028" height="531" key="GridCell.Tab.7.right" timestamp="1614060716965">
-      <screen x="67" y="27" width="1459" height="1261" />
-    </state>
-    <state width="918" height="284" key="GridCell.Tab.7.right/67.27.1101.755@67.27.1101.755" timestamp="1613854270175" />
-    <state width="1028" height="531" key="GridCell.Tab.7.right/67.27.1459.1261@67.27.1459.1261" timestamp="1614060716965" />
-    <state x="167" y="125" width="1213" height="1063" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1614121482213">
-      <screen x="67" y="27" width="1413" height="1261" />
-    </state>
-    <state x="167" y="125" width="1213" height="1063" key="com.intellij.history.integration.ui.views.FileHistoryDialog/67.27.1413.1261@67.27.1413.1261" timestamp="1614121482213" />
-  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/com/movie_aggregator/utils/ImdbApiReader.java</url>
-          <line>205</line>
+          <line>229</line>
           <properties class="com.movie_aggregator.utils.ImdbApiReader" method="main">
             <option name="EMULATED" value="true" />
           </properties>
@@ -751,5 +588,9 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

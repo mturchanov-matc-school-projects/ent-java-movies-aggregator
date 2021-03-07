@@ -146,14 +146,26 @@ public class ImdbApiReader implements PropertiesLoader {
                 String filmAffinityRating = movieRatingsObj.getString("filmAffinity");
 
 
-                Movie movie = new Movie(name, imdb_id, imdbRating, metacriticRating, theMovieDbRating, rottenTomatoesRating, tV_comRating,
-                        filmAffinityRating, image, year);
+               //Movie movie = new Movie(name, imdb_id, imdbRating, metacriticRating, theMovieDbRating, rottenTomatoesRating, tV_comRating,
+               //         filmAffinityRating, image, year);
 
-                movies.add(movie);
+               // movies.add(movie);
             }
         } catch (JSONException | IOException e) {
 //            e.printStackTrace();
             return new ArrayList<>();
+        }
+
+        for (Movie movie : movies) {
+            String strImdbId = movie.getImdbId();
+            String strKinopoiskId = movie.getKinopoiskId();
+            if (strImdbId != null) {
+                movie.setId(Integer.parseInt(strImdbId.replaceAll("\\D", "")));
+                continue;
+            }
+            if (strKinopoiskId != null) {
+                movie.setId(Integer.parseInt(strKinopoiskId));
+            }
         }
 
         return movies;
