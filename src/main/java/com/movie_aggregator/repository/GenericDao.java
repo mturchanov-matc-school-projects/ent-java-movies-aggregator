@@ -1,6 +1,7 @@
 package com.movie_aggregator.repository;
 
 import com.movie_aggregator.entity.Movie;
+import com.movie_aggregator.entity.Search;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -8,6 +9,9 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -48,5 +52,18 @@ public class GenericDao {
         final Session session = sessionFactory.getCurrentSession();
         final Criteria crit = session.createCriteria(type);
         return crit.list();
+    }
+
+    public <T> List<T> getAllByColumProperty(String propertyName, String searchVal, Class<T> type) {
+        Session session = sessionFactory.openSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<T> query = builder.createQuery(type);
+        Root<T> root = query.from(type);
+        query.select(root).where(builder.equal(root.get(propertyName), searchVal));
+        List<T> tableEntities = session.createQuery(query)
+                .getResultList();
+
+        //session.close();
+        return tableEntities;
     }
 }

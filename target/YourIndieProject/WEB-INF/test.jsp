@@ -15,7 +15,8 @@ getAll: ${movies} <br>
 getByID: ${getMovie} <br>
 <hr>
 addNew: ${moviesWiehNew}<br>
-
+<hr>
+getAllByColumnProperty: ${searches}
 <hr>
 
 </body>

@@ -1,5 +1,6 @@
 package com.movie_aggregator.service;
 
+import com.movie_aggregator.entity.Search;
 import com.movie_aggregator.repository.GenericDao;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -41,5 +42,19 @@ public class GenericService {
 
     public <T> List<T> getAll(final Class<T> type) {
         return genericDao.getAll(type);
+    }
+
+    public <T> List<T> getAllByColumProperty(String propertyName, String searchVal, Class<T> type) {
+        return genericDao.getAllByColumProperty(propertyName, searchVal, type);
+    }
+
+    public <T, S> void addEntityListToTableIfOtherTableHasntSpecifiedColumnProperty(List<T> entitiesToAdd, String propertyName, String searchVal, Class<S> type) {
+        List<S> tableEntriesBySpecifiedColumnProperty = getAllByColumProperty(propertyName, searchVal, type);
+
+        if (!entitiesToAdd.isEmpty() && tableEntriesBySpecifiedColumnProperty.isEmpty()) {
+            for (T entityToAdd : entitiesToAdd) {
+                genericDao.saveOrUpdate(entityToAdd);
+            }
+        }
     }
 }
