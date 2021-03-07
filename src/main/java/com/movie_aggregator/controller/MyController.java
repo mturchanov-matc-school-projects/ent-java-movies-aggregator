@@ -20,36 +20,17 @@ import java.util.List;
 public class MyController {
 
     @Autowired
-    private MovieService movieService;
-
-    @Autowired
-    private MovieServiceImpl movieServiceImpl;
-
-    @Autowired
-    private SearchService searchService;
-
-    @Autowired
     private GenericService genericService;;
 
 
     @RequestMapping("/searchMovie")
     public String getHomePage(@RequestParam("searchVal") String searchVal, Model model)
             throws IOException {
-//        ImdbApiReader apiReader = new ImdbApiReader();
-        //MovieApiReader reader = new MovieApiReader();
+
         MovieApisReader reader = new MovieApisReader();
 
-//        String JSONMovies = apiReader.getResults("SearchMovie",searchVal, null);
-//        List<Movie> imdbMovies = apiReader.parseJSONMovies(JSONMovies);
-//        List<Movie> kinopoiskMovies = apiReader.parseKinopoiskSearchHtml(searchVal);
-//        List<Movie> movies = apiReader.getMovieListFromApis(searchVal);
-        //List<Movie> movies = reader.getMovieListFromApis(searchVal);
-        List<Movie> movies = reader.parseJSONKinopoiskMovies(searchVal);
-        //for (Movie m : movies) {
-        //    movieService.saveMovie(m);
-        //}
 
-        //System.out.println(movieService.getColumnProperties("imdb_rating"));
+        List<Movie> movies = reader.parseJSONKinopoiskMovies(searchVal);
         model.addAttribute("movies", movies);
         return "result";
     }
@@ -65,15 +46,6 @@ public class MyController {
 
     @RequestMapping("/test")
     public String test(Model model) {
-        //Movie m1 = new Movie();
-        //m1.setName("123");
-        //m1.setImage("asdd");
-        //Search search = new Search("asd");
-        //m1.addSearchToMovie(search);
-        //movieService.delete(new Movie(), 27);
-        //model.addAttribute("movie", m1);
-        //movieServiceImpl.saveMovie(m1);
-        //movieServiceImpl.deleteMovie(26);
         genericService.delete(Movie.class, 29);
         return "test";
     }
