@@ -33,31 +33,20 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/entity/Movie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/entity/Movie.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/repository/GenericDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/repository/GenericDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/service/GenericService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/service/GenericService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/utils/MovieApisReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/utils/MovieApisReader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/test.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/test.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/YourIndieProject.war" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject.war" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/controller/MyController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/controller/MyController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/entity/Movie.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/entity/Movie.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/repository/Dao.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/repository/MovieDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/repository/MovieDAOImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/service/MovieService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/service/MovieServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/service/SearchService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/utils/ImdbApiReader.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/utils/MovieApiReader.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/utils/SessionFactoryProvider.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/repository/GenericDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/repository/GenericDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/service/GenericService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/service/GenericService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/utils/MovieApisReader.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/utils/MovieApisReader.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/test.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/test.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/controller/MyController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/controller/MyController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/entity/Movie.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/entity/Movie.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/repository/Dao.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/repository/MovieDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/repository/MovieDAOImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/service/MovieService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/service/MovieServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/service/SearchService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/utils/ImdbApiReader.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/utils/MovieApiReader.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/utils/SessionFactoryProvider.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/repository/GenericDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/repository/GenericDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/service/GenericService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/service/GenericService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/utils/MovieApisReader.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/utils/MovieApisReader.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -508,10 +497,10 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.MovieApisReader" />
         <item itemvalue="Application.Test (1)" />
         <item itemvalue="Application.Test" />
         <item itemvalue="Application.SearchService" />
-        <item itemvalue="Application.MovieApisReader" />
         <item itemvalue="Application.MovieApiReader" />
       </list>
     </recent_temporary>
@@ -546,7 +535,7 @@
       <workItem from="1614834254298" duration="4077000" />
       <workItem from="1614908522214" duration="14865000" />
       <workItem from="1615054948822" duration="48000" />
-      <workItem from="1615055452504" duration="9614000" />
+      <workItem from="1615055452504" duration="17572000" />
     </task>
     <servers />
   </component>

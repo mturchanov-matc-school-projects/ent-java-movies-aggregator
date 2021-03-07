@@ -54,16 +54,18 @@ public class GenericDao {
         return crit.list();
     }
 
-    public <T> List<T> getAllByColumProperty(String propertyName, String searchVal, Class<T> type) {
+    public <T> T getOneEntryByColumProperty(String propertyName, String searchVal, Class<T> type) {
         Session session = sessionFactory.openSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<T> query = builder.createQuery(type);
         Root<T> root = query.from(type);
         query.select(root).where(builder.equal(root.get(propertyName), searchVal));
-        List<T> tableEntities = session.createQuery(query)
-                .getResultList();
-
-        //session.close();
-        return tableEntities;
+        T tableEntity = session.createQuery(query)
+                .getResultList()
+                .stream()
+                .findFirst()
+                .orElse(null);
+        session.close();
+        return tableEntity;
     }
 }

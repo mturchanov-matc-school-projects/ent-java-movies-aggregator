@@ -21,9 +21,12 @@ public class Movie {
     @Column
     private String name;
 
+
+
     // doesnt matter what cascade is because search entities are kept for statistics
     // and movies entities are kept for reducing load time. no delete expected
-    @ManyToMany(cascade = CascadeType.ALL)
+    //@ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinTable(
             name = "movie_search",
             joinColumns = @JoinColumn(name = "movie_id"), //write how bridge table get connected with this source table/entity

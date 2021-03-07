@@ -18,6 +18,7 @@ addNew: ${moviesWiehNew}<br>
 <hr>
 getAllByColumnProperty: ${searches}
 <hr>
+seacg Result: ${search}
 
 </body>
 </html>

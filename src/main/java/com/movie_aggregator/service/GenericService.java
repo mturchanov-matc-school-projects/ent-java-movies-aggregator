@@ -1,15 +1,17 @@
 package com.movie_aggregator.service;
 
+import com.movie_aggregator.entity.Movie;
 import com.movie_aggregator.entity.Search;
 import com.movie_aggregator.repository.GenericDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * @author mturchanov
  */
-@org.springframework.stereotype.Service
+@Service
 public class GenericService {
 
     @Autowired
@@ -31,7 +33,6 @@ public class GenericService {
 
     /***/
     public <T> T merge(final T o) {
-
         return (T) genericDao.merge(o);
     }
 
@@ -44,17 +45,31 @@ public class GenericService {
         return genericDao.getAll(type);
     }
 
-    public <T> List<T> getAllByColumProperty(String propertyName, String searchVal, Class<T> type) {
-        return genericDao.getAllByColumProperty(propertyName, searchVal, type);
+    public <T> T getOneEntryByColumProperty(String propertyName, String searchVal, Class<T> type) {
+        return genericDao.getOneEntryByColumProperty(propertyName, searchVal, type);
     }
 
-    public <T, S> void addEntityListToTableIfOtherTableHasntSpecifiedColumnProperty(List<T> entitiesToAdd, String propertyName, String searchVal, Class<S> type) {
-        List<S> tableEntriesBySpecifiedColumnProperty = getAllByColumProperty(propertyName, searchVal, type);
-
-        if (!entitiesToAdd.isEmpty() && tableEntriesBySpecifiedColumnProperty.isEmpty()) {
-            for (T entityToAdd : entitiesToAdd) {
-                genericDao.saveOrUpdate(entityToAdd);
+    public Integer addMovieListToMovieTable(List<Movie> moviesToAdd, String propertyName, String searchVal, Class<Search> searchClass) {
+        Search search = getOneEntryByColumProperty(propertyName, searchVal, searchClass);
+        // if there is no such search in db then db hasnt movie list yet
+        if (!moviesToAdd.isEmpty() && search == null) {
+            for (Movie movie : moviesToAdd) {
+                //however if movie was already there then it was found by another search value
+                // and new search must be recorded
+                //TODO: When movie.searches is updated then error
+                //      related to cascade?
+                // Low priority
+                Movie getMovie = get(Movie.class, movie.getId());
+                if (getMovie != null) {
+                    getMovie.addSearchToMovie(new Search(searchVal));
+                    genericDao.saveOrUpdate(getMovie);
+                    continue;
+                }
+                genericDao.saveOrUpdate(movie);
             }
+            return 1;
         }
+
+        return 0;
     }
 }
