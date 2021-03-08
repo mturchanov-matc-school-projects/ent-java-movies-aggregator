@@ -15,17 +15,11 @@ import java.util.*;
 public class Movie {
 
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column
     private String name;
 
-
-
-    // doesnt matter what cascade is because search entities are kept for statistics
-    // and movies entities are kept for reducing load time. no delete expected
-    //@ManyToMany(cascade = CascadeType.ALL)
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinTable(
             name = "movie_search",

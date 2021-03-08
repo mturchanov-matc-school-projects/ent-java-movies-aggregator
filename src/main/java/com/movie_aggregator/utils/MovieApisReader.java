@@ -1,13 +1,11 @@
 package com.movie_aggregator.utils;
 
 import com.movie_aggregator.entity.Movie;
-import com.movie_aggregator.entity.Search;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URLEncoder;

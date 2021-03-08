@@ -1,12 +1,10 @@
 package com.movie_aggregator.repository;
 
-import com.movie_aggregator.entity.Movie;
 import com.movie_aggregator.entity.Search;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Order;
-import org.hibernate.query.Query;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -58,6 +56,7 @@ public class GenericDao {
         return crit.list();
     }
 
+    //TODO: change from specific Type to Generic
     public Search getLastSearch() {
         final Session session = sessionFactory.getCurrentSession();
 
