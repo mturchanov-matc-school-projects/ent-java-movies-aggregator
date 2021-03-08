@@ -66,10 +66,20 @@ Tasks Completed:
    2/22/2021 ~ 4 hours  
    Tasks Completed:
    * Refactoring/fixing implemented new apis 
-    
+     
+   2/25/2021 ~ 4 hours  
+   Tasks Completed:
+   * Starting writing generic dao
+   * Starting manytoToMany relationship between movies table and search table
+       * trial to fixing StaleObjectStateException
+
+### Week 7
    
-      
-    
+   3/6/2021 ~ 4 hours  
+   Tasks Completed:
+   * Implemented generic dao + generic service
+   * manyToMany relationship is working more or less
+   * cleaning all garbage(unneeded classes/code)
 
   
   

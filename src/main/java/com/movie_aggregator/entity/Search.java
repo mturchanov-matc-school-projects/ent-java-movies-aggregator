@@ -1,5 +1,8 @@
 package com.movie_aggregator.entity;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,12 +16,14 @@ import java.util.Objects;
 @Entity(name = "Search")
 public class Search {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy= GenerationType.AUTO, generator="native")
+    //@GenericGenerator(name = "native",strategy = "native")
     private int id;
 
     @Column
     private String name;
-
+    //@ManyToMany(cascade = CascadeType.ALL)
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinTable(
             name = "movie_search",
@@ -31,6 +36,11 @@ public class Search {
     }
 
     public Search(String name) {
+        this.name = name;
+    }
+
+    public Search(int id, String name) {
+        this.id = id;
         this.name = name;
     }
 

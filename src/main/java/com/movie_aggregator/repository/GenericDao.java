@@ -5,6 +5,7 @@ import com.movie_aggregator.entity.Search;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -22,8 +23,8 @@ public class GenericDao {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public <T> T save(final T o) {
-        return (T) sessionFactory.getCurrentSession().save(o);
+    public <T> int save(final T o) {
+        return (Integer) sessionFactory.getCurrentSession().save(o);
     }
 
 
@@ -37,6 +38,9 @@ public class GenericDao {
     public <T> T get(final Class<T> type, final Integer id) {
         return (T) sessionFactory.getCurrentSession().get(type, id);
     }
+
+
+
 
     /***/
     public <T> T merge(final T o) {
@@ -53,6 +57,15 @@ public class GenericDao {
         final Criteria crit = session.createCriteria(type);
         return crit.list();
     }
+
+    public Search getLastSearch() {
+        final Session session = sessionFactory.getCurrentSession();
+
+        Search lastSearch =  (Search) session.createQuery("from Search ORDER BY id DESC")
+                .setMaxResults(1).uniqueResult();
+        return lastSearch;
+    }
+
 
     public <T> T getOneEntryByColumProperty(String propertyName, String searchVal, Class<T> type) {
         Session session = sessionFactory.openSession();

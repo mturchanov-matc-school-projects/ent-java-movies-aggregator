@@ -10,7 +10,7 @@
 <body>
 
 <h3>Movie tyest dao</h3>
-getAll: ${movies} <br>
+getAll: ${movie} <br>
 <hr>
 getByID: ${getMovie} <br>
 <hr>

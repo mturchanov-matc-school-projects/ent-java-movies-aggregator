@@ -42,7 +42,10 @@ public class MyController {
         // Exception: org.hibernate.StaleObjectStateException: Row was updated or deleted by another transaction (or unsaved-value mapping was incorrect) : [com.movie_aggregator.entity.Movie#77394]
 
         List<Movie> movies = reader.parseJSONKinopoiskMovies(searchVal);
-        System.out.println("Controller getHomePage()'s movies: " + movies);
+        //Search existedSearch = genericService.getOneEntryByColumProperty("name", searchVal, Search.class);
+
+
+        //System.out.println("Controller getHomePage()'s movies: " + movies);
         genericService.addMovieListToMovieTable(movies, "name", searchVal, Search.class);
         //System.out.printf("is added? - %d%n", isAddedToTable);
 
@@ -93,14 +96,28 @@ public class MyController {
 
 
 
+        //causes the error
+        // problem search without identity + no id causes err
+        //     and search with identity + id causes err
+        Movie m1 = new Movie(  6,"Name4", "Image4", "YEAR4");
+        Search search = new Search(1, "searchWithID4"); //this line for some reason causes it
+       // search.addMovieToSearch(m1);
+        m1.addSearchToMovie(search);
+        //System.out.println(search.getMovies());
+        //ystem.out.printf("m'searches: %s, m - %s\n",  m1.getSearches(), m1);
+        genericService.save(m1);
 
-       // Movie m1 = new Movie();
-       // m1.setName("1234");
-       // m1.setImage("asdd4");
-       // Search search = new Search("asd4");
-       // m1.addSearchToMovie(search);
-        //genericService.save(m1);
 
+
+
+
+
+        //Search s1 = new Search("testSearchWithoutID");
+       // s1.setId(105);
+        //System.out.println(s1);
+        //genericService.save(s1);
+        //System.out.println(s1);
+        //model.addAttribute("movie", search);
 
 
         //TODO: Need fix - when movie is updated wrong behaviour
@@ -108,16 +125,16 @@ public class MyController {
         // -> old movie entry without update(s) is deleted from `movies`
         // -> old movie entry is deleted from `movie_search`
 
-        Movie getMovie = genericService.get(Movie.class, 46);
-        getMovie.setImdbRating("3.66");
-        System.out.println("MyControler.test.getMovie.Entity before save: " + getMovie);
+        //Movie getMovie = genericService.get(Movie.class, 46);
+        //getMovie.setImdbRating("3.66");
+        //System.out.println("MyControler.test.getMovie.Entity before save: " + getMovie);
 
-        genericService.save(getMovie);
-        System.out.println("MyControler.test.getMovie.Entity after save: " + getMovie);
+        //genericService.save(getMovie);
+        //System.out.println("MyControler.test.getMovie.Entity after save: " + getMovie);
 
 
         //Search search = genericService.getOneEntryByColumProperty("name", "test", Search.class);
-        model.addAttribute("getMovie", getMovie);
+        //model.addAttribute("getMovie", getMovie);
 
         return "test";
     }

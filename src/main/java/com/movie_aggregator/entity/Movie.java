@@ -15,7 +15,7 @@ import java.util.*;
 public class Movie {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column
@@ -107,6 +107,19 @@ public class Movie {
      * Instantiates a new Movie.
      */
     public Movie() {
+    }
+
+    public Movie(String name, String image, String year) {
+        this.name = name;
+        this.image = image;
+        this.year = year;
+    }
+
+    public Movie(int id, String name, String image, String year) {
+        this.id = id;
+        this.name = name;
+        this.image = image;
+        this.year = year;
     }
 
     public Movie(String name, String kinopoiskId, String easternName, String kinopoiskRating, String year) {
@@ -353,6 +366,14 @@ public class Movie {
 
     public void setYear(String year) {
         this.year = year;
+    }
+
+    public List<Search> getSearches() {
+        return searches;
+    }
+
+    public void setSearches(List<Search> searches) {
+        this.searches = searches;
     }
 
     public void addSearchToMovie(Search search) {

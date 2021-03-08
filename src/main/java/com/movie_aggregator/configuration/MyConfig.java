@@ -51,6 +51,8 @@ public class MyConfig {
         Properties hibernateProperties = new Properties();
         hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
         hibernateProperties.setProperty("hibernate.show_sql", "true");
+        hibernateProperties.setProperty("hibernate.id.new_generator_mappings", "false");
+
         sessionFactory.setHibernateProperties(hibernateProperties);
         return sessionFactory;
     }
