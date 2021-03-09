@@ -19,7 +19,8 @@ public class MyWebInitializer extends
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return null;
+
+        return new Class[]{MyConfig.class};
     }
 
     @Override

@@ -53,6 +53,7 @@ public class GenericDaoTest extends AbstractTest {
     @Test
     void getByIdSuccess() {
         Search retrievedSearch = dao.get(Search.class, 1);
+        logger.info("TESTTEST");
         assertEquals("Django", retrievedSearch.getName());
     }
 

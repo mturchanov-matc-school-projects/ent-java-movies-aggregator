@@ -4,6 +4,8 @@ import com.movie_aggregator.entity.Movie;
 import com.movie_aggregator.entity.Search;
 import com.movie_aggregator.repository.GenericDao;
 import com.movie_aggregator.utils.MovieApisReader;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,7 @@ public class GenericService {
 
     @Autowired
     private GenericDao genericDao;
+    private final Logger logger = LogManager.getLogger(this.getClass());
 
 
     public <T> int save(final T o)
@@ -50,6 +53,7 @@ public class GenericService {
     }
 
     public List<Movie> getMovies (Search existedSearch, String searchVal) throws IOException {
+        logger.info("GenericService.getMovies(): trest");
        // Search existedSearch = getOneEntryByColumProperty(propertyName, searchVal, searchClass);
         List<Movie> movies = null;
         System.out.println(existedSearch == null);
