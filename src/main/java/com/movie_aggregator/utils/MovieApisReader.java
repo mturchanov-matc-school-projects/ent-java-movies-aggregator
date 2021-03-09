@@ -4,6 +4,8 @@ import com.movie_aggregator.entity.Movie;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
@@ -23,6 +25,8 @@ public class MovieApisReader implements PropertiesLoader {
     private Properties properties;
     public static final String KINOPOISK_ROOT = "https://kinopoiskapiunofficial.tech/api/v2.1/films/";
     public static final String OMDB_ROOT = "http://www.omdbapi.com/";
+    private final Logger logger = LogManager.getLogger(this.getClass());
+
 
     public MovieApisReader() {
         properties = loadProperties("/api_keys.properties");
@@ -145,6 +149,8 @@ public class MovieApisReader implements PropertiesLoader {
             movies.add(movie);
         }
         System.out.println("sout parseJSONKinopoiskMovies: movie list: " + movies);
+        logger.debug("Hello this is a debug message");
+        logger.info("Hello this is an info message");
         return movies;
     }
 
