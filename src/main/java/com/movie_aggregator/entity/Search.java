@@ -1,12 +1,12 @@
 package com.movie_aggregator.entity;
 
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * @author mturchanov
@@ -18,15 +18,18 @@ public class Search {
     @Id
     private int id;
 
-    @Column
+    @Column(unique = true, nullable = false)
     private String name;
+    //@ManyToMany(cascade = CascadeType.ALL)
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinTable(
             name = "movie_search",
             joinColumns = @JoinColumn(name = "search_id"), //write how bridge table get connected with this source table/entity
             inverseJoinColumns = @JoinColumn(name = "movie_id") //write how bridge table get connected with other target table/entity
     )
-    private List<Movie> movies;
+    private Set<Movie> movies;
+
+    private int number;
 
     public Search() {
     }
@@ -44,6 +47,14 @@ public class Search {
         return id;
     }
 
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -56,17 +67,18 @@ public class Search {
         this.name = name;
     }
 
-    public List<Movie> getMovies() {
+    public Set<Movie> getMovies() {
         return movies;
     }
 
-    public void setMovies(List<Movie> movies) {
+    public void setMovies(Set<Movie> movies) {
         this.movies = movies;
     }
 
+
     public void addMovieToSearch(Movie movie) {
         if(movies == null) {
-            movies = new ArrayList<>();
+            movies = new HashSet<>();
         }
         movies.add(movie);
     }

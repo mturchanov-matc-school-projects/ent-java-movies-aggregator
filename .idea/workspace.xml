@@ -29,27 +29,44 @@
   <component name="ChangeListManager">
     <list default="true" id="b4add5ff-e70d-4f2b-bb88-aba2066d226f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Journal.md" beforeDir="false" afterPath="$PROJECT_DIR$/Journal.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/movies_aggregator.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/movies_aggregator.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/configuration/MyConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/configuration/MyConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/configuration/MySecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/configuration/MySecurityConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/controller/MyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/controller/MyController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/entity/Movie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/entity/Movie.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/entity/Search.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/entity/Search.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/repository/GenericDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/repository/GenericDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/service/GenericService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/service/GenericService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/utils/MovieApisReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/utils/MovieApisReader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/log4j2.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/log4j2.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/test.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/test.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/repository/GenericDaoTest.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/YourIndieProject.war" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject.war" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/configuration/MyConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/configuration/MyConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/configuration/MySecurityConfig.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/controller/MyController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/controller/MyController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/entity/Movie.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/entity/Movie.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/entity/Search.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/entity/Search.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/repository/GenericDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/repository/GenericDao.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/service/GenericService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/service/GenericService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/utils/MovieApisReader.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/utils/MovieApisReader.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/hibernate.cfg.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/log4j2.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/log4j2.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/test.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/test.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/configuration/MyConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/configuration/MyConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/configuration/MySecurityConfig.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/controller/MyController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/controller/MyController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/entity/Movie.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/entity/Movie.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/entity/Search.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/entity/Search.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/repository/GenericDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/repository/GenericDao.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/service/GenericService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/service/GenericService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/utils/MovieApisReader.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/utils/MovieApisReader.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/hibernate.cfg.xml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,7 +122,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../week2-display-exercise" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/test/resources" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
@@ -114,6 +131,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/test/resources" />
       <recent name="$PROJECT_DIR$/designDocs/screens" />
       <recent name="$PROJECT_DIR$/src/main/resources" />
     </key>
@@ -122,6 +140,7 @@
       <recent name="$PROJECT_DIR$/src/main/webapp/WEB-INF/view" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="java.com.movie_aggregator.testUtils" />
       <recent name="utils" />
     </key>
   </component>
@@ -185,72 +204,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Tomcat Server.Tomcat 9.0.41">
-    <configuration name="MovieApiReader" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.movie_aggregator.utils.MovieApiReader" />
-      <module name="yourindieproject" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.movie_aggregator.utils.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="MovieApisReader" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.movie_aggregator.utils.MovieApisReader" />
-      <module name="yourindieproject" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.movie_aggregator.utils.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="SearchService" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.movie_aggregator.service.SearchService" />
-      <module name="yourindieproject" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.movie_aggregator.service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Test (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.movie_aggregator.Test" />
-      <module name="yourindieproject" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.movie_aggregator.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.spring.hibernate_many_to_many.Test" />
-      <module name="yourindieproject" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.spring.hibernate_many_to_many.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.GenericDaoTest.getByIdSuccess">
     <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
@@ -260,6 +214,78 @@
       <option name="TEST_OBJECT" value="CLASS" />
       <properties />
       <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="All in yourindieproject" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="yourindieproject" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GenericDaoTest.getByIdSuccess" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="yourindieproject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.movie_aggregator.repository.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.movie_aggregator.repository" />
+      <option name="MAIN_CLASS_NAME" value="com.movie_aggregator.repository.GenericDaoTest" />
+      <option name="METHOD_NAME" value="getByIdSuccess" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GenericDaoTest.incrementSearchNumberCounterTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="yourindieproject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.movie_aggregator.repository.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.movie_aggregator.repository" />
+      <option name="MAIN_CLASS_NAME" value="com.movie_aggregator.repository.GenericDaoTest" />
+      <option name="METHOD_NAME" value="incrementSearchNumberCounterTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GenericDaoTest.saveOrUpdateTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="yourindieproject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.movie_aggregator.repository.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.movie_aggregator.repository" />
+      <option name="MAIN_CLASS_NAME" value="com.movie_aggregator.repository.GenericDaoTest" />
+      <option name="METHOD_NAME" value="saveOrUpdateTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GenericDaoTest.saveSuccess" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="yourindieproject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.movie_aggregator.repository.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.movie_aggregator.repository" />
+      <option name="MAIN_CLASS_NAME" value="com.movie_aggregator.repository.GenericDaoTest" />
+      <option name="METHOD_NAME" value="saveSuccess" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -493,20 +519,20 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.MovieApiReader" />
-      <item itemvalue="Application.MovieApisReader" />
-      <item itemvalue="Application.SearchService" />
-      <item itemvalue="Application.Test" />
-      <item itemvalue="Application.Test (1)" />
       <item itemvalue="Tomcat Server.Tomcat 9.0.41" />
+      <item itemvalue="JUnit.GenericDaoTest.saveOrUpdateTest" />
+      <item itemvalue="JUnit.All in yourindieproject" />
+      <item itemvalue="JUnit.GenericDaoTest.incrementSearchNumberCounterTest" />
+      <item itemvalue="JUnit.GenericDaoTest.getByIdSuccess" />
+      <item itemvalue="JUnit.GenericDaoTest.saveSuccess" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.MovieApisReader" />
-        <item itemvalue="Application.Test (1)" />
-        <item itemvalue="Application.Test" />
-        <item itemvalue="Application.SearchService" />
-        <item itemvalue="Application.MovieApiReader" />
+        <item itemvalue="JUnit.GenericDaoTest.getByIdSuccess" />
+        <item itemvalue="JUnit.All in yourindieproject" />
+        <item itemvalue="JUnit.GenericDaoTest.saveSuccess" />
+        <item itemvalue="JUnit.GenericDaoTest.incrementSearchNumberCounterTest" />
+        <item itemvalue="JUnit.GenericDaoTest.saveOrUpdateTest" />
       </list>
     </recent_temporary>
   </component>
@@ -542,6 +568,8 @@
       <workItem from="1615054948822" duration="48000" />
       <workItem from="1615055452504" duration="17572000" />
       <workItem from="1615144398356" duration="24458000" />
+      <workItem from="1615231557977" duration="18460000" />
+      <workItem from="1615262935990" duration="14902000" />
     </task>
     <servers />
   </component>
@@ -565,8 +593,24 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/movie_aggregator/service/GenericService.java</url>
-          <line>22</line>
+          <line>25</line>
           <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/test/java/com/movie_aggregator/repository/GenericDaoTest.java</url>
+          <line>81</line>
+          <properties class="com.movie_aggregator.repository.GenericDaoTest" method="saveSuccess">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/test/java/com/movie_aggregator/repository/GenericDaoTest.java</url>
+          <line>104</line>
+          <properties class="com.movie_aggregator.repository.GenericDaoTest" method="getLastSearchTest">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

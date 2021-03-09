@@ -1,0 +1,7 @@
+[INFO ] 2021-03-09 01:48:56.767 [main] GenericDaoTest - expected: 2, actual: 1
+
+[INFO ] 2021-03-09 01:53:39.204 [main] GenericDaoTest - expected: 2, actual: 1
+
+[ERROR] 2021-03-09 01:54:39.942 [main] GenericDaoTest - expected: 2, actual: 1
+
+[DEBUG] 2021-03-09 01:58:23.329 [RMI TCP Connection(62)-127.0.0.1] MyWebInitializer - No ContextLoaderListener registered, as createRootApplicationContext() did not return an application context

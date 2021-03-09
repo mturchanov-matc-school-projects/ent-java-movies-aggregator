@@ -15,17 +15,17 @@ import javax.sql.DataSource;
  * @author mturchanov
  */
 
-@EnableWebSecurity //check this class that is responsible for security configuration
-public class MySecurityConfig extends WebSecurityConfigurerAdapter {
-
-    @Autowired
-    DataSource dataSource;
-
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-
-    }
+//@EnableWebSecurity //check this class that is responsible for security configuration
+//public class MySecurityConfig extends WebSecurityConfigurerAdapter {
+//
+//    @Autowired
+//    DataSource dataSource;
+//
+//
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//
+//    }
 
 
 //    /** authorization - giving permissions access **/
@@ -38,4 +38,4 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/manager_info/**").hasRole("MANAGER") // MANAGER has access to all links that begin with '/,manager_info/
 //                .and().formLogin().permitAll(); // ask for login/password for all urls
 //    }
-}
+//}

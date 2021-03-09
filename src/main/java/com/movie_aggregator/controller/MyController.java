@@ -24,9 +24,6 @@ public class MyController {
     @Autowired
     private GenericService genericService;
 
-    //@Autowired
-    private MovieApisReader reader;
-
 
     @RequestMapping("/searchMovie")
     public String searchMovie(@RequestParam("searchVal") String searchVal, Model model)
@@ -40,13 +37,16 @@ public class MyController {
         // Note: when calling addMovieListToMovieTable() in MyController.test
         //      it is working. Maybe try to add movies with full details?
         // Exception: org.hibernate.StaleObjectStateException: Row was updated or deleted by another transaction (or unsaved-value mapping was incorrect) : [com.movie_aggregator.entity.Movie#77394]
+        Search existedSearch = genericService.getOneEntryByColumProperty("name", searchVal, Search.class);
+        List<Movie> movies = genericService.getMovies(existedSearch, searchVal);
 
-        List<Movie> movies = reader.parseJSONKinopoiskMovies(searchVal);
+
+        //movies = reader.parseJSONKinopoiskMovies(searchVal);
         //Search existedSearch = genericService.getOneEntryByColumProperty("name", searchVal, Search.class);
 
 
         //System.out.println("Controller getHomePage()'s movies: " + movies);
-        genericService.addMovieListToMovieTable(movies, "name", searchVal, Search.class);
+        //genericService.addMovieListToMovieTable(movies, "name", searchVal, Search.class);
         //System.out.printf("is added? - %d%n", isAddedToTable);
 
 
@@ -99,13 +99,17 @@ public class MyController {
         //causes the error
         // problem search without identity + no id causes err
         //     and search with identity + id causes err
-        Movie m1 = new Movie(  6,"Name4", "Image4", "YEAR4");
-        Search search = new Search(1, "searchWithID4"); //this line for some reason causes it
-       // search.addMovieToSearch(m1);
-        m1.addSearchToMovie(search);
+        //Movie m1 = new Movie(  16,"Django2", "Image4", "YEAR4");
+        //Search search = new Search(195, "Django4"); //this line for some reason causes it
+        //search.addMovieToSearch(m1);
+        //m1.addSearchToMovie(search);
+
         //System.out.println(search.getMovies());
-        //ystem.out.printf("m'searches: %s, m - %s\n",  m1.getSearches(), m1);
-        genericService.save(m1);
+        //genericService.save(m1);
+
+
+
+        //genericService.incrementIntegerColumn(185);
 
 
 

@@ -19,14 +19,14 @@ public class Movie {
 
     @Column
     private String name;
-
+    //@ManyToMany(cascade = CascadeType.ALL)
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinTable(
             name = "movie_search",
             joinColumns = @JoinColumn(name = "movie_id"), //write how bridge table get connected with this source table/entity
             inverseJoinColumns = @JoinColumn(name = "search_id") //write how bridge table get connected with other target table/entity
     )
-    private List<Search> searches;
+    private Set<Search> searches;
 
     @Column(name = "imdb_id")
     private String imdbId;
@@ -362,17 +362,17 @@ public class Movie {
         this.year = year;
     }
 
-    public List<Search> getSearches() {
+    public Set<Search> getSearches() {
         return searches;
     }
 
-    public void setSearches(List<Search> searches) {
+    public void setSearches(Set<Search> searches) {
         this.searches = searches;
     }
 
     public void addSearchToMovie(Search search) {
         if(searches == null) {
-            searches = new ArrayList<>();
+            searches = new HashSet<>();
         }
         searches.add(search);
     }

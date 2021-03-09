@@ -6,6 +6,7 @@ import com.movie_aggregator.entity.Search;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -28,6 +29,7 @@ import java.util.Properties;
 public class MyConfig {
 
     @Bean
+    @Profile("prod")
     public DataSource dataSource()  {
         ComboPooledDataSource dataSource = new ComboPooledDataSource();
         try {
@@ -42,6 +44,24 @@ public class MyConfig {
         return dataSource;
     }
 
+    @Profile("dev")
+    @Bean(name = "dataSource")
+    public DataSource dataSourceForTest()  {
+        ComboPooledDataSource dataSource = new ComboPooledDataSource();
+        try {
+            dataSource.setDriverClass("com.mysql.cj.jdbc.Driver");
+            dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/ent_java_indiv_proj_test?useSSL=false&serverTimezone=UTC");
+            dataSource.setUser("root");
+            dataSource.setPassword("root");
+        } catch (PropertyVetoException e) {
+            e.printStackTrace();
+        }
+
+        return dataSource;
+    }
+
+
+
     @Bean
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
@@ -51,8 +71,6 @@ public class MyConfig {
         Properties hibernateProperties = new Properties();
         hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
         hibernateProperties.setProperty("hibernate.show_sql", "true");
-        hibernateProperties.setProperty("hibernate.id.new_generator_mappings", "false");
-
         sessionFactory.setHibernateProperties(hibernateProperties);
         return sessionFactory;
     }
