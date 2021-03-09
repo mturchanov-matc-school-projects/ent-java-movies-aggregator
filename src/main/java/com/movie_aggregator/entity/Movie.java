@@ -1,7 +1,5 @@
 package com.movie_aggregator.entity;
 
-import org.hibernate.engine.internal.Cascade;
-
 import javax.persistence.*;
 import java.util.*;
 
@@ -103,12 +101,27 @@ public class Movie {
     public Movie() {
     }
 
+    /**
+     * Instantiates a new Movie.
+     *
+     * @param name  the name
+     * @param image the image
+     * @param year  the year
+     */
     public Movie(String name, String image, String year) {
         this.name = name;
         this.image = image;
         this.year = year;
     }
 
+    /**
+     * Instantiates a new Movie.
+     *
+     * @param id    the id
+     * @param name  the name
+     * @param image the image
+     * @param year  the year
+     */
     public Movie(int id, String name, String image, String year) {
         this.id = id;
         this.name = name;
@@ -116,7 +129,17 @@ public class Movie {
         this.year = year;
     }
 
-    public Movie(String name, String kinopoiskId, String easternName, String kinopoiskRating, String year) {
+    /**
+     * Instantiates a new Movie.
+     *
+     * @param name            the name
+     * @param kinopoiskId     the kinopoisk id
+     * @param easternName     the eastern name
+     * @param kinopoiskRating the kinopoisk rating
+     * @param year            the year
+     */
+    public Movie(String name, String kinopoiskId, String easternName,
+                 String kinopoiskRating, String year) {
         this.name = name;
         this.kinopoiskId = kinopoiskId;
         this.easternName = easternName;
@@ -124,8 +147,25 @@ public class Movie {
         this.year = year;
     }
 
-
-
+    /**
+     * Instantiates a new Movie.
+     *
+     * @param name        the name
+     * @param imdbId      the imdb id
+     * @param description the description
+     * @param imdbRating  the imdb rating
+     * @param imdbVotes   the imdb votes
+     * @param boxOffice   the box office
+     * @param duration    the duration
+     * @param genre       the genre
+     * @param director    the director
+     * @param actors      the actors
+     * @param language    the language
+     * @param country     the country
+     * @param metascore   the metascore
+     * @param image       the image
+     * @param year        the year
+     */
     public Movie(String name, String imdbId, String description, String imdbRating,
                  String imdbVotes, String boxOffice, String duration, String genre,
                  String director, String actors, String language, String country,
@@ -146,7 +186,9 @@ public class Movie {
         this.image = image;
         this.year = year;
     }
-    public Movie(String nameEn, String nameRu, String imdbId, String filmId, String shortDesc, String duration, String year, String kVotes, String rating, String image, String description) {
+    public Movie(String nameEn, String nameRu, String imdbId, String filmId,
+                 String shortDesc, String duration, String year, String kVotes,
+                 String rating, String image, String description) {
         this.name = nameEn;
         this.imdbId = imdbId;
         this.kinopoiskId = filmId;
@@ -160,216 +202,479 @@ public class Movie {
         this.kinopoiskVotes = kVotes;
     }
 
-
-
+    /**
+     * Gets kinopoisk votes.
+     *
+     * @return the kinopoisk votes
+     */
     public String getKinopoiskVotes() {
         return kinopoiskVotes;
     }
 
+    /**
+     * Sets kinopoisk votes.
+     *
+     * @param kinopoiskVotes the kinopoisk votes
+     */
     public void setKinopoiskVotes(String kinopoiskVotes) {
         this.kinopoiskVotes = kinopoiskVotes;
     }
 
+    /**
+     * Gets id.
+     *
+     * @return the id
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * Sets id.
+     *
+     * @param id the id
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Sets name.
+     *
+     * @param name the name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Gets imdb id.
+     *
+     * @return the imdb id
+     */
     public String getImdbId() {
         return imdbId;
     }
 
+    /**
+     * Sets imdb id.
+     *
+     * @param imdbId the imdb id
+     */
     public void setImdbId(String imdbId) {
         this.imdbId = imdbId;
     }
 
+    /**
+     * Gets kinopoisk id.
+     *
+     * @return the kinopoisk id
+     */
     public String getKinopoiskId() {
         return kinopoiskId;
     }
 
+    /**
+     * Sets kinopoisk id.
+     *
+     * @param kinopoiskId the kinopoisk id
+     */
     public void setKinopoiskId(String kinopoiskId) {
         this.kinopoiskId = kinopoiskId;
     }
 
+    /**
+     * Gets description.
+     *
+     * @return the description
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     * Sets description.
+     *
+     * @param description the description
+     */
     public void setDescription(String description) {
         this.description = description;
     }
 
+    /**
+     * Gets imdb rating.
+     *
+     * @return the imdb rating
+     */
     public String getImdbRating() {
         return imdbRating;
     }
 
+    /**
+     * Sets imdb rating.
+     *
+     * @param imdbRating the imdb rating
+     */
     public void setImdbRating(String imdbRating) {
         this.imdbRating = imdbRating;
     }
 
+    /**
+     * Gets imdb votes.
+     *
+     * @return the imdb votes
+     */
     public String getImdbVotes() {
         return imdbVotes;
     }
 
+    /**
+     * Sets imdb votes.
+     *
+     * @param imdbVotes the imdb votes
+     */
     public void setImdbVotes(String imdbVotes) {
         this.imdbVotes = imdbVotes;
     }
 
+    /**
+     * Gets metacritic rating.
+     *
+     * @return the metacritic rating
+     */
     public String getMetacriticRating() {
         return metacriticRating;
     }
 
+    /**
+     * Sets metacritic rating.
+     *
+     * @param metacriticRating the metacritic rating
+     */
     public void setMetacriticRating(String metacriticRating) {
         this.metacriticRating = metacriticRating;
     }
 
+    /**
+     * Gets the movie db rating.
+     *
+     * @return the the movie db rating
+     */
     public String getTheMovieDbRating() {
         return theMovieDbRating;
     }
 
+    /**
+     * Sets the movie db rating.
+     *
+     * @param theMovieDbRating the the movie db rating
+     */
     public void setTheMovieDbRating(String theMovieDbRating) {
         this.theMovieDbRating = theMovieDbRating;
     }
 
+    /**
+     * Gets rotten tomatoes rating.
+     *
+     * @return the rotten tomatoes rating
+     */
     public String getRottenTomatoesRating() {
         return rottenTomatoesRating;
     }
 
+    /**
+     * Sets rotten tomatoes rating.
+     *
+     * @param rottenTomatoesRating the rotten tomatoes rating
+     */
     public void setRottenTomatoesRating(String rottenTomatoesRating) {
         this.rottenTomatoesRating = rottenTomatoesRating;
     }
 
+    /**
+     * Gets v com rating.
+     *
+     * @return the v com rating
+     */
     public String gettV_comRating() {
         return tV_comRating;
     }
 
+    /**
+     * Sets v com rating.
+     *
+     * @param tV_comRating the t v com rating
+     */
     public void settV_comRating(String tV_comRating) {
         this.tV_comRating = tV_comRating;
     }
 
+    /**
+     * Gets film affinity rating.
+     *
+     * @return the film affinity rating
+     */
     public String getFilmAffinityRating() {
         return filmAffinityRating;
     }
 
+    /**
+     * Sets film affinity rating.
+     *
+     * @param filmAffinityRating the film affinity rating
+     */
     public void setFilmAffinityRating(String filmAffinityRating) {
         this.filmAffinityRating = filmAffinityRating;
     }
 
+    /**
+     * Gets eastern name.
+     *
+     * @return the eastern name
+     */
     public String getEasternName() {
         return easternName;
     }
 
+    /**
+     * Sets eastern name.
+     *
+     * @param easternName the eastern name
+     */
     public void setEasternName(String easternName) {
         this.easternName = easternName;
     }
 
+    /**
+     * Gets kinopoisk rating.
+     *
+     * @return the kinopoisk rating
+     */
     public String getKinopoiskRating() {
         return kinopoiskRating;
     }
 
+    /**
+     * Sets kinopoisk rating.
+     *
+     * @param kinopoiskRating the kinopoisk rating
+     */
     public void setKinopoiskRating(String kinopoiskRating) {
         this.kinopoiskRating = kinopoiskRating;
     }
 
+    /**
+     * Gets box office.
+     *
+     * @return the box office
+     */
     public String getBoxOffice() {
         return boxOffice;
     }
 
+    /**
+     * Sets box office.
+     *
+     * @param boxOffice the box office
+     */
     public void setBoxOffice(String boxOffice) {
         this.boxOffice = boxOffice;
     }
 
+    /**
+     * Gets duration.
+     *
+     * @return the duration
+     */
     public String getDuration() {
         return duration;
     }
 
+    /**
+     * Sets duration.
+     *
+     * @param duration the duration
+     */
     public void setDuration(String duration) {
         this.duration = duration;
     }
 
+    /**
+     * Gets genre.
+     *
+     * @return the genre
+     */
     public String getGenre() {
         return genre;
     }
 
+    /**
+     * Sets genre.
+     *
+     * @param genre the genre
+     */
     public void setGenre(String genre) {
         this.genre = genre;
     }
 
+    /**
+     * Gets director.
+     *
+     * @return the director
+     */
     public String getDirector() {
         return director;
     }
 
+    /**
+     * Sets director.
+     *
+     * @param director the director
+     */
     public void setDirector(String director) {
         this.director = director;
     }
 
+    /**
+     * Gets actors.
+     *
+     * @return the actors
+     */
     public String getActors() {
         return actors;
     }
 
+    /**
+     * Sets actors.
+     *
+     * @param actors the actors
+     */
     public void setActors(String actors) {
         this.actors = actors;
     }
 
+    /**
+     * Gets language.
+     *
+     * @return the language
+     */
     public String getLanguage() {
         return language;
     }
 
+    /**
+     * Sets language.
+     *
+     * @param language the language
+     */
     public void setLanguage(String language) {
         this.language = language;
     }
 
+    /**
+     * Gets country.
+     *
+     * @return the country
+     */
     public String getCountry() {
         return country;
     }
 
+    /**
+     * Sets country.
+     *
+     * @param country the country
+     */
     public void setCountry(String country) {
         this.country = country;
     }
 
+    /**
+     * Gets metascore.
+     *
+     * @return the metascore
+     */
     public String getMetascore() {
         return metascore;
     }
 
+    /**
+     * Sets metascore.
+     *
+     * @param metascore the metascore
+     */
     public void setMetascore(String metascore) {
         this.metascore = metascore;
     }
 
+    /**
+     * Gets image.
+     *
+     * @return the image
+     */
     public String getImage() {
         return image;
     }
 
+    /**
+     * Sets image.
+     *
+     * @param image the image
+     */
     public void setImage(String image) {
         this.image = image;
     }
 
+    /**
+     * Gets year.
+     *
+     * @return the year
+     */
     public String getYear() {
         return year;
     }
 
+    /**
+     * Sets year.
+     *
+     * @param year the year
+     */
     public void setYear(String year) {
         this.year = year;
     }
 
+    /**
+     * Gets searches.
+     *
+     * @return the searches
+     */
     public Set<Search> getSearches() {
         return searches;
     }
 
+    /**
+     * Sets searches.
+     *
+     * @param searches the searches
+     */
     public void setSearches(Set<Search> searches) {
         this.searches = searches;
     }
 
+    /**
+     * Add search to movie.
+     *
+     * @param search the search
+     */
     public void addSearchToMovie(Search search) {
         if(searches == null) {
             searches = new HashSet<>();
@@ -377,17 +682,46 @@ public class Movie {
         searches.add(search);
     }
 
+    //TODO: fix equals for test.repositary.GenericDaoTest
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Movie movie = (Movie) o;
-        return id == movie.id && Objects.equals(name, movie.name) && Objects.equals(searches, movie.searches) && Objects.equals(imdbId, movie.imdbId) && Objects.equals(kinopoiskId, movie.kinopoiskId) && Objects.equals(description, movie.description) && Objects.equals(imdbRating, movie.imdbRating) && Objects.equals(imdbVotes, movie.imdbVotes) && Objects.equals(metacriticRating, movie.metacriticRating) && Objects.equals(theMovieDbRating, movie.theMovieDbRating) && Objects.equals(rottenTomatoesRating, movie.rottenTomatoesRating) && Objects.equals(tV_comRating, movie.tV_comRating) && Objects.equals(filmAffinityRating, movie.filmAffinityRating) && Objects.equals(easternName, movie.easternName) && Objects.equals(kinopoiskRating, movie.kinopoiskRating) && Objects.equals(boxOffice, movie.boxOffice) && Objects.equals(duration, movie.duration) && Objects.equals(genre, movie.genre) && Objects.equals(director, movie.director) && Objects.equals(actors, movie.actors) && Objects.equals(language, movie.language) && Objects.equals(country, movie.country) && Objects.equals(metascore, movie.metascore) && Objects.equals(image, movie.image) && Objects.equals(year, movie.year) && Objects.equals(kinopoiskVotes, movie.kinopoiskVotes);
+        return id == movie.id && Objects.equals(name, movie.name)
+                && Objects.equals(searches, movie.searches)
+                && Objects.equals(imdbId, movie.imdbId)
+                && Objects.equals(kinopoiskId, movie.kinopoiskId)
+                && Objects.equals(description, movie.description)
+                && Objects.equals(imdbRating, movie.imdbRating)
+                && Objects.equals(imdbVotes, movie.imdbVotes)
+                && Objects.equals(metacriticRating, movie.metacriticRating)
+                && Objects.equals(theMovieDbRating, movie.theMovieDbRating)
+                && Objects.equals(rottenTomatoesRating, movie.rottenTomatoesRating)
+                && Objects.equals(tV_comRating, movie.tV_comRating)
+                && Objects.equals(filmAffinityRating, movie.filmAffinityRating)
+                && Objects.equals(easternName, movie.easternName)
+                && Objects.equals(kinopoiskRating, movie.kinopoiskRating)
+                && Objects.equals(boxOffice, movie.boxOffice)
+                && Objects.equals(duration, movie.duration)
+                && Objects.equals(genre, movie.genre)
+                && Objects.equals(director, movie.director)
+                && Objects.equals(actors, movie.actors)
+                && Objects.equals(language, movie.language)
+                && Objects.equals(country, movie.country)
+                && Objects.equals(metascore, movie.metascore)
+                && Objects.equals(image, movie.image)
+                && Objects.equals(year, movie.year)
+                && Objects.equals(kinopoiskVotes, movie.kinopoiskVotes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, searches, imdbId, kinopoiskId, description, imdbRating, imdbVotes, metacriticRating, theMovieDbRating, rottenTomatoesRating, tV_comRating, filmAffinityRating, easternName, kinopoiskRating, boxOffice, duration, genre, director, actors, language, country, metascore, image, year, kinopoiskVotes);
+        return Objects.hash(id, name, searches, imdbId, kinopoiskId, description,
+                imdbRating, imdbVotes, metacriticRating, theMovieDbRating,
+                rottenTomatoesRating, tV_comRating, filmAffinityRating, easternName,
+                kinopoiskRating, boxOffice, duration, genre, director, actors, language,
+                country, metascore, image, year, kinopoiskVotes);
     }
 
     @Override

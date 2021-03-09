@@ -1,10 +1,5 @@
 package com.movie_aggregator.entity;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import java.util.*;
 
@@ -74,7 +69,6 @@ public class Search {
     public void setMovies(Set<Movie> movies) {
         this.movies = movies;
     }
-
 
     public void addMovieToSearch(Movie movie) {
         if(movies == null) {

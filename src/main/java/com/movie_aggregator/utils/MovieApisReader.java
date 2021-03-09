@@ -19,21 +19,42 @@ import java.util.List;
 import java.util.Properties;
 
 /**
+ * The type Movie apis reader.
+ *
  * @author mturchanov
  */
 public class MovieApisReader implements PropertiesLoader {
     private Properties properties;
+    /**
+     * The constant KINOPOISK_ROOT.
+     */
     public static final String KINOPOISK_ROOT = "https://kinopoiskapiunofficial.tech/api/v2.1/films/";
+    /**
+     * The constant OMDB_ROOT.
+     */
     public static final String OMDB_ROOT = "http://www.omdbapi.com/";
     private final Logger logger = LogManager.getLogger(this.getClass());
 
 
+    /**
+     * Instantiates a new Movie apis reader.
+     */
     public MovieApisReader() {
         properties = loadProperties("/api_keys.properties");
     }
 
 
-    public String getJSONFromApi(String searchSource , String searchType, String searchVal) throws IOException {
+    /**
+     * Gets json from api.
+     *
+     * @param searchSource the search source
+     * @param searchType   the search type
+     * @param searchVal    the search val
+     * @return the json from api
+     * @throws IOException the io exception
+     */
+    public String getJSONFromApi(String searchSource , String searchType, String searchVal)
+            throws IOException {
         searchVal =  URLEncoder.encode(searchVal, StandardCharsets.UTF_8);
         OkHttpClient client = new OkHttpClient();
         String requestURL = null;
@@ -74,8 +95,15 @@ public class MovieApisReader implements PropertiesLoader {
         }
         return response.body().string();
     }
-    //TODO: run only kinopoisk if ASCII has russian characters
-    public List<Movie> parseJSONKinopoiskMovies(String searchVal) throws IOException {
+
+    /**
+     * Parse json kinopoisk movies list.
+     *
+     * @param searchVal the search val
+     * @return the list
+     */
+//TODO: run only kinopoisk if ASCII has russian characters
+    public List<Movie> parseJSONKinopoiskMovies(String searchVal) {
         //get general movie info json data
         //String JSONMovies = getJSONFromApi("general", "kinopoisk", searchVal);
         //test
@@ -140,17 +168,15 @@ public class MovieApisReader implements PropertiesLoader {
                 //test
                 String imdbDataJSON = "{\"Title\":\"Django\",\"Year\":\"1966\",\"Rated\":\"Not Rated\",\"Released\":\"01 Dec 1966\",\"Runtime\":\"91 min\",\"Genre\":\"Action, Western\",\"Director\":\"Sergio Corbucci\",\"Writer\":\"Sergio Corbucci (story), Bruno Corbucci (story), Sergio Corbucci (screenplay), Bruno Corbucci (screenplay), Franco Rossetti (screenplay in collaboration with), Piero Vivarelli (screenplay in collaboration with), Geoffrey Copleston (English version by)\",\"Actors\":\"Franco Nero, José Bódalo, Loredana Nusciak, Ángel Álvarez\",\"Plot\":\"In the opening scene a lone man walks, behind him he drags a coffin. That man is Django. He rescues a woman from bandits and, later, arrives in a town ravaged by the same bandits. The scene for confrontation is set. But why does he drag that coffin everywhere and who, or what, is in it?\",\"Language\":\"Italian\",\"Country\":\"Italy, Spain\",\"Awards\":\"N/A\",\"Poster\":\"https://m.media-amazon.com/images/M/MV5BMTA4M2NmZTgtOGJlOS00NDExLWE4MzItNWQxNTRmYzIzYmM0L2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyNjc1NTYyMjg@._V1_SX300.jpg\",\"Ratings\":[{\"Source\":\"Internet Movie Database\",\"Value\":\"7.2/10\"},{\"Source\":\"Rotten Tomatoes\",\"Value\":\"92%\"},{\"Source\":\"Metacritic\",\"Value\":\"75/100\"}],\"Metascore\":\"75\",\"imdbRating\":\"7.2\",\"imdbVotes\":\"24,995\",\"imdbID\":\"tt0060315\",\"Type\":\"movie\",\"DVD\":\"07 Jun 2017\",\"BoxOffice\":\"$25,916\",\"Production\":\"B.R.C. Produzione S.r.l.\",\"Website\":\"N/A\",\"Response\":\"True\"}";
 
-                //System.out.println(imdbDataJSON);
+                //logger.info(imdbDataJSON);
                 //String imdbDataJSON = "{\"Title\":\"Matrix\",\"Year\":\"1993\",\"Rated\":\"N/A\",\"Released\":\"01 Mar 1993\",\"Runtime\":\"60 min\",\"Genre\":\"Action, Drama, Fantasy, Thriller\",\"Director\":\"N/A\",\"Writer\":\"Grenville Case\",\"Actors\":\"Nick Mancuso, Phillip Jarrett, Carrie-Anne Moss, John Vernon\",\"Plot\":\"Steven Matrix is one of the underworld's foremost hitmen until his luck runs out, and someone puts a contract out on him. Shot in the forehead by a .22 pistol, Matrix \\\"dies\\\" and finds ...\",\"Language\":\"English\",\"Country\":\"Canada\",\"Awards\":\"1 win.\",\"Poster\":\"https://m.media-amazon.com/images/M/MV5BYzUzOTA5ZTMtMTdlZS00MmQ5LWFmNjEtMjE5MTczN2RjNjE3XkEyXkFqcGdeQXVyNTc2ODIyMzY@._V1_SX300.jpg\",\"Ratings\":[{\"Source\":\"Internet Movie Database\",\"Value\":\"7.9/10\"}],\"Metascore\":\"N/A\",\"imdbRating\":\"7.9\",\"imdbVotes\":\"138\",\"imdbID\":\"tt0106062\",\"Type\":\"series\",\"totalSeasons\":\"N/A\",\"Response\":\"True\"}";
                 movies.add(parseJSONImdbMovie(imdbDataJSON, movie));
                 continue;
             }
-            System.out.println("sout parseJSONKinopoiskMovies(): single movie: " + movie);
+            logger.info("sout parseJSONKinopoiskMovies(): single movie: " + movie);
             movies.add(movie);
         }
-        System.out.println("sout parseJSONKinopoiskMovies: movie list: " + movies);
-        logger.debug("Hello this is a debug message");
-        logger.info("Hello this is an info message");
+        logger.info("sout parseJSONKinopoiskMovies: movie list: " + movies);
         return movies;
     }
 
@@ -201,13 +227,18 @@ public class MovieApisReader implements PropertiesLoader {
                     movie.setMetacriticRating(ratingsJSON.getString("Value"));
                 }
             }
-
-
-        //System.out.println(movie);
-
+        logger.info(movie);
         return movie;
     }
 
+
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     * @throws IOException the io exception
+     */
+//dirty and rough testing
     public static void main(String[] args) throws IOException {
         MovieApisReader reader = new MovieApisReader();
         //test
