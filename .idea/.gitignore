@@ -36,6 +36,11 @@
 /log/
 /lib/
 
+# api keys + hibernate.xml
+/src/main/resources/api_keys.properties
+/src/main/resources/hibernate.cfg.xml
+
+
 # mpeltonen/sbt-idea plugin
 .idea_modules/
 

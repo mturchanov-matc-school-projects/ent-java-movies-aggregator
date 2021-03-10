@@ -1,0 +1,3 @@
+[INFO ] 2021-03-09 17:16:24.993 [main] GenericDaoTest - TESTTEST
+[INFO ] 2021-03-09 17:18:15.705 [http-nio-8080-exec-17] GenericService - GenericService.getMovies(): trest
+[INFO ] 2021-03-09 17:20:26.921 [http-nio-8080-exec-4] GenericService - GenericService.getMovies(): trest

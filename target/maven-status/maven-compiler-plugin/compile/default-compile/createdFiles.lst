@@ -1,0 +1,15 @@
+com/movie_aggregator/utils/PropertiesLoader.class
+com/movie_aggregator/utils/SessionFactoryProvider.class
+com/movie_aggregator/utils/ImdbApiReader.class
+com/movie_aggregator/controller/MyRestController.class
+com/movie_aggregator/repository/MovieDAO.class
+com/movie_aggregator/repository/MovieDAOImpl.class
+com/movie_aggregator/configuration/MySecurityInitializer.class
+com/movie_aggregator/service/MovieServiceImpl.class
+com/movie_aggregator/configuration/MyConfig.class
+com/movie_aggregator/utils/MovieApiReader.class
+com/movie_aggregator/configuration/MyWebInitializer.class
+com/movie_aggregator/service/MovieService.class
+com/movie_aggregator/controller/MyController.class
+com/movie_aggregator/configuration/MySecurityConfig.class
+com/movie_aggregator/entity/Movie.class
