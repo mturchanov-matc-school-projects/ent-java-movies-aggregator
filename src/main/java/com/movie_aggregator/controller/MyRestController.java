@@ -8,9 +8,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
+ * The type My rest controller.
+ *
  * @author mturchanov
  */
-
 @RestController
 @RequestMapping("/api")
 public class MyRestController {
@@ -18,24 +19,47 @@ public class MyRestController {
     @Autowired
     private GenericService genericService;
 
+    /**
+     * Show all movies list.
+     *
+     * @return the list
+     */
     @GetMapping("/movies")
     public List<Movie> showAllMovies() {
         List<Movie> allMovies = genericService.getAll(Movie.class);
         return allMovies; // jackson-api in maven will convert entity-object to json
     }
 
-    //TODO: exception handling
+    /**
+     * Gets movie.
+     *
+     * @param id the id
+     * @return the movie
+     */
+//TODO: exception handling
     @GetMapping("movies/{id}")
     public Movie getMovie(@PathVariable int id) {
         return genericService.get(Movie.class, id); // jackson-api in maven will convert entity-object to json
     }
 
+    /**
+     * Add new movie movie.
+     *
+     * @param movie the movie
+     * @return the movie
+     */
     @PostMapping("/movies")
     public Movie addNewMovie(@RequestBody Movie movie) {
         genericService.save(movie);;
         return movie;
     }
 
+    /**
+     * Delete movie string.
+     *
+     * @param id the id
+     * @return the string
+     */
     @PutMapping("/movies/{id}")
 //    @RequestMapping(value = "/movies/{id}",
 //            produces = "application/json",

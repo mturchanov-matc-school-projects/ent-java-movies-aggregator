@@ -24,12 +24,16 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
+ * The type Generic dao test.
+ *
  * @author mturchanov
  */
-
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = { MyConfig.class, MyWebInitializer.class})
 public class GenericDaoTest extends AbstractTest {
+    /**
+     * The Dao.
+     */
     @Autowired
     GenericDao dao;
 
@@ -92,6 +96,9 @@ public class GenericDaoTest extends AbstractTest {
         assertEquals(insertedMovie.getId(), newMovie.getId());
     }
 
+    /**
+     * Verify Saving or update test.
+     */
     @Test
     void saveOrUpdateTest() {
         Movie getMovie = dao.get(Movie.class, 77394);
@@ -101,6 +108,9 @@ public class GenericDaoTest extends AbstractTest {
         assertEquals("modifiedName", updatedMovie.getName());
     }
 
+    /**
+     * Verify Geting last search test.
+     */
     @Test
     void getLastSearchTest() {
         Search newSearch = new Search(20, "new Serch val");
@@ -109,6 +119,9 @@ public class GenericDaoTest extends AbstractTest {
         assertEquals(lastSearch, newSearch);
     }
 
+    /**
+     * Verify Incrementing search number counter test.
+     */
     @Test
     public void incrementSearchNumberCounterTest() {
         Search search = dao.getLastSearch();
@@ -118,12 +131,18 @@ public class GenericDaoTest extends AbstractTest {
         assertEquals(expectedSearchNumber, updatedSearch.getNumber());
     }
 
+    /**
+     * Verify Geting movies based on search name test.
+     */
     @Test
     void getMoviesBasedOnSearchNameTest() {
         List<Movie> movies = dao.getMoviesBasedOnSearchName("Django");
         assertEquals(12, movies.size());
     }
 
+    /**
+     * Verify Geting first entry based on another table column property test.
+     */
     @Test
     void getFirstEntryBasedOnAnotherTableColumnPropertyTest() {
         Movie movie = dao.getFirstEntryBasedOnAnotherTableColumnProperty

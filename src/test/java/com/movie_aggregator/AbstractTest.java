@@ -17,20 +17,37 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+/**
+ * The type Abstract test.
+ */
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {MyConfig.class, MyWebInitializer.class})
 @ActiveProfiles("dev")
 @WebAppConfiguration
 public abstract class AbstractTest {
 
+    /**
+     * The Context.
+     */
     WebApplicationContext context;
+    /**
+     * The Mock mvc.
+     */
     MockMvc mockMvc;
 
+    /**
+     * Sets context.
+     *
+     * @param context the context
+     */
     @Autowired
     public void setContext(WebApplicationContext context) {
         this.context = context;
     }
 
+    /**
+     * Sets .
+     */
     @Before
     public void setup() {
         mockMvc = MockMvcBuilders.webAppContextSetup(context).build();

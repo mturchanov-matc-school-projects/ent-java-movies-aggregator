@@ -22,12 +22,20 @@ import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
 import java.util.Properties;
 
+/**
+ * The type My config.
+ */
 @Configuration
 @ComponentScan(basePackages = "com.movie_aggregator")
 @EnableWebMvc
 @EnableTransactionManagement
 public class MyConfig {
 
+    /**
+     * Data source data source.
+     *
+     * @return the data source
+     */
     @Bean
     @Profile("prod")
     public DataSource dataSource()  {
@@ -44,6 +52,11 @@ public class MyConfig {
         return dataSource;
     }
 
+    /**
+     * Data source for test data source.
+     *
+     * @return the data source
+     */
     @Profile("dev")
     @Bean(name = "dataSource")
     public DataSource dataSourceForTest()  {
@@ -61,7 +74,11 @@ public class MyConfig {
     }
 
 
-
+    /**
+     * Session factory local session factory bean.
+     *
+     * @return the local session factory bean
+     */
     @Bean
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
@@ -75,6 +92,11 @@ public class MyConfig {
         return sessionFactory;
     }
 
+    /**
+     * Transaction manager hibernate transaction manager.
+     *
+     * @return the hibernate transaction manager
+     */
     @Bean
     public HibernateTransactionManager transactionManager() {
         HibernateTransactionManager transactionManager = new HibernateTransactionManager();
@@ -82,7 +104,9 @@ public class MyConfig {
         return transactionManager;
     }
 
-    /** shortcut for controller mapping to view **/
+    /**
+     * shortcut for controller mapping to view  @return the view resolver
+     */
     @Bean
     public ViewResolver viewResolver() {
         InternalResourceViewResolver internalResourceViewResolver =

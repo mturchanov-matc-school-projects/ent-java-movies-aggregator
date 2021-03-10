@@ -6,6 +6,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
 /**
+ * The type My web initializer.
+ *
  * @author mturchanov
  */
 public class MyWebInitializer extends

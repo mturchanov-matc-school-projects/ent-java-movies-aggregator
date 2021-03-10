@@ -160,7 +160,6 @@ public class MovieApisReader implements PropertiesLoader {
 
             Movie movie = new Movie(nameEn, nameRu,imdbId, filmId, shortDesc, duration, year, kVotes, rating, image, description);
             //JSONObject movieReview = movieDetailsJSON.getJSONObject("review");
-            // trying to fix exc
             movie.setId(Integer.parseInt(filmId));
             if (!imdbId.equals("null")) {
                 //make requests to get json with imdb movie details

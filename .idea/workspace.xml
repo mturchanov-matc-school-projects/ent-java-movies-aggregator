@@ -27,20 +27,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b4add5ff-e70d-4f2b-bb88-aba2066d226f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/${filepath}/MovieAggregator.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/${filepath}/hibernate.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/movies_aggregator.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/configuration/MyWebInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/configuration/MyWebInitializer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/service/GenericService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/service/GenericService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/log4j2.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/log4j2.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/movie_aggregator/repository/GenericDaoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/movie_aggregator/repository/GenericDaoTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject.war" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject.war" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/log4j2.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/log4j2.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/log4j2.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/log4j2.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/com/movie_aggregator/repository/GenericDaoTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/movie_aggregator/repository/GenericDaoTest.class" afterDir="false" />
-    </list>
+    <list default="true" id="b4add5ff-e70d-4f2b-bb88-aba2066d226f" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -538,7 +525,7 @@
       <workItem from="1615144398356" duration="24458000" />
       <workItem from="1615231557977" duration="18460000" />
       <workItem from="1615262935990" duration="14902000" />
-      <workItem from="1615328198388" duration="3651000" />
+      <workItem from="1615328198388" duration="7255000" />
     </task>
     <servers />
   </component>
@@ -562,12 +549,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/movie_aggregator/service/GenericService.java</url>
-          <line>28</line>
+          <line>37</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/movie_aggregator/utils/MovieApisReader.java</url>
-          <line>78</line>
+          <line>106</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
