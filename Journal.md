@@ -90,5 +90,17 @@ Tasks Completed:
        `@GeneratedValue`s are removed  
 
   
-  
+   3/8/2021 ~ 4 hours  
+   Tasks Completed:
+   * small updated everywhere
+   * starting setting up unit tests
+   * @manyToMany related classes updated
+
+
+   3/9/2021 ~ 2 hours  
+   Tasks Completed:
+   * unit tests for GenereicDao implemented
+   * souts changed to log.info
+   * javadocs added
+   * junk comments/code cleaned
  
