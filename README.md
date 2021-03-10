@@ -21,10 +21,17 @@ A website that gathers a rating of a searched movie from different movie source 
 * delete movies from my_list if logged
 * add a note/review regarding a moview
 
+###### Logic on search
+1. checks whether such search word is in DB
+1.1 if no such word in db then app calls APIs requests. 
+   It parses JSONs, adds to DB and display results
+1.2 If there is such word then app just gets movie(s) associated the searchword from DB
+   
+As a result, it will increase loading speed + will record movie info that can be
+  used later in REST service
+
 ###### Login/Signup
 * login/signup to access my movie list
-
-
 
 ### Supporting Materials
 * omdb api - http://www.omdbapi.com/
