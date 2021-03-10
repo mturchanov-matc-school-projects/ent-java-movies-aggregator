@@ -110,7 +110,7 @@ public class GenericService {
             // GET movies from DB
             movies = getMoviesBasedOnSearchName(searchVal);
             incrementSearchNumberCounter(existedSearch.getId()); // increment Search.number
-        } else  {
+        } else  { // OTHERWISE, NO SEARCH IN DB == NO MOVIES TO GET -> CALL APIS REQUESTS
             MovieApisReader movieApisReader = new MovieApisReader();
             movies = movieApisReader.parseJSONKinopoiskMovies(searchVal);
             Search lastSearch = getLastSearch();
@@ -121,7 +121,7 @@ public class GenericService {
             save(new Search(id, searchVal));
 
             for (Movie movie : movies) {
-                movie.addSearchToMovie(new Search(id, searchVal));
+                movie.addSearchToMovie(new Search(id, searchVal)); // id set manually
             }
 
             for (Movie movie : movies) {
