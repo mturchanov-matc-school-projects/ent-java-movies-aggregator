@@ -30,10 +30,7 @@ public abstract class AbstractTest {
      * The Context.
      */
     WebApplicationContext context;
-    /**
-     * The Mock mvc.
-     */
-    MockMvc mockMvc;
+
 
     /**
      * Sets context.
@@ -48,8 +45,5 @@ public abstract class AbstractTest {
     /**
      * Sets .
      */
-    @Before
-    public void setup() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
-    }
+
 }

@@ -17,6 +17,8 @@
     <mysql-version>8.0.16</mysql-version>
     <jstl-version>1.2</jstl-version>
     <log4j-version>2.10.0</log4j-version>
+    <jersey-version>2.29.1</jersey-version>
+
     <jupiter-version>5.0.0</jupiter-version>
     <junit-platform-runner-version>1.0.0</junit-platform-runner-version>
     <maven-compiler-plugin-version>3.8.1</maven-compiler-plugin-version>
@@ -187,7 +189,17 @@
 
 
 
+    <dependency>
+      <groupId>org.glassfish.jersey.core</groupId>
+      <artifactId>jersey-client</artifactId>
+      <version>${jersey-version}</version>
+    </dependency>
 
+    <dependency>
+      <groupId>org.glassfish.jersey.inject</groupId>
+      <artifactId>jersey-hk2</artifactId>
+      <version>${jersey-version}</version>
+    </dependency>
 
 
     <!-- https://mvnrepository.com/artifact/org.json/json -->

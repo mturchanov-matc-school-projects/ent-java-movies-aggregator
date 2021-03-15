@@ -5,7 +5,6 @@ import com.movie_aggregator.configuration.MyConfig;
 import com.movie_aggregator.configuration.MyWebInitializer;
 import com.movie_aggregator.entity.Movie;
 import com.movie_aggregator.entity.Search;
-import com.movie_aggregator.service.GenericService;
 import com.movie_aggregator.testUtils.Database;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

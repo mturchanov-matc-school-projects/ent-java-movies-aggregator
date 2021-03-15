@@ -28,7 +28,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b4add5ff-e70d-4f2b-bb88-aba2066d226f" name="Default Changelist" comment="ERD image was updated(added users/roles table)">
-      <change afterPath="$PROJECT_DIR$/designDocs/ERD.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/movie_aggregator.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/movie_aggregator.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/controller/MyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/controller/MyController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/controller/MyRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/controller/MyRestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/utils/MovieApisReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/utils/MovieApisReader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/movie_aggregator/AbstractTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/movie_aggregator/AbstractTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/movie_aggregator/repository/GenericDaoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/movie_aggregator/repository/GenericDaoTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject.war" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject.war" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/controller/MyController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/controller/MyController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/controller/MyRestController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/controller/MyRestController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/utils/MovieApisReader.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/utils/MovieApisReader.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/controller/MyController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/controller/MyController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/controller/MyRestController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/controller/MyRestController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/utils/MovieApisReader.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/utils/MovieApisReader.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/movie_aggregator/AbstractTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/movie_aggregator/AbstractTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/movie_aggregator/repository/GenericDaoTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/movie_aggregator/repository/GenericDaoTest.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -166,40 +182,36 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Tomcat Server.Tomcat 9.0.41">
-    <configuration name="MovieApisReader" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.movie_aggregator.utils.MovieApisReader" />
-      <module name="yourindieproject" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.movie_aggregator.utils.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.RestGetRequestsTest.testGetAllMoviesbySearch">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GenericDaoTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="yourindieproject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.movie_aggregator.repository.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.movie_aggregator.repository" />
+      <option name="MAIN_CLASS_NAME" value="com.movie_aggregator.repository.GenericDaoTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="All in yourindieproject" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="yourindieproject" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="GenericDaoTest.getByIdSuccess" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="RestGetRequestsTest.testGetAllMovies" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="yourindieproject" />
       <extension name="coverage">
         <pattern>
@@ -208,14 +220,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="com.movie_aggregator.repository" />
-      <option name="MAIN_CLASS_NAME" value="com.movie_aggregator.repository.GenericDaoTest" />
-      <option name="METHOD_NAME" value="getByIdSuccess" />
+      <option name="MAIN_CLASS_NAME" value="com.movie_aggregator.repository.RestGetRequestsTest" />
+      <option name="METHOD_NAME" value="testGetAllMovies" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="GenericDaoTest.incrementSearchNumberCounterTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="RestGetRequestsTest.testGetAllMoviesbySearch" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="yourindieproject" />
       <extension name="coverage">
         <pattern>
@@ -224,14 +236,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="com.movie_aggregator.repository" />
-      <option name="MAIN_CLASS_NAME" value="com.movie_aggregator.repository.GenericDaoTest" />
-      <option name="METHOD_NAME" value="incrementSearchNumberCounterTest" />
+      <option name="MAIN_CLASS_NAME" value="com.movie_aggregator.repository.RestGetRequestsTest" />
+      <option name="METHOD_NAME" value="testGetAllMoviesbySearch" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="GenericDaoTest.saveSuccess" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="RestGetRequestsTest.testGetMovieById" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="yourindieproject" />
       <extension name="coverage">
         <pattern>
@@ -240,8 +252,24 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="com.movie_aggregator.repository" />
-      <option name="MAIN_CLASS_NAME" value="com.movie_aggregator.repository.GenericDaoTest" />
-      <option name="METHOD_NAME" value="saveSuccess" />
+      <option name="MAIN_CLASS_NAME" value="com.movie_aggregator.repository.RestGetRequestsTest" />
+      <option name="METHOD_NAME" value="testGetMovieById" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RestGetRequestsTest.testswapiJSON" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="yourindieproject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.movie_aggregator.repository.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.movie_aggregator.repository" />
+      <option name="MAIN_CLASS_NAME" value="com.movie_aggregator.repository.RestGetRequestsTest" />
+      <option name="METHOD_NAME" value="testswapiJSON" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -476,20 +504,20 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="JUnit.All in yourindieproject" />
-      <item itemvalue="JUnit.GenericDaoTest.incrementSearchNumberCounterTest" />
-      <item itemvalue="JUnit.GenericDaoTest.getByIdSuccess" />
-      <item itemvalue="JUnit.GenericDaoTest.saveSuccess" />
+      <item itemvalue="JUnit.RestGetRequestsTest.testswapiJSON" />
+      <item itemvalue="JUnit.GenericDaoTest" />
+      <item itemvalue="JUnit.RestGetRequestsTest.testGetAllMovies" />
+      <item itemvalue="JUnit.RestGetRequestsTest.testGetMovieById" />
+      <item itemvalue="JUnit.RestGetRequestsTest.testGetAllMoviesbySearch" />
       <item itemvalue="Tomcat Server.Tomcat 9.0.41" />
-      <item itemvalue="Application.MovieApisReader" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.GenericDaoTest.getByIdSuccess" />
-        <item itemvalue="JUnit.All in yourindieproject" />
-        <item itemvalue="Application.MovieApisReader" />
-        <item itemvalue="JUnit.GenericDaoTest.saveSuccess" />
-        <item itemvalue="JUnit.GenericDaoTest.incrementSearchNumberCounterTest" />
+        <item itemvalue="JUnit.RestGetRequestsTest.testGetAllMoviesbySearch" />
+        <item itemvalue="JUnit.RestGetRequestsTest.testGetMovieById" />
+        <item itemvalue="JUnit.RestGetRequestsTest.testGetAllMovies" />
+        <item itemvalue="JUnit.RestGetRequestsTest.testswapiJSON" />
+        <item itemvalue="JUnit.GenericDaoTest" />
       </list>
     </recent_temporary>
   </component>
@@ -528,6 +556,12 @@
       <workItem from="1615231557977" duration="18460000" />
       <workItem from="1615262935990" duration="14902000" />
       <workItem from="1615328198388" duration="9310000" />
+      <workItem from="1615511259170" duration="756000" />
+      <workItem from="1615512089019" duration="1498000" />
+      <workItem from="1615516186108" duration="52000" />
+      <workItem from="1615516270637" duration="802000" />
+      <workItem from="1615521676507" duration="8334000" />
+      <workItem from="1615777091535" duration="623000" />
     </task>
     <task id="LOCAL-00001" summary="ERD image was updated(added users/roles table)">
       <created>1615338497654</created>
@@ -573,7 +607,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/test/java/com/movie_aggregator/repository/GenericDaoTest.java</url>
-          <line>86</line>
+          <line>85</line>
           <properties class="com.movie_aggregator.repository.GenericDaoTest">
             <option name="EMULATED" value="true" />
           </properties>
@@ -581,7 +615,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/test/java/com/movie_aggregator/repository/GenericDaoTest.java</url>
-          <line>115</line>
+          <line>114</line>
           <properties class="com.movie_aggregator.repository.GenericDaoTest">
             <option name="EMULATED" value="true" />
           </properties>

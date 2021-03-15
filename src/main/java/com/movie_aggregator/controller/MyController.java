@@ -68,16 +68,15 @@ public class MyController {
 //Testing time
     @RequestMapping("/test")
     public String test(Model model) {
-        //Search search = new Search("search1");
-        //newMovie.addSearchToMovie(search);
-        //movies.add(newMovie);
-        //Movie newMovie2 = new Movie();
-        //newMovie2.setName("m2 - 2 movied added as a list");
-        //newMovie2.setImage("https://ichef.bbci.co.uk/news/976/cpsprodpb/12A9B/production/_111434467_gettyimages-1143489763.jpg");
-        //newMovie2.addSearchToMovie(search);
-        //movies.add(newMovie2);
-        //genericService.addMovieListToMovieTable(
-        //        movies,"name", "search1", Search.class);
+        Movie newMovie = new Movie();
+        Search search = new Search(4, "search11212");
+        newMovie.addSearchToMovie(search);
+        newMovie.setName("m2 - 2 movied added as a list");
+        newMovie.setId(1234);
+        newMovie.setImage("https://ichef.bbci.co.uk/news/976/cpsprodpb/12A9B/production/_111434467_gettyimages-1143489763.jpg");
+        search.addMovieToSearch(newMovie);
+        newMovie.addSearchToMovie(search);
+        genericService.save(newMovie);
         return "test";
     }
 
