@@ -29,6 +29,7 @@ import java.util.Properties;
 @ComponentScan(basePackages = "com.movie_aggregator")
 @EnableWebMvc
 @EnableTransactionManagement
+//TODO: check what to do with setting datasource username/pass. hiding to properties or else?
 public class MyConfig {
 
     /**
@@ -41,6 +42,7 @@ public class MyConfig {
     public DataSource dataSource()  {
         ComboPooledDataSource dataSource = new ComboPooledDataSource();
         try {
+            //TODO: change user to a limited-read-only-user
             dataSource.setDriverClass("com.mysql.cj.jdbc.Driver");
             dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/ent_java_indiv_proj?useSSL=false&serverTimezone=UTC");
             dataSource.setUser("root");
@@ -111,7 +113,7 @@ public class MyConfig {
     public ViewResolver viewResolver() {
         InternalResourceViewResolver internalResourceViewResolver =
                 new InternalResourceViewResolver();
-        internalResourceViewResolver.setPrefix("/WEB-INF/");
+        internalResourceViewResolver.setPrefix("/");
         internalResourceViewResolver.setSuffix(".jsp");
         return  internalResourceViewResolver;
     }

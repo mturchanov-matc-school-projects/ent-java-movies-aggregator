@@ -39,7 +39,7 @@ public class MyController {
         List<Movie> movies = genericService.getMovies(existedSearch, searchVal);
         System.out.println(movies);
         model.addAttribute("movies", movies);
-        return "/result.jsp";
+        return "/result";
     }
 
 
@@ -54,7 +54,7 @@ public class MyController {
         //model.addAttribute("movie", movieService.getMovie(id));
         model.addAttribute("movie", genericService.get(Movie.class, id));
 
-        return "/movie.jsp";
+        return "/movie";
     }
 
     /**
@@ -73,11 +73,11 @@ public class MyController {
         //newMovie.setImage("https://ichef.bbci.co.uk/news/976/cpsprodpb/12A9B/production/_111434467_gettyimages-1143489763.jpg");
         //newMovie.addSearchToMovie(search);
         //genericService.save(newMovie);
-        String searchVal = "Exam";
+        String searchVal = "Django";
         Search existedSearch = genericService.getOneEntryByColumProperty("name", searchVal, Search.class);
         List<Movie> movies = genericService.getMovies(existedSearch, searchVal);
         model.addAttribute("movies", movies);
-        return "/test.jsp";
+        return "/test";
     }
 
 

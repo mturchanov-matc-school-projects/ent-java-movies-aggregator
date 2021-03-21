@@ -10,6 +10,11 @@
 
 </head>
 <body>
+<security:authorize access="hasRole('anonymous')">
+    <input type="button" value="LOGIN"
+           onclick="window.location.href='login'">
+</security:authorize>
+
 <h1>Search</h1>
 
 <a href="${pageContext.request.contextPath}/myMovies">Go to My Movies</a>
