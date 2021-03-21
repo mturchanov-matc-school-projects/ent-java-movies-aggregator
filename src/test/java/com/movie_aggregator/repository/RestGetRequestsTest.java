@@ -3,26 +3,37 @@ package com.movie_aggregator.repository;
 import com.movie_aggregator.AbstractTest;
 import com.movie_aggregator.configuration.MyConfig;
 import com.movie_aggregator.configuration.MyWebInitializer;
+import com.movie_aggregator.entity.Movie;
 import com.movie_aggregator.testUtils.Database;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.ws.rs.client.*;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 /**
  * @author mturchanov
  */
+@RunWith(SpringRunner.class)
+
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = { MyConfig.class, MyWebInitializer.class})
 public class RestGetRequestsTest extends AbstractTest {
 
-    @Autowired
+
+@Autowired
     GenericDao dao;
+
+
     /**
      * Run set up tasks before each test:
      * 1. execute sql which deletes everything from the table and inserts records)
@@ -30,6 +41,7 @@ public class RestGetRequestsTest extends AbstractTest {
      */
     @BeforeEach
     void setUp() {
+
         Database database = Database.getInstance();
         database.runSQL("cleandb.sql");
     }

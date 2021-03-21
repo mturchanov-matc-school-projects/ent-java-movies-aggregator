@@ -41,7 +41,7 @@ INSERT INTO `movies` (`id`, `imdb_id`, `kinopoisk_id`, `imdb_rating`, `imdb_vote
 (1272234,	'tt0060315',	'1272234',	'7.2',	'24,995',	'Django/Zorro',	'',	'In the opening scene a lone man walks, behind him he drags a coffin. That man is Django. He rescues a woman from bandits and, later, arrives in a town ravaged by the same bandits. The scene for confrontation is set. But why does he drag that coffin everywhere and who, or what, is in it?',	'n/a',	'Sergio Corbucci',	'Franco Nero, José Bódalo, Loredana Nusciak, Ángel Álvarez',	'Italian',	'Italy, Spain',	'75',	'Action, Western',	'$25,916',	'75/100',	'7.2/10',	'92%',	NULL,	NULL,	'97%',	'1142',	'https://kinopoiskapiunofficial.tech/images/posters/kp_small/77394.jpg',	'2022');
 
 INSERT INTO `search` (`id`, `name`, `number`) VALUES
-(1,	'Django',	2);
+(1,	'Django',	1);
 
 -- 2021-03-09 03:33:21
 

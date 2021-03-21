@@ -172,6 +172,7 @@ public class MovieApisReader implements PropertiesLoader {
                 movies.add(parseJSONImdbMovie(imdbDataJSON, movie));
                 continue;
             }
+            System.out.println("MovieApisReader.parseJSONKinopoiskMovies().movie - " + movie);
             logger.info("sout parseJSONKinopoiskMovies(): single movie: " + movie);
             movies.add(movie);
         }
@@ -248,7 +249,7 @@ public class MovieApisReader implements PropertiesLoader {
     public static void main(String[] args) throws IOException {
         MovieApisReader reader = new MovieApisReader();
         //test
-        List<Movie> movies = reader.parseJSONKinopoiskMovies("Django");
+        List<Movie> movies = reader.parseJSONKinopoiskMovies("Avengers");
 
         // test with requests for apis
         //List<Movie> movies = reader.parseJSONKinopoiskMovies("Django");
