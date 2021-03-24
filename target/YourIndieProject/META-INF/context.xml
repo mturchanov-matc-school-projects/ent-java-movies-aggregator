@@ -1,5 +1,5 @@
 
 <Context docBase="admin" path="/admin" reloadable="true">
-
+<!-- for simple manual login can be used form-auth method -->
 </Context>
 

@@ -13,6 +13,9 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -117,4 +120,15 @@ public class MyConfig {
         internalResourceViewResolver.setSuffix(".jsp");
         return  internalResourceViewResolver;
     }
+
+    //@Bean
+    //public ViewResolver htmlViewResolver() {
+    //    InternalResourceViewResolver internalResourceViewResolver =
+    //            new InternalResourceViewResolver();
+    //    internalResourceViewResolver.setPrefix("/WEB-INF/html/");
+    //    internalResourceViewResolver.setSuffix(".html");
+    //    internalResourceViewResolver.setOrder(2);
+    //    return  internalResourceViewResolver;
+    //}
+
 }

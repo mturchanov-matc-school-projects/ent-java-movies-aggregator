@@ -18,8 +18,11 @@
 <h1>Search</h1>
 
 <a href="${pageContext.request.contextPath}/myMovies">Go to My Movies</a>
+<br>
 
-
+<a href="${pageContext.request.contextPath}/registrationProcessing">Register</a>
+<br>
+<hr>
 <form action="${pageContext.request.contextPath}/searchMovie"
       method="get">
     <label for="search">

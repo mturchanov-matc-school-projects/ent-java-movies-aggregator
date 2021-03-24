@@ -9,9 +9,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.channel.ChannelProcessingFilter;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 
 import javax.sql.DataSource;
 
@@ -25,33 +27,39 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     DataSource dataSource;
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
         // authentication manager
         auth.jdbcAuthentication().dataSource(dataSource);
-
     }
 
-
-
-//    /** authorization - giving permissions access **/
+    //    /** authorization - giving permissions access **/
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // http builder configurations for authorize requests and form login
         http.authorizeRequests()
-                .antMatchers("/").hasAnyRole("EMPLOYEE", "HR", "MANAGER")  // main page('/') can see emp, hr, managers
-                .antMatchers("/api/**").hasRole("admin")
+                .antMatchers("/").hasAnyRole("ADMIN", "HR", "MANAGER")  // main page('/') can see emp, hr, managers
+                .antMatchers("/api/**").hasRole("ADMIN")
                 .and()
                 .formLogin()
                 //.loginPage("/login.html")
                 //.loginProcessingUrl("/login")
-                .defaultSuccessUrl("/test", true)
-                .failureUrl("/login.html?error=true")
+                //.defaultSuccessUrl("/", true)
+               // .failureUrl("/login.html?error=true")
                 .permitAll(); // ask for login/password for all urls
+
+
+        //http.authorizeRequests()
+        //        .antMatchers("/api/**").access("hasRole('ROLE_ADMIN')")
+        //        .anyRequest().permitAll()
+        //        .and()
+        //        .formLogin().loginPage("/login.jsp")
+        //        .usernameParameter("username").passwordParameter("password")
+        //        .and()
+        //       // .logout().logoutSuccessUrl("/login?logout")
+        //       // .and()
+        //       // .exceptionHandling().accessDeniedPage("/403")
+        //       // .and()
+        //        .csrf();
     }
 }
