@@ -1,12 +1,17 @@
 package com.movie_aggregator.service;
 
+import com.movie_aggregator.entity.Authority;
 import com.movie_aggregator.entity.Movie;
 import com.movie_aggregator.entity.Search;
+import com.movie_aggregator.entity.User;
 import com.movie_aggregator.repository.GenericDao;
 import com.movie_aggregator.utils.MovieApisReader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -138,6 +143,29 @@ public class GenericService {
         }
 
         return movies;
+    }
+
+    public int saveUser(User user) {
+        User existedUserWithTheSameUsername = getOneEntryByColumProperty("username", user.getUsername(), User.class);
+        if (existedUserWithTheSameUsername != null) {
+            return 0;
+        }
+        user.setEnabled(1);
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        String encodedPassword = encoder.encode(user.getPassword());
+
+        //String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
+
+        Authority authority = new Authority();
+        authority.setUsername(user.getUsername());
+        authority.setAuthority("ROLE_USER");
+        //authority.setAuthority("ROLE_ADMIN");
+
+        user.addAuthorityToUser(authority);
+        saveOrUpdate(user);
+        return 1;
     }
 
     /**

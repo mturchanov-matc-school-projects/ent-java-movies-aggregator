@@ -1,10 +1,13 @@
 package com.movie_aggregator.controller;
 
+import com.movie_aggregator.entity.Authority;
 import com.movie_aggregator.entity.Movie;
 import com.movie_aggregator.entity.Search;
 import com.movie_aggregator.entity.User;
 import com.movie_aggregator.service.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,6 +34,11 @@ public class MyController {
         return "/sign-up";
     }
 
+    //TODO:  add info-error if username is used already
+    //TODO: add to view 'my_movies_list' ->
+    //    1. configure MySecurityConfig - anonym_role cannot see link + cannot access
+    //    2. admin/user can see ;imk and access
+    //    + store somehow user in session to not login everytime  when access page with extra
     @RequestMapping(value = "/registrationProcessing", method = RequestMethod.POST)
     public String registrationProcessing(final @Valid @ModelAttribute("user") User user,
                                          final BindingResult bindingResult,
@@ -39,10 +47,9 @@ public class MyController {
             System.out.println(bindingResult.hasErrors());
             return "/test";
         }
-        user.setEnabled(0);
 
-        genericService.save(user);
-        return "/index";
+        int isSaved =  genericService.saveUser(user);
+        return "/login";
     }
     /**
      * Search movie string.
