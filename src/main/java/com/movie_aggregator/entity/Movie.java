@@ -28,6 +28,15 @@ public class Movie {
     )
     private Set<Search> searches;
 
+
+    @ManyToMany(cascade = {CascadeType.MERGE})
+    @JoinTable(
+            name = "movies_user",
+            joinColumns = @JoinColumn(name = "movie_id"), //write how bridge table get connected with this source table/entity
+            inverseJoinColumns = @JoinColumn(name = "username") //write how bridge table get connected with other target table/entity
+    )
+    private Set<User> users;
+
     @Column(name = "imdb_id")
     private String imdbId;
 

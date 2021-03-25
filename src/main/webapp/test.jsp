@@ -1,3 +1,5 @@
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -8,7 +10,19 @@
     <title>Document</title>
 </head>
 <body>
+<sec:authorize access="!isAuthenticated()">
+    <input type="button" value="LOGIN"
+           onclick="window.location.href='login'">
+</sec:authorize>
+<sec:authorize access="isAuthenticated()">
+    Logout
+</sec:authorize>
 
+
+<sec:authorize access="isAuthenticated()">
+    Welcome Back, <sec:authentication property="name"/>
+</sec:authorize>
+<br>
 <h3>Movie tyest dao</h3>
 getAll: ${movies} <br>
 <hr>
@@ -19,6 +33,9 @@ addNew: ${moviesWiehNew}<br>
 getAllByColumnProperty: ${searches}
 <hr>
 seacg Result: ${search}
+<br>
+<hr>
+<h2>Here's username: ${username}</h2>
 
 </body>
 </html>

@@ -28,7 +28,10 @@
 <%--<a href="/">Home</a>--%>
 <div class="container-fluid">
     <h2>$Result </h2>
-
+    <!-- TODO: add 'ADD/DELETE' functionality to each parsed movie
+                 -> js sending request
+                 -> if no working then simple mappings in controler
+                 -->
     <c:forEach items="${movies}" var="movie">
         <div class="container">
             <ul class="list-unstyled">

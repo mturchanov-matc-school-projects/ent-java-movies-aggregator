@@ -41,6 +41,15 @@ public class MyRestController {
         return allMovies; // jackson-api in maven will convert entity-object to json
     }
 
+    @GetMapping("/movies/api/${api_key}")
+    public List<Movie> showMoviesByToken() {
+        List<Movie> allMovies = genericService.getAll(Movie.class);
+        for (Movie m : allMovies) {
+            m.setSearches(null);
+        }
+        return allMovies; // jackson-api in maven will convert entity-object to json
+    }
+
 
     /**
      * Show all movies list.

@@ -1,6 +1,9 @@
 package com.movie_aggregator.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * @author mturchanov
@@ -9,11 +12,11 @@ import javax.persistence.*;
 @Table(name = "authorities")
 @Entity(name = "Authority")
 public class Authority {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+   // @Id
+    //private int id;
 
     @Column
+    @Id
     private String username;
 
     @Column
@@ -22,13 +25,7 @@ public class Authority {
     public Authority() {
     }
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getUsername() {
         return username;

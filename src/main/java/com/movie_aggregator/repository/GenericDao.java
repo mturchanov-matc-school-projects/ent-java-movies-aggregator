@@ -119,6 +119,20 @@ public class GenericDao {
         updateHits.executeUpdate();
     }
 
+    public List<Movie> getMoviesByToken(String token) {
+        final Session session = sessionFactory.getCurrentSession();
+        Query movies = session.createQuery(
+                "select m from Movie m " +
+                        "inner join m.users u " +
+                        "where u.token=:token" );
+        movies.setParameter("token", token);
+        //Query movies = session.createQuery(
+        //        "select * from movies \n" +
+       //                 "inner join movies_user on movies_user.movie_id= movies.id\n" +
+        //                "inner join users on movies_user.username=users.username where token='1'" );
+       return movies.list();
+    }
+
     /**
      * Gets movies based on search name.
      *
@@ -157,5 +171,10 @@ public class GenericDao {
                 .orElse(null);
         //session.close();
         return tableEntity;
+    }
+
+    /***/
+    public <T> T merge(final T o)   {
+        return (T) sessionFactory.getCurrentSession().merge(o);
     }
 }

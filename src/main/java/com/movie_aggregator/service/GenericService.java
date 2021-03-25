@@ -51,7 +51,7 @@ public class GenericService {
      * @param id   the id
      */
     public <T> void  delete(final Class<T> type, Integer id){
-      genericDao.delete(type, id);
+        genericDao.delete(type, id);
     }
 
     /**
@@ -73,7 +73,7 @@ public class GenericService {
      * @param o   the o
      */
     public <T> void saveOrUpdate(final T o) {
-       genericDao.saveOrUpdate(o);
+        genericDao.saveOrUpdate(o);
     }
 
     /**
@@ -100,6 +100,11 @@ public class GenericService {
         return genericDao.getFirstEntryBasedOnAnotherTableColumnProperty(propertyName, searchVal, type);
     }
 
+
+    public List<Movie> getMoviesByToken(String token) {
+        return genericDao.getMoviesByToken(token);
+    }
+
     /**
      * Gets movies.
      *
@@ -109,7 +114,7 @@ public class GenericService {
      * @throws IOException the io exception
      */
     public List<Movie> getMovies (Search existedSearch, String searchVal) throws IOException {
-       // Search existedSearch = getOneEntryByColumProperty(propertyName, searchVal, searchClass);
+        // Search existedSearch = getOneEntryByColumProperty(propertyName, searchVal, searchClass);
         List<Movie> movies = null;
         if (existedSearch != null) { //IF SEARCH IN DB THEN NO NEED FOR APIS REQUESTS
             // GET movies from DB
@@ -145,6 +150,12 @@ public class GenericService {
         return movies;
     }
 
+
+    /***/
+    public <T> T merge(final T o)   {
+        return (T) genericDao.merge(o);
+    }
+
     public int saveUser(User user) {
         User existedUserWithTheSameUsername = getOneEntryByColumProperty("username", user.getUsername(), User.class);
         if (existedUserWithTheSameUsername != null) {
@@ -176,7 +187,7 @@ public class GenericService {
      */
     //TODO: make it generic
     public List<Movie> getMoviesBasedOnSearchName(String searchName) {
-       return genericDao.getMoviesBasedOnSearchName(searchName);
+        return genericDao.getMoviesBasedOnSearchName(searchName);
     }
 
     /**
@@ -195,7 +206,7 @@ public class GenericService {
      */
     //TODO: make it generic
     public void incrementSearchNumberCounter(int id) {
-       genericDao.incrementSearchNumberCounter(id);
+        genericDao.incrementSearchNumberCounter(id);
     }
 
 

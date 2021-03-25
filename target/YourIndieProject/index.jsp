@@ -1,3 +1,5 @@
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -10,17 +12,33 @@
 
 </head>
 <body>
-<security:authorize access="hasRole('anonymous')">
-    <input type="button" value="LOGIN"
-           onclick="window.location.href='login'">
-</security:authorize>
+
+
+
+
+<hr>
+
+<sec:authorize access="!isAuthenticated()">
+    <a href="${pageContext.request.contextPath}/registrationProcessing">Register</a>
+</sec:authorize>
+<br>
+<sec:authorize access="!isAuthenticated()">
+<input type="button" value="LOGIN"
+       onclick="window.location.href='login'">
+</sec:authorize>
+
+<<br>
+<sec:authorize access="isAuthenticated()">
+    <a href="${pageContext.request.contextPath}/logout" >">Logout</a>
+</sec:authorize>
 
 <h1>Search</h1>
 
 <a href="${pageContext.request.contextPath}/myMovies">Go to My Movies</a>
 <br>
 
-<a href="${pageContext.request.contextPath}/registrationProcessing">Register</a>
+<br>
+<a href="${pageContext.request.contextPath}/test">Testing</a>
 <br>
 <hr>
 <form action="${pageContext.request.contextPath}/searchMovie"
@@ -31,9 +49,9 @@
     <input type="submit" value="Search">
 </form>
 
-<script>
-    //console.log($( "#content" ).load( "ajax/https://api.jquery.com/load/ nav#main" ));
+<sec:authorize access="isAuthenticated()">
+    Welcome Back, <sec:authentication property="name"/>
+</sec:authorize>
 
-</script>
 </body>
 </html>

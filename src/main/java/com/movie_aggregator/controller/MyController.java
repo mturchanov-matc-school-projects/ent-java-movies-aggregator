@@ -6,6 +6,8 @@ import com.movie_aggregator.entity.Search;
 import com.movie_aggregator.entity.User;
 import com.movie_aggregator.service.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -34,11 +36,31 @@ public class MyController {
         return "/sign-up";
     }
 
+    //TODO: take somehow username if user is logged in -> put filtered movies to model
+    @RequestMapping("/myMovies")
+    public String getMyMovies(@RequestParam("searchVal") String searchVal, Model model) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<Movie> userMovies;
+
+        if (principal instanceof UserDetails) {
+            String username = ((UserDetails)principal).getUsername();
+            //userMovies = genericService.
+            model.addAttribute("username", username);
+        } else {
+            String username = principal.toString();
+        }
+        return "result";
+    }
+
+
+
+
     //TODO:  add info-error if username is used already
     //TODO: add to view 'my_movies_list' ->
     //    1. configure MySecurityConfig - anonym_role cannot see link + cannot access
     //    2. admin/user can see ;imk and access
     //    + store somehow user in session to not login everytime  when access page with extra
+
     @RequestMapping(value = "/registrationProcessing", method = RequestMethod.POST)
     public String registrationProcessing(final @Valid @ModelAttribute("user") User user,
                                          final BindingResult bindingResult,
@@ -115,6 +137,23 @@ public class MyController {
         //authority.setAuthority("ROLE_USER");
         //user.addAuthorityToUser(authority);
         //genericService.saveOrUpdate(user);
+
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal instanceof UserDetails) {
+            String username = ((UserDetails)principal).getUsername();
+            model.addAttribute("username", username);
+        } else {
+            String username = principal.toString();
+        }
+
+        //User user = genericService.getOneEntryByColumProperty("username", "2", User.class);
+        //user.addMovieToUser(new Movie(12344, "123", "123", "123"));
+        //genericService.merge(user);
+
+        List<Movie> movies = genericService.getMoviesByToken("1");
+        model.addAttribute("movies", movies);
         return "/test";
     }
 

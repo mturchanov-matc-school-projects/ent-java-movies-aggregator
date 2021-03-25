@@ -4,9 +4,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -25,11 +23,29 @@ public class User implements UserDetails {
     @Column(name = "enabled")
     private int enabled;
 
+    @Column
+    private String token;
+
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "username")
     private List<Authority> authorityList;
 
+    @ManyToMany(cascade = {CascadeType.MERGE})
+    @JoinTable(
+            name = "movies_user",
+            joinColumns = @JoinColumn(name = "username"), //write how bridge table get connected with this source table/entity
+            inverseJoinColumns = @JoinColumn(name = "movie_id") //write how bridge table get connected with other target table/entity
+    )
+    private Set<Movie> myMovies;
+
     public User() {
+    }
+
+    public void addMovieToUser(Movie movie) {
+        if(myMovies == null) {
+            myMovies = new HashSet<>();
+        }
+        myMovies.add(movie);
     }
 
     public void addAuthorityToUser(Authority authority) {

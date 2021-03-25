@@ -40,12 +40,16 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/").hasAnyRole("ADMIN", "HR", "MANAGER")  // main page('/') can see emp, hr, managers
                 .antMatchers("/api/**").hasRole("ADMIN")
+                .antMatchers("/test").hasRole("USER")
                 .and()
                 .formLogin()
                 //.loginPage("/login.html")
                 //.loginProcessingUrl("/login")
-                //.defaultSuccessUrl("/", true)
+                .defaultSuccessUrl("/", true)
+                .and()
                // .failureUrl("/login.html?error=true")
+                .logout().logoutSuccessUrl("/").permitAll()
+
                 .permitAll(); // ask for login/password for all urls
 
 
