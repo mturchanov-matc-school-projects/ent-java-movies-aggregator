@@ -4,8 +4,7 @@ import com.movie_aggregator.entity.Movie;
 import com.movie_aggregator.entity.Search;
 import com.movie_aggregator.service.GenericService;
 import com.movie_aggregator.utils.MovieApisReader;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +23,7 @@ public class MyRestController {
 
     @Autowired
     private GenericService genericService;
-    private final Logger logger = LogManager.getLogger(this.getClass());
+    //private final Logger logger = LogManager.getLogger(this.getClass());
 
 
     /**
@@ -41,9 +40,9 @@ public class MyRestController {
         return allMovies; // jackson-api in maven will convert entity-object to json
     }
 
-    @GetMapping("/movies/api/${api_key}")
-    public List<Movie> showMoviesByToken() {
-        List<Movie> allMovies = genericService.getAll(Movie.class);
+    @GetMapping("/movies/t/{token}")
+    public List<Movie> showMoviesByToken(@PathVariable String token) {
+        List<Movie> allMovies = genericService.getMoviesByToken(token);
         for (Movie m : allMovies) {
             m.setSearches(null);
         }
@@ -79,7 +78,7 @@ public class MyRestController {
     public Movie getMovie(@PathVariable int id) {
         Movie getMovie =  genericService.get(Movie.class, id); // jackson-api in maven will convert entity-object to json
         getMovie.setSearches(null);
-        logger.info(String.format("MyRestController.getMovie(): %s", getMovie));
+        //logger.info(String.format("MyRestController.getMovie(): %s", getMovie));
         System.out.println(String.format("MyRestController.getMovie(): %s", getMovie));
         return getMovie;
     }

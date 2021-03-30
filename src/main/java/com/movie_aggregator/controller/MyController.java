@@ -124,10 +124,10 @@ public class MyController {
         //genericService.save(newMovie);
 
 
-        //String searchVal = "Django";
-        //Search existedSearch = genericService.getOneEntryByColumProperty("name", searchVal, Search.class);
-        //List<Movie> movies = genericService.getMovies(existedSearch, searchVal);
-        //model.addAttribute("movies", movies);
+        String searchVal = "Mor";
+        Search existedSearch = genericService.getOneEntryByColumProperty("name", searchVal, Search.class);
+        List<Movie> movies = genericService.getMovies(existedSearch, searchVal);
+        model.addAttribute("movies", movies);
 
         //User user = new User();
         //user.setPassword("123");
@@ -152,8 +152,8 @@ public class MyController {
         //user.addMovieToUser(new Movie(12344, "123", "123", "123"));
         //genericService.merge(user);
 
-        List<Movie> movies = genericService.getMoviesByToken("1");
-        model.addAttribute("movies", movies);
+        //List<Movie> movies = genericService.getMoviesByToken("1");
+       // model.addAttribute("movies", movies);
         return "/test";
     }
 

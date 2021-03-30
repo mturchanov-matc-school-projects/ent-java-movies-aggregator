@@ -6,8 +6,7 @@ import com.movie_aggregator.entity.Search;
 import com.movie_aggregator.entity.User;
 import com.movie_aggregator.repository.GenericDao;
 import com.movie_aggregator.utils.MovieApisReader;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -28,7 +27,9 @@ public class GenericService {
 
     @Autowired
     private GenericDao genericDao;
-    private final Logger logger = LogManager.getLogger(this.getClass());
+    @Autowired
+    private MovieApisReader movieApisReader;
+    //private final Logger logger = LogManager.getLogger(this.getClass());
 
 
     /**
@@ -101,6 +102,12 @@ public class GenericService {
     }
 
 
+    /**
+     * Gets movies by token.
+     *
+     * @param token the token
+     * @return the movies by token
+     */
     public List<Movie> getMoviesByToken(String token) {
         return genericDao.getMoviesByToken(token);
     }
@@ -121,14 +128,14 @@ public class GenericService {
             movies = getMoviesBasedOnSearchName(searchVal);
             incrementSearchNumberCounter(existedSearch.getId()); // increment Search.number
         } else  { // OTHERWISE, NO SEARCH IN DB == NO MOVIES TO GET -> CALL APIS REQUESTS
-            MovieApisReader movieApisReader = new MovieApisReader();
+            //MovieApisReader movieApisReader = new MovieApisReader();
             movies = movieApisReader.parseJSONKinopoiskMovies(searchVal);
             Search lastSearch = getLastSearch();
             int id = 1;
             if (lastSearch != null) {
                 id = lastSearch.getId() + 1;
             }
-            save(new Search(id, searchVal));
+            saveOrUpdate(new Search(id, searchVal));
 
             for (Movie movie : movies) {
                 movie.addSearchToMovie(new Search(id, searchVal)); // id set manually
@@ -136,13 +143,13 @@ public class GenericService {
 
             for (Movie movie : movies) {
                 // check if movie was added to db by different search
-                Movie getMovie = getOneEntryByColumProperty("kinopoiskId",
-                        movie.getKinopoiskId(), Movie.class);
-                if (getMovie != null) {
-                    getMovie.addSearchToMovie(new Search(searchVal));
-                    genericDao.saveOrUpdate(getMovie);
-                    continue;
-                }
+                //Movie getMovie = getOneEntryByColumProperty("kinopoiskId",
+                //        movie.getKinopoiskId(), Movie.class);
+                //if (getMovie != null) {
+                //    getMovie.addSearchToMovie(new Search(searchVal));
+                //    genericDao.saveOrUpdate(getMovie);
+                //    continue;
+                //}
                 genericDao.saveOrUpdate(movie);
             }
         }
@@ -151,11 +158,23 @@ public class GenericService {
     }
 
 
-    /***/
+    /**
+     * Merge t.
+     *
+     * @param <T> the type parameter
+     * @param o   the o
+     * @return the t
+     */
     public <T> T merge(final T o)   {
         return (T) genericDao.merge(o);
     }
 
+    /**
+     * Save user int.
+     *
+     * @param user the user
+     * @return the int
+     */
     public int saveUser(User user) {
         User existedUserWithTheSameUsername = getOneEntryByColumProperty("username", user.getUsername(), User.class);
         if (existedUserWithTheSameUsername != null) {
@@ -185,7 +204,7 @@ public class GenericService {
      * @param searchName the search name
      * @return the movies based on search name
      */
-    //TODO: make it generic
+//TODO: make it generic
     public List<Movie> getMoviesBasedOnSearchName(String searchName) {
         return genericDao.getMoviesBasedOnSearchName(searchName);
     }
@@ -204,7 +223,7 @@ public class GenericService {
      *
      * @param id the id
      */
-    //TODO: make it generic
+//TODO: make it generic
     public void incrementSearchNumberCounter(int id) {
         genericDao.incrementSearchNumberCounter(id);
     }

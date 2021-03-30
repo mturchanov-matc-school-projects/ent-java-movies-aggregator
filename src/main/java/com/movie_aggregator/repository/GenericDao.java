@@ -2,8 +2,7 @@ package com.movie_aggregator.repository;
 
 import com.movie_aggregator.entity.Movie;
 import com.movie_aggregator.entity.Search;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -31,7 +30,7 @@ public class GenericDao {
     @Autowired
     private SessionFactory sessionFactory;
 
-    private final Logger logger = LogManager.getLogger(this.getClass());
+   // private final Logger logger = LogManager.getLogger(this.getClass());
 
 
     /**
@@ -119,6 +118,12 @@ public class GenericDao {
         updateHits.executeUpdate();
     }
 
+    /**
+     * Gets movies by token.
+     *
+     * @param token the token
+     * @return the movies by token
+     */
     public List<Movie> getMoviesByToken(String token) {
         final Session session = sessionFactory.getCurrentSession();
         Query movies = session.createQuery(
@@ -173,7 +178,14 @@ public class GenericDao {
         return tableEntity;
     }
 
-    /***/
+
+    /**
+     * Merge t.
+     *
+     * @param <T> the type parameter
+     * @param o   the o
+     * @return the t
+     */
     public <T> T merge(final T o)   {
         return (T) sessionFactory.getCurrentSession().merge(o);
     }

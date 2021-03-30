@@ -38,18 +38,18 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // http builder configurations for authorize requests and form login
         http.authorizeRequests()
-                .antMatchers("/").hasAnyRole("ADMIN", "HR", "MANAGER")  // main page('/') can see emp, hr, managers
+                .antMatchers("/").hasAnyRole("ADMIN", "USER")  // main page('/') can see emp, hr, managers
                 .antMatchers("/api/**").hasRole("ADMIN")
+                .antMatchers("/resultUserList/**").hasRole("USER")
                 .antMatchers("/test").hasRole("USER")
                 .and()
                 .formLogin()
                 //.loginPage("/login.html")
                 //.loginProcessingUrl("/login")
-                .defaultSuccessUrl("/", true)
+                //.defaultSuccessUrl("/", true)
                 .and()
                // .failureUrl("/login.html?error=true")
                 .logout().logoutSuccessUrl("/").permitAll()
-
                 .permitAll(); // ask for login/password for all urls
 
 

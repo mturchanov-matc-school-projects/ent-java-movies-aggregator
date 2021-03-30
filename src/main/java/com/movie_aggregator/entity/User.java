@@ -8,6 +8,8 @@ import java.util.*;
 
 
 /**
+ * The type User.
+ *
  * @author mturchanov
  */
 @Table(name = "users")
@@ -38,9 +40,17 @@ public class User implements UserDetails {
     )
     private Set<Movie> myMovies;
 
+    /**
+     * Instantiates a new User.
+     */
     public User() {
     }
 
+    /**
+     * Add movie to user.
+     *
+     * @param movie the movie
+     */
     public void addMovieToUser(Movie movie) {
         if(myMovies == null) {
             myMovies = new HashSet<>();
@@ -48,6 +58,11 @@ public class User implements UserDetails {
         myMovies.add(movie);
     }
 
+    /**
+     * Add authority to user.
+     *
+     * @param authority the authority
+     */
     public void addAuthorityToUser(Authority authority) {
         if(authorityList == null) {
             authorityList = new ArrayList<>();
@@ -79,6 +94,11 @@ public class User implements UserDetails {
         return enabled != 0;
     }
 
+    /**
+     * Sets username.
+     *
+     * @param username the username
+     */
     public void setUsername(String username) {
         this.username = username;
     }
@@ -92,14 +112,29 @@ public class User implements UserDetails {
         return password;
     }
 
+    /**
+     * Sets password.
+     *
+     * @param password the password
+     */
     public void setPassword(String password) {
         this.password = password;
     }
 
+    /**
+     * Gets enabled.
+     *
+     * @return the enabled
+     */
     public int getEnabled() {
         return enabled;
     }
 
+    /**
+     * Sets enabled.
+     *
+     * @param enabled the enabled
+     */
     public void setEnabled(int enabled) {
         this.enabled = enabled;
     }

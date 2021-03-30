@@ -49,7 +49,7 @@ public class MyConfig {
             dataSource.setDriverClass("com.mysql.cj.jdbc.Driver");
             dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/ent_java_indiv_proj?useSSL=false&serverTimezone=UTC");
             dataSource.setUser("root");
-            dataSource.setPassword("root");
+            dataSource.setPassword("KOOgFGKmax18");
         } catch (PropertyVetoException e) {
             e.printStackTrace();
         }
@@ -120,6 +120,8 @@ public class MyConfig {
         internalResourceViewResolver.setSuffix(".jsp");
         return  internalResourceViewResolver;
     }
+
+
 
     //@Bean
     //public ViewResolver htmlViewResolver() {

@@ -4,8 +4,7 @@ import com.movie_aggregator.entity.Movie;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
@@ -23,6 +22,7 @@ import java.util.Properties;
  *
  * @author mturchanov
  */
+@Component
 public class MovieApisReader implements PropertiesLoader {
     private Properties properties;
     /**
@@ -33,7 +33,7 @@ public class MovieApisReader implements PropertiesLoader {
      * The constant OMDB_ROOT.
      */
     public static final String OMDB_ROOT = "http://www.omdbapi.com/";
-    private final Logger logger = LogManager.getLogger(this.getClass());
+    //private final Logger logger = LogManager.getLogger(this.getClass());
 
 
     /**
@@ -173,10 +173,10 @@ public class MovieApisReader implements PropertiesLoader {
                 continue;
             }
             System.out.println("MovieApisReader.parseJSONKinopoiskMovies().movie - " + movie);
-            logger.info("sout parseJSONKinopoiskMovies(): single movie: " + movie);
+           // logger.info("sout parseJSONKinopoiskMovies(): single movie: " + movie);
             movies.add(movie);
         }
-        logger.info("sout parseJSONKinopoiskMovies: movie list: " + movies);
+        //logger.info("sout parseJSONKinopoiskMovies: movie list: " + movies);
         return movies;
     }
 
@@ -234,7 +234,7 @@ public class MovieApisReader implements PropertiesLoader {
                     movie.setMetacriticRating(ratingsJSON.getString("Value"));
                 }
             }
-        logger.info(movie);
+        //logger.info(movie);
         return movie;
     }
 
@@ -249,7 +249,7 @@ public class MovieApisReader implements PropertiesLoader {
     public static void main(String[] args) throws IOException {
         MovieApisReader reader = new MovieApisReader();
         //test
-        List<Movie> movies = reader.parseJSONKinopoiskMovies("Avengers");
+        List<Movie> movies = reader.parseJSONKinopoiskMovies("Kar");
 
         // test with requests for apis
         //List<Movie> movies = reader.parseJSONKinopoiskMovies("Django");

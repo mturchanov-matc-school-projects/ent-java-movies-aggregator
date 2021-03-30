@@ -197,6 +197,22 @@ public class Movie {
         this.image = image;
         this.year = year;
     }
+
+    /**
+     * Instantiates a new Movie.
+     *
+     * @param nameEn      the name en
+     * @param nameRu      the name ru
+     * @param imdbId      the imdb id
+     * @param filmId      the film id
+     * @param shortDesc   the short desc
+     * @param duration    the duration
+     * @param year        the year
+     * @param kVotes      the k votes
+     * @param rating      the rating
+     * @param image       the image
+     * @param description the description
+     */
     public Movie(String nameEn, String nameRu, String imdbId, String filmId,
                  String shortDesc, String duration, String year, String kVotes,
                  String rating, String image, String description) {

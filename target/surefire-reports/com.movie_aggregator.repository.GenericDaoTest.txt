@@ -1,0 +1,12 @@
+-------------------------------------------------------------------------------
+Test set: com.movie_aggregator.repository.GenericDaoTest
+-------------------------------------------------------------------------------
+Tests run: 9, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 1.984 sec <<< FAILURE! - in com.movie_aggregator.repository.GenericDaoTest
+deleteSuccess()  Time elapsed: 0.718 sec  <<< ERROR!
+org.springframework.dao.InvalidDataAccessResourceUsageException: could not execute statement; SQL [n/a]; nested exception is org.hibernate.exception.SQLGrammarException: could not execute statement
+	at com.movie_aggregator.repository.GenericDaoTest.deleteSuccess(GenericDaoTest.java:69)
+Caused by: org.hibernate.exception.SQLGrammarException: could not execute statement
+	at com.movie_aggregator.repository.GenericDaoTest.deleteSuccess(GenericDaoTest.java:69)
+Caused by: java.sql.SQLSyntaxErrorException: Table 'ent_java_indiv_proj_test.movies_user' doesn't exist
+	at com.movie_aggregator.repository.GenericDaoTest.deleteSuccess(GenericDaoTest.java:69)
+
