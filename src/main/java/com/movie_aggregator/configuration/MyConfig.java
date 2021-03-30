@@ -49,7 +49,7 @@ public class MyConfig {
             dataSource.setDriverClass("com.mysql.cj.jdbc.Driver");
             dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/ent_java_indiv_proj?useSSL=false&serverTimezone=UTC");
             dataSource.setUser("root");
-            dataSource.setPassword("KOOgFGKmax18");
+            dataSource.setPassword("root");
         } catch (PropertyVetoException e) {
             e.printStackTrace();
         }
