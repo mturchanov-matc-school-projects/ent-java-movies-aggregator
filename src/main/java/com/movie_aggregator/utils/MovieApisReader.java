@@ -15,6 +15,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Properties;
 
 /**
@@ -120,8 +121,9 @@ public class MovieApisReader implements PropertiesLoader {
             String nameRu = movieJSON.getString("nameRu");
             String nameEn = movieJSON.getString("nameEn");
             String shortDesc = movieJSON.getString("description");
-
-            if(!nameEn.contains(searchVal) || nameEn.contains("(сериал)")
+           // System.out.println(nameEn);
+            if(!nameEn.toLowerCase(Locale.ROOT).contains(searchVal)
+                    || nameEn.contains("(сериал)")
                     || shortDesc.contains("короткометражка")
                     || nameRu.contains("(ТВ)")
             ) {
@@ -249,7 +251,7 @@ public class MovieApisReader implements PropertiesLoader {
     public static void main(String[] args) throws IOException {
         MovieApisReader reader = new MovieApisReader();
         //test
-        List<Movie> movies = reader.parseJSONKinopoiskMovies("Kar");
+        List<Movie> movies = reader.parseJSONKinopoiskMovies("star");
 
         // test with requests for apis
         //List<Movie> movies = reader.parseJSONKinopoiskMovies("Django");

@@ -11,7 +11,7 @@
 </head>
 <body class="security-app">
 <div class="details">
-    <h2>Fill up username and password/h2>
+    <h2>Fill up username and password</h2>
 </div>
 
 <form action="${pageContext.request.contextPath}/login" method="post">

@@ -25,7 +25,7 @@ public class Search {
     )
     private Set<Movie> movies;
 
-    private int number;
+    private int number = 1;
 
     /**
      * Instantiates a new Search.

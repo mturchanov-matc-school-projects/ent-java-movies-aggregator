@@ -123,6 +123,7 @@ public class GenericService {
     public List<Movie> getMovies (Search existedSearch, String searchVal) throws IOException {
         // Search existedSearch = getOneEntryByColumProperty(propertyName, searchVal, searchClass);
         List<Movie> movies = null;
+        System.out.println("test");
         if (existedSearch != null) { //IF SEARCH IN DB THEN NO NEED FOR APIS REQUESTS
             // GET movies from DB
             movies = getMoviesBasedOnSearchName(searchVal);
@@ -132,9 +133,11 @@ public class GenericService {
             movies = movieApisReader.parseJSONKinopoiskMovies(searchVal);
             Search lastSearch = getLastSearch();
             int id = 1;
+            System.out.println(id);
             if (lastSearch != null) {
                 id = lastSearch.getId() + 1;
             }
+            System.out.println(id);
             saveOrUpdate(new Search(id, searchVal));
 
             for (Movie movie : movies) {
