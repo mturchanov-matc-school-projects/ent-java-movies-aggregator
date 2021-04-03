@@ -2,6 +2,7 @@ package com.movie_aggregator.controller;
 
 import com.movie_aggregator.entity.Movie;
 import com.movie_aggregator.entity.Search;
+import com.movie_aggregator.entity.User;
 import com.movie_aggregator.service.GenericService;
 import com.movie_aggregator.utils.MovieApisReader;
 
@@ -47,6 +48,14 @@ public class MyRestController {
             m.setSearches(null);
         }
         return allMovies; // jackson-api in maven will convert entity-object to json
+    }
+
+    @PostMapping("/movies/t/{token}")
+    public Movie addNewMovieWithTokenToUserList(@RequestBody Movie movie, @PathVariable String token) {
+        User user = genericService.getOneEntryByColumProperty("token", token, User.class);
+        user.addMovieToUser(movie);
+        genericService.merge(user);
+        return movie;
     }
 
 

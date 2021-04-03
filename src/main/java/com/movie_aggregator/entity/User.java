@@ -103,6 +103,8 @@ public class User implements UserDetails {
         this.username = username;
     }
 
+
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;

@@ -45,27 +45,18 @@
                         <h4 class="mt-0 mb-1"><c:out value="Kinopoisk Rating ${movie.kinopoiskRating}" /> </h4>
                         <h4 class="mt-0 mb-1"><c:out value="Metacritic Rating ${movie.metacriticRating}" /> </h4>
                         <h4 class="mt-0 mb-1"><c:out value="rottenTomatoes Rating ${movie.rottenTomatoesRating}" /> </h4>
+                       <!-- TODO: delete --> <h4 class="mt-0 mb-1"><c:out value="isAdded  ${movie.addedToUserList}" /> </h4>
+
                     </div>
 
-<%--                    <form action="${pageContext.request.contextPath}/addMovie" method="post">--%>
-<%--                        <input type="submit" value="Add">--%>
-<%--                        <input type="hidden" name="movieToAdd" value="${movie}" />--%>
-<%--                        <input type="hidden" name="movieName" value="${movie.name}" />--%>
-<%--                        <input type="hidden" name="movieYear" value="${movie.year}" />--%>
-<%--                        <input type="hidden" name="movieImdbId" value="${movie.imdbId}" />--%>
-<%--                        <input type="hidden" name="movieImdbRating" value="${movie.imdbRating}" />--%>
-<%--                        <input type="hidden" name="movieMetacriticRating" value="${movie.metacriticRating}" />--%>
-<%--                        <input type="hidden" name="movieRottenTomatoesRating" value="${movie.rottenTomatoesRating}" />--%>
-<%--                        <input type="hidden" name="movieTheMovieDbRating" value="${movie.theMovieDbRating}" />--%>
-<%--                        <input type="hidden" name="movieTV_comRating" value="${movie.tV_comRating}" />--%>
-<%--                        <input type="hidden" name="movieFilmAffinityRating" value="${movie.filmAffinityRating}" />--%>
-<%--                        <input type="hidden" name="movieImage" value="${movie.image}" />--%>
-<%--                    </form>--%>
-
-<%--                    <form action="${pageContext.request.contextPath}/deleteMovie" method="post">--%>
-<%--                        <input type="submit" value="Delete">--%>
-<%--                        <input type="hidden" name="movieId" value="${movie.id}" />--%>
-<%--                    </form>--%>
+                    <form action="${pageContext.request.contextPath}/addMovie" method="get">
+                        <input type="submit" value="Add">
+                        <input type="hidden" name="movieId" value="${movie.id}" />
+                    </form>
+                    <form action="${pageContext.request.contextPath}/deleteMovie" method="post">
+                        <input type="submit" value="Delete">
+                        <input type="hidden" name="movieId" value="${movie.id}" />
+                    </form>
                     <a href="${pageContext.request.contextPath}/movie?id=${movie.id}">
                         <button type="button" class="btn btn-info">More Info</button>
                     </a>

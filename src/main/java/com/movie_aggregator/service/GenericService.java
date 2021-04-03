@@ -112,6 +112,11 @@ public class GenericService {
         return genericDao.getMoviesByToken(token);
     }
 
+    public List<Movie> getMoviesByProperty(String field, String searchVal, String propertyEntity) {
+        return genericDao.getMoviesByProperty(field, searchVal, propertyEntity);
+    }
+
+
     /**
      * Gets movies.
      *
@@ -123,7 +128,6 @@ public class GenericService {
     public List<Movie> getMovies (Search existedSearch, String searchVal) throws IOException {
         // Search existedSearch = getOneEntryByColumProperty(propertyName, searchVal, searchClass);
         List<Movie> movies = null;
-        System.out.println("test");
         if (existedSearch != null) { //IF SEARCH IN DB THEN NO NEED FOR APIS REQUESTS
             // GET movies from DB
             movies = getMoviesBasedOnSearchName(searchVal);

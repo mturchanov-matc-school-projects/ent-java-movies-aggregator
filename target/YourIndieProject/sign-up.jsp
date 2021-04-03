@@ -17,7 +17,6 @@
 
 <form:form method="POST"
            action="registrationProcessing" modelAttribute="user">
-
     <form:label path="username">Username</form:label>
     <form:input path="username"/>
     <br>

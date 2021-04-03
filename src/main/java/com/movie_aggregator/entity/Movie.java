@@ -106,6 +106,9 @@ public class Movie {
     @Column(name = "kinopoisk_votes")
     private String kinopoiskVotes;
 
+    @Transient
+    private boolean isAddedToUserList;
+
     /**
      * Instantiates a new Movie.
      */
@@ -227,6 +230,15 @@ public class Movie {
         this.image = image;
         this.year = year;
         this.kinopoiskVotes = kVotes;
+    }
+
+
+    public boolean isAddedToUserList() {
+        return isAddedToUserList;
+    }
+
+    public void setAddedToUserList(boolean addedToUserList) {
+        isAddedToUserList = addedToUserList;
     }
 
     /**
@@ -778,6 +790,7 @@ public class Movie {
                 ", metascore='" + metascore + '\'' +
                 ", image='" + image + '\'' +
                 ", year='" + year + '\'' +
+                ", isAdded='" + isAddedToUserList + '\'' +
                 '}';
     }
 }

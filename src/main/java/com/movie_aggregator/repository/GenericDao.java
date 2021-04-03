@@ -138,6 +138,21 @@ public class GenericDao {
        return movies.list();
     }
 
+    public List<Movie> getMoviesByProperty(String field, String searchVal, String propertyEntity) {
+        final Session session = sessionFactory.getCurrentSession();
+        String hquery = String.format("select m from Movie m " +
+                "inner join m.%s u " +
+                "where u.%s=:%s", propertyEntity, field, field);
+
+        Query movies = session.createQuery(hquery);
+        movies.setParameter(field, searchVal);
+        //Query movies = session.createQuery(
+        //        "select * from movies \n" +
+        //                 "inner join movies_user on movies_user.movie_id= movies.id\n" +
+        //                "inner join users on movies_user.username=users.username where token='1'" );
+        return movies.list();
+    }
+
     /**
      * Gets movies based on search name.
      *

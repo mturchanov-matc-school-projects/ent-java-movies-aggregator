@@ -1,6 +1,5 @@
 package com.movie_aggregator.controller;
 
-import com.movie_aggregator.entity.Authority;
 import com.movie_aggregator.entity.Movie;
 import com.movie_aggregator.entity.Search;
 import com.movie_aggregator.entity.User;
@@ -8,13 +7,12 @@ import com.movie_aggregator.service.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
@@ -52,6 +50,29 @@ public class MyController {
         return "result";
     }
 
+    @GetMapping(value = "/addMovie")
+    public String addMovie(@RequestParam("movieId") int movieId, HttpServletRequest request) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username;
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails)principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+
+        User user = genericService.getOneEntryByColumProperty("username", username, User.class);
+        Movie movie = genericService.get(Movie.class, movieId);
+        movie.setSearches(null);
+
+        user.addMovieToUser(movie);
+        genericService.merge(user);
+
+        String referer = request.getHeader("Referer");
+        return "redirect:"+ referer;
+        //return "index";
+    }
+
+
 
 
 
@@ -86,6 +107,27 @@ public class MyController {
             throws IOException {
         Search existedSearch = genericService.getOneEntryByColumProperty("name", searchVal, Search.class);
         List<Movie> movies = genericService.getMovies(existedSearch, searchVal);
+
+
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = null;
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails)principal).getUsername();
+        }
+
+        if (username != null) {
+            List<Movie> userMovies = genericService.getMoviesByProperty("username", username, "users");
+            for (Movie m : movies) {
+                if (userMovies.contains(m)) {
+                    m.setAddedToUserList(true);
+                }
+            }
+        }
+
+
+
+
         System.out.println(movies);
         model.addAttribute("movies", movies);
         return "/result";
@@ -124,10 +166,10 @@ public class MyController {
         //genericService.save(newMovie);
 
 
-        String searchVal = "Mor";
-        Search existedSearch = genericService.getOneEntryByColumProperty("name", searchVal, Search.class);
-        List<Movie> movies = genericService.getMovies(existedSearch, searchVal);
-        model.addAttribute("movies", movies);
+        //String searchVal = "Mor";
+        //Search existedSearch = genericService.getOneEntryByColumProperty("name", searchVal, Search.class);
+        //List<Movie> movies = genericService.getMovies(existedSearch, searchVal);
+        //model.addAttribute("movies", movies);
 
         //User user = new User();
         //user.setPassword("123");
@@ -140,20 +182,40 @@ public class MyController {
 
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
+        String username;
         if (principal instanceof UserDetails) {
-            String username = ((UserDetails)principal).getUsername();
-            model.addAttribute("username", username);
+            username = ((UserDetails)principal).getUsername();
         } else {
-            String username = principal.toString();
+            username = principal.toString();
         }
 
-        //User user = genericService.getOneEntryByColumProperty("username", "2", User.class);
-        //user.addMovieToUser(new Movie(12344, "123", "123", "123"));
+        //User user = genericService.getOneEntryByColumProperty("username", username, User.class);
+        //Movie movie = genericService.get(Movie.class, 1209195);
+        //movie.setSearches(null);
+        //user.addMovieToUser(movie);
         //genericService.merge(user);
+        //List<Movie> movies = genericService.getMoviesByToken(user.get);
+        //model.addAttribute("movies", movies);
 
+
+
+        //Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//
+        //if (principal instanceof UserDetails) {
+        //    String username = ((UserDetails)principal).getUsername();
+        //    model.addAttribute("username", username);
+        //} else {
+        //    String username = principal.toString();
+        //}
+//
+        //User user = genericService.getOneEntryByColumProperty("token", "1", User.class);
+        //user.addMovieToUser(new Movie(111, "11", "11", "11"));
+        //genericService.merge(user);
+       // User user = genericService.getOneEntryByColumProperty("username", username, User.class);
+        List<Movie> movies = genericService.getMoviesByProperty("username", "2", "users");
         //List<Movie> movies = genericService.getMoviesByToken("1");
-       // model.addAttribute("movies", movies);
+
+        model.addAttribute("movies", movies);
         return "/test";
     }
 
