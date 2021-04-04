@@ -28,11 +28,7 @@ public class MyController {
     @Autowired
     private GenericService genericService;
 
-    @GetMapping("/registrationProcessing")
-    public String registrationProcessing(Model model) {
-        model.addAttribute("user", new User());
-        return "/sign-up";
-    }
+
 
     //TODO: take somehow username if user is logged in -> put filtered movies to model
     @RequestMapping("/myMovies")
@@ -107,11 +103,30 @@ public class MyController {
         int isSaved =  genericService.saveUser(newUser);
         if (isSaved == 0) {
             model.addAttribute("warning", "Such username already in use! Try again");
-            return "/sign-up";
+            return "redirect:/registrationProcessing";
         }
 
+        return "redirect:/login";
+    }
+
+    @GetMapping("/login")
+    public String login() {
         return "/login";
     }
+
+
+        @GetMapping("/registrationProcessing")
+    public String registrationProcessing(Model model, @ModelAttribute("warning") String warning) {
+        model.addAttribute("user", new User());
+        model.addAttribute("warning", warning);
+        return "/sign-up";
+    }
+
+
+
+
+
+
     /**
      * Search movie string.
      *

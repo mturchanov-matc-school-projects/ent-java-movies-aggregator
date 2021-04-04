@@ -30,11 +30,8 @@
     <list default="true" id="b4add5ff-e70d-4f2b-bb88-aba2066d226f" name="Default Changelist" comment="ERD image was updated(added users/roles table)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/controller/MyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/controller/MyController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/sign-up.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/sign-up.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/YourIndieProject.war" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject.war" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/controller/MyController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/controller/MyController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/result.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/result.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/sign-up.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/sign-up.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/controller/MyController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/controller/MyController.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -557,7 +554,7 @@
       <workItem from="1617133646690" duration="11991000" />
       <workItem from="1617394454682" duration="4965000" />
       <workItem from="1617479171326" duration="7869000" />
-      <workItem from="1617553736675" duration="849000" />
+      <workItem from="1617553736675" duration="1880000" />
     </task>
     <task id="LOCAL-00001" summary="ERD image was updated(added users/roles table)">
       <created>1615338497654</created>
