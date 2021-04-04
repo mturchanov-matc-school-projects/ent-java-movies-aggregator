@@ -62,8 +62,6 @@ public class MyController {
 
         User user = genericService.getOneEntryByColumProperty("username", username, User.class);
         Movie movie = genericService.get(Movie.class, movieId);
-        movie.setSearches(null);
-
         user.addMovieToUser(movie);
         genericService.merge(user);
 
