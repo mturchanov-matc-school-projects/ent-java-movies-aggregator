@@ -9,11 +9,16 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
+    <style>
+        #warning-sign-up {
+            color: red;
+            font-weight: 500;
+        }
+    </style>
 </head>
 <body>
 <h3>Welcome, new user</h3>
-
+<h4 id="warning-sign-up">${warning}</h4>
 
 <form:form method="POST"
            action="registrationProcessing" modelAttribute="user">

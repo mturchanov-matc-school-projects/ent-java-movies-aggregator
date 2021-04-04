@@ -95,15 +95,21 @@ public class MyController {
     //    + store somehow user in session to not login everytime  when access page with extra
 
     @RequestMapping(value = "/registrationProcessing", method = RequestMethod.POST)
-    public String registrationProcessing(final @Valid @ModelAttribute("user") User user,
+    public String registrationProcessing(final @Valid @ModelAttribute("user") User newUser,
                                          final BindingResult bindingResult,
                                          final Model model) {
         if (bindingResult.hasErrors()) {
             System.out.println(bindingResult.hasErrors());
+            System.out.println("existing username?");
             return "/test";
         }
 
-        int isSaved =  genericService.saveUser(user);
+        int isSaved =  genericService.saveUser(newUser);
+        if (isSaved == 0) {
+            model.addAttribute("warning", "Such username already in use! Try again");
+            return "/sign-up";
+        }
+
         return "/login";
     }
     /**
