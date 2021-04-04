@@ -149,4 +149,10 @@ public class User implements UserDetails {
                 ", enabled=" + enabled +
                 '}';
     }
+
+    public void removeMovieFromUser(Movie movie) {
+        if (myMovies != null) {
+            myMovies.remove(movie);
+        }
+    }
 }

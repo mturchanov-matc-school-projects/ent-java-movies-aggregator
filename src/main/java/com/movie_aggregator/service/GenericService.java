@@ -120,14 +120,16 @@ public class GenericService {
     /**
      * Gets movies.
      *
-     * @param existedSearch the existed search
      * @param searchVal     the search val
      * @return the movies
      * @throws IOException the io exception
      */
-    public List<Movie> getMovies (Search existedSearch, String searchVal) throws IOException {
+    public List<Movie> getMovies (String searchVal) throws IOException {
+        Search existedSearch = getOneEntryByColumProperty("name", searchVal, Search.class);
+        searchVal = searchVal.trim().toLowerCase();
         // Search existedSearch = getOneEntryByColumProperty(propertyName, searchVal, searchClass);
         List<Movie> movies = null;
+        System.out.printf("existedSearch is null : %b%n", existedSearch == null);
         if (existedSearch != null) { //IF SEARCH IN DB THEN NO NEED FOR APIS REQUESTS
             // GET movies from DB
             movies = getMoviesBasedOnSearchName(searchVal);
@@ -141,22 +143,22 @@ public class GenericService {
             if (lastSearch != null) {
                 id = lastSearch.getId() + 1;
             }
-            System.out.println(id);
-            saveOrUpdate(new Search(id, searchVal));
+            Search newSearch = new Search(id, searchVal);
+            saveOrUpdate(newSearch); // save new search manually because only once needed
 
-            for (Movie movie : movies) {
-                movie.addSearchToMovie(new Search(id, searchVal)); // id set manually
+            for (Movie movie : movies) { // update movie_search via cascade
+                movie.addSearchToMovie(new Search(id, searchVal)); //1search-manyMovies case
             }
 
+            // check if movie was added to db by different search -> update movie_search via cascade
             for (Movie movie : movies) {
-                // check if movie was added to db by different search
-                //Movie getMovie = getOneEntryByColumProperty("kinopoiskId",
-                //        movie.getKinopoiskId(), Movie.class);
-                //if (getMovie != null) {
-                //    getMovie.addSearchToMovie(new Search(searchVal));
-                //    genericDao.saveOrUpdate(getMovie);
-                //    continue;
-                //}
+                Movie getMovie = getOneEntryByColumProperty("kinopoiskId",
+                        movie.getKinopoiskId(), Movie.class);
+                if (getMovie != null) { //if movie in db then it was added via another search
+                    getMovie.addSearchToMovie(newSearch);
+                    genericDao.merge(getMovie); // update movie_search -> 1movie-manySearches case
+                    continue;
+                }
                 genericDao.saveOrUpdate(movie);
             }
         }

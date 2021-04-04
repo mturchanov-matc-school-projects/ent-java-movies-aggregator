@@ -48,22 +48,29 @@
                        <!-- TODO: delete --> <h4 class="mt-0 mb-1"><c:out value="isAdded  ${movie.addedToUserList}" /> </h4>
 
                     </div>
+                    <sec:authorize access="isAuthenticated()">
+                        <c:choose>
+                            <c:when test="${!movie.addedToUserList}">
+                                <form action="${pageContext.request.contextPath}/addMovie" method="get">
+                                    <input type="submit" value="Add">
+                                    <input type="hidden" name="movieId" value="${movie.id}" />
+                                </form>
+                            </c:when>
+                            <c:otherwise>
+                                <form action="${pageContext.request.contextPath}/deleteMovie" method="get">
+                                    <input type="submit" value="Delete">
+                                    <input type="hidden" name="movieId" value="${movie.id}" />
+                                </form>
+                            </c:otherwise>
+                        </c:choose>
+                    </sec:authorize>
 
-                    <form action="${pageContext.request.contextPath}/addMovie" method="get">
-                        <input type="submit" value="Add">
-                        <input type="hidden" name="movieId" value="${movie.id}" />
-                    </form>
-                    <form action="${pageContext.request.contextPath}/deleteMovie" method="post">
-                        <input type="submit" value="Delete">
-                        <input type="hidden" name="movieId" value="${movie.id}" />
-                    </form>
+
                     <a href="${pageContext.request.contextPath}/movie?id=${movie.id}">
                         <button type="button" class="btn btn-info">More Info</button>
                     </a>
                 </li>
             </ul>
-
-
         </div>
     </c:forEach>
 </div>

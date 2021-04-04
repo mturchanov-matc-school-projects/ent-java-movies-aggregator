@@ -66,8 +66,7 @@ public class MyRestController {
      */
     @GetMapping("/movies/s/{searchVal}")
     public List<Movie> showAllMoviesBySearchName(@PathVariable String searchVal) throws IOException {
-        Search existedSearch = genericService.getOneEntryByColumProperty("name", searchVal, Search.class);
-        List<Movie> movies = genericService.getMovies(existedSearch, searchVal);
+        List<Movie> movies = genericService.getMovies(searchVal);
         System.out.println(movies);
         for (Movie m : movies) {
             m.setSearches(null);

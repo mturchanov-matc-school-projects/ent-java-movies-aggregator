@@ -126,6 +126,7 @@ public class MovieApisReader implements PropertiesLoader {
                     || nameEn.contains("(сериал)")
                     || shortDesc.contains("короткометражка")
                     || nameRu.contains("(ТВ)")
+                    || nameEn.contains("(видео)")
             ) {
                 continue;
             }
@@ -251,7 +252,7 @@ public class MovieApisReader implements PropertiesLoader {
     public static void main(String[] args) throws IOException {
         MovieApisReader reader = new MovieApisReader();
         //test
-        List<Movie> movies = reader.parseJSONKinopoiskMovies("star");
+        List<Movie> movies = reader.parseJSONKinopoiskMovies("redemption");
 
         // test with requests for apis
         //List<Movie> movies = reader.parseJSONKinopoiskMovies("Django");

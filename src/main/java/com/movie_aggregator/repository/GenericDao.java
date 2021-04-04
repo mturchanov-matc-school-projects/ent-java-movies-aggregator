@@ -179,7 +179,7 @@ public class GenericDao {
      * @return the first entry based on another table column property
      */
     public <T> T getFirstEntryBasedOnAnotherTableColumnProperty(String propertyName, String searchVal, Class<T> type) {
-        Session session = sessionFactory.openSession();
+        final Session session = sessionFactory.getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<T> query = builder.createQuery(type);
         Root<T> root = query.from(type);

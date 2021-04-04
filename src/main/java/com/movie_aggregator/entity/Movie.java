@@ -20,7 +20,7 @@ public class Movie {
     @Column
     private String name;
     //@ManyToMany(cascade = CascadeType.ALL)
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}
+    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}
             , fetch = FetchType.EAGER)
     @JoinTable(
             name = "movie_search",

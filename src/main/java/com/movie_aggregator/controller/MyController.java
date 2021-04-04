@@ -53,21 +53,35 @@ public class MyController {
     @GetMapping(value = "/addMovie")
     public String addMovie(@RequestParam("movieId") int movieId, HttpServletRequest request) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username;
+        String username = null;
         if (principal instanceof UserDetails) {
             username = ((UserDetails)principal).getUsername();
-        } else {
-            username = principal.toString();
         }
 
         User user = genericService.getOneEntryByColumProperty("username", username, User.class);
         Movie movie = genericService.get(Movie.class, movieId);
+
         user.addMovieToUser(movie);
         genericService.merge(user);
 
         String referer = request.getHeader("Referer");
         return "redirect:"+ referer;
-        //return "index";
+    }
+
+    @GetMapping(value = "/deleteMovie")
+    public String deleteMovie(@RequestParam("movieId") int movieId, HttpServletRequest request) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = null;
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails)principal).getUsername();
+        }
+
+        User user = genericService.getOneEntryByColumProperty("username", username, User.class);
+        Movie movie = genericService.get(Movie.class, movieId);
+        user.removeMovieFromUser(movie);
+        genericService.merge(user);
+        String referer = request.getHeader("Referer");
+        return "redirect:"+ referer;
     }
 
 
@@ -103,8 +117,7 @@ public class MyController {
     @RequestMapping("/searchMovie")
     public String searchMovie(@RequestParam("searchVal") String searchVal, Model model)
             throws IOException {
-        Search existedSearch = genericService.getOneEntryByColumProperty("name", searchVal, Search.class);
-        List<Movie> movies = genericService.getMovies(existedSearch, searchVal);
+        List<Movie> movies = genericService.getMovies(searchVal);
 
 
 
@@ -210,10 +223,31 @@ public class MyController {
         //user.addMovieToUser(new Movie(111, "11", "11", "11"));
         //genericService.merge(user);
        // User user = genericService.getOneEntryByColumProperty("username", username, User.class);
-        List<Movie> movies = genericService.getMoviesByProperty("username", "2", "users");
+        //List<Movie> movies = genericService.getMoviesByProperty("username", "2", "users");
         //List<Movie> movies = genericService.getMoviesByToken("1");
 
-        model.addAttribute("movies", movies);
+       //Movie newMovie = new Movie();
+       //Search search = new Search( 5,"test search1");
+       //genericService.saveOrUpdate(search);
+
+       //newMovie.setName("new m - from test search1");
+       //newMovie.setId(12345);
+       //newMovie.setKinopoiskId("12345");
+       //newMovie.setImage("https://ichef.bbci.co.uk/news/976/cpsprodpb/12A9B/production/_111434467_gettyimages-1143489763.jpg");
+       //newMovie.addSearchToMovie(search);
+       //genericService.saveOrUpdate(newMovie);
+
+
+
+       //Search search2 = new Search( 6,"test search2");
+       //genericService.saveOrUpdate(search2);
+
+       //Movie getMovie = genericService.getOneEntryByColumProperty("kinopoiskId",
+       //        newMovie.getKinopoiskId(), Movie.class);
+       //etMovie.addSearchToMovie(search2);
+       //genericService.merge(getMovie);
+
+       // model.addAttribute("movies", movies);
         return "/test";
     }
 
