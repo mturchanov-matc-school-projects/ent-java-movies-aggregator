@@ -26,8 +26,8 @@
                 </sec:authorize>
                 <sec:authorize access="isAuthenticated()">
                     <li><a href="${pageContext.request.contextPath}/logout">LOGOUT</a></li>
+                    <li><a href="${pageContext.request.contextPath}/myMovies">MY MOVIES</a></li>
                 </sec:authorize>
-              <!--  <li><a href="${pageContext.request.contextPath}/myMovies">Go to My Movies</a></li> -->
                 <li><a href="${pageContext.request.contextPath}/test">TEST</a></li>
             </ul>
         </div>

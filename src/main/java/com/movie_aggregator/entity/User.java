@@ -32,7 +32,7 @@ public class User implements UserDetails {
     @JoinColumn(name = "username")
     private List<Authority> authorityList;
 
-    @ManyToMany(cascade = {CascadeType.MERGE})
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.DETACH}, fetch = FetchType.EAGER)
     @JoinTable(
             name = "movies_user",
             joinColumns = @JoinColumn(name = "username"), //write how bridge table get connected with this source table/entity

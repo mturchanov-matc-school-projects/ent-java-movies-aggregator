@@ -1,7 +1,6 @@
 package com.movie_aggregator.controller;
 
 import com.movie_aggregator.entity.Movie;
-import com.movie_aggregator.entity.Search;
 import com.movie_aggregator.entity.User;
 import com.movie_aggregator.service.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,18 +31,20 @@ public class MyController {
 
     //TODO: take somehow username if user is logged in -> put filtered movies to model
     @RequestMapping("/myMovies")
-    public String getMyMovies(@RequestParam("searchVal") String searchVal, Model model) {
+    public String getMyMovies(Model model) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<Movie> userMovies;
-
+        String username = null;
         if (principal instanceof UserDetails) {
-            String username = ((UserDetails)principal).getUsername();
-            //userMovies = genericService.
-            model.addAttribute("username", username);
-        } else {
-            String username = principal.toString();
+            username = ((UserDetails)principal).getUsername();
         }
-        return "result";
+
+        userMovies = genericService.getMoviesByProperty("username", username, "users");
+        for (Movie movie : userMovies) {
+            movie.setAddedToUserList(true);
+        }
+        model.addAttribute("movies", userMovies);
+        return "/result";
     }
 
     @GetMapping(value = "/addMovie")
@@ -101,7 +102,7 @@ public class MyController {
         }
 
         int isSaved =  genericService.saveUser(newUser);
-        if (isSaved == 0) {
+        if (isSaved == 0) { // if no saved then such username already exists
             model.addAttribute("warning", "Such username already in use! Try again");
             return "redirect:/registrationProcessing";
         }
@@ -109,6 +110,11 @@ public class MyController {
         return "redirect:/login";
     }
 
+    /**
+     * get-redirect for prg pattern
+     *
+     * @return default spring security login
+     */
     @GetMapping("/login")
     public String login() {
         return "/login";
@@ -123,10 +129,6 @@ public class MyController {
     }
 
 
-
-
-
-
     /**
      * Search movie string.
      *
@@ -139,8 +141,6 @@ public class MyController {
     public String searchMovie(@RequestParam("searchVal") String searchVal, Model model)
             throws IOException {
         List<Movie> movies = genericService.getMovies(searchVal);
-
-
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = null;
