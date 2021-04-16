@@ -76,7 +76,9 @@ public class MovieApisReader implements PropertiesLoader {
                 if (searchSource.equals("general")) {
                     requestURL = String.format("%s%s%s%s", KINOPOISK_ROOT, "search-by-keyword?keyword=", searchVal, "&page=1");
                 } else if (searchSource.equals("specific")) {
-                    requestURL = String.format("%s%s", KINOPOISK_ROOT, searchVal);
+                    requestURL = String.format("%s%s?append_to_response=REVIEW", KINOPOISK_ROOT, searchVal);
+                } else if(searchSource.equals("frames")) {
+                    requestURL = String.format("%s%s/frames", KINOPOISK_ROOT, searchVal);
                 }
                 request = new Request.Builder()
                         .url(requestURL)
@@ -120,7 +122,9 @@ public class MovieApisReader implements PropertiesLoader {
             String filmId = String.valueOf(movieJSON.getInt("filmId"));
             String nameRu = movieJSON.getString("nameRu");
             String nameEn = movieJSON.getString("nameEn");
-            String shortDesc = movieJSON.getString("description");
+            String shortDesc = movieJSON.has("description")
+                ? movieJSON.getString("description")
+                    : "";
            // System.out.println(nameEn);
             if(!nameEn.toLowerCase(Locale.ROOT).contains(searchVal)
                     || nameEn.contains("(сериал)")
@@ -161,7 +165,39 @@ public class MovieApisReader implements PropertiesLoader {
                     ? externalIdObj.getString("imdbId")
                     : "null";
 
+            JSONObject reviewJSON = movieDetailsJSON.getJSONObject("review");
+
+            int reviews = !reviewJSON.isNull("reviewsCount")
+                    ? reviewJSON.getInt("reviewsCount"):
+                    0;
+            int goodReviews = !reviewJSON.isNull("ratingGoodReviewVoteCount")
+                    ? reviewJSON.getInt("ratingGoodReviewVoteCount"):
+                    0;
+
+            //JSONObject budgetJSON = movieDetailsJSON.getJSONObject("budget");
+            //String budget =  budgetJSON.getString("budget");
             Movie movie = new Movie(nameEn, nameRu,imdbId, filmId, shortDesc, duration, year, kVotes, rating, image, description);
+
+            String framesDetails = getJSONFromApi("frames","kinopoisk", filmId);
+            if (!framesDetails.isEmpty()) {
+                StringBuilder framesSb = new StringBuilder();
+                JSONObject framesDetailsJSON = new JSONObject(framesDetails);
+
+                JSONArray frames = framesDetailsJSON.getJSONArray("frames");
+                for (int j = 0; j < frames.length(); j++) {
+                    JSONObject frameJSON = frames.getJSONObject(j);
+                    String frame = frameJSON.getString("image");
+                    framesSb.append(frame).append(" ");
+                }
+                String kinopoiskReviewsFormatted = String.format("%s(%s)", reviews, goodReviews);
+                movie.setKinopoiskReviews(kinopoiskReviewsFormatted);
+                movie.setImages(framesSb.toString().trim());
+
+                //System.out.printf("name:%s%nreview:%d/%d%nframeSB:%s%n%n", nameEn, reviews, goodReviews, framesSb.toString());
+            }
+
+
+            //Movie movie = new Movie(nameEn, nameRu,imdbId, filmId, shortDesc, duration, year, kVotes, rating, image, description);
             //JSONObject movieReview = movieDetailsJSON.getJSONObject("review");
             movie.setId(Integer.parseInt(filmId));
             if (!imdbId.equals("null")) {
@@ -175,7 +211,7 @@ public class MovieApisReader implements PropertiesLoader {
                 movies.add(parseJSONImdbMovie(imdbDataJSON, movie));
                 continue;
             }
-            System.out.println("MovieApisReader.parseJSONKinopoiskMovies().movie - " + movie);
+            //System.out.println("MovieApisReader.parseJSONKinopoiskMovies().movie - " + movie);
            // logger.info("sout parseJSONKinopoiskMovies(): single movie: " + movie);
             movies.add(movie);
         }
@@ -252,13 +288,13 @@ public class MovieApisReader implements PropertiesLoader {
     public static void main(String[] args) throws IOException {
         MovieApisReader reader = new MovieApisReader();
         //test
-        List<Movie> movies = reader.parseJSONKinopoiskMovies("redemption");
+        //List<Movie> movies = reader.parseJSONKinopoiskMovies("Django");
 
         // test with requests for apis
         //List<Movie> movies = reader.parseJSONKinopoiskMovies("Django");
-        for (Movie m : movies) {
-            System.out.println(m);
-        }
+        //for (Movie m : movies) {
+           // System.out.println(m);
+        //}
     }
 
 }

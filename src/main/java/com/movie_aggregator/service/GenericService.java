@@ -139,7 +139,6 @@ public class GenericService {
             movies = movieApisReader.parseJSONKinopoiskMovies(searchVal);
             Search lastSearch = getLastSearch();
             int id = 1;
-            System.out.println(id);
             if (lastSearch != null) {
                 id = lastSearch.getId() + 1;
             }

@@ -20,7 +20,7 @@ public class Movie {
     @Column
     private String name;
     //@ManyToMany(cascade = CascadeType.ALL)
-    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}
+    @ManyToMany(cascade = {CascadeType.PERSIST,  CascadeType.REFRESH, CascadeType.DETACH}
             , fetch = FetchType.EAGER)
     @JoinTable(
             name = "movie_search",
@@ -106,6 +106,17 @@ public class Movie {
 
     @Column(name = "kinopoisk_votes")
     private String kinopoiskVotes;
+
+    /**
+     * has such format: "%s(%s)"
+     * at the left is total review number,
+     * in parenthesis is number of good reviews
+     **/
+    @Column(name = "kinopoisk_reviews")
+    private String kinopoiskReviews;
+
+    @Column
+    private String images;
 
     @Transient
     private boolean isAddedToUserList;
@@ -720,6 +731,22 @@ public class Movie {
             searches = new HashSet<>();
         }
         searches.add(search);
+    }
+
+    public String getKinopoiskReviews() {
+        return kinopoiskReviews;
+    }
+
+    public void setKinopoiskReviews(String kinopoiskReviews) {
+        this.kinopoiskReviews = kinopoiskReviews;
+    }
+
+    public String getImages() {
+        return images;
+    }
+
+    public void setImages(String images) {
+        this.images = images;
     }
 
     //TODO: fix equals for test.repositary.GenericDaoTest

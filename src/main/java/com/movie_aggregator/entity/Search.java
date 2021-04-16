@@ -142,12 +142,12 @@ public class Search {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Search search = (Search) o;
-        return id == search.id && Objects.equals(name, search.name);
+        return Objects.equals(name, search.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return Objects.hash(name);
     }
 
     @Override
