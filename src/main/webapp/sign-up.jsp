@@ -1,22 +1,14 @@
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
 <!doctype html>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <style>
-        #warning-sign-up {
-            color: red;
-            font-weight: 500;
-        }
-    </style>
-</head>
+
+<c:set var="title" value="Movie Aggregator - Home" scope="request" />
+<c:import url="includes/head.jsp" />
+
 <body>
+<c:import url="includes/header.jsp" />
+
 <h3>Welcome, new user</h3>
 <h4 id="warning-sign-up">${warning}</h4>
 
@@ -46,5 +38,7 @@
         });
     </script>
 </form:form>
+<c:import url="includes/footer.jsp" />
+
 </body>
 </html>

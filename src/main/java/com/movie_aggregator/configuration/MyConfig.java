@@ -19,6 +19,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import javax.sql.DataSource;
@@ -33,7 +36,7 @@ import java.util.Properties;
 @EnableWebMvc
 @EnableTransactionManagement
 //TODO: check what to do with setting datasource username/pass. hiding to properties or else?
-public class MyConfig {
+public class MyConfig implements WebMvcConfigurer {
 
     /**
      * Data source data source.
@@ -120,6 +123,12 @@ public class MyConfig {
         internalResourceViewResolver.setSuffix(".jsp");
         return  internalResourceViewResolver;
     }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+    }
+
 
 
 

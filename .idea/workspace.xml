@@ -29,15 +29,17 @@
   <component name="ChangeListManager">
     <list default="true" id="b4add5ff-e70d-4f2b-bb88-aba2066d226f" name="Default Changelist" comment="ERD image was updated(added users/roles table)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/entity/Movie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/entity/Movie.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/entity/Search.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/entity/Search.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/service/GenericService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/service/GenericService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/utils/MovieApisReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/utils/MovieApisReader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/configuration/MyConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/configuration/MyConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/configuration/MySecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/configuration/MySecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/movie.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/movie.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/result.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/result.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sign-up.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/sign-up.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/YourIndieProject.war" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject.war" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/service/GenericService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/service/GenericService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/utils/MovieApisReader.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/utils/MovieApisReader.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/service/GenericService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/service/GenericService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/utils/MovieApisReader.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/utils/MovieApisReader.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/index.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/movie.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/movie.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/result.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/result.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/sign-up.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/sign-up.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,6 +52,7 @@
         <option value="HTML File" />
         <option value="Class" />
         <option value="Interface" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -106,7 +109,8 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$USER_HOME$/GitHubRepos/projects" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/webapp" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
@@ -122,10 +126,10 @@
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/webapp" />
-      <recent name="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp" />
-      <recent name="$PROJECT_DIR$/src/main/resources/static/css" />
-      <recent name="$PROJECT_DIR$/src/main/webapp/WEB-INF/html" />
+      <recent name="$PROJECT_DIR$/src/main/resources/static/style" />
+      <recent name="$PROJECT_DIR$/src/main/webapp/resourses" />
       <recent name="$PROJECT_DIR$/src/main/resources/static" />
+      <recent name="$PROJECT_DIR$/src/main/resources" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="java.com.movie_aggregator.testUtils" />
@@ -591,7 +595,7 @@
       <workItem from="1618196352373" duration="35000" />
       <workItem from="1618196434334" duration="612000" />
       <workItem from="1618447896897" duration="141000" />
-      <workItem from="1618448134702" duration="4234000" />
+      <workItem from="1618448134702" duration="14617000" />
     </task>
     <task id="LOCAL-00001" summary="ERD image was updated(added users/roles table)">
       <created>1615338497654</created>
