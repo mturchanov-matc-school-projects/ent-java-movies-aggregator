@@ -23,6 +23,8 @@
             </label>
             <input type="submit" value="Search">
         </form>
+    <hr>
+    <p class="text-warning">${headerTitle}</p>
 
 
 </main>

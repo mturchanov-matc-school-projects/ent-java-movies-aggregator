@@ -137,6 +137,9 @@ public class GenericService {
         } else  { // OTHERWISE, NO SEARCH IN DB == NO MOVIES TO GET -> CALL APIS REQUESTS
             //MovieApisReader movieApisReader = new MovieApisReader();
             movies = movieApisReader.parseJSONKinopoiskMovies(searchVal);
+            if (movies == null) {
+                return null;
+            }
             Search lastSearch = getLastSearch();
             int id = 1;
             if (lastSearch != null) {

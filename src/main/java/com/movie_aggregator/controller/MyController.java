@@ -141,6 +141,10 @@ public class MyController {
     public String searchMovie(@RequestParam("searchVal") String searchVal, Model model)
             throws IOException {
         List<Movie> movies = genericService.getMovies(searchVal);
+        if (movies == null) {
+            model.addAttribute("headerTitle", String.format("Sorry, no result with '%s' input", searchVal));
+            return "/index";
+        }
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = null;
