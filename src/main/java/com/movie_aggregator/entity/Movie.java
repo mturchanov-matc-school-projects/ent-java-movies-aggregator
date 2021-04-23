@@ -29,7 +29,7 @@ public class Movie {
     )
     private Set<Search> searches;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(targetEntity=Image.class, mappedBy="movie",cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Image> images;
 
     @ManyToMany(cascade = {CascadeType.MERGE})

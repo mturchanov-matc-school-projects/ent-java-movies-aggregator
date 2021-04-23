@@ -7,6 +7,7 @@
 <c:import url="includes/head.jsp"/>
 <body>
 <c:import url="includes/header.jsp"/>
+<a href="#wrapper"><button onclick="topFunction()" id="myBtn" title="Go to top">Top</button></a>
 
 <div class="container-fluid bg-white" id="wrapper">
 
@@ -36,14 +37,18 @@
                 <div class="col-md-5 col-sm-12" class="mainRatingVal">
                     <img class="sourceIcon" src="resources/images/imdb_icon.svg" alt="imdb-icon">
                     <span class="mainSourcesRatingValue">${movie.imdbRating}</span>/10 (${movie.imdbVotes}) <br>
-                    <a href="https://www.imdb.com/title/${movie.imdbId}/reviews?ref_=tt_urv" target="_blank">Read reviews</a>
+                    <a href="https://www.imdb.com/title/${movie.imdbId}/reviews?ref_=tt_urv" target="_blank">Read
+                        reviews</a>
 
                 </div>
                 <div class="col-md-5 col-sm-12" class="mainRatingVal">
-                    <img class="sourceIcon" src="${pageContext.request.contextPath}/resources/images/imdb_icon.svg" alt="imdb-icon">
+                    <img class="sourceIcon" src="${pageContext.request.contextPath}/resources/images/imdb_icon.svg"
+                         alt="imdb-icon">
                     <span class="mainSourcesRatingValue">${movie.kinopoiskRating}</span>/10 (${movie.kinopoiskVotes})
                     <br> Reviews: ${movie.kinopoiskReviews}
-                    <br><a href="https://www.kinopoisk.ru/film/${movie.kinopoiskId}/reviews/?ord=rating" target="_blank">Read reviews</a>
+                    <br><a href="https://www.kinopoisk.ru/film/${movie.kinopoiskId}/reviews/?ord=rating"
+                           target="_blank">Read
+                    reviews</a>
                 </div>
             </div>
             <hr>
@@ -142,19 +147,42 @@
                 </div>
             </div>
             <hr>
-            <div class="card">
-                <h5 class="card-header">Images</h5>
-                <div class="card-body">
-                    <h5 class="card-title">To be updated</h5>
-                    <p class="card-text">${movie.images}</p>
-                    <a href="#" class="btn btn-primary">Do something</a>
-                </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h5 class="card-header">Images</h5>
+        <div class="card-body">
+            <div class="container">
+
+
+                <c:choose>
+                <c:when test="${movie.images.isEmpty()}">
+                    <a href="${pageContext.request.contextPath}/uploadImages?id=${movie.id}">
+                        <div class="d-grid gap-2 col-4 mx-auto">
+                            <button class="btn btn-primary" type="button">Load images</button>
+                        </div>
+                    </a>
+                </c:when>
+                <c:otherwise>
+                <details id="frames">
+                    <summary>Show images</summary>
+                    <div id="pic_container" class="d-flex flex-wrap justify-content-center align-items-center">
+                        <c:forEach items="${movie.images}" var="image">
+                            <img class="frame" src="${image.url}" alt="">
+                        </c:forEach>
+                    </div>
+                    </c:otherwise>
+                    </c:choose>
+                </details>
+
             </div>
 
         </div>
     </div>
 
-    <c:import url="includes/footer.jsp"/>
+    <%-- <c:import url="includes/footer.jsp"/> --%>
 </div>
+
 </body>
 </html>

@@ -4,6 +4,7 @@ import com.movie_aggregator.entity.Image;
 import com.movie_aggregator.entity.Movie;
 import com.movie_aggregator.entity.User;
 import com.movie_aggregator.service.GenericService;
+import com.movie_aggregator.utils.MovieApisReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,6 +28,8 @@ public class MyController {
 
     @Autowired
     private GenericService genericService;
+    @Autowired
+    private MovieApisReader apisReader;
 
 
 
@@ -185,6 +188,16 @@ public class MyController {
         return "/movie";
     }
 
+
+    @RequestMapping("/uploadImages")
+    public String loadImages( @RequestParam int id, Model model) throws IOException {
+        //model.addAttribute("id", movieService.getMovie(id));
+        Movie movie = genericService.get(Movie.class, id);
+        movie = apisReader.loadFrames(movie);
+        model.addAttribute("movie", movie);
+        return "/movie";
+    }
+
     /**
      * Test string.
      *
@@ -252,17 +265,14 @@ public class MyController {
         //List<Movie> movies = genericService.getMoviesByProperty("username", "2", "users");
         //List<Movie> movies = genericService.getMoviesByToken("1");
 
-       Movie newMovie = new Movie();
+      // Movie newMovie = new Movie();
        //Search search = new Search( 5,"test search1");
        //genericService.saveOrUpdate(search);
 
-       newMovie.setName("TEST IMAGES IMAGE");
-       newMovie.setId(667766);
-       newMovie.setKinopoiskId("12345");
-       newMovie.setImage("image");
-        newMovie.addImageToMovie(new Image( "image1"));
-        newMovie.addImageToMovie(new Image( "image2"));
-       genericService.saveOrUpdate(newMovie);
+      Movie newMovie = genericService.get(Movie.class, 197863);
+        newMovie.addImageToMovie(new Image( newMovie, "image1"));
+        newMovie.addImageToMovie(new Image( newMovie,"image2"));
+       genericService.merge(newMovie);
 
        //genericService.merge(newMovie);
 

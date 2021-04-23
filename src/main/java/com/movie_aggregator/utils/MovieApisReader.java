@@ -192,8 +192,9 @@ public class MovieApisReader implements PropertiesLoader {
             //JSONObject budgetJSON = movieDetailsJSON.getJSONObject("budget");
             //String budget =  budgetJSON.getString("budget");
             Movie movie = new Movie(nameEn, nameRu,imdbId, filmId, shortDesc, duration, year, kVotes, rating, image, description);
-
-            processFramesAndReview(filmId, reviews, goodReviews, movie);
+            String kinopoiskReviewsFormatted = String.format("%s(%s)", reviews, goodReviews);
+            movie.setKinopoiskReviews(kinopoiskReviewsFormatted);
+            //processFramesAndReview(filmId, reviews, goodReviews, movie);
 
 
 
@@ -220,27 +221,26 @@ public class MovieApisReader implements PropertiesLoader {
         return movies;
     }
 
-    private void processFramesAndReview(String filmId, int reviews, int goodReviews, Movie movie) throws IOException {
-        String framesDetails = getJSONFromApi("frames","kinopoisk", filmId);
+    public Movie loadFrames(Movie movie) throws IOException {
+        String framesDetails = getJSONFromApi("frames","kinopoisk", movie.getKinopoiskId());
         if (!framesDetails.isEmpty()) {
-            StringBuilder framesSb = new StringBuilder();
+            //StringBuilder framesSb = new StringBuilder();
             JSONObject framesDetailsJSON = new JSONObject(framesDetails);
-
             JSONArray frames = framesDetailsJSON.getJSONArray("frames");
             for (int j = 0; j < frames.length(); j++) {
                 JSONObject frameJSON = frames.getJSONObject(j);
                 String frame = frameJSON.getString("image");
                 if (!frame.isEmpty()) {
-                    movie.addImageToMovie(new Image(movie.getId(), frame));
+                    movie.addImageToMovie(new Image(movie, frame));
                 }
-                framesSb.append(frame).append(" ");
+                //framesSb.append(frame).append(" ");
             }
-            String kinopoiskReviewsFormatted = String.format("%s(%s)", reviews, goodReviews);
-            movie.setKinopoiskReviews(kinopoiskReviewsFormatted);
+
             //movie.setImages(framesSb.toString().trim());
 
             //System.out.printf("name:%s%nreview:%d/%d%nframeSB:%s%n%n", nameEn, reviews, goodReviews, framesSb.toString());
         }
+        return movie;
     }
 
     /**
@@ -271,11 +271,19 @@ public class MovieApisReader implements PropertiesLoader {
         String boxOffice = movieDetailsJSON.has("BoxOffice")
                 ? movieDetailsJSON.getString("BoxOffice")
                 : "n/a";
-        String awards = movieDetailsJSON.getString("Awards");
-        String production = movieDetailsJSON.getString("Production");
+        String awards = movieDetailsJSON.has("Awards")
+                ? movieDetailsJSON.getString("Awards")
+                : "n/a";
+        String production = movieDetailsJSON.has("Production")
+                ? movieDetailsJSON.getString("Production")
+                : "n/a";
         String released = movieDetailsJSON.getString("Released");
-        String writer = movieDetailsJSON.getString("Writer");
-        String audienceRating = movieDetailsJSON.getString("Rated");
+        String writer = movieDetailsJSON.has("Writer")
+                ? movieDetailsJSON.getString("Writer")
+                : "n/a";
+        String audienceRating = movieDetailsJSON.has("Rated")
+                ? movieDetailsJSON.getString("Rated")
+                : "n/a";
 
         movie.setAwards(awards);
         movie.setReleased(released);

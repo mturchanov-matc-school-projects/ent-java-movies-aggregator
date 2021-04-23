@@ -1,7 +1,5 @@
 package com.movie_aggregator.entity;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 
 
@@ -15,26 +13,25 @@ public class Image {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @GenericGenerator(name = "native", strategy = "native")
     @Column(name = "id")
     private int id;
-    @Column
-    private String image;
-    //@ManyToOne
-    //@JoinColumn(name="movie_id", nullable=false)
-    //private Movie movie;
+    @Column(unique = true)
+    private String url;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="movie_id")
+    private Movie movie;
 
 
     public Image() {
     }
 
-    public Image(String image) {
-        this.image = image;
+    public Image(String url) {
+        this.url = url;
     }
 
-    public Image(int id, String image) {
-        this.id = id;
-        this.image = image;
+    public Image(Movie movie, String url) {
+        this.movie = movie;
+        this.url = url;
     }
 
     public int getId() {
@@ -45,11 +42,19 @@ public class Image {
         this.id = id;
     }
 
-    public String getImage() {
-        return image;
+    public String getUrl() {
+        return url;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public Movie getMovie() {
+        return movie;
+    }
+
+    public void setMovie(Movie movie) {
+        this.movie = movie;
     }
 }
