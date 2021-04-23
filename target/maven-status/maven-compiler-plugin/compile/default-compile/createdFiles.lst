@@ -8,6 +8,7 @@ com/movie_aggregator/entity/Search.class
 com/movie_aggregator/entity/User.class
 com/movie_aggregator/configuration/MySecurityInitializer.class
 com/movie_aggregator/configuration/MyConfig.class
+com/movie_aggregator/entity/Language.class
 com/movie_aggregator/configuration/MyWebInitializer.class
 com/movie_aggregator/controller/MyController.class
 com/movie_aggregator/configuration/MySecurityConfig.class

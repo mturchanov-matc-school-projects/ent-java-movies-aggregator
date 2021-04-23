@@ -17,6 +17,9 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 img.movieImg {
     width: 200px;
 }
+.sourceIcon {
+    width: 2em;
+}
 #warning-sign-up {
     color: red;
     font-weight: 500;

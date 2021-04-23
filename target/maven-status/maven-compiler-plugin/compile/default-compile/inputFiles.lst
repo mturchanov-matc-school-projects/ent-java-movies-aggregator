@@ -9,6 +9,7 @@
 /home/student/Desktop/java_ent_2021/movies_aggregator/src/main/java/com/movie_aggregator/entity/Search.java
 /home/student/Desktop/java_ent_2021/movies_aggregator/src/main/java/com/movie_aggregator/utils/PropertiesLoader.java
 /home/student/Desktop/java_ent_2021/movies_aggregator/src/main/java/com/movie_aggregator/service/GenericService.java
+/home/student/Desktop/java_ent_2021/movies_aggregator/src/main/java/com/movie_aggregator/entity/Language.java
 /home/student/Desktop/java_ent_2021/movies_aggregator/src/main/java/com/movie_aggregator/entity/Authority.java
 /home/student/Desktop/java_ent_2021/movies_aggregator/src/main/java/com/movie_aggregator/controller/MyRestController.java
 /home/student/Desktop/java_ent_2021/movies_aggregator/src/main/java/com/movie_aggregator/controller/MyController.java

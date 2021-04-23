@@ -1,5 +1,6 @@
 package com.movie_aggregator.controller;
 
+import com.movie_aggregator.entity.Image;
 import com.movie_aggregator.entity.Movie;
 import com.movie_aggregator.entity.User;
 import com.movie_aggregator.service.GenericService;
@@ -251,16 +252,19 @@ public class MyController {
         //List<Movie> movies = genericService.getMoviesByProperty("username", "2", "users");
         //List<Movie> movies = genericService.getMoviesByToken("1");
 
-       //Movie newMovie = new Movie();
+       Movie newMovie = new Movie();
        //Search search = new Search( 5,"test search1");
        //genericService.saveOrUpdate(search);
 
-       //newMovie.setName("new m - from test search1");
-       //newMovie.setId(12345);
-       //newMovie.setKinopoiskId("12345");
-       //newMovie.setImage("https://ichef.bbci.co.uk/news/976/cpsprodpb/12A9B/production/_111434467_gettyimages-1143489763.jpg");
-       //newMovie.addSearchToMovie(search);
-       //genericService.saveOrUpdate(newMovie);
+       newMovie.setName("TEST IMAGES IMAGE");
+       newMovie.setId(667766);
+       newMovie.setKinopoiskId("12345");
+       newMovie.setImage("image");
+        newMovie.addImageToMovie(new Image( "image1"));
+        newMovie.addImageToMovie(new Image( "image2"));
+       genericService.saveOrUpdate(newMovie);
+
+       //genericService.merge(newMovie);
 
 
 

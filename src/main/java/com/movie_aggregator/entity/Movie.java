@@ -29,6 +29,8 @@ public class Movie {
     )
     private Set<Search> searches;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<Image> images;
 
     @ManyToMany(cascade = {CascadeType.MERGE})
     @JoinTable(
@@ -107,6 +109,17 @@ public class Movie {
     @Column(name = "kinopoisk_votes")
     private String kinopoiskVotes;
 
+    @Column
+    private String awards;
+    @Column
+    private String writer;
+    @Column
+    private String released;
+    @Column
+    private String production;
+    @Column(name="audience_rating")
+    private String audienceRating;
+
     /**
      * has such format: "%s(%s)"
      * at the left is total review number,
@@ -115,8 +128,8 @@ public class Movie {
     @Column(name = "kinopoisk_reviews")
     private String kinopoiskReviews;
 
-    @Column
-    private String images;
+    //@Column
+    //private String images;
 
     @Transient
     private boolean isAddedToUserList;
@@ -280,6 +293,14 @@ public class Movie {
         return id;
     }
 
+    public String getProduction() {
+        return production;
+    }
+
+    public void setProduction(String production) {
+        this.production = production;
+    }
+
     /**
      * Sets id.
      *
@@ -406,6 +427,38 @@ public class Movie {
         return metacriticRating;
     }
 
+    public String getAwards() {
+        return awards;
+    }
+
+    public void setAwards(String awards) {
+        this.awards = awards;
+    }
+
+    public String getWriter() {
+        return writer;
+    }
+
+    public void setWriter(String writer) {
+        this.writer = writer;
+    }
+
+    public String getReleased() {
+        return released;
+    }
+
+    public void setReleased(String released) {
+        this.released = released;
+    }
+
+    public String getAudienceRating() {
+        return audienceRating;
+    }
+
+    public void setAudienceRating(String audienceRating) {
+        this.audienceRating = audienceRating;
+    }
+
     /**
      * Sets metacritic rating.
      *
@@ -422,6 +475,14 @@ public class Movie {
      */
     public String getTheMovieDbRating() {
         return theMovieDbRating;
+    }
+
+    public Set<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(Set<Image> images) {
+        this.images = images;
     }
 
     /**
@@ -733,6 +794,13 @@ public class Movie {
         searches.add(search);
     }
 
+    public void addImageToMovie(Image image) {
+        if(images == null) {
+            images = new HashSet<>();
+        }
+        images.add(image);
+    }
+
     public String getKinopoiskReviews() {
         return kinopoiskReviews;
     }
@@ -741,13 +809,7 @@ public class Movie {
         this.kinopoiskReviews = kinopoiskReviews;
     }
 
-    public String getImages() {
-        return images;
-    }
 
-    public void setImages(String images) {
-        this.images = images;
-    }
 
     //TODO: fix equals for test.repositary.GenericDaoTest
     @Override

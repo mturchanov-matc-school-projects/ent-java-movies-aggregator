@@ -1,9 +1,6 @@
 package com.movie_aggregator.service;
 
-import com.movie_aggregator.entity.Authority;
-import com.movie_aggregator.entity.Movie;
-import com.movie_aggregator.entity.Search;
-import com.movie_aggregator.entity.User;
+import com.movie_aggregator.entity.*;
 import com.movie_aggregator.repository.GenericDao;
 import com.movie_aggregator.utils.MovieApisReader;
 
@@ -129,7 +126,7 @@ public class GenericService {
         searchVal = searchVal.trim().toLowerCase();
         // Search existedSearch = getOneEntryByColumProperty(propertyName, searchVal, searchClass);
         List<Movie> movies = null;
-        System.out.printf("existedSearch is null : %b%n", existedSearch == null);
+        //System.out.printf("existedSearch is null : %b%n", existedSearch == null);
         if (existedSearch != null) { //IF SEARCH IN DB THEN NO NEED FOR APIS REQUESTS
             // GET movies from DB
             movies = getMoviesBasedOnSearchName(searchVal);
