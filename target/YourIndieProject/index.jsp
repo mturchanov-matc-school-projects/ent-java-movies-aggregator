@@ -1,7 +1,6 @@
-<!doctype html>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<html lang="en">
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
 
 <c:set var="title" value="Movie Aggregator - Home" scope="request" />
 <c:import url="includes/head.jsp" />
@@ -15,7 +14,7 @@
             <h1>Welcome Back, <sec:authentication property="name"/></h1>
         </sec:authorize>
 
-
+test of russian chars: Производится тест
         <hr>
         <h2>Search</h2>
         <form action="${pageContext.request.contextPath}/searchMovie"

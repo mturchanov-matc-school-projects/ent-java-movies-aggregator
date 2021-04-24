@@ -137,11 +137,18 @@ public class MovieApisReader implements PropertiesLoader {
             JSONObject movieJSON = films.getJSONObject(i);
             String filmId = String.valueOf(movieJSON.getInt("filmId"));
             String nameRu = movieJSON.getString("nameRu");
-            String nameEn = movieJSON.getString("nameEn");
+            //String nameEn = movieJSON.getString("nameEn");
+            String nameEn = movieJSON.has("nameEn")
+                    ? movieJSON.getString("nameEn")
+                    : "";
             String shortDesc = movieJSON.has("description")
                     ? movieJSON.getString("description")
                     : "";
-            if(!nameEn.toLowerCase(Locale.ROOT).contains(searchVal)
+            System.out.println(searchVal + " inside parse");
+            System.out.println(nameRu);
+            System.out.println("eng: " + nameEn);
+
+            if((!nameEn.isEmpty()  && !nameEn.toLowerCase(Locale.ROOT).contains(searchVal))
                     || nameEn.contains("(сериал)")
                     || shortDesc.contains("короткометражка")
                     || nameRu.contains("(ТВ)")
@@ -333,10 +340,10 @@ public class MovieApisReader implements PropertiesLoader {
         //List<Movie> movies = reader.parseJSONKinopoiskMovies("Django");
 
         // test with requests for apis
-        //List<Movie> movies = reader.parseJSONKinopoiskMovies("Django");
-        //for (Movie m : movies) {
-        // System.out.println(m);
-        //}
+        List<Movie> movies = reader.parseJSONKinopoiskMovies("Брат>");
+        for (Movie m : movies) {
+         System.out.println(m);
+        }
 
     }
 

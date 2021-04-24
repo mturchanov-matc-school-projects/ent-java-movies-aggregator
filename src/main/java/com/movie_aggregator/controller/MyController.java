@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 /**
  * The type My controller.
@@ -194,6 +195,7 @@ public class MyController {
         //model.addAttribute("id", movieService.getMovie(id));
         Movie movie = genericService.get(Movie.class, id);
         movie = apisReader.loadFrames(movie);
+        genericService.merge(movie);
         model.addAttribute("movie", movie);
         return "/movie";
     }
@@ -269,11 +271,16 @@ public class MyController {
        //Search search = new Search( 5,"test search1");
        //genericService.saveOrUpdate(search);
 
-      Movie newMovie = genericService.get(Movie.class, 197863);
-        newMovie.addImageToMovie(new Image( newMovie, "image1"));
-        newMovie.addImageToMovie(new Image( newMovie,"image2"));
-       genericService.merge(newMovie);
+        // Movie newMovie = genericService.get(Movie.class, 197863);
+        //newMovie.addImageToMovie(new Image( newMovie, "image1"));
+        //newMovie.addImageToMovie(new Image( newMovie,"image2"));
+       //genericService.merge(newMovie);
+        List<Movie> movies = genericService.getMovies("Шурик");
+        System.out.println(movies.size());
 
+        for (Movie m : movies) {
+            System.out.println(m);
+        }
        //genericService.merge(newMovie);
 
 
