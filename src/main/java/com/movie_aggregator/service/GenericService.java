@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 /**
@@ -121,7 +122,7 @@ public class GenericService {
      * @return the movies
      * @throws IOException the io exception
      */
-    public List<Movie> getMovies (String searchVal) throws IOException {
+    public List<Movie> getMovies (String searchVal) throws IOException, URISyntaxException {
         Search existedSearch = getOneEntryByColumProperty("name", searchVal, Search.class);
         searchVal = searchVal.trim().toLowerCase();
         // Search existedSearch = getOneEntryByColumProperty(propertyName, searchVal, searchClass);

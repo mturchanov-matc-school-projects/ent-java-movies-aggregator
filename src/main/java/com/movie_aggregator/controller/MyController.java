@@ -2,6 +2,7 @@ package com.movie_aggregator.controller;
 
 import com.movie_aggregator.entity.Image;
 import com.movie_aggregator.entity.Movie;
+import com.movie_aggregator.entity.ReviewSource;
 import com.movie_aggregator.entity.User;
 import com.movie_aggregator.service.GenericService;
 import com.movie_aggregator.utils.MovieApisReader;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Set;
 
@@ -144,7 +146,7 @@ public class MyController {
      */
     @RequestMapping("/searchMovie")
     public String searchMovie(@RequestParam("searchVal") String searchVal, Model model)
-            throws IOException {
+            throws IOException, URISyntaxException {
         List<Movie> movies = genericService.getMovies(searchVal);
         if (movies == null) {
             model.addAttribute("headerTitle", String.format("Sorry, no result with '%s' input", searchVal));
@@ -191,7 +193,7 @@ public class MyController {
 
 
     @RequestMapping("/uploadImages")
-    public String loadImages( @RequestParam int id, Model model) throws IOException {
+    public String loadImages( @RequestParam int id, Model model) throws IOException, URISyntaxException {
         //model.addAttribute("id", movieService.getMovie(id));
         Movie movie = genericService.get(Movie.class, id);
         movie = apisReader.loadFrames(movie);
@@ -208,7 +210,7 @@ public class MyController {
      */
 //Testing time
     @RequestMapping("/test")
-    public String test(Model model) throws IOException {
+    public String test(Model model) throws IOException, URISyntaxException {
         //Movie newMovie = new Movie();
         //Search search = new Search( 14,"search11212");
         //newMovie.setName("m4 - 2 movied added as a list");
@@ -271,17 +273,28 @@ public class MyController {
        //Search search = new Search( 5,"test search1");
        //genericService.saveOrUpdate(search);
 
-        // Movie newMovie = genericService.get(Movie.class, 197863);
+         Movie newMovie = genericService.get(Movie.class, 4778);
+        //Movie newMovie = new Movie();
+        //newMovie.setName("testReviews2");
+        //newMovie.setYear("testReviews2");
+        //newMovie.setImage("testReviews2");
+        //newMovie.setId(12376);
+
+
         //newMovie.addImageToMovie(new Image( newMovie, "image1"));
         //newMovie.addImageToMovie(new Image( newMovie,"image2"));
        //genericService.merge(newMovie);
-        List<Movie> movies = genericService.getMovies("Шурик");
-        System.out.println(movies.size());
+        //List<Movie> movies = genericService.getMovies("Шурик");
+        //System.out.println(movies.size());
+//
+        //for (Movie m : movies) {
+        //    System.out.println(m);
+        //}
+        ReviewSource reviewSource = apisReader.parseJSONWikiDataReviewSources("9714");
+        reviewSource.setMovie(newMovie);
+        newMovie.setReviewSources(reviewSource);
 
-        for (Movie m : movies) {
-            System.out.println(m);
-        }
-       //genericService.merge(newMovie);
+        genericService.merge(newMovie);
 
 
 

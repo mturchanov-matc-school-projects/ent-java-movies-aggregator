@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Set;
 
@@ -65,7 +66,7 @@ public class MyRestController {
      * @return the list
      */
     @GetMapping("/movies/s/{searchVal}")
-    public List<Movie> showAllMoviesBySearchName(@PathVariable String searchVal) throws IOException {
+    public List<Movie> showAllMoviesBySearchName(@PathVariable String searchVal) throws IOException, URISyntaxException {
         List<Movie> movies = genericService.getMovies(searchVal);
         System.out.println(movies);
         for (Movie m : movies) {

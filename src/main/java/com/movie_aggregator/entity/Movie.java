@@ -32,6 +32,11 @@ public class Movie {
     @OneToMany(targetEntity=Image.class, mappedBy="movie",cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Image> images;
 
+    //@OneToOne(targetEntity=Image.class, mappedBy="movie",cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    //private ReviewSource reviewSources;
+    @OneToOne(mappedBy = "movie", cascade = CascadeType.ALL)
+    private ReviewSource reviewSources;
+
     @ManyToMany(cascade = {CascadeType.MERGE})
     @JoinTable(
             name = "movies_user",
@@ -792,6 +797,14 @@ public class Movie {
             searches = new HashSet<>();
         }
         searches.add(search);
+    }
+
+    public ReviewSource getReviewSources() {
+        return reviewSources;
+    }
+
+    public void setReviewSources(ReviewSource reviewSources) {
+        this.reviewSources = reviewSources;
     }
 
     public void addImageToMovie(Image image) {

@@ -1,8 +1,8 @@
 package com.movie_aggregator.utils;
 
 import com.movie_aggregator.entity.Image;
-import com.movie_aggregator.entity.Language;
 import com.movie_aggregator.entity.Movie;
+import com.movie_aggregator.entity.ReviewSource;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -10,10 +10,14 @@ import com.squareup.okhttp.Response;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
-
+import com.jayway.jsonpath.*;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -35,6 +39,8 @@ public class MovieApisReader implements PropertiesLoader {
      * The constant OMDB_ROOT.
      */
     public static final String OMDB_ROOT = "http://www.omdbapi.com/";
+
+    public static final String QUERY_WIKI_DATA = "https://query.wikidata.org/sparql?format=json&query=";
     //private final Logger logger = LogManager.getLogger(this.getClass());
 
 
@@ -49,26 +55,26 @@ public class MovieApisReader implements PropertiesLoader {
     /**
      * Gets json from api.
      *
-     * @param searchSource the search source
-     * @param searchType   the search type
+     * @param searchType the search source
+     * @param source   the search type
      * @param searchVal    the search val
      * @return the json from api
      * @throws IOException the io exception
      */
-    public String getJSONFromApi(String searchSource , String searchType, String searchVal)
-            throws IOException {
+    public String getJSONFromApi(String searchType, String source, String searchVal)
+            throws IOException, URISyntaxException {
         searchVal =  URLEncoder.encode(searchVal, StandardCharsets.UTF_8);
         OkHttpClient client = new OkHttpClient();
         String requestURL = null;
         Request request = null;
 
-        switch (searchType) {
+        switch (source) {
             case "omdb": {
                 String apiKey = properties.getProperty("omdb_api");
 
-                if (searchSource.equals("general")) {
+                if (searchType.equals("general")) {
                     requestURL = String.format("%s?s=%s&apiKey=%s&type=movie", OMDB_ROOT, searchVal, apiKey);
-                } else if (searchSource.equals("specific")) {
+                } else if (searchType.equals("specific")) {
                     requestURL = String.format("%s?i=%s&apiKey=%s&plot=full&type=movie", OMDB_ROOT, searchVal, apiKey);
                 }
 
@@ -80,11 +86,11 @@ public class MovieApisReader implements PropertiesLoader {
             }
             case "kinopoisk": {
                 String apiKey = properties.getProperty("kinopoisk_unofficial_api");
-                if (searchSource.equals("general")) {
+                if (searchType.equals("general")) {
                     requestURL = String.format("%s%s%s%s", KINOPOISK_ROOT, "search-by-keyword?keyword=", searchVal, "&page=1");
-                } else if (searchSource.equals("specific")) {
+                } else if (searchType.equals("specific")) {
                     requestURL = String.format("%s%s?append_to_response=REVIEW", KINOPOISK_ROOT, searchVal);
-                } else if(searchSource.equals("frames")) {
+                } else if(searchType.equals("frames")) {
                     requestURL = String.format("%s%s/frames", KINOPOISK_ROOT, searchVal);
                 }
                 request = new Request.Builder()
@@ -93,7 +99,21 @@ public class MovieApisReader implements PropertiesLoader {
                         .method("GET", null)
                         .build();
                 break;
+            }
 
+            case "sparql": {
+                URL resourceCustomersCsvUrl = MovieApisReader.class.getResource("/sparqlQuery.txt");
+                String filePathForSparqlQuery = Paths.get(resourceCustomersCsvUrl.toURI()).toFile().getAbsolutePath();
+                String expectedClaimsJSON =  new String(Files.readAllBytes(Paths.get(filePathForSparqlQuery)));
+                String sparqlQuery = String.format(expectedClaimsJSON, searchVal);
+                requestURL = String.format("%s%s", QUERY_WIKI_DATA, sparqlQuery);
+
+
+                request = new Request.Builder()
+                        .url(requestURL)
+                        .method("GET", null)
+                        .build();
+                break;
             }
         }
 
@@ -119,7 +139,7 @@ public class MovieApisReader implements PropertiesLoader {
      * @return the list
      */
 //TODO: run only kinopoisk if ASCII has russian characters
-    public List<Movie> parseJSONKinopoiskMovies(String searchVal) throws IOException {
+    public List<Movie> parseJSONKinopoiskMovies(String searchVal) throws IOException, URISyntaxException {
         //get general movie info json data
         String JSONMovies = getJSONFromApi("general", "kinopoisk", searchVal);
         if (JSONMovies == null) {
@@ -149,9 +169,9 @@ public class MovieApisReader implements PropertiesLoader {
             System.out.println("eng: " + nameEn);
 
             if((!nameEn.isEmpty()  && !nameEn.toLowerCase(Locale.ROOT).contains(searchVal))
-                    || nameEn.contains("(сериал)")
+                    //|| nameEn.contains("(сериал)")
                     || shortDesc.contains("короткометражка")
-                    || nameRu.contains("(ТВ)")
+                    //|| nameRu.contains("(ТВ)")
                     || nameEn.contains("(видео)")
             ) {
                 continue;
@@ -228,7 +248,7 @@ public class MovieApisReader implements PropertiesLoader {
         return movies;
     }
 
-    public Movie loadFrames(Movie movie) throws IOException {
+    public Movie loadFrames(Movie movie) throws IOException, URISyntaxException {
         String framesDetails = getJSONFromApi("frames","kinopoisk", movie.getKinopoiskId());
         if (!framesDetails.isEmpty()) {
             //StringBuilder framesSb = new StringBuilder();
@@ -326,6 +346,15 @@ public class MovieApisReader implements PropertiesLoader {
         return movie;
     }
 
+    public ReviewSource parseJSONWikiDataReviewSources(String kinopoiskId) throws IOException, URISyntaxException {
+        String sourceReviewJSON = getJSONFromApi(null, "sparql", kinopoiskId);
+        sourceReviewJSON = sourceReviewJSON.replaceAll("[\n\\]]", "")
+                .replaceAll(".+: \\[", "");
+        sourceReviewJSON = sourceReviewJSON.substring(0, sourceReviewJSON.length() - 2);
+        ReviewSource reviewSource = new ReviewSource(sourceReviewJSON);
+        return reviewSource;
+    }
+
 
     /**
      * The entry point of application.
@@ -334,17 +363,32 @@ public class MovieApisReader implements PropertiesLoader {
      * @throws IOException the io exception
      */
 //dirty and rough testing
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, URISyntaxException {
         MovieApisReader reader = new MovieApisReader();
         //test
         //List<Movie> movies = reader.parseJSONKinopoiskMovies("Django");
 
         // test with requests for apis
-        List<Movie> movies = reader.parseJSONKinopoiskMovies("Брат>");
-        for (Movie m : movies) {
-         System.out.println(m);
-        }
+        //List<Movie> movies = reader.parseJSONKinopoiskMovies("Брат>");
+        //for (Movie m : movies) {
+        // System.out.println(m);
+        //}
+        String sparql = reader.getJSONFromApi(null, "sparql", "326");
 
+        sparql = sparql.replaceAll("[\n\\]]", "")
+                .replaceAll(".+: \\[", "");
+        sparql = sparql.substring(0, sparql.length() - 2);
+        ReviewSource reviewSource = new ReviewSource(sparql);
+        Properties properties = reader.loadProperties("/reviewSources.properties");
+        //String d = String.format(properties.getProperty("film_web_pl"),
+        //        reviewSource.getFilm_web_name_pl(), "1994", reviewSource.getFilm_web_id_pl());
+       //String allcin =  JsonPath.read(sparql, "$.all_cinema_jp.value");
+       // System.out.println(allcin);
+       // String h = properties.getProperty("all_cinema_jp");
+       // System.out.println(h);
+       // String d  = String.format(properties.getProperty("all_cinema_jp"), allcin);   // paste identifier
+       // System.out.println(d);
+        System.out.println(reviewSource);
     }
 
 }
