@@ -111,10 +111,8 @@ public class ReviewSource implements PropertiesLoader {
     public ReviewSource(String sparql) {
         properties = loadProperties("/reviewSources.properties");
 
-        film = JsonPath.read(sparql, "$.film.value");
+       // film = JsonPath.read(sparql, "$.film.value");
 
-        if (sparql.contains("film_web_id_pl")) {
-        }
         if (sparql.contains("film_web_name_pl") && sparql.contains("film_web_id_pl")) {
             film_web_name_pl = JsonPath.read(sparql, "$.film_web_name_pl.value");
             film_web_id_pl =  JsonPath.read(sparql, "$.film_web_id_pl.value");

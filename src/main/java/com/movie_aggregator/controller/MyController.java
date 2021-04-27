@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -142,9 +143,13 @@ public class MyController {
      * @throws IOException the io exception
      */
     @RequestMapping("/searchMovie")
-    public String searchMovie(@RequestParam String movieSourceBase, @RequestParam("searchVal") String searchVal, Model model) {
+    public String searchMovie(@RequestParam(name = "movieSourceBase") String movieSourceBase,
+                              //@RequestParam(name = "reviewSources") String[] reviewSources,
+                              @RequestParam("searchVal") String searchVal, Model model) {
         System.out.println(movieSourceBase);
-                
+        //for (String s : reviewSources) {
+        //    System.out.println(s);
+        //}
         List<Movie> movies = genericService.getMovies(searchVal, movieSourceBase);
         if (movies == null) {
             model.addAttribute("headerTitle", String.format("Sorry, no result with '%s' input", searchVal));
@@ -167,7 +172,8 @@ public class MyController {
         }
 
 
-        System.out.println(movies);
+         //HttpSession session = request.getSession();
+        //model.addAttribute("reviewsSources", reviewSources);
         model.addAttribute("movieSourceBase", movieSourceBase);
         model.addAttribute("movies", movies);
         return "/result";
@@ -181,9 +187,11 @@ public class MyController {
      * @return the movie info
      */
     @RequestMapping("/movie")
-    public String getMovieInfo( @RequestParam int id, @RequestParam String movieSourceBase, Model model) {
+    public String getMovieInfo( @RequestParam int id, @RequestParam String movieSourceBase,
+                                 Model model) {
         //model.addAttribute("movie", movieService.getMovie(id));
         Movie movie = genericService.get(Movie.class, id);
+        ReviewSource reviewSource = apisReader.parseJSONWikiDataReviewSources(movie.getImdbId());
         // check if api specific-movie-request was launched before
         if (movieSourceBase.equals("kinopoisk") && movie.getKinopoiskReviews() == null) {
             movie = apisReader.parseSpecificKinopoiskMoviesJson(movie);
@@ -193,6 +201,7 @@ public class MyController {
 
         }
         model.addAttribute("movie", movie);
+        model.addAttribute("reviewSource", reviewSource);
 
         return "/movie";
     }
@@ -206,6 +215,14 @@ public class MyController {
         genericService.merge(movie);
         model.addAttribute("movie", movie);
         return "/movie";
+    }
+
+    @RequestMapping("/showReviewSources")
+    public String showReviewSources( Model model)  {
+        List<ReviewsSourcesLookup> reviewsSourcesLookups =  genericService.getAll(ReviewsSourcesLookup.class);
+        model.addAttribute("reviewsSources", reviewsSourcesLookups);
+        System.out.println(123);
+        return "/index";
     }
 
     /**
@@ -343,9 +360,12 @@ public class MyController {
      *
      * @return the string
      */
-    @RequestMapping("/")
-    public String showFirstView() {
-        return "/index.html";
+    @RequestMapping(value ={"/", "index", "home"})
+    public String showFirstView(Model model) {
+        List<ReviewsSourcesLookup> reviewsSourcesLookups =  genericService.getAll(ReviewsSourcesLookup.class);
+        model.addAttribute("reviewsSources", reviewsSourcesLookups);
+        System.out.println(123);
+        return "/index";
     }
 }
 

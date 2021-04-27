@@ -474,6 +474,8 @@ public class MovieApisReader implements PropertiesLoader {
         return reviewSource;
     }
 
+
+
     public List<Movie> parseGeneralImdbMoviesJson(String searchVal)  {
         String JSONMovies = getJSONFromApi("general", "omdb", searchVal);
         if (JSONMovies == null) {
@@ -481,7 +483,12 @@ public class MovieApisReader implements PropertiesLoader {
         }
         ArrayList<Movie> movies = new ArrayList<>();
         JSONObject obj = new JSONObject(JSONMovies);
-        JSONArray films = obj.getJSONArray("Search");
+        JSONArray films = obj.has("Search")
+                ? obj.getJSONArray("Search")
+                : null;
+        if (films == null) {
+            return null;
+        }
         for (int i = 0; i < films.length(); i++) {
             JSONObject movieJSON = films.getJSONObject(i);
             String imdbId = movieJSON.getString("imdbID");

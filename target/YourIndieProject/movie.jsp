@@ -11,6 +11,7 @@
 </a>
 
 <div class="container-fluid bg-white" id="wrapper">
+    ${reviewSource.metacritic}
 
     <h2>${movie.engName}</h2>
 
@@ -189,6 +190,24 @@
             <hr>
         </div>
     </div>
+    <div class="card">
+        <h5 class="card-header">revs</h5>
+        <div class="card-body">
+            <div class="container">
+                <details>
+                    <summary>Show reviews urls</summary>
+                    <div class="d-flex flex-wrap justify-content-center align-items-center">
+
+                    </div>
+                </details>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
 
     <div class="card">
         <h5 class="card-header">Images</h5>

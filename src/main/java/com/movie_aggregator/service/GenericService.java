@@ -4,12 +4,15 @@ import com.movie_aggregator.entity.*;
 import com.movie_aggregator.repository.GenericDao;
 import com.movie_aggregator.utils.MovieApisReader;
 
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -167,8 +170,6 @@ public class GenericService {
                 genericDao.saveOrUpdate(movie);
             }
         }
-
-
         return movies;
     }
 

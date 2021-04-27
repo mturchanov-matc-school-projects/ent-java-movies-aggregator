@@ -29,30 +29,30 @@
   <component name="ChangeListManager">
     <list default="true" id="b4add5ff-e70d-4f2b-bb88-aba2066d226f" name="Default Changelist" comment="ERD image was updated(added users/roles table)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/configuration/MyConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/configuration/MyConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/controller/MyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/controller/MyController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/entity/Movie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/entity/Movie.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/entity/Search.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/entity/Search.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/entity/ReviewSource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/entity/ReviewSource.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/repository/GenericDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/repository/GenericDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/service/GenericService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/service/GenericService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/utils/MovieApisReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/utils/MovieApisReader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/includes/head.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/includes/head.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/movie.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/movie.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/result.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/result.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/movie_aggregator/repository/GenericDaoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/movie_aggregator/repository/GenericDaoTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/configuration/MyConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/configuration/MyConfig.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/controller/MyController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/controller/MyController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/entity/Movie.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/entity/Movie.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/entity/Search.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/entity/Search.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/entity/ReviewSource.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/entity/ReviewSource.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/service/GenericService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/service/GenericService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/utils/MovieApisReader.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/utils/MovieApisReader.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/YourIndieProject/includes/head.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/includes/head.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/YourIndieProject/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/index.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/result.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/result.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/movie.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/movie.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/resources/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/resources/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/configuration/MyConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/configuration/MyConfig.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/controller/MyController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/controller/MyController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/entity/Movie.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/entity/Movie.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/entity/Search.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/entity/Search.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/entity/ReviewSource.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/entity/ReviewSource.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/service/GenericService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/service/GenericService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/utils/MovieApisReader.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/utils/MovieApisReader.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/com/movie_aggregator/repository/GenericDaoTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/movie_aggregator/repository/GenericDaoTest.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -616,7 +616,9 @@
       <workItem from="1619506998371" duration="174000" />
       <workItem from="1619507210711" duration="3085000" />
       <workItem from="1619511150877" duration="96000" />
-      <workItem from="1619511281323" duration="5367000" />
+      <workItem from="1619511281323" duration="21270000" />
+      <workItem from="1619539536553" duration="609000" />
+      <workItem from="1619540853241" duration="3562000" />
     </task>
     <task id="LOCAL-00001" summary="ERD image was updated(added users/roles table)">
       <created>1615338497654</created>
@@ -652,13 +654,21 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/movie_aggregator/service/GenericService.java</url>
-          <line>40</line>
+          <line>43</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/movie_aggregator/utils/MovieApisReader.java</url>
           <line>31</line>
           <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/com/movie_aggregator/utils/MovieApisReader.java</url>
+          <line>403</line>
+          <properties class="com.movie_aggregator.utils.MovieApisReader" method="parseSpecificImdbMovieJson">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

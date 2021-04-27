@@ -1,6 +1,8 @@
 package com.movie_aggregator.repository;
 
 import com.movie_aggregator.entity.Movie;
+import com.movie_aggregator.entity.ReviewSource;
+import com.movie_aggregator.entity.ReviewsSourcesLookup;
 import com.movie_aggregator.entity.Search;
 
 import org.hibernate.Criteria;
@@ -11,6 +13,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -192,6 +195,8 @@ public class GenericDao {
         //session.close();
         return tableEntity;
     }
+
+
 
 
     /**

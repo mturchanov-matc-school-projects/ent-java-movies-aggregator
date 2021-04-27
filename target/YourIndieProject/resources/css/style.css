@@ -57,3 +57,8 @@ div#pic_container img {
 #myBtn:hover {
     background-color: #555;
 }
+
+
+.list-group-item-action{
+    width: fit-content;
+}
