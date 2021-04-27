@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Test;
 
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.SpringVersion;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -102,10 +101,10 @@ public class GenericDaoTest extends AbstractTest {
     @Test
     void saveOrUpdateTest() {
         Movie getMovie = dao.get(Movie.class, 77394);
-        getMovie.setName("modifiedName");
+        getMovie.setEngName("modifiedName");
         dao.saveOrUpdate(getMovie);
         Movie updatedMovie = dao.get(Movie.class, 77394);
-        assertEquals("modifiedName", updatedMovie.getName());
+        assertEquals("modifiedName", updatedMovie.getEngName());
     }
 
     /**

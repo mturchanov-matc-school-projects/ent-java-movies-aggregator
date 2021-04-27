@@ -8,50 +8,49 @@
 <c:import url="includes/header.jsp" />
 <div id="wrapper" class="container text-center">
 
-<main class="p-3">
+    <main class="p-3">
 
         <sec:authorize access="isAuthenticated()">
             <h1>Welcome Back, <sec:authentication property="name"/></h1>
         </sec:authorize>
 
-test of russian chars: Производится тест
+
         <hr>
         <h2>Search</h2>
+
+
+
+
+
         <form action="${pageContext.request.contextPath}/searchMovie"
               method="get">
-            <label for="search">
-                Search: <input type="text" name="searchVal" id="search">
-            </label>
-            <input type="submit" value="Search">
-
-            <!--
-            <fieldset class="form-group">
-                <div class="row">
-                    <legend class="col-form-label col-sm-2 pt-0">Language</legend>
-                    <div class="col-sm-10">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="lang" id="engLangRadio" value="eng" checked>
-                            <label class="form-check-label" for="engLangRadio">
-                                English
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="lang" id="rusLangRadio" value="rus">
-                            <label class="form-check-label" for="rusLangRadio">
-                                Russian
-                            </label>
-                        </div>
-                    </div>
+            <div id="checkboxes" class="text-left">
+                <div class="form-check form-check-inline">
+                    <input type="radio" class="btn-check" name="movieSourceBase" value="imdb" id="imdbSource" autocomplete="off" checked>
+                    <label class="btn btn-outline-success" for="imdbSource">Imdb source</label><br>
                 </div>
-            </fieldset>
-            -->
+                <div class="form-check form-check-inline">
+                    <input type="radio" class="btn-check" name="movieSourceBase" value="kinopoisk" id="kinopoiskSource" autocomplete="off">
+                    <label class="btn btn-outline-success" for="kinopoiskSource">Kinopoisk source(russian results)</label>
+                    </label>
+                </div>
+            </div>
 
+
+            <hr>
+            <div class="row mb-3">
+            <label for="search">
+                <input type="text" class="form-control form-control-lg" placeholder="Search for movies" name="searchVal" id="search">
+            </label>
+            <br>
+            </div>
+            <input type="submit" value="Search">
         </form>
-    <hr>
-    <p class="text-warning">${headerTitle}</p>
+        <hr>
+        <p class="text-warning">${headerTitle}</p>
 
 
-</main>
+    </main>
 
 </div>
 <c:import url="includes/footer.jsp" />

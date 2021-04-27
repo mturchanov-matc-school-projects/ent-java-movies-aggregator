@@ -20,7 +20,7 @@
                 <li class="media w3-padding w3-container w3-round-large w3-light-gray">
                     <img class="mr-3 movieImg" src="<c:out value="${movie.kinopoiskImage}" />" alt="image" />
                     <div class="media-body">
-                        <h3 class="mt-0 mb-1"><c:out value="${movie.name}  ${movie.year}" /></h3>
+                        <h3 class="mt-0 mb-1"><c:out value="${movie.engName}  ${movie.year}" /></h3>
                         <h4 class="mt-0 mb-1"><a href="<c:out value="https://www.imdb.com/title/${movie.imdbId}"/>">imdb reviews</a></h4>
                         <h4 class="mt-0 mb-1"><a href="<c:out value="https://www.kinopoisk.ru/film/${movie.kinopoiskId}/#user-reviews"/>">Kinopoisk reviews</a></h4>
                         <h4 class="mt-0 mb-1"><c:out value="IMDB Rating ${movie.imdbRating}" /> </h4>
@@ -48,7 +48,7 @@
                     </sec:authorize>
 
 
-                    <a href="${pageContext.request.contextPath}/movie?id=${movie.id}">
+                    <a href="${pageContext.request.contextPath}/movie?id=${movie.id}&movieSourceBase=${movieSourceBase}">
                         <button type="button" class="btn btn-info">More Info</button>
                     </a>
                 </li>

@@ -51,7 +51,7 @@ public class Movie {
 
 
     @Column(name = "eng_name")
-    private String name;
+    private String engName;
 
     @Column(name = "imdb_id")
     private String imdbId;
@@ -104,8 +104,11 @@ public class Movie {
     @Column(name = "kinopoisk_genre")
     private String kinopoiskGenre;
 
-    @Column
-    private String director;
+    @Column(name = "imdb_director")
+    private String imdbDirector;
+
+    @Column(name = "kinopoisk_director")
+    private String kinopoiskDirector;
 
     @Column
     private String actors;
@@ -173,27 +176,55 @@ public class Movie {
     /**
      * Instantiates a new Movie.
      *
-     * @param name  the name
+     * @param engName  the name
      * @param kinopoiskImage the image
      * @param year  the year
      */
-    public Movie(String name, String kinopoiskImage, String year) {
-        this.name = name;
+    public Movie(String engName, String kinopoiskImage, String year) {
+        this.engName = engName;
         this.kinopoiskImage = kinopoiskImage;
         this.year = year;
+    }
+
+    //filmId, nameEn, nameRu, year, director, duration, rating, image, kVotes, countries.toString(), genres.toString())
+
+    public Movie(int id, String engName, String rusName, String kinopoiskRating, String duration,
+                 String kinopoiskGenre, String kinopoiskDirector, String kinopoiskCountry,
+                 String kinopoiskImage, String year, String kinopoiskVotes) {
+        this.id = id;
+        this.engName = engName;
+        this.rusName = rusName;
+        this.kinopoiskRating = kinopoiskRating;
+        this.duration = duration;
+        this.kinopoiskGenre = kinopoiskGenre;
+        this.kinopoiskDirector = kinopoiskDirector;
+        this.kinopoiskCountry = kinopoiskCountry;
+        this.kinopoiskImage = kinopoiskImage;
+        this.year = year;
+        this.kinopoiskVotes = kinopoiskVotes;
+    }
+
+    public Movie(String imdbId, String kinopoiskDescription, String imdbRating, String imdbVotes, String boxOffice, String audienceRating, String kinopoiskReviews) {
+        this.imdbId = imdbId;
+        this.kinopoiskDescription = kinopoiskDescription;
+        this.imdbRating = imdbRating;
+        this.imdbVotes = imdbVotes;
+        this.boxOffice = boxOffice;
+        this.audienceRating = audienceRating;
+        this.kinopoiskReviews = kinopoiskReviews;
     }
 
     /**
      * Instantiates a new Movie.
      *
      * @param id    the id
-     * @param name  the name
+     * @param engName  the name
      * @param image the image
      * @param year  the year
      */
-    public Movie(int id, String name, String image, String year, String imdbId) {
+    public Movie(int id, String engName, String image, String year, String imdbId) {
         this.id = id;
-        this.name = name;
+        this.engName = engName;
         this.imdbPoster = image;
         this.year = year;
         this.imdbId = imdbId;
@@ -202,59 +233,45 @@ public class Movie {
     /**
      * Instantiates a new Movie.
      *
-     * @param name            the name
+     * @param engName            the name
      * @param kinopoiskId     the kinopoisk id
      * @param rusName     the eastern name
      * @param kinopoiskRating the kinopoisk rating
      * @param year            the year
      */
-    public Movie(String name, String kinopoiskId, String rusName,
+    public Movie(String engName, String kinopoiskId, String rusName,
                  String kinopoiskRating, String year) {
-        this.name = name;
+        this.engName = engName;
         this.kinopoiskId = kinopoiskId;
         this.rusName = rusName;
         this.kinopoiskRating = kinopoiskRating;
         this.year = year;
     }
 
-    /**
-     * Instantiates a new Movie.
-     *
-     * @param name        the name
-     * @param imdbId      the imdb id
-     * @param imdbDescription the description
-     * @param imdbRating  the imdb rating
-     * @param imdbVotes   the imdb votes
-     * @param boxOffice   the box office
-     * @param duration    the duration
-     * @param imdbGenre       the genre
-     * @param director    the director
-     * @param actors      the actors
-     * @param language    the language
-     * @param imdbCountry     the country
-     * @param metascore   the metascore
-     * @param kinopoiskImage       the image
-     * @param year        the year
-     */
-    public Movie(String name, String imdbId, String imdbDescription, String imdbRating,
-                 String imdbVotes, String boxOffice, String duration, String imdbGenre,
-                 String director, String actors, String language, String imdbCountry,
-                 String metascore, String kinopoiskImage, String year) {
-        this.name = name;
-        this.imdbId = imdbId;
+
+
+    public Movie(String imdbDescription, String imdbRating, String imdbVotes, String metacriticRating,
+                 String rottenTomatoesRating, String boxOffice, String duration, String imdbGenre, String imdbDirector,
+                 String actors, String language, String imdbCountry, String metascore, String awards, String writer,
+                 String released, String production, String audienceRating) {
         this.imdbDescription = imdbDescription;
         this.imdbRating = imdbRating;
         this.imdbVotes = imdbVotes;
+        this.metacriticRating = metacriticRating;
+        this.rottenTomatoesRating = rottenTomatoesRating;
         this.boxOffice = boxOffice;
         this.duration = duration;
         this.imdbGenre = imdbGenre;
-        this.director = director;
+        this.imdbDirector = imdbDirector;
         this.actors = actors;
         this.language = language;
         this.imdbCountry = imdbCountry;
         this.metascore = metascore;
-        this.kinopoiskImage = kinopoiskImage;
-        this.year = year;
+        this.awards = awards;
+        this.writer = writer;
+        this.released = released;
+        this.production = production;
+        this.audienceRating = audienceRating;
     }
 
     /**
@@ -275,10 +292,10 @@ public class Movie {
     public Movie(String nameEn, String nameRu, String imdbId, String filmId,
                  String shortDesc, String duration, String year, String kVotes,
                  String rating, String kinopoiskImage, String imdbDescription) {
-        this.name = nameEn;
+        this.engName = nameEn;
         this.imdbId = imdbId;
         this.kinopoiskId = filmId;
-        this.director = shortDesc;
+        this.imdbDirector = shortDesc;
         this.imdbDescription = imdbDescription;
         this.rusName = nameRu;
         this.kinopoiskRating = rating;
@@ -347,8 +364,8 @@ public class Movie {
      *
      * @return the name
      */
-    public String getName() {
-        return name;
+    public String getEngName() {
+        return engName;
     }
 
     /**
@@ -356,8 +373,8 @@ public class Movie {
      *
      * @param name the name
      */
-    public void setName(String name) {
-        this.name = name;
+    public void setEngName(String name) {
+        this.engName = name;
     }
 
     /**
@@ -715,8 +732,8 @@ public class Movie {
      *
      * @return the director
      */
-    public String getDirector() {
-        return director;
+    public String getImdbDirector() {
+        return imdbDirector;
     }
 
     /**
@@ -724,8 +741,8 @@ public class Movie {
      *
      * @param director the director
      */
-    public void setDirector(String director) {
-        this.director = director;
+    public void setImdbDirector(String director) {
+        this.imdbDirector = director;
     }
 
     /**
@@ -771,6 +788,14 @@ public class Movie {
      */
     public String getImdbCountry() {
         return imdbCountry;
+    }
+
+    public String getKinopoiskDirector() {
+        return kinopoiskDirector;
+    }
+
+    public void setKinopoiskDirector(String kinopoiskDirector) {
+        this.kinopoiskDirector = kinopoiskDirector;
     }
 
     /**
@@ -908,7 +933,7 @@ public class Movie {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Movie movie = (Movie) o;
-        return id == movie.id && Objects.equals(name, movie.name)
+        return id == movie.id && Objects.equals(engName, movie.engName)
                 && Objects.equals(searches, movie.searches)
                 && Objects.equals(imdbId, movie.imdbId)
                 && Objects.equals(kinopoiskId, movie.kinopoiskId)
@@ -925,7 +950,7 @@ public class Movie {
                 && Objects.equals(boxOffice, movie.boxOffice)
                 && Objects.equals(duration, movie.duration)
                 && Objects.equals(imdbGenre, movie.imdbGenre)
-                && Objects.equals(director, movie.director)
+                && Objects.equals(imdbDirector, movie.imdbDirector)
                 && Objects.equals(actors, movie.actors)
                 && Objects.equals(language, movie.language)
                 && Objects.equals(imdbCountry, movie.imdbCountry)
@@ -937,10 +962,10 @@ public class Movie {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, searches, imdbId, kinopoiskId, imdbDescription,
+        return Objects.hash(id, engName, searches, imdbId, kinopoiskId, imdbDescription,
                 imdbRating, imdbVotes, metacriticRating, theMovieDbRating,
                 rottenTomatoesRating, tV_comRating, filmAffinityRating, rusName,
-                kinopoiskRating, boxOffice, duration, imdbGenre, director, actors, language,
+                kinopoiskRating, boxOffice, duration, imdbGenre, imdbDirector, actors, language,
                 imdbCountry, metascore, kinopoiskImage, year, kinopoiskVotes);
     }
 
@@ -948,7 +973,7 @@ public class Movie {
     public String toString() {
         return "Movie{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", name='" + engName + '\'' +
                 ", imdbId='" + imdbId + '\'' +
                 ", kinopoiskId='" + kinopoiskId + '\'' +
                 ", description='" + imdbDescription + '\'' +
@@ -964,7 +989,7 @@ public class Movie {
                 ", boxOffice='" + boxOffice + '\'' +
                 ", duration='" + duration + '\'' +
                 ", genre='" + imdbGenre + '\'' +
-                ", director='" + director + '\'' +
+                ", director='" + imdbDirector + '\'' +
                 ", actors='" + actors + '\'' +
                 ", language='" + language + '\'' +
                 ", country='" + imdbCountry + '\'' +

@@ -37,8 +37,7 @@ public class GenericService {
      * @param o   the o
      * @return the int
      */
-    public <T> int save(final T o)
-    {
+    public <T> int save(final T o) {
         return (Integer) genericDao.save(o);
     }
 
@@ -49,7 +48,7 @@ public class GenericService {
      * @param type the type
      * @param id   the id
      */
-    public <T> void  delete(final Class<T> type, Integer id){
+    public <T> void delete(final Class<T> type, Integer id) {
         genericDao.delete(type, id);
     }
 
@@ -114,15 +113,67 @@ public class GenericService {
         return genericDao.getMoviesByProperty(field, searchVal, propertyEntity);
     }
 
+    public List<Movie> getMovies(String searchVal, String movieSourceBase) {
+        Search existedSearch = getOneEntryByColumProperty("name", searchVal, Search.class);
+        searchVal = searchVal.trim().toLowerCase();
+        Search newSearch = null;
+        // Search existedSearch = getOneEntryByColumProperty(propertyName, searchVal, searchClass);
+        List<Movie> movies = null;
+        if (existedSearch != null && existedSearch.isSearchWithSearchSourceAlreadyWas(movieSourceBase)) { //IF SEARCH IN DB THEN NO NEED FOR APIS REQUESTS
+            // GET movies from DB
+            movies = getMoviesBasedOnSearchName(searchVal);
+            incrementSearchNumberCounter(existedSearch.getId()); // increment Search.number
+        } else {
+            Search lastSearch = getLastSearch();
+            int id = 1;
+            if (lastSearch != null) {
+                id = lastSearch.getId() + 1;
+            }
+            newSearch = new Search(id, searchVal);
+            if (movieSourceBase.equals("kinopoisk")) {
+                movies = movieApisReader.parseGeneralKinopoiskMoviesJson(searchVal);
+                newSearch.setIsKinopoiskLaunched(1);
+            } else if (movieSourceBase.equals("imdb")) {
+                movies = movieApisReader.parseGeneralImdbMoviesJson(searchVal);
+                newSearch.setIsOmdbLaunched(1);
+            }
 
-    /**
-     * Gets movies.
-     *
-     * @param searchVal     the search val
-     * @return the movies
-     * @throws IOException the io exception
-     */
-    public List<Movie> getMovies (String searchVal) throws IOException, URISyntaxException {
+            if (movies == null) {
+                return null;
+            }
+            saveOrUpdate(newSearch); // save new search manually because only once needed
+
+            for (Movie movie : movies) { // update movie_search via cascade
+                movie.addSearchToMovie(newSearch); //1search-manyMovies case
+            }
+            // check if movie was added to db by different search -> update movie_search via cascade
+            for (Movie movie : movies) {
+                int filmId = 0;
+                String nameEn = movie.getEngName();
+                String year = movie.getYear();
+                String nameRu = movie.getRusName();
+                if (!movie.getEngName().isEmpty()) {
+                    filmId = MovieApisReader.hashCode(nameEn + year);
+                } else {
+                    filmId = MovieApisReader.hashCode(nameRu + year);
+                }
+
+                Movie getMovie = get(Movie.class, filmId);
+                if (getMovie != null) { //if movie in db then it was added via another search
+                    getMovie.addSearchToMovie(newSearch);
+                    genericDao.merge(getMovie); // update movie_search -> 1movie-manySearches case
+                    continue;
+                }
+                genericDao.saveOrUpdate(movie);
+            }
+        }
+
+
+        return movies;
+    }
+
+
+    public List<Movie> getMovies(String searchVal) {
         Search existedSearch = getOneEntryByColumProperty("name", searchVal, Search.class);
         searchVal = searchVal.trim().toLowerCase();
         // Search existedSearch = getOneEntryByColumProperty(propertyName, searchVal, searchClass);
@@ -132,7 +183,7 @@ public class GenericService {
             // GET movies from DB
             movies = getMoviesBasedOnSearchName(searchVal);
             incrementSearchNumberCounter(existedSearch.getId()); // increment Search.number
-        } else  { // OTHERWISE, NO SEARCH IN DB == NO MOVIES TO GET -> CALL APIS REQUESTS
+        } else { // OTHERWISE, NO SEARCH IN DB == NO MOVIES TO GET -> CALL APIS REQUESTS
             //MovieApisReader movieApisReader = new MovieApisReader();
             movies = movieApisReader.parseJSONKinopoiskMovies(searchVal);
             if (movies == null) {
@@ -174,7 +225,7 @@ public class GenericService {
      * @param o   the o
      * @return the t
      */
-    public <T> T merge(final T o)   {
+    public <T> T merge(final T o) {
         return (T) genericDao.merge(o);
     }
 

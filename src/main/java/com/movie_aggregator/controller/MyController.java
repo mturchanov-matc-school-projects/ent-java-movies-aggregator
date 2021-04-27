@@ -142,9 +142,10 @@ public class MyController {
      * @throws IOException the io exception
      */
     @RequestMapping("/searchMovie")
-    public String searchMovie(@RequestParam("searchVal") String searchVal, Model model)
-            throws IOException, URISyntaxException {
-        List<Movie> movies = genericService.getMovies(searchVal);
+    public String searchMovie(@RequestParam String movieSourceBase, @RequestParam("searchVal") String searchVal, Model model) {
+        System.out.println(movieSourceBase);
+                
+        List<Movie> movies = genericService.getMovies(searchVal, movieSourceBase);
         if (movies == null) {
             model.addAttribute("headerTitle", String.format("Sorry, no result with '%s' input", searchVal));
             return "/index";
@@ -166,9 +167,8 @@ public class MyController {
         }
 
 
-
-
         System.out.println(movies);
+        model.addAttribute("movieSourceBase", movieSourceBase);
         model.addAttribute("movies", movies);
         return "/result";
     }
@@ -181,16 +181,25 @@ public class MyController {
      * @return the movie info
      */
     @RequestMapping("/movie")
-    public String getMovieInfo( @RequestParam int id, Model model) {
+    public String getMovieInfo( @RequestParam int id, @RequestParam String movieSourceBase, Model model) {
         //model.addAttribute("movie", movieService.getMovie(id));
-        model.addAttribute("movie", genericService.get(Movie.class, id));
+        Movie movie = genericService.get(Movie.class, id);
+        // check if api specific-movie-request was launched before
+        if (movieSourceBase.equals("kinopoisk") && movie.getKinopoiskReviews() == null) {
+            movie = apisReader.parseSpecificKinopoiskMoviesJson(movie);
+
+        } else if (movieSourceBase.equals("imdb") && movie.getWriter() == null) {
+            movie = apisReader.parseSpecificImdbMovieJson(movie);
+
+        }
+        model.addAttribute("movie", movie);
 
         return "/movie";
     }
 
 
     @RequestMapping("/uploadImages")
-    public String loadImages( @RequestParam int id, Model model) throws IOException, URISyntaxException {
+    public String loadImages( @RequestParam int id, Model model)  {
         //model.addAttribute("id", movieService.getMovie(id));
         Movie movie = genericService.get(Movie.class, id);
         movie = apisReader.loadFrames(movie);

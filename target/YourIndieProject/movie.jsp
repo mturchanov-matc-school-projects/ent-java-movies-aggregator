@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 
-<c:set var="title" value="Movie - ${movie.name}" scope="request"/>
+<c:set var="title" value="Movie - ${movie.engName}" scope="request"/>
 <c:import url="includes/head.jsp"/>
 <body>
 <c:import url="includes/header.jsp"/>
@@ -12,11 +12,11 @@
 
 <div class="container-fluid bg-white" id="wrapper">
 
-    <h2>${movie.name}</h2>
+    <h2>${movie.engName}</h2>
 
     <div id="movieInfo" class="row mb-3">
         <div class="col-lg-4 col-sm-12 text-center" id="movieImage">
-            <img src="${movie.kinopoiskImage}" alt="image ${movie.name}">
+            <img src="${movie.kinopoiskImage}" alt="image ${movie.engName}">
         </div>
 
         <div class="col-lg-8 col-sm-12">
@@ -26,13 +26,13 @@
 
                     </div>
                     <div class="card-body">
-                        <c:if test="${movie.name != null} ">
-                            <h5 class="card-title">English name: ${movie.name}</h5>
+                        <c:if test="${movie.engName != null} ">
+                            <h5 class="card-title">English name: ${movie.engName}</h5>
                         </c:if>
                         <h5 class="card-title">Russian name: ${movie.rusName}</h5>
 
                         <p class="card-text">
-                            ${movie.description}
+                            ${movie.imdbDescription}
                         </p>
                     </div>
                 </div>
@@ -144,10 +144,11 @@
                                 <td>${movie.language}</td>
                             </tr>
                         </c:if>
-                        <c:if test="${movie.director != null}">
+
+                        <c:if test="${movie.kinopoiskDirector != null}">
                             <tr>
                                 <td>Director</td>
-                                <td>${movie.director}</td>
+                                <td>${movie.kinopoiskDirector}</td>
                             </tr>
                         </c:if>
                         <c:if test="${movie.writer != null}">
