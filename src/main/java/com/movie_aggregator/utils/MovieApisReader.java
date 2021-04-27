@@ -7,8 +7,9 @@ import com.squareup.okhttp.Response;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
-import com.jayway.jsonpath.*;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -28,6 +29,7 @@ import java.util.Properties;
  */
 @Component
 public class MovieApisReader implements PropertiesLoader {
+    private static final int PRIME = 31;
     private Properties properties;
     /**
      * The constant KINOPOISK_ROOT.
@@ -54,14 +56,13 @@ public class MovieApisReader implements PropertiesLoader {
      * Gets json from api.
      *
      * @param searchType the search source
-     * @param source   the search type
-     * @param searchVal    the search val
+     * @param source     the search type
+     * @param searchVal  the search val
      * @return the json from api
      * @throws IOException the io exception
      */
-    public String getJSONFromApi(String searchType, String source, String searchVal)
-            throws IOException, URISyntaxException {
-        searchVal =  URLEncoder.encode(searchVal, StandardCharsets.UTF_8);
+    public String getJSONFromApi(String searchType, String source, String searchVal) {
+        searchVal = URLEncoder.encode(searchVal, StandardCharsets.UTF_8);
         OkHttpClient client = new OkHttpClient();
         String requestURL = null;
         Request request = null;
@@ -88,7 +89,7 @@ public class MovieApisReader implements PropertiesLoader {
                     requestURL = String.format("%s%s%s%s", KINOPOISK_ROOT, "search-by-keyword?keyword=", searchVal, "&page=1");
                 } else if (searchType.equals("specific")) {
                     requestURL = String.format("%s%s?append_to_response=REVIEW", KINOPOISK_ROOT, searchVal);
-                } else if(searchType.equals("frames")) {
+                } else if (searchType.equals("frames")) {
                     requestURL = String.format("%s%s/frames", KINOPOISK_ROOT, searchVal);
                 }
                 request = new Request.Builder()
@@ -101,8 +102,15 @@ public class MovieApisReader implements PropertiesLoader {
 
             case "sparql": {
                 URL resourceCustomersCsvUrl = MovieApisReader.class.getResource("/sparqlQuery.txt");
-                String filePathForSparqlQuery = Paths.get(resourceCustomersCsvUrl.toURI()).toFile().getAbsolutePath();
-                String sparqlWithoutId =  new String(Files.readAllBytes(Paths.get(filePathForSparqlQuery)));
+                String filePathForSparqlQuery = null;
+                String sparqlWithoutId = null;
+
+                try {
+                    filePathForSparqlQuery = Paths.get(resourceCustomersCsvUrl.toURI()).toFile().getAbsolutePath();
+                    sparqlWithoutId = new String(Files.readAllBytes(Paths.get(filePathForSparqlQuery)));
+                } catch (IOException | URISyntaxException e) {
+                    e.printStackTrace();
+                }
                 String sparqlQueryFormatted = String.format(sparqlWithoutId, searchVal);
                 requestURL = String.format("%s%s", QUERY_WIKI_DATA, sparqlQueryFormatted);
 
@@ -118,14 +126,15 @@ public class MovieApisReader implements PropertiesLoader {
         Response response = null;
         try {
             response = client.newCall(request).execute();
+            if (response == null) {
+                return null;
+            }
+            return response.body().string();
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
-        if (response == null) {
-            return null;
-        }
-        return response.body().string();
-    }
+        return  null;
+}
 
 
 
@@ -235,7 +244,7 @@ public class MovieApisReader implements PropertiesLoader {
 
                 //logger.info(imdbDataJSON);
                 //String imdbDataJSON = "{\"Title\":\"Matrix\",\"Year\":\"1993\",\"Rated\":\"N/A\",\"Released\":\"01 Mar 1993\",\"Runtime\":\"60 min\",\"Genre\":\"Action, Drama, Fantasy, Thriller\",\"Director\":\"N/A\",\"Writer\":\"Grenville Case\",\"Actors\":\"Nick Mancuso, Phillip Jarrett, Carrie-Anne Moss, John Vernon\",\"Plot\":\"Steven Matrix is one of the underworld's foremost hitmen until his luck runs out, and someone puts a contract out on him. Shot in the forehead by a .22 pistol, Matrix \\\"dies\\\" and finds ...\",\"Language\":\"English\",\"Country\":\"Canada\",\"Awards\":\"1 win.\",\"Poster\":\"https://m.media-amazon.com/images/M/MV5BYzUzOTA5ZTMtMTdlZS00MmQ5LWFmNjEtMjE5MTczN2RjNjE3XkEyXkFqcGdeQXVyNTc2ODIyMzY@._V1_SX300.jpg\",\"Ratings\":[{\"Source\":\"Internet Movie Database\",\"Value\":\"7.9/10\"}],\"Metascore\":\"N/A\",\"imdbRating\":\"7.9\",\"imdbVotes\":\"138\",\"imdbID\":\"tt0106062\",\"Type\":\"series\",\"totalSeasons\":\"N/A\",\"Response\":\"True\"}";
-                movies.add(parseJSONImdbMovie(imdbDataJSON, movie));
+                movies.add(parseSpecificImdbMovieJson(movie));
                 continue;
             }
             //System.out.println("MovieApisReader.parseJSONKinopoiskMovies().movie - " + movie);
@@ -271,15 +280,16 @@ public class MovieApisReader implements PropertiesLoader {
     /**
      * parses imdb movie JSON
      *
-     * @param imdbData
      * @param movie
      * @return
      */
-    private Movie parseJSONImdbMovie(String imdbData, Movie movie) {
-        JSONObject movieDetailsJSON = new JSONObject(imdbData);
-//                JSONObject movieDetailsJSON = new JSONObject("{\"Title\":\"The Lord of the Rings: The Return of the King\",\"Year\":\"2003\",\"Rated\":\"PG-13\",\"Released\":\"17 Dec 2003\",\"Runtime\":\"201 min\",\"Genre\":\"Action, Adventure, Drama, Fantasy\",\"Director\":\"Peter Jackson\",\"Writer\":\"J.R.R. Tolkien (novel), Fran Walsh (screenplay), Philippa Boyens (screenplay), Peter Jackson (screenplay)\",\"Actors\":\"Noel Appleby, Ali Astin, Sean Astin, David Aston\",\"Plot\":\"The final confrontation between the forces of good and evil fighting for control of the future of Middle-earth. Hobbits: Frodo and Sam reach Mordor in their quest to destroy the \\\"one ring\\\", while Aragorn leads the forces of good against Sauron's evil army at the stone city of Minas Tirith.\",\"Language\":\"English, Quenya, Old English, Sindarin\",\"Country\":\"New Zealand, USA\",\"Awards\":\"Won 11 Oscars. Another 199 wins & 124 nominations.\",\"Poster\":\"https://m.media-amazon.com/images/M/MV5BNzA5ZDNlZWMtM2NhNS00NDJjLTk4NDItYTRmY2EwMWZlMTY3XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg\",\"Ratings\":[{\"Source\":\"Internet Movie Database\",\"Value\":\"8.9/10\"},{\"Source\":\"Rotten Tomatoes\",\"Value\":\"93%\"},{\"Source\":\"Metacritic\",\"Value\":\"94/100\"}],\"Metascore\":\"94\",\"imdbRating\":\"8.9\",\"imdbVotes\":\"1,645,871\",\"imdbID\":\"tt0167260\",\"Type\":\"movie\",\"DVD\":\"N/A\",\"BoxOffice\":\"$377,845,905\",\"Production\":\"New Line Cinema, Saul Zaentz Company\",\"Website\":\"N/A\",\"Response\":\"True\"}");
-//                System.out.println(movieDetaiulsString);
-
+    public Movie parseSpecificImdbMovieJson(Movie movie) {
+        String JSONMovies = getJSONFromApi("specific", "omdb", movie.getImdbId());
+        if (JSONMovies == null) {
+            return null;
+        }
+        JSONObject movieDetailsJSON = new JSONObject(JSONMovies);
+        //JSONObject movieDetailsJSON = new JSONObject(imdbData);
         String isWorking = movieDetailsJSON.getString("Response");
         if(isWorking.equals("False")) {
             return movie;
@@ -315,12 +325,12 @@ public class MovieApisReader implements PropertiesLoader {
         movie.setProduction(production);
         movie.setWriter(writer);
         movie.setAudienceRating(audienceRating);
-        movie.setGenre(genre);
-        movie.setDescription(description);
+        movie.setImdbGenre(genre);
+        movie.setImdbDescription(description);
         movie.setDirector(director);
         movie.setActors(actors);
         movie.setLanguage(language);
-        movie.setCountry(country);
+        movie.setImdbCountry(country);
         movie.setMetascore(metascore);
         movie.setImdbRating(imdbRating);
         movie.setImdbVotes(imdbVotes);
@@ -355,23 +365,31 @@ public class MovieApisReader implements PropertiesLoader {
         return reviewSource;
     }
 
-    //public MovieReviewSource parseJSONWikiDataReviewSources(Movie movie, ReviewsSources reviewSource) throws IOException, URISyntaxException {
-    //    MovieReviewSource movieReviewSource;
-    //    String sourceReviewJSON = getJSONFromApi(null, "sparql", movie.getImdbId());
-    //    sourceReviewJSON = sourceReviewJSON.replaceAll("[\n\\]]", "")
-    //            .replaceAll(".+: \\[", "");
-    //    sourceReviewJSON = sourceReviewJSON.substring(0, sourceReviewJSON.length() - 2);
-    //    String identifier = null;
-    //    System.out.println(sourceReviewJSON);
-    //    if (sourceReviewJSON.contains(reviewSource.getName())) {
-    //        String jsonPathExpression = String.format("$.%s.value", reviewSource.getName());
-    //        System.out.println(jsonPathExpression);
-    //        identifier = JsonPath.read(sourceReviewJSON, jsonPathExpression);
-    //    }
-    //    System.out.println(identifier);
-    //    movieReviewSource = new MovieReviewSource(movie, reviewSource, identifier);
-    //    return movieReviewSource;
-    //}
+    public List<Movie> parseGeneralImdbMoviesJson(String searchVal) throws IOException, URISyntaxException {
+        String JSONMovies = getJSONFromApi("general", "omdb", searchVal);
+        if (JSONMovies == null) {
+            return null;
+        }
+        ArrayList<Movie> movies = new ArrayList<>();
+        JSONObject obj = new JSONObject(JSONMovies);
+        JSONArray films = obj.getJSONArray("Search");
+        for (int i = 0; i < films.length(); i++) {
+            JSONObject movieJSON = films.getJSONObject(i);
+            String imdbId = movieJSON.getString("imdbID");
+            String name = movieJSON.getString("Title");
+            String imdbPoster = movieJSON.getString("Poster");
+            String year = movieJSON.getString("Year");
+            int filmId = hashCode(name + year);
+
+            Movie movie = new Movie(filmId, name, imdbPoster, year, imdbId);
+            movies.add(movie);
+        }
+        return movies;
+    }
+
+    public static int hashCode(@NonNull String string) {
+        return string.hashCode() * PRIME;
+    }
 
 
     /**
@@ -391,11 +409,11 @@ public class MovieApisReader implements PropertiesLoader {
         //for (Movie m : movies) {
         // System.out.println(m);
         //}
-        String sparql = reader.getJSONFromApi(null, "sparql", "tt0124621");
+        //String sparql = reader.getJSONFromApi(null, "sparql", "tt0124621");
 
-        sparql = sparql.replaceAll("[\n\\]]", "")
-                .replaceAll(".+: \\[", "");
-        sparql = sparql.substring(0, sparql.length() - 2);
+        //sparql = sparql.replaceAll("[\n\\]]", "")
+                //.replaceAll(".+: \\[", "");
+        //sparql = sparql.substring(0, sparql.length() - 2);
         //ReviewSource reviewSource = new ReviewSource(sparql);
         //Properties properties = reader.loadProperties("/reviewSources.properties");
         //String d = String.format(properties.getProperty("film_web_pl"),
@@ -406,7 +424,11 @@ public class MovieApisReader implements PropertiesLoader {
        // System.out.println(h);
        // String d  = String.format(properties.getProperty("all_cinema_jp"), allcin);   // paste identifier
        // System.out.println(d);
-        System.out.println(sparql);
+
+
+
+
+        System.out.println( "123".hashCode() * 31);
     }
 
 }

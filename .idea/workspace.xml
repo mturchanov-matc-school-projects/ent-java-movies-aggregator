@@ -31,16 +31,10 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/controller/MyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/controller/MyController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/entity/Movie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/entity/Movie.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/entity/ReviewSource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/entity/ReviewSource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/entity/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/utils/MovieApisReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/utils/MovieApisReader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/controller/MyController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/controller/MyController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/entity/Movie.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/entity/Movie.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/entity/ReviewSource.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/entity/ReviewSource.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/utils/MovieApisReader.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/utils/MovieApisReader.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/controller/MyController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/controller/MyController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/entity/Movie.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/entity/Movie.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/entity/ReviewSource.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/entity/ReviewSource.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/movie.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/movie.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/result.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/result.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/movie_aggregator/repository/GenericDaoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/movie_aggregator/repository/GenericDaoTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/utils/MovieApisReader.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/utils/MovieApisReader.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -63,7 +57,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="test" />
+        <entry key="$PROJECT_DIR$" value="main-dev-spring" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -77,15 +71,15 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/src/main/java/com/movie_aggregator/utils/MovieApisReader.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/com/movie_aggregator/configuration/MyConfig.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/main/webapp/index.jsp" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/main/java/com/movie_aggregator/controller/MyRestController.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/webapp/result.jsp" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/movie_aggregator/service/GenericService.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/movie_aggregator/utils/MovieApisReader.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/movie_aggregator/controller/MyRestController.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/com/movie_aggregator/repository/GenericDao.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/test/java/com/movie_aggregator/repository/GenericDaoTest.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/webapp/index.jsp" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/webapp/sign-up.jsp" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/main/java/com/movie_aggregator/service/GenericService.java" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="LogFilters">
     <option name="FILTER_ERRORS" value="false" />
@@ -599,7 +593,8 @@
       <workItem from="1619158083529" duration="9824000" />
       <workItem from="1619192431790" duration="9621000" />
       <workItem from="1619240037762" duration="38863000" />
-      <workItem from="1619482345829" duration="1681000" />
+      <workItem from="1619482345829" duration="6529000" />
+      <workItem from="1619492692079" duration="1617000" />
     </task>
     <task id="LOCAL-00001" summary="ERD image was updated(added users/roles table)">
       <created>1615338497654</created>
@@ -640,7 +635,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/movie_aggregator/utils/MovieApisReader.java</url>
-          <line>29</line>
+          <line>30</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>

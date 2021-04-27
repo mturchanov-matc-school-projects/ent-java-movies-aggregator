@@ -259,10 +259,10 @@ public class MyController {
         //    String username = principal.toString();
         //}
 //
-        User user = genericService.getOneEntryByColumProperty("username", "2", User.class);
-        ReviewsSourcesLookup reviewsSources = genericService.get(ReviewsSourcesLookup.class, 3);
-        user.addReviewSourceToUser(reviewsSources);
-        genericService.merge(user);
+        //User user = genericService.getOneEntryByColumProperty("username", "2", User.class);
+        //ReviewsSourcesLookup reviewsSources = genericService.get(ReviewsSourcesLookup.class, 3);
+        //user.addReviewSourceToUser(reviewsSources);
+        //genericService.merge(user);
         //user.addMovieToUser(new Movie(111, "11", "11", "11"));
         //genericService.merge(user);
        // User user = genericService.getOneEntryByColumProperty("username", username, User.class);
@@ -307,7 +307,13 @@ public class MyController {
         //genericService.merge(newMovie);
 
 
+        List<Movie> imdbMovies = apisReader.parseGeneralImdbMoviesJson("blue");
+        Movie movie = imdbMovies.get(1);
+        Movie updatedMovie = apisReader.parseSpecificImdbMovieJson(movie);
+        model.addAttribute("movies", imdbMovies);
+        model.addAttribute("movie", updatedMovie);
 
+        System.out.printf("size: %d, movies: %s%nupdatedMovie: %s%n", imdbMovies.size(), imdbMovies, updatedMovie);
 
 
        //Search search2 = new Search( 6,"test search2");

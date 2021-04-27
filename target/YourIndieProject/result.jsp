@@ -18,7 +18,7 @@
         <div class="container">
             <ul class="list-unstyled">
                 <li class="media w3-padding w3-container w3-round-large w3-light-gray">
-                    <img class="mr-3 movieImg" src="<c:out value="${movie.image}" />" alt="image" />
+                    <img class="mr-3 movieImg" src="<c:out value="${movie.kinopoiskImage}" />" alt="image" />
                     <div class="media-body">
                         <h3 class="mt-0 mb-1"><c:out value="${movie.name}  ${movie.year}" /></h3>
                         <h4 class="mt-0 mb-1"><a href="<c:out value="https://www.imdb.com/title/${movie.imdbId}"/>">imdb reviews</a></h4>

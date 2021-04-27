@@ -16,7 +16,7 @@
 
     <div id="movieInfo" class="row mb-3">
         <div class="col-lg-4 col-sm-12 text-center" id="movieImage">
-            <img src="${movie.image}" alt="image ${movie.name}">
+            <img src="${movie.kinopoiskImage}" alt="image ${movie.name}">
         </div>
 
         <div class="col-lg-8 col-sm-12">
@@ -29,7 +29,7 @@
                         <c:if test="${movie.name != null} ">
                             <h5 class="card-title">English name: ${movie.name}</h5>
                         </c:if>
-                        <h5 class="card-title">Russian name: ${movie.easternName}</h5>
+                        <h5 class="card-title">Russian name: ${movie.rusName}</h5>
 
                         <p class="card-text">
                             ${movie.description}
@@ -120,10 +120,10 @@
                                 <td>${movie.released}</td>
                             </tr>
                         </c:if>
-                        <c:if test="${movie.genre != null}">
+                        <c:if test="${movie.imdbGenre != null}">
                             <tr>
                                 <td>Genre(s)</td>
-                                <td>${movie.genre}</td>
+                                <td>${movie.imdbGenre}</td>
                             </tr>
                         </c:if>
                         <c:if test="${movie.duration != null}">
@@ -132,10 +132,10 @@
                                 <td>${movie.duration}</td>
                             </tr>
                         </c:if>
-                        <c:if test="${movie.country != null}">
+                        <c:if test="${movie.imdbCountry != null}">
                             <tr>
                                 <td>Country</td>
-                                <td>${movie.country}</td>
+                                <td>${movie.imdbCountry}</td>
                             </tr>
                         </c:if>
                         <c:if test="${movie.language != null}">

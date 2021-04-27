@@ -1,7 +1,5 @@
 package com.movie_aggregator.entity;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import java.util.*;
 
@@ -17,8 +15,7 @@ public class Movie {
     @Id
     private int id;
 
-    @Column
-    private String name;
+
     //@ManyToMany(cascade = CascadeType.ALL)
     @ManyToMany(cascade = {CascadeType.PERSIST,  CascadeType.REFRESH, CascadeType.DETACH}
             , fetch = FetchType.EAGER)
@@ -53,6 +50,8 @@ public class Movie {
     //private Set<ReviewsSources> reviewsSources;
 
 
+    @Column(name = "eng_name")
+    private String name;
 
     @Column(name = "imdb_id")
     private String imdbId;
@@ -60,8 +59,11 @@ public class Movie {
     @Column(name = "kinopoisk_id")
     private String kinopoiskId;
 
-    @Column(name = "description")
-    private String description;
+    @Column(name = "imdb_description")
+    private String imdbDescription;
+
+    @Column(name = "kinopoisk_description")
+    private String kinopoiskDescription;
 
     @Column(name = "imdb_rating")
     private String imdbRating;
@@ -84,8 +86,8 @@ public class Movie {
     @Column(name = "film_affinity_rating")
     private String filmAffinityRating;
 
-    @Column(name = "eastern_name")
-    private String easternName;
+    @Column(name = "rus_name")
+    private String rusName;
 
     @Column(name = "kinopoisk_rating")
     private String kinopoiskRating;
@@ -96,8 +98,11 @@ public class Movie {
     @Column
     private String duration;
 
-    @Column
-    private String genre;
+    @Column(name = "imdb_genre")
+    private String imdbGenre;
+
+    @Column(name = "kinopoisk_genre")
+    private String kinopoiskGenre;
 
     @Column
     private String director;
@@ -108,14 +113,20 @@ public class Movie {
     @Column
     private String language;
 
-    @Column
-    private String country;
+    @Column(name = "imdb_country")
+    private String imdbCountry;
+
+    @Column(name = "kinopoisk_country")
+    private String kinopoiskCountry;
 
     @Column
     private String metascore;
 
-    @Column
-    private String image;
+    @Column(name = "kinopoisk_poster")
+    private String kinopoiskImage;
+
+    @Column(name = "imdb_poster")
+    private String imdbPoster;
 
     @Column
     private String year;
@@ -133,6 +144,11 @@ public class Movie {
     private String production;
     @Column(name="audience_rating")
     private String audienceRating;
+
+    @Column(name="imdb_distributor")
+    private String imdbDistributor;
+    @Column(name="kinopoisk_distributor")
+    private String kinopoiskDistributor;
 
     /**
      * has such format: "%s(%s)"
@@ -158,12 +174,12 @@ public class Movie {
      * Instantiates a new Movie.
      *
      * @param name  the name
-     * @param image the image
+     * @param kinopoiskImage the image
      * @param year  the year
      */
-    public Movie(String name, String image, String year) {
+    public Movie(String name, String kinopoiskImage, String year) {
         this.name = name;
-        this.image = image;
+        this.kinopoiskImage = kinopoiskImage;
         this.year = year;
     }
 
@@ -175,11 +191,12 @@ public class Movie {
      * @param image the image
      * @param year  the year
      */
-    public Movie(int id, String name, String image, String year) {
+    public Movie(int id, String name, String image, String year, String imdbId) {
         this.id = id;
         this.name = name;
-        this.image = image;
+        this.imdbPoster = image;
         this.year = year;
+        this.imdbId = imdbId;
     }
 
     /**
@@ -187,15 +204,15 @@ public class Movie {
      *
      * @param name            the name
      * @param kinopoiskId     the kinopoisk id
-     * @param easternName     the eastern name
+     * @param rusName     the eastern name
      * @param kinopoiskRating the kinopoisk rating
      * @param year            the year
      */
-    public Movie(String name, String kinopoiskId, String easternName,
+    public Movie(String name, String kinopoiskId, String rusName,
                  String kinopoiskRating, String year) {
         this.name = name;
         this.kinopoiskId = kinopoiskId;
-        this.easternName = easternName;
+        this.rusName = rusName;
         this.kinopoiskRating = kinopoiskRating;
         this.year = year;
     }
@@ -205,38 +222,38 @@ public class Movie {
      *
      * @param name        the name
      * @param imdbId      the imdb id
-     * @param description the description
+     * @param imdbDescription the description
      * @param imdbRating  the imdb rating
      * @param imdbVotes   the imdb votes
      * @param boxOffice   the box office
      * @param duration    the duration
-     * @param genre       the genre
+     * @param imdbGenre       the genre
      * @param director    the director
      * @param actors      the actors
      * @param language    the language
-     * @param country     the country
+     * @param imdbCountry     the country
      * @param metascore   the metascore
-     * @param image       the image
+     * @param kinopoiskImage       the image
      * @param year        the year
      */
-    public Movie(String name, String imdbId, String description, String imdbRating,
-                 String imdbVotes, String boxOffice, String duration, String genre,
-                 String director, String actors, String language, String country,
-                 String metascore, String image, String year) {
+    public Movie(String name, String imdbId, String imdbDescription, String imdbRating,
+                 String imdbVotes, String boxOffice, String duration, String imdbGenre,
+                 String director, String actors, String language, String imdbCountry,
+                 String metascore, String kinopoiskImage, String year) {
         this.name = name;
         this.imdbId = imdbId;
-        this.description = description;
+        this.imdbDescription = imdbDescription;
         this.imdbRating = imdbRating;
         this.imdbVotes = imdbVotes;
         this.boxOffice = boxOffice;
         this.duration = duration;
-        this.genre = genre;
+        this.imdbGenre = imdbGenre;
         this.director = director;
         this.actors = actors;
         this.language = language;
-        this.country = country;
+        this.imdbCountry = imdbCountry;
         this.metascore = metascore;
-        this.image = image;
+        this.kinopoiskImage = kinopoiskImage;
         this.year = year;
     }
 
@@ -252,21 +269,21 @@ public class Movie {
      * @param year        the year
      * @param kVotes      the k votes
      * @param rating      the rating
-     * @param image       the image
-     * @param description the description
+     * @param kinopoiskImage       the image
+     * @param imdbDescription the description
      */
     public Movie(String nameEn, String nameRu, String imdbId, String filmId,
                  String shortDesc, String duration, String year, String kVotes,
-                 String rating, String image, String description) {
+                 String rating, String kinopoiskImage, String imdbDescription) {
         this.name = nameEn;
         this.imdbId = imdbId;
         this.kinopoiskId = filmId;
         this.director = shortDesc;
-        this.description = description;
-        this.easternName = nameRu;
+        this.imdbDescription = imdbDescription;
+        this.rusName = nameRu;
         this.kinopoiskRating = rating;
         this.duration = duration;
-        this.image = image;
+        this.kinopoiskImage = kinopoiskImage;
         this.year = year;
         this.kinopoiskVotes = kVotes;
     }
@@ -384,8 +401,8 @@ public class Movie {
      *
      * @return the description
      */
-    public String getDescription() {
-        return description;
+    public String getImdbDescription() {
+        return imdbDescription;
     }
 
     /**
@@ -393,8 +410,8 @@ public class Movie {
      *
      * @param description the description
      */
-    public void setDescription(String description) {
-        this.description = description;
+    public void setImdbDescription(String description) {
+        this.imdbDescription = description;
     }
 
     /**
@@ -440,6 +457,46 @@ public class Movie {
      */
     public String getMetacriticRating() {
         return metacriticRating;
+    }
+
+    public String getKinopoiskDescription() {
+        return kinopoiskDescription;
+    }
+
+    public void setKinopoiskDescription(String kinopoiskDescription) {
+        this.kinopoiskDescription = kinopoiskDescription;
+    }
+
+    public String getKinopoiskGenre() {
+        return kinopoiskGenre;
+    }
+
+    public void setKinopoiskGenre(String kinopoiskGenre) {
+        this.kinopoiskGenre = kinopoiskGenre;
+    }
+
+    public String getKinopoiskCountry() {
+        return kinopoiskCountry;
+    }
+
+    public void setKinopoiskCountry(String kinopoiskCountry) {
+        this.kinopoiskCountry = kinopoiskCountry;
+    }
+
+    public String getImdbDistributor() {
+        return imdbDistributor;
+    }
+
+    public void setImdbDistributor(String imdbDistributor) {
+        this.imdbDistributor = imdbDistributor;
+    }
+
+    public String getKinopoiskDistributor() {
+        return kinopoiskDistributor;
+    }
+
+    public void setKinopoiskDistributor(String kinopoiskDistributor) {
+        this.kinopoiskDistributor = kinopoiskDistributor;
     }
 
     public String getAwards() {
@@ -568,8 +625,8 @@ public class Movie {
      *
      * @return the eastern name
      */
-    public String getEasternName() {
-        return easternName;
+    public String getRusName() {
+        return rusName;
     }
 
     /**
@@ -577,8 +634,8 @@ public class Movie {
      *
      * @param easternName the eastern name
      */
-    public void setEasternName(String easternName) {
-        this.easternName = easternName;
+    public void setRusName(String easternName) {
+        this.rusName = easternName;
     }
 
     /**
@@ -640,8 +697,8 @@ public class Movie {
      *
      * @return the genre
      */
-    public String getGenre() {
-        return genre;
+    public String getImdbGenre() {
+        return imdbGenre;
     }
 
     /**
@@ -649,8 +706,8 @@ public class Movie {
      *
      * @param genre the genre
      */
-    public void setGenre(String genre) {
-        this.genre = genre;
+    public void setImdbGenre(String genre) {
+        this.imdbGenre = genre;
     }
 
     /**
@@ -712,8 +769,8 @@ public class Movie {
      *
      * @return the country
      */
-    public String getCountry() {
-        return country;
+    public String getImdbCountry() {
+        return imdbCountry;
     }
 
     /**
@@ -721,8 +778,8 @@ public class Movie {
      *
      * @param country the country
      */
-    public void setCountry(String country) {
-        this.country = country;
+    public void setImdbCountry(String country) {
+        this.imdbCountry = country;
     }
 
     /**
@@ -748,8 +805,8 @@ public class Movie {
      *
      * @return the image
      */
-    public String getImage() {
-        return image;
+    public String getKinopoiskImage() {
+        return kinopoiskImage;
     }
 
     /**
@@ -757,8 +814,8 @@ public class Movie {
      *
      * @param image the image
      */
-    public void setImage(String image) {
-        this.image = image;
+    public void setKinopoiskImage(String image) {
+        this.kinopoiskImage = image;
     }
 
     /**
@@ -797,6 +854,14 @@ public class Movie {
         this.searches = searches;
     }
 
+    public String getImdbPoster() {
+        return imdbPoster;
+    }
+
+    public void setImdbPoster(String imdbPoster) {
+        this.imdbPoster = imdbPoster;
+    }
+
     /**
      * Add search to movie.
      *
@@ -809,6 +874,13 @@ public class Movie {
         searches.add(search);
     }
 
+    public void addImageToMovie(Image image) {
+        if(images == null) {
+            images = new HashSet<>();
+        }
+        images.add(image);
+    }
+
 
     public ReviewSource getReviewSources() {
         return reviewSources;
@@ -818,12 +890,7 @@ public class Movie {
         this.reviewSources = reviewSources;
     }
 
-    public void addImageToMovie(Image image) {
-        if(images == null) {
-            images = new HashSet<>();
-        }
-        images.add(image);
-    }
+
 
     public String getKinopoiskReviews() {
         return kinopoiskReviews;
@@ -845,7 +912,7 @@ public class Movie {
                 && Objects.equals(searches, movie.searches)
                 && Objects.equals(imdbId, movie.imdbId)
                 && Objects.equals(kinopoiskId, movie.kinopoiskId)
-                && Objects.equals(description, movie.description)
+                && Objects.equals(imdbDescription, movie.imdbDescription)
                 && Objects.equals(imdbRating, movie.imdbRating)
                 && Objects.equals(imdbVotes, movie.imdbVotes)
                 && Objects.equals(metacriticRating, movie.metacriticRating)
@@ -853,28 +920,28 @@ public class Movie {
                 && Objects.equals(rottenTomatoesRating, movie.rottenTomatoesRating)
                 && Objects.equals(tV_comRating, movie.tV_comRating)
                 && Objects.equals(filmAffinityRating, movie.filmAffinityRating)
-                && Objects.equals(easternName, movie.easternName)
+                && Objects.equals(rusName, movie.rusName)
                 && Objects.equals(kinopoiskRating, movie.kinopoiskRating)
                 && Objects.equals(boxOffice, movie.boxOffice)
                 && Objects.equals(duration, movie.duration)
-                && Objects.equals(genre, movie.genre)
+                && Objects.equals(imdbGenre, movie.imdbGenre)
                 && Objects.equals(director, movie.director)
                 && Objects.equals(actors, movie.actors)
                 && Objects.equals(language, movie.language)
-                && Objects.equals(country, movie.country)
+                && Objects.equals(imdbCountry, movie.imdbCountry)
                 && Objects.equals(metascore, movie.metascore)
-                && Objects.equals(image, movie.image)
+                && Objects.equals(kinopoiskImage, movie.kinopoiskImage)
                 && Objects.equals(year, movie.year)
                 && Objects.equals(kinopoiskVotes, movie.kinopoiskVotes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, searches, imdbId, kinopoiskId, description,
+        return Objects.hash(id, name, searches, imdbId, kinopoiskId, imdbDescription,
                 imdbRating, imdbVotes, metacriticRating, theMovieDbRating,
-                rottenTomatoesRating, tV_comRating, filmAffinityRating, easternName,
-                kinopoiskRating, boxOffice, duration, genre, director, actors, language,
-                country, metascore, image, year, kinopoiskVotes);
+                rottenTomatoesRating, tV_comRating, filmAffinityRating, rusName,
+                kinopoiskRating, boxOffice, duration, imdbGenre, director, actors, language,
+                imdbCountry, metascore, kinopoiskImage, year, kinopoiskVotes);
     }
 
     @Override
@@ -884,7 +951,7 @@ public class Movie {
                 ", name='" + name + '\'' +
                 ", imdbId='" + imdbId + '\'' +
                 ", kinopoiskId='" + kinopoiskId + '\'' +
-                ", description='" + description + '\'' +
+                ", description='" + imdbDescription + '\'' +
                 ", imdbRating='" + imdbRating + '\'' +
                 ", imdbVotes='" + imdbVotes + '\'' +
                 ", metacriticRating='" + metacriticRating + '\'' +
@@ -892,17 +959,17 @@ public class Movie {
                 ", rottenTomatoesRating='" + rottenTomatoesRating + '\'' +
                 ", tV_comRating='" + tV_comRating + '\'' +
                 ", filmAffinityRating='" + filmAffinityRating + '\'' +
-                ", easternName='" + easternName + '\'' +
+                ", easternName='" + rusName + '\'' +
                 ", kinopoiskRating='" + kinopoiskRating + '\'' +
                 ", boxOffice='" + boxOffice + '\'' +
                 ", duration='" + duration + '\'' +
-                ", genre='" + genre + '\'' +
+                ", genre='" + imdbGenre + '\'' +
                 ", director='" + director + '\'' +
                 ", actors='" + actors + '\'' +
                 ", language='" + language + '\'' +
-                ", country='" + country + '\'' +
+                ", country='" + imdbCountry + '\'' +
                 ", metascore='" + metascore + '\'' +
-                ", image='" + image + '\'' +
+                ", image='" + kinopoiskImage + '\'' +
                 ", year='" + year + '\'' +
                 ", isAdded='" + isAddedToUserList + '\'' +
                 '}';
