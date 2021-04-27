@@ -125,22 +125,18 @@ public class ReviewSource implements PropertiesLoader {
         if (sparql.contains("all_cinema_jp")) {
             String all_cinema_jpIdentifier = JsonPath.read(sparql, "$.all_cinema_jp.value");
             all_cinema_jp = String.format(properties.getProperty("all_cinema_jp"), all_cinema_jpIdentifier);
-
         }
         if (sparql.contains("allcine_fr")) {
             String allcine_frIdentifier = JsonPath.read(sparql, "$.allcine_fr.value");
             allocine_fr = String.format(properties.getProperty("allcine_fr"), allcine_frIdentifier);
-
         }
         if (sparql.contains("cine_gr")) {
             String cine_grIdentifier = JsonPath.read(sparql, "$.cine_gr.value");
             cine_gr = String.format(properties.getProperty("cine_gr"), cine_grIdentifier);
-
         }
         if (sparql.contains("cinema_de")) {
             String cinema_deIdentifier = JsonPath.read(sparql, "$.cinema_de.value");
             cinema_de = String.format(properties.getProperty("cinema_de"), cinema_deIdentifier);
-
         }
         if (sparql.contains("common_sense")) {
             String common_senseIdentifier = JsonPath.read(sparql, "$.common_sense.value");
@@ -150,157 +146,126 @@ public class ReviewSource implements PropertiesLoader {
         if (sparql.contains("eiga_jp")) {
             String eiga_jpIdentifier = JsonPath.read(sparql, "$.eiga_jp.value");
             eiga_jp = String.format(properties.getProperty("eiga_jp"), eiga_jpIdentifier);
-
         }
         if (sparql.contains("film_affinity")) {
             String film_affinityIdentifier = JsonPath.read(sparql, "$.film_affinity.value");
             film_affinity = String.format(properties.getProperty("film_affinity"), film_affinityIdentifier);
-
         }
         if (sparql.contains("filmfront_no")) {
             String filmfront_noIdentifier = JsonPath.read(sparql, "$.filmfront_no.value");
             filmfront_no = String.format(properties.getProperty("filmfront_no"), filmfront_noIdentifier);
-
         }
         if (sparql.contains("film_tv_it")) {
             String film_tv_itIdentifier = JsonPath.read(sparql, "$.film_tv_it.value");
             film_tv_it = String.format(properties.getProperty("film_tv_it"), film_tv_itIdentifier);
-
         }
         if (sparql.contains("google_play_tv")) {
             String google_play_tvIdentifier = JsonPath.read(sparql, "$.google_play_tv.value");
             google_play_tv = String.format(properties.getProperty("google_play_tv"), google_play_tvIdentifier);
-
         }
         if (sparql.contains("kinenote_jp")) {
             String kinenote_jpIdentifier = JsonPath.read(sparql, "$.kinenote_jp.value");
             kinenote_jp = String.format(properties.getProperty("kinenote_jp"), kinenote_jpIdentifier);
-
         }
         if (sparql.contains("kvikmyndir_is")) {
             String kvikmyndir_isIdentifier = JsonPath.read(sparql, "$.kvikmyndir_is.value");
             kvikmyndir_is = String.format(properties.getProperty("kvikmyndir_is"), kvikmyndir_isIdentifier);
-
         }
         if (sparql.contains("ldif_de")) {
             String ldif_deIdentifier = JsonPath.read(sparql, "$.ldif_de.value");
             ldif_de = String.format(properties.getProperty("ldif_de"), ldif_deIdentifier);
-
         }
         if (sparql.contains("letterbox")) {
             String letterboxIdentifier = JsonPath.read(sparql, "$.letterbox.value");
             letterbox = String.format(properties.getProperty("letterbox"), letterboxIdentifier);
-
         }
         if (sparql.contains("metacritic")) {
             String metacriticIdentifier = JsonPath.read(sparql, "$.metacritic.value");
             metacritic = String.format(properties.getProperty("metacritic"), metacriticIdentifier);
-
         }
         if (sparql.contains("mrqe")) {
             String mrqeIdentifier = JsonPath.read(sparql, "$.mrqe.value");
             mrqe = String.format(properties.getProperty("mrqe"), mrqeIdentifier);
-
         }
         if (sparql.contains("movie_walker_jp")) {
             String movie_walker_jpIdentifier = JsonPath.read(sparql, "$.movie_walker_jp.value");
             movie_walker_jp = String.format(properties.getProperty("movie_walker_jp"), movie_walker_jpIdentifier);
-
         }
         if (sparql.contains("moviemeter_nl")) {
             String moviemeter_nlIdentifier = JsonPath.read(sparql, "$.moviemeter_nl.value");
             moviemeter_nl = String.format(properties.getProperty("moviemeter_nl"), moviemeter_nlIdentifier);
-
         }
         if (sparql.contains("movies_anywhere")) {
             String movies_anywhereIdentifier = JsonPath.read(sparql, "$.movies_anywhere.value");
             movies_anywhere = String.format(properties.getProperty("movies_anywhere"), movies_anywhereIdentifier);
-
         }
         if (sparql.contains("mubi")) {
             String mubiIdentifier = JsonPath.read(sparql, "$.mubi.value");
             mubi = String.format(properties.getProperty("mubi"), mubiIdentifier);
-
         }
         if (sparql.contains("mymovies_it")) {
             String mymovies_itIdentifier = JsonPath.read(sparql, "$.mymovies_it.value");
             mymovies_it = String.format(properties.getProperty("mymovies_it"), mymovies_itIdentifier);
-
         }
         if (sparql.contains("netflix")) {
             String netflixIdentifier = JsonPath.read(sparql, "$.netflix.value");
             netflix = String.format(properties.getProperty("netflix"), netflixIdentifier);
-
         }
         if (sparql.contains("port_hu")) {
             String port_huIdentifier = JsonPath.read(sparql, "$.port_hu.value");
             port_hu = String.format(properties.getProperty("port_hu"), port_huIdentifier);
-
         }
         if (sparql.contains("quora_topic")) {
             String quora_topicIdentifier = JsonPath.read(sparql, "$.quora_topic.value");
             quora_topic = String.format(properties.getProperty("quora_topic"), quora_topicIdentifier);
-
         }
         if (sparql.contains("rotten_tomatoes")) {
             String rotten_tomatoesIdentifier = JsonPath.read(sparql, "$.rotten_tomatoes.value");
             rotten_tomatoes = String.format(properties.getProperty("rotten_tomatoes"), rotten_tomatoesIdentifier);
-
         }
         if (sparql.contains("scope_dk")) {
             String scope_dkIdentifier = JsonPath.read(sparql, "$.scope_dk.value");
             scope_dk = String.format(properties.getProperty("scope_dk"), scope_dkIdentifier);
-
         }
         if (sparql.contains("sratim_il")) {
             String sratim_ilIdentifier = JsonPath.read(sparql, "$.sratim_il.value");
             sratim_il = String.format(properties.getProperty("sratim_il"), sratim_ilIdentifier);
-
         }
         if (sparql.contains("tmdb")) {
             String tmdbIdentifier = JsonPath.read(sparql, "$.tmdb.value");
             tmdb = String.format(properties.getProperty("tmdb"), tmdbIdentifier);
-
         }
         if (sparql.contains("tv_com")) {
             String tv_comIdentifier = JsonPath.read(sparql, "$.tv_com.value");
             tv_com = String.format(properties.getProperty("tv_com"), tv_comIdentifier);
-
         }
         if (sparql.contains("anidb")) {
             String anidbIdentifier = JsonPath.read(sparql, "$.anidb.value");
             anidb = String.format(properties.getProperty("anidb"), anidbIdentifier);
-
         }
         if (sparql.contains("anime_news_newtwork")) {
             String anime_news_newtworkIdentifier = JsonPath.read(sparql, "$.anime_news_newtwork.value");
             anime_news_newtwork = String.format(properties.getProperty("anime_news_newtwork"), anime_news_newtworkIdentifier);
-
         }
         if (sparql.contains("anime_click")) {
             String anime_clickIdentifier = JsonPath.read(sparql, "$.anime_click.value");
             anime_click = String.format(properties.getProperty("anime_click"), anime_clickIdentifier);
-
         }
         if (sparql.contains("imfdb")) {
             String imfdbIdentifier = JsonPath.read(sparql, "$.imfdb.value");
             imfdb = String.format(properties.getProperty("imfdb"), imfdbIdentifier);
-
         }
         if (sparql.contains("mal")) {
             String malIdentifier = JsonPath.read(sparql, "$.mal.value");
             mal = String.format(properties.getProperty("mal"), malIdentifier);
-
         }
         if (sparql.contains("trakt_tv")) {
             String trakt_tvIdentifier = JsonPath.read(sparql, "$.trakt_tv.value");
             trakt_tv = String.format(properties.getProperty("trakt_tv"), trakt_tvIdentifier);
-
         }
         if (sparql.contains("anilist")) {
             String anilistIdentifier = JsonPath.read(sparql, "$.anilist.value");
             anilist = String.format(properties.getProperty("anilist"), anilistIdentifier);
-
         }
 
     }

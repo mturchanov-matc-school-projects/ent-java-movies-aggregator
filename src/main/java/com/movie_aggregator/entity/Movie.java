@@ -32,10 +32,13 @@ public class Movie {
     @OneToMany(targetEntity=Image.class, mappedBy="movie",cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Image> images;
 
-    //@OneToOne(targetEntity=Image.class, mappedBy="movie",cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+
+
+    //@OneToOne(targetEntity=ReviewSource.class, mappedBy="movie",cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     //private ReviewSource reviewSources;
-    @OneToOne(mappedBy = "movie", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "movie", cascade = {CascadeType.PERSIST,  CascadeType.REFRESH, CascadeType.MERGE})
     private ReviewSource reviewSources;
+
 
     @ManyToMany(cascade = {CascadeType.MERGE})
     @JoinTable(
@@ -44,6 +47,12 @@ public class Movie {
             inverseJoinColumns = @JoinColumn(name = "username") //write how bridge table get connected with other target table/entity
     )
     private Set<User> users;
+
+
+    //@OneToMany(targetEntity=ReviewsSources.class, mappedBy="movie",cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    //private Set<ReviewsSources> reviewsSources;
+
+
 
     @Column(name = "imdb_id")
     private String imdbId;
@@ -279,6 +288,7 @@ public class Movie {
     public String getKinopoiskVotes() {
         return kinopoiskVotes;
     }
+
 
     /**
      * Sets kinopoisk votes.
@@ -798,6 +808,7 @@ public class Movie {
         }
         searches.add(search);
     }
+
 
     public ReviewSource getReviewSources() {
         return reviewSources;

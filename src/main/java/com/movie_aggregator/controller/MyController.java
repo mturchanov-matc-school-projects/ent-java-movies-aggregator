@@ -1,9 +1,6 @@
 package com.movie_aggregator.controller;
 
-import com.movie_aggregator.entity.Image;
-import com.movie_aggregator.entity.Movie;
-import com.movie_aggregator.entity.ReviewSource;
-import com.movie_aggregator.entity.User;
+import com.movie_aggregator.entity.*;
 import com.movie_aggregator.service.GenericService;
 import com.movie_aggregator.utils.MovieApisReader;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -262,7 +259,10 @@ public class MyController {
         //    String username = principal.toString();
         //}
 //
-        //User user = genericService.getOneEntryByColumProperty("token", "1", User.class);
+        User user = genericService.getOneEntryByColumProperty("username", "2", User.class);
+        ReviewsSourcesLookup reviewsSources = genericService.get(ReviewsSourcesLookup.class, 3);
+        user.addReviewSourceToUser(reviewsSources);
+        genericService.merge(user);
         //user.addMovieToUser(new Movie(111, "11", "11", "11"));
         //genericService.merge(user);
        // User user = genericService.getOneEntryByColumProperty("username", username, User.class);
@@ -273,7 +273,17 @@ public class MyController {
        //Search search = new Search( 5,"test search1");
        //genericService.saveOrUpdate(search);
 
-         Movie newMovie = genericService.get(Movie.class, 4778);
+        //Movie newMovie = genericService.get(Movie.class, 326);
+        //ReviewSource reviewSource = apisReader.parseJSONWikiDataReviewSources("326");
+        //reviewSource.setMovie(newMovie);
+        //newMovie.setReviewSources(reviewSource);
+        //User user = genericService.get(User.class, )
+
+        //ReviewsSources reviewsSource = genericService.get(ReviewsSources.class, 6);
+        //MovieReviewSource movieReviewSource = apisReader.parseJSONWikiDataReviewSources(newMovie, reviewsSource);
+        //newMovie.addReviewSourceToMovie(movieReviewSource);
+        //System.out.println(reviewSource);
+        //genericService.merge(newMovie);
         //Movie newMovie = new Movie();
         //newMovie.setName("testReviews2");
         //newMovie.setYear("testReviews2");
@@ -290,11 +300,13 @@ public class MyController {
         //for (Movie m : movies) {
         //    System.out.println(m);
         //}
-        ReviewSource reviewSource = apisReader.parseJSONWikiDataReviewSources("9714");
-        reviewSource.setMovie(newMovie);
-        newMovie.setReviewSources(reviewSource);
+        //ReviewSource reviewSource = apisReader.parseJSONWikiDataReviewSources("9714");
+        //reviewSource.setMovie(newMovie);
+        //newMovie.setReviewSources(reviewSource);
 
-        genericService.merge(newMovie);
+        //genericService.merge(newMovie);
+
+
 
 
 

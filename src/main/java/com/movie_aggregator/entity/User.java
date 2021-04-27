@@ -40,6 +40,14 @@ public class User implements UserDetails {
     )
     private Set<Movie> myMovies;
 
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.DETACH}, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_review_source",
+            joinColumns = @JoinColumn(name = "username"), //write how bridge table get connected with this source table/entity
+            inverseJoinColumns = @JoinColumn(name = "review_source_id") //write how bridge table get connected with other target table/entity
+    )
+    private Set<ReviewsSourcesLookup> reviewsSourceLookups;
+
     /**
      * Instantiates a new User.
      */
@@ -68,6 +76,12 @@ public class User implements UserDetails {
             authorityList = new ArrayList<>();
         }
         authorityList.add(authority);
+    }
+    public void addReviewSourceToUser(ReviewsSourcesLookup reviewsSource) {
+        if(reviewsSourceLookups == null) {
+            reviewsSourceLookups = new HashSet<>();
+        }
+        reviewsSourceLookups.add(reviewsSource);
     }
 
     public String getUsername() {
@@ -104,6 +118,13 @@ public class User implements UserDetails {
     }
 
 
+    public Set<ReviewsSourcesLookup> getReviewsSources() {
+        return reviewsSourceLookups;
+    }
+
+    public void setReviewsSources(Set<ReviewsSourcesLookup> reviewsSourceLookups) {
+        this.reviewsSourceLookups = reviewsSourceLookups;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -1,8 +1,6 @@
 package com.movie_aggregator.utils;
 
-import com.movie_aggregator.entity.Image;
-import com.movie_aggregator.entity.Movie;
-import com.movie_aggregator.entity.ReviewSource;
+import com.movie_aggregator.entity.*;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -104,9 +102,9 @@ public class MovieApisReader implements PropertiesLoader {
             case "sparql": {
                 URL resourceCustomersCsvUrl = MovieApisReader.class.getResource("/sparqlQuery.txt");
                 String filePathForSparqlQuery = Paths.get(resourceCustomersCsvUrl.toURI()).toFile().getAbsolutePath();
-                String expectedClaimsJSON =  new String(Files.readAllBytes(Paths.get(filePathForSparqlQuery)));
-                String sparqlQuery = String.format(expectedClaimsJSON, searchVal);
-                requestURL = String.format("%s%s", QUERY_WIKI_DATA, sparqlQuery);
+                String sparqlWithoutId =  new String(Files.readAllBytes(Paths.get(filePathForSparqlQuery)));
+                String sparqlQueryFormatted = String.format(sparqlWithoutId, searchVal);
+                requestURL = String.format("%s%s", QUERY_WIKI_DATA, sparqlQueryFormatted);
 
 
                 request = new Request.Builder()
@@ -348,12 +346,32 @@ public class MovieApisReader implements PropertiesLoader {
 
     public ReviewSource parseJSONWikiDataReviewSources(String kinopoiskId) throws IOException, URISyntaxException {
         String sourceReviewJSON = getJSONFromApi(null, "sparql", kinopoiskId);
+        System.out.println(sourceReviewJSON);
         sourceReviewJSON = sourceReviewJSON.replaceAll("[\n\\]]", "")
                 .replaceAll(".+: \\[", "");
         sourceReviewJSON = sourceReviewJSON.substring(0, sourceReviewJSON.length() - 2);
+        System.out.println(sourceReviewJSON);
         ReviewSource reviewSource = new ReviewSource(sourceReviewJSON);
         return reviewSource;
     }
+
+    //public MovieReviewSource parseJSONWikiDataReviewSources(Movie movie, ReviewsSources reviewSource) throws IOException, URISyntaxException {
+    //    MovieReviewSource movieReviewSource;
+    //    String sourceReviewJSON = getJSONFromApi(null, "sparql", movie.getImdbId());
+    //    sourceReviewJSON = sourceReviewJSON.replaceAll("[\n\\]]", "")
+    //            .replaceAll(".+: \\[", "");
+    //    sourceReviewJSON = sourceReviewJSON.substring(0, sourceReviewJSON.length() - 2);
+    //    String identifier = null;
+    //    System.out.println(sourceReviewJSON);
+    //    if (sourceReviewJSON.contains(reviewSource.getName())) {
+    //        String jsonPathExpression = String.format("$.%s.value", reviewSource.getName());
+    //        System.out.println(jsonPathExpression);
+    //        identifier = JsonPath.read(sourceReviewJSON, jsonPathExpression);
+    //    }
+    //    System.out.println(identifier);
+    //    movieReviewSource = new MovieReviewSource(movie, reviewSource, identifier);
+    //    return movieReviewSource;
+    //}
 
 
     /**
@@ -373,13 +391,13 @@ public class MovieApisReader implements PropertiesLoader {
         //for (Movie m : movies) {
         // System.out.println(m);
         //}
-        String sparql = reader.getJSONFromApi(null, "sparql", "326");
+        String sparql = reader.getJSONFromApi(null, "sparql", "tt0124621");
 
         sparql = sparql.replaceAll("[\n\\]]", "")
                 .replaceAll(".+: \\[", "");
         sparql = sparql.substring(0, sparql.length() - 2);
-        ReviewSource reviewSource = new ReviewSource(sparql);
-        Properties properties = reader.loadProperties("/reviewSources.properties");
+        //ReviewSource reviewSource = new ReviewSource(sparql);
+        //Properties properties = reader.loadProperties("/reviewSources.properties");
         //String d = String.format(properties.getProperty("film_web_pl"),
         //        reviewSource.getFilm_web_name_pl(), "1994", reviewSource.getFilm_web_id_pl());
        //String allcin =  JsonPath.read(sparql, "$.all_cinema_jp.value");
@@ -388,7 +406,7 @@ public class MovieApisReader implements PropertiesLoader {
        // System.out.println(h);
        // String d  = String.format(properties.getProperty("all_cinema_jp"), allcin);   // paste identifier
        // System.out.println(d);
-        System.out.println(reviewSource);
+        System.out.println(sparql);
     }
 
 }
