@@ -29,6 +29,9 @@ public class Movie {
     @OneToMany(targetEntity=Image.class, mappedBy="movie",cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Image> images;
 
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<MovieReviewSource> movieReviewSources;
+
 
 
     //@OneToOne(targetEntity=ReviewSource.class, mappedBy="movie",cascade=CascadeType.ALL, fetch = FetchType.EAGER)
@@ -900,6 +903,7 @@ public class Movie {
         searches.add(search);
     }
 
+
     public void addImageToMovie(Image image) {
         if(images == null) {
             images = new HashSet<>();
@@ -916,6 +920,13 @@ public class Movie {
         this.reviewSources = reviewSources;
     }
 
+    public Set<MovieReviewSource> getMovieReviewSources() {
+        return movieReviewSources;
+    }
+
+    public void setMovieReviewSources(Set<MovieReviewSource> movieReviewSources) {
+        this.movieReviewSources = movieReviewSources;
+    }
 
 
     public String getKinopoiskReviews() {

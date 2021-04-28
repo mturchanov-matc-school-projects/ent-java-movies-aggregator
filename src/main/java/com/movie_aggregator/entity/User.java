@@ -42,7 +42,7 @@ public class User implements UserDetails {
 
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.DETACH}, fetch = FetchType.EAGER)
     @JoinTable(
-            name = "user_review_source",
+            name = "user_review_source_lookup",
             joinColumns = @JoinColumn(name = "username"), //write how bridge table get connected with this source table/entity
             inverseJoinColumns = @JoinColumn(name = "review_source_id") //write how bridge table get connected with other target table/entity
     )

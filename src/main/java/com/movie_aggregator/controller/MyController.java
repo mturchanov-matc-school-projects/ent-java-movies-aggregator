@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -228,7 +229,10 @@ public class MyController {
 //Testing time
     @RequestMapping("/test")
     public String test(Model model) throws IOException, URISyntaxException {
-
+        User user = genericService.getOneEntryByColumProperty("username", "2", User.class);
+        ReviewsSourcesLookup lookup = genericService.get(ReviewsSourcesLookup.class, 4);
+        user.addReviewSourceToUser(lookup);
+        genericService.merge(user);
         return "/test";
     }
 }

@@ -1,6 +1,7 @@
 package com.movie_aggregator.entity;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -24,11 +25,14 @@ public class ReviewsSourcesLookup {
 
     @ManyToMany(cascade = {CascadeType.MERGE})
     @JoinTable(
-            name = "user_review_source",
+            name = "user_review_source_lookup",
             joinColumns = @JoinColumn(name = "review_source_id"), //write how bridge table get connected with this source table/entity
             inverseJoinColumns = @JoinColumn(name = "username") //write how bridge table get connected with other target table/entity
     )
     private Set<User> users;
+
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<MovieReviewSource> movieReviewSources = new HashSet<>();
 
 
     public int getId() {
