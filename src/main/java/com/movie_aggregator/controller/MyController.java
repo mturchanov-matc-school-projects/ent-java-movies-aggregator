@@ -17,6 +17,7 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 /**
@@ -86,16 +87,6 @@ public class MyController {
         return "redirect:"+ referer;
     }
 
-
-
-
-
-    //TODO:  add info-error if username is used already
-    //TODO: add to view 'my_movies_list' ->
-    //    1. configure MySecurityConfig - anonym_role cannot see link + cannot access
-    //    2. admin/user can see ;imk and access
-    //    + store somehow user in session to not login everytime  when access page with extra
-
     @RequestMapping(value = "/registrationProcessing", method = RequestMethod.POST)
     public String registrationProcessing(final @Valid @ModelAttribute("user") User newUser,
                                          final BindingResult bindingResult,
@@ -150,6 +141,7 @@ public class MyController {
         //for (String s : reviewSources) {
         //    System.out.println(s);
         //}
+        searchVal = searchVal.toLowerCase(Locale.ROOT);
         List<Movie> movies = genericService.getMovies(searchVal, movieSourceBase);
         if (movies == null) {
             model.addAttribute("headerTitle", String.format("Sorry, no result with '%s' input", searchVal));
@@ -202,6 +194,9 @@ public class MyController {
         }
         model.addAttribute("movie", movie);
         model.addAttribute("reviewSource", reviewSource);
+        if (movieSourceBase.equals("kinopoisk")) {
+            return "/kin_movie";
+        }
 
         return "/movie";
     }
@@ -221,7 +216,6 @@ public class MyController {
     public String showReviewSources( Model model)  {
         List<ReviewsSourcesLookup> reviewsSourcesLookups =  genericService.getAll(ReviewsSourcesLookup.class);
         model.addAttribute("reviewsSources", reviewsSourcesLookups);
-        System.out.println(123);
         return "/index";
     }
 
@@ -234,138 +228,8 @@ public class MyController {
 //Testing time
     @RequestMapping("/test")
     public String test(Model model) throws IOException, URISyntaxException {
-        //Movie newMovie = new Movie();
-        //Search search = new Search( 14,"search11212");
-        //newMovie.setName("m4 - 2 movied added as a list");
-        //newMovie.setId(1234);
-        //newMovie.setImage("https://ichef.bbci.co.uk/news/976/cpsprodpb/12A9B/production/_111434467_gettyimages-1143489763.jpg");
-        //newMovie.addSearchToMovie(search);
-        //genericService.save(newMovie);
 
-
-        //String searchVal = "Mor";
-        //Search existedSearch = genericService.getOneEntryByColumProperty("name", searchVal, Search.class);
-        //List<Movie> movies = genericService.getMovies(existedSearch, searchVal);
-        //model.addAttribute("movies", movies);
-
-        //User user = new User();
-        //user.setPassword("123");
-        //user.setUsername("My new user with authority added by cascade");
-        //Authority authority = new Authority();
-        //authority.setUsername(user.getUsername());
-        //authority.setAuthority("ROLE_USER");
-        //user.addAuthorityToUser(authority);
-        //genericService.saveOrUpdate(user);
-
-
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username;
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
-        } else {
-            username = principal.toString();
-        }
-
-        //User user = genericService.getOneEntryByColumProperty("username", username, User.class);
-        //Movie movie = genericService.get(Movie.class, 1209195);
-        //movie.setSearches(null);
-        //user.addMovieToUser(movie);
-        //genericService.merge(user);
-        //List<Movie> movies = genericService.getMoviesByToken(user.get);
-        //model.addAttribute("movies", movies);
-
-
-
-        //Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//
-        //if (principal instanceof UserDetails) {
-        //    String username = ((UserDetails)principal).getUsername();
-        //    model.addAttribute("username", username);
-        //} else {
-        //    String username = principal.toString();
-        //}
-//
-        //User user = genericService.getOneEntryByColumProperty("username", "2", User.class);
-        //ReviewsSourcesLookup reviewsSources = genericService.get(ReviewsSourcesLookup.class, 3);
-        //user.addReviewSourceToUser(reviewsSources);
-        //genericService.merge(user);
-        //user.addMovieToUser(new Movie(111, "11", "11", "11"));
-        //genericService.merge(user);
-       // User user = genericService.getOneEntryByColumProperty("username", username, User.class);
-        //List<Movie> movies = genericService.getMoviesByProperty("username", "2", "users");
-        //List<Movie> movies = genericService.getMoviesByToken("1");
-
-      // Movie newMovie = new Movie();
-       //Search search = new Search( 5,"test search1");
-       //genericService.saveOrUpdate(search);
-
-        //Movie newMovie = genericService.get(Movie.class, 326);
-        //ReviewSource reviewSource = apisReader.parseJSONWikiDataReviewSources("326");
-        //reviewSource.setMovie(newMovie);
-        //newMovie.setReviewSources(reviewSource);
-        //User user = genericService.get(User.class, )
-
-        //ReviewsSources reviewsSource = genericService.get(ReviewsSources.class, 6);
-        //MovieReviewSource movieReviewSource = apisReader.parseJSONWikiDataReviewSources(newMovie, reviewsSource);
-        //newMovie.addReviewSourceToMovie(movieReviewSource);
-        //System.out.println(reviewSource);
-        //genericService.merge(newMovie);
-        //Movie newMovie = new Movie();
-        //newMovie.setName("testReviews2");
-        //newMovie.setYear("testReviews2");
-        //newMovie.setImage("testReviews2");
-        //newMovie.setId(12376);
-
-
-        //newMovie.addImageToMovie(new Image( newMovie, "image1"));
-        //newMovie.addImageToMovie(new Image( newMovie,"image2"));
-       //genericService.merge(newMovie);
-        //List<Movie> movies = genericService.getMovies("Шурик");
-        //System.out.println(movies.size());
-//
-        //for (Movie m : movies) {
-        //    System.out.println(m);
-        //}
-        //ReviewSource reviewSource = apisReader.parseJSONWikiDataReviewSources("9714");
-        //reviewSource.setMovie(newMovie);
-        //newMovie.setReviewSources(reviewSource);
-
-        //genericService.merge(newMovie);
-
-
-        List<Movie> imdbMovies = apisReader.parseGeneralImdbMoviesJson("blue");
-        Movie movie = imdbMovies.get(1);
-        Movie updatedMovie = apisReader.parseSpecificImdbMovieJson(movie);
-        model.addAttribute("movies", imdbMovies);
-        model.addAttribute("movie", updatedMovie);
-
-        System.out.printf("size: %d, movies: %s%nupdatedMovie: %s%n", imdbMovies.size(), imdbMovies, updatedMovie);
-
-
-       //Search search2 = new Search( 6,"test search2");
-       //genericService.saveOrUpdate(search2);
-
-       //Movie getMovie = genericService.getOneEntryByColumProperty("kinopoiskId",
-       //        newMovie.getKinopoiskId(), Movie.class);
-       //etMovie.addSearchToMovie(search2);
-       //genericService.merge(getMovie);
-
-       // model.addAttribute("movies", movies);
         return "/test";
-    }
-
-
-    /**
-     * Show first view string.
-     *
-     * @return the string
-     */
-    @RequestMapping(value ={"/", "index", "home"})
-    public String showFirstView(Model model) {
-        List<ReviewsSourcesLookup> reviewsSourcesLookups =  genericService.getAll(ReviewsSourcesLookup.class);
-        model.addAttribute("reviewsSources", reviewsSourcesLookups);
-        System.out.println(123);
-        return "/index";
     }
 }
 

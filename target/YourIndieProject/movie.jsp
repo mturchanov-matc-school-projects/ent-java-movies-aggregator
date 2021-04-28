@@ -11,13 +11,12 @@
 </a>
 
 <div class="container-fluid bg-white" id="wrapper">
-    ${reviewSource.metacritic}
 
     <h2>${movie.engName}</h2>
 
     <div id="movieInfo" class="row mb-3">
         <div class="col-lg-4 col-sm-12 text-center" id="movieImage">
-            <img src="${movie.kinopoiskImage}" alt="image ${movie.engName}">
+            <img src="${movie.imdbPoster}" alt="image ${movie.engName}">
         </div>
 
         <div class="col-lg-8 col-sm-12">
@@ -28,9 +27,8 @@
                     </div>
                     <div class="card-body">
                         <c:if test="${movie.engName != null} ">
-                            <h5 class="card-title">English name: ${movie.engName}</h5>
+                            <h5 class="card-title">English name: ${movie.engName} <small>${movie.rusName}</small></h5>
                         </c:if>
-                        <h5 class="card-title">Russian name: ${movie.rusName}</h5>
 
                         <p class="card-text">
                             ${movie.imdbDescription}
@@ -67,7 +65,7 @@
             </c:if>
             <hr>
             <div class="row" id="movieTableInfo">
-                <c:if test="${movie.imdbRating != null}">
+                <c:if test="${movie.imdbPoster != null}">
                     <div class="col-lg-4 col-sm-12">
                         <table class="table table-bordered table-striped">
                             <tr>
@@ -146,10 +144,10 @@
                             </tr>
                         </c:if>
 
-                        <c:if test="${movie.kinopoiskDirector != null}">
+                        <c:if test="${movie.imdbDirector != null}">
                             <tr>
                                 <td>Director</td>
-                                <td>${movie.kinopoiskDirector}</td>
+                                <td>${movie.imdbDirector}</td>
                             </tr>
                         </c:if>
                         <c:if test="${movie.writer != null}">

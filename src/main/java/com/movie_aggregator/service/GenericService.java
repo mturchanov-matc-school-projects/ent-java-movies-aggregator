@@ -118,106 +118,99 @@ public class GenericService {
 
     public List<Movie> getMovies(String searchVal, String movieSourceBase) {
         Search existedSearch = getOneEntryByColumProperty("name", searchVal, Search.class);
+
         searchVal = searchVal.trim().toLowerCase();
         Search newSearch = null;
         // Search existedSearch = getOneEntryByColumProperty(propertyName, searchVal, searchClass);
         List<Movie> movies = null;
-        if (existedSearch != null && existedSearch.isSearchWithSearchSourceAlreadyWas(movieSourceBase)) { //IF SEARCH IN DB THEN NO NEED FOR APIS REQUESTS
-            // GET movies from DB
+        if (existedSearch != null
+                && movieSourceBase.equals("kinopoisk")
+                && existedSearch.getIsKinopoiskLaunched() == 0 ) { //IF SEARCH IN DB THEN NO NEED FOR APIS REQUESTS
+
+            List<Movie> updateMovies = movieApisReader.parseGeneralKinopoiskMoviesJson(searchVal);
+            movies = getMoviesBasedOnSearchName(searchVal);
+            MovieApisReader.merge1(updateMovies, movies);
+            existedSearch.setIsKinopoiskLaunched(1);
+            genericDao.merge(existedSearch);
+            for (Movie m : updateMovies) {
+                saveOrUpdate(m);
+            }
+            incrementSearchNumberCounter(existedSearch.getId()); // increment Search.number
+            return  updateMovies;
+
+        } else if (existedSearch != null
+                && movieSourceBase.equals("imdb")
+                && existedSearch.getIsOmdbLaunched() == 0) {
+
+            List<Movie> updateMovies = movieApisReader.parseGeneralImdbMoviesJson(searchVal);
+            movies = getMoviesBasedOnSearchName(searchVal);
+            MovieApisReader.merge1(updateMovies, movies);
+            existedSearch.setIsOmdbLaunched(1);
+            genericDao.merge(existedSearch);
+            for (Movie m : updateMovies) {
+                saveOrUpdate(m);
+            }
+            incrementSearchNumberCounter(existedSearch.getId()); // increment Search.number
+            return  updateMovies;
+        } else if(existedSearch != null) {
             movies = getMoviesBasedOnSearchName(searchVal);
             incrementSearchNumberCounter(existedSearch.getId()); // increment Search.number
-        } else {
-            Search lastSearch = getLastSearch();
-            int id = 1;
-            if (lastSearch != null) {
-                id = lastSearch.getId() + 1;
-            }
-            newSearch = new Search(id, searchVal);
-            if (movieSourceBase.equals("kinopoisk")) {
-                movies = movieApisReader.parseGeneralKinopoiskMoviesJson(searchVal);
-                newSearch.setIsKinopoiskLaunched(1);
-            } else if (movieSourceBase.equals("imdb")) {
-                movies = movieApisReader.parseGeneralImdbMoviesJson(searchVal);
-                newSearch.setIsOmdbLaunched(1);
-            }
-
-            if (movies == null) {
-                return null;
-            }
-            saveOrUpdate(newSearch); // save new search manually because only once needed
-
-            for (Movie movie : movies) { // update movie_search via cascade
-                movie.addSearchToMovie(newSearch); //1search-manyMovies case
-            }
-            // check if movie was added to db by different search -> update movie_search via cascade
-            for (Movie movie : movies) {
-                int filmId = 0;
-                String nameEn = movie.getEngName();
-                String year = movie.getYear();
-                String nameRu = movie.getRusName();
-                if (!movie.getEngName().isEmpty()) {
-                    filmId = MovieApisReader.hashCode(nameEn + year);
-                } else {
-                    filmId = MovieApisReader.hashCode(nameRu + year);
-                }
-
-                Movie getMovie = get(Movie.class, filmId);
-                if (getMovie != null) { //if movie in db then it was added via another search
-                    getMovie.addSearchToMovie(newSearch);
-                    genericDao.merge(getMovie); // update movie_search -> 1movie-manySearches case
-                    continue;
-                }
-                genericDao.saveOrUpdate(movie);
-            }
         }
+            else {
+            movies = recordNewMovies(searchVal, movieSourceBase);
+            if (movies == null) return null;
+        }
+
         return movies;
     }
 
-
-    public List<Movie> getMovies(String searchVal) {
-        Search existedSearch = getOneEntryByColumProperty("name", searchVal, Search.class);
-        searchVal = searchVal.trim().toLowerCase();
-        // Search existedSearch = getOneEntryByColumProperty(propertyName, searchVal, searchClass);
+    private List<Movie> recordNewMovies(String searchVal, String movieSourceBase) {
         List<Movie> movies = null;
-        //System.out.printf("existedSearch is null : %b%n", existedSearch == null);
-        if (existedSearch != null) { //IF SEARCH IN DB THEN NO NEED FOR APIS REQUESTS
-            // GET movies from DB
-            movies = getMoviesBasedOnSearchName(searchVal);
-            incrementSearchNumberCounter(existedSearch.getId()); // increment Search.number
-        } else { // OTHERWISE, NO SEARCH IN DB == NO MOVIES TO GET -> CALL APIS REQUESTS
-            //MovieApisReader movieApisReader = new MovieApisReader();
-            movies = movieApisReader.parseJSONKinopoiskMovies(searchVal);
-            if (movies == null) {
-                return null;
-            }
-            Search lastSearch = getLastSearch();
-            int id = 1;
-            if (lastSearch != null) {
-                id = lastSearch.getId() + 1;
-            }
-            Search newSearch = new Search(id, searchVal);
-            saveOrUpdate(newSearch); // save new search manually because only once needed
-
-            for (Movie movie : movies) { // update movie_search via cascade
-                movie.addSearchToMovie(new Search(id, searchVal)); //1search-manyMovies case
-            }
-
-            // check if movie was added to db by different search -> update movie_search via cascade
-            for (Movie movie : movies) {
-                Movie getMovie = getOneEntryByColumProperty("kinopoiskId",
-                        movie.getKinopoiskId(), Movie.class);
-                if (getMovie != null) { //if movie in db then it was added via another search
-                    getMovie.addSearchToMovie(newSearch);
-                    genericDao.merge(getMovie); // update movie_search -> 1movie-manySearches case
-                    continue;
-                }
-                genericDao.saveOrUpdate(movie);
-            }
+        Search newSearch;
+        Search lastSearch = getLastSearch();
+        int id = 1;
+        if (lastSearch != null) {
+            id = lastSearch.getId() + 1;
+        }
+        newSearch = new Search(id, searchVal);
+        if (movieSourceBase.equals("kinopoisk")) {
+            movies = movieApisReader.parseGeneralKinopoiskMoviesJson(searchVal);
+            newSearch.setIsKinopoiskLaunched(1);
+        } else if (movieSourceBase.equals("imdb")) {
+            movies = movieApisReader.parseGeneralImdbMoviesJson(searchVal);
+            newSearch.setIsOmdbLaunched(1);
         }
 
+        if (movies == null) {
+            return null;
+        }
+        saveOrUpdate(newSearch); // save new search manually because only once needed
+
+        for (Movie movie : movies) { // update movie_search via cascade
+            movie.addSearchToMovie(newSearch); //1search-manyMovies case
+        }
+        // check if movie was added to db by different search -> update movie_search via cascade
+        for (Movie movie : movies) {
+            int filmId = 0;
+            String nameEn = movie.getEngName();
+            String year = movie.getYear();
+            String nameRu = movie.getRusName();
+            if (!movie.getEngName().isEmpty()) {
+                filmId = MovieApisReader.hashCode(nameEn + year);
+            } else {
+                filmId = MovieApisReader.hashCode(nameRu + year);
+            }
+
+            Movie getMovie = get(Movie.class, filmId);
+            if (getMovie != null) { //if movie in db then it was added via another search
+                getMovie.addSearchToMovie(newSearch);
+                genericDao.merge(getMovie); // update movie_search -> 1movie-manySearches case
+                continue;
+            }
+            genericDao.saveOrUpdate(movie);
+        }
         return movies;
     }
-
 
     /**
      * Merge t.
@@ -288,6 +281,5 @@ public class GenericService {
     public void incrementSearchNumberCounter(int id) {
         genericDao.incrementSearchNumberCounter(id);
     }
-
 
 }

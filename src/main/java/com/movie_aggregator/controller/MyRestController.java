@@ -60,21 +60,7 @@ public class MyRestController {
     }
 
 
-    /**
-     * Show all movies list.
-     *
-     * @return the list
-     */
-    @GetMapping("/movies/s/{searchVal}")
-    public List<Movie> showAllMoviesBySearchName(@PathVariable String searchVal) throws IOException, URISyntaxException {
-        List<Movie> movies = genericService.getMovies(searchVal);
-        System.out.println(movies);
-        for (Movie m : movies) {
-            m.setSearches(null);
-        }
 
-        return movies; // jackson-api in maven will convert entity-object to json
-    }
 
     /**
      * Gets movie.

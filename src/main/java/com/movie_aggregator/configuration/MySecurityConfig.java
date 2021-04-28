@@ -44,19 +44,6 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout().logoutSuccessUrl("/").permitAll()
                 .permitAll(); // ask for login/password for all urls
 
-
-        //http.authorizeRequests()
-        //        .antMatchers("/api/**").access("hasRole('ROLE_ADMIN')")
-        //        .anyRequest().permitAll()
-        //        .and()
-        //        .formLogin().loginPage("/login.jsp")
-        //        .usernameParameter("username").passwordParameter("password")
-        //        .and()
-        //       // .logout().logoutSuccessUrl("/login?logout")
-        //       // .and()
-        //       // .exceptionHandling().accessDeniedPage("/403")
-        //       // .and()
-        //        .csrf();
     }
 
 }

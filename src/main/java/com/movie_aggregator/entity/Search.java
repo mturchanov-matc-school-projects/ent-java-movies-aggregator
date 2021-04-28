@@ -17,9 +17,9 @@ public class Search {
     @Column(unique = true, nullable = false)
     private String name;
     @Column(name = "kinopoisk_source")
-    private Integer isKinopoiskLaunched;
+    private Integer isKinopoiskLaunched = 0;
     @Column(name = "imdb_source")
-    private Integer isOmdbLaunched;
+    private Integer isOmdbLaunched = 0;
     //@ManyToMany(cascade = CascadeType.ALL)
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinTable(
@@ -60,10 +60,7 @@ public class Search {
     public boolean isSearchWithSearchSourceAlreadyWas(String movieSourceBase) {
         if (movieSourceBase.equals("kinopoisk") && isKinopoiskLaunched == 1) {
             return true;
-        } else if (movieSourceBase.equals("imdb") && isOmdbLaunched == 1) {
-            return true;
-        }
-        return false;
+        } else return movieSourceBase.equals("imdb") && isOmdbLaunched == 1;
     }
 
     /**
@@ -184,6 +181,9 @@ public class Search {
         return "Search{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", isKinopoiskLaunched=" + isKinopoiskLaunched +
+                ", isOmdbLaunched=" + isOmdbLaunched +
+                ", number=" + number +
                 '}';
     }
 }

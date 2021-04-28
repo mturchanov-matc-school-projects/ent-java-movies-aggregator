@@ -10,17 +10,23 @@
 
 <div class="container-fluid" id="wrapper">
     <h2>$Result </h2>
-    <!-- TODO: add 'ADD/DELETE' functionality to each parsed movie
-                 -> js sending request
-                 -> if no working then simple mappings in controler
-                 -->
+
     <c:forEach items="${movies}" var="movie">
         <div class="container">
             <ul class="list-unstyled">
                 <li class="media w3-padding w3-container w3-round-large w3-light-gray">
-                    <img class="mr-3 movieImg" src="<c:out value="${movie.kinopoiskImage}" />" alt="image" />
+                    <c:choose>
+                        <c:when test="${movieSourceBase == 'imdb'}">
+                            <img class="mr-3 movieImg" src="<c:out value="${movie.imdbPoster}" />" alt="image" />
+
+                        </c:when>
+                        <c:when test="${movieSourceBase == 'kinopoisk'}">
+                            <img class="mr-3 movieImg" src="<c:out value="${movie.kinopoiskImage}" />" alt="image" />
+                        </c:when>
+                    </c:choose>
                     <div class="media-body">
                         <h3 class="mt-0 mb-1"><c:out value="${movie.engName}  ${movie.year}" /></h3>
+                        <h4 class="mt-0 mb-1"><c:out value="${movie.rusName}" /></h4>
                         <h4 class="mt-0 mb-1"><a href="<c:out value="https://www.imdb.com/title/${movie.imdbId}"/>">imdb reviews</a></h4>
                         <h4 class="mt-0 mb-1"><a href="<c:out value="https://www.kinopoisk.ru/film/${movie.kinopoiskId}/#user-reviews"/>">Kinopoisk reviews</a></h4>
                         <h4 class="mt-0 mb-1"><c:out value="IMDB Rating ${movie.imdbRating}" /> </h4>

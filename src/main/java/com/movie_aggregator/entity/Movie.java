@@ -190,7 +190,7 @@ public class Movie {
 
     public Movie(int id, String engName, String rusName, String kinopoiskRating, String duration,
                  String kinopoiskGenre, String kinopoiskDirector, String kinopoiskCountry,
-                 String kinopoiskImage, String year, String kinopoiskVotes) {
+                 String kinopoiskImage, String year, String kinopoiskVotes, String kinopoiskId) {
         this.id = id;
         this.engName = engName;
         this.rusName = rusName;
@@ -202,6 +202,7 @@ public class Movie {
         this.kinopoiskImage = kinopoiskImage;
         this.year = year;
         this.kinopoiskVotes = kinopoiskVotes;
+        this.kinopoiskId = kinopoiskId;
     }
 
     public Movie(String imdbId, String kinopoiskDescription, String imdbRating, String imdbVotes, String boxOffice, String audienceRating, String kinopoiskReviews) {
