@@ -1,5 +1,6 @@
 package com.movie_aggregator.service;
 
+import com.jayway.jsonpath.JsonPath;
 import com.movie_aggregator.entity.*;
 import com.movie_aggregator.repository.GenericDao;
 import com.movie_aggregator.utils.MovieApisReader;
@@ -270,6 +271,35 @@ public class GenericService {
      */
     public Search getLastSearch() {
         return genericDao.getLastSearch();
+    }
+
+
+    public MovieReviewSource getMovieReviewSourceBasedOnColumns(Movie movie, ReviewsSourcesLookup reviewSource, String sparqlResponseJSON) {
+        String reviewSourceName = reviewSource.getName();
+        int movieId = movie.getId();
+        //take movieReviewSource woth review url if already was such request
+        MovieReviewSource movieReviewSource =
+                genericDao.getMovieReviewSourceBasedOnColumns(movieId, reviewSourceName);
+
+        // logic if there is no such movieReviewSource in db/no request was maiden
+        //if (movieReviewSource == null
+        //        && sparqlResponseJSON.contains("film_web_name_pl") // wikidata's response on film has such property
+        //        && reviewSourceName.equals("film_web_pl")) {       // check whether such review_source was requested
+        //    // film_web's final identifier is messed up - it's www/name-year-id, meh
+        //    String filmName = JsonPath.read(sparqlResponseJSON, "$.film_web_name_pl.value");
+        //    String filmId =  JsonPath.read(sparqlResponseJSON, "$.film_web_id_pl.value");
+        //    String urlMovieIdentifier = String.format(reviewSourceName,
+        //            filmName, movie.getYear(), filmId);
+        //    String movieReviewUrl = String.format(reviewSource.getUrl(), urlMovieIdentifier);
+        //    movieReviewSource = new MovieReviewSource(reviewSource, movie, movieReviewUrl);
+        //} else if (movieReviewSource == null
+        //        && sparqlResponseJSON.contains(reviewSourceName)) {
+        //    String jsonPathExpression = String.format("$.%s.value", reviewSourceName);
+        //    String urlMovieIdentifier = JsonPath.read(sparqlResponseJSON, jsonPathExpression);
+        //    String movieReviewUrl = String.format(reviewSource.getUrl(), urlMovieIdentifier);
+        //    movieReviewSource = new MovieReviewSource(reviewSource, movie, movieReviewUrl);
+        //}
+        return movieReviewSource;
     }
 
     /**

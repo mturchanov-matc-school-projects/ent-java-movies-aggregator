@@ -167,6 +167,7 @@ public class MyController {
 
          //HttpSession session = request.getSession();
         //model.addAttribute("reviewsSources", reviewSources);
+
         model.addAttribute("movieSourceBase", movieSourceBase);
         model.addAttribute("movies", movies);
         return "/result";
@@ -184,17 +185,15 @@ public class MyController {
                                  Model model) {
         //model.addAttribute("movie", movieService.getMovie(id));
         Movie movie = genericService.get(Movie.class, id);
-        ReviewSource reviewSource = apisReader.parseJSONWikiDataReviewSources(movie.getImdbId());
+        //ReviewSource reviewSource = apisReader.parseJSONWikiDataReviewSources(movie.getImdbId());
         // check if api specific-movie-request was launched before
         if (movieSourceBase.equals("kinopoisk") && movie.getKinopoiskReviews() == null) {
             movie = apisReader.parseSpecificKinopoiskMoviesJson(movie);
-
         } else if (movieSourceBase.equals("imdb") && movie.getWriter() == null) {
             movie = apisReader.parseSpecificImdbMovieJson(movie);
-
         }
         model.addAttribute("movie", movie);
-        model.addAttribute("reviewSource", reviewSource);
+        //model.addAttribute("reviewSource", reviewSource);
         if (movieSourceBase.equals("kinopoisk")) {
             return "/kin_movie";
         }
@@ -229,10 +228,22 @@ public class MyController {
 //Testing time
     @RequestMapping("/test")
     public String test(Model model) throws IOException, URISyntaxException {
-        User user = genericService.getOneEntryByColumProperty("username", "2", User.class);
-        ReviewsSourcesLookup lookup = genericService.get(ReviewsSourcesLookup.class, 4);
-        user.addReviewSourceToUser(lookup);
-        genericService.merge(user);
+        //User user = genericService.getOneEntryByColumProperty("username", "2", User.class);
+        //ReviewsSourcesLookup lookup = genericService.get(ReviewsSourcesLookup.class, 4);
+        Movie movie = genericService.get(Movie.class, -1778224323);
+        Set<ReviewsSourcesLookup> reviewsSourcesLookups = new HashSet<>(genericService.getAll(ReviewsSourcesLookup.class));
+        //String sparqlResponse = "{ \"head\": { \"vars\": [ \"film\", \"film_web_id_pl\", \"film_web_name_pl\", \"all_cinema_jp\", \"allcine_fr\", \"cine_gr\", \"cinema_de\", \"common_sense\", \"eiga_jp\", \"film_affinity\", \"filmfront_no\", \"film_tv_it\", \"google_play_tv\", \"kinenote_jp\", \"kvikmyndir_is\", \"ldif_de\", \"letterbox\", \"metacritic\", \"mrqe\", \"movie_walker_jp\", \"moviemeter_nl\", \"movies_anywhere\", \"mubi\", \"mymovies_it\", \"netflix\", \"port_hu\", \"quora_topic\", \"rotten_tomatoes\", \"skope_dk\", \"sratim_il\", \"tmdb\", \"tv_com\", \"anidb\", \"anime_news_newtwork\", \"anime_click\", \"imfdb\", \"mal\", \"trakt_tv\", \"anilist\" ] }, \"results\": { \"bindings\": [ { \"film\": { \"type\": \"uri\", \"value\": \"http://www.wikidata.org/entity/Q131074\" }, \"all_cinema_jp\": { \"type\": \"literal\", \"value\": \"241899\" }, \"allcine_fr\": { \"type\": \"literal\", \"value\": \"39187\" }, \"cine_gr\": { \"type\": \"literal\", \"value\": \"703026\" }, \"cinema_de\": { \"type\": \"literal\", \"value\": \"1296738\" }, \"film_affinity\": { \"type\": \"literal\", \"value\": \"226427\" }, \"filmfront_no\": { \"type\": \"literal\", \"value\": \"1441\" }, \"ldif_de\": { \"type\": \"literal\", \"value\": \"521596\" }, \"netflix\": { \"type\": \"literal\", \"value\": \"60004484\" }, \"movies_anywhere\": { \"type\": \"literal\", \"value\": \"the-lord-of-the-rings-the-return-of-the-king\" }, \"moviemeter_nl\": { \"type\": \"literal\", \"value\": \"3934\" }, \"movie_walker_jp\": { \"type\": \"literal\", \"value\": \"3934\" }, \"mrqe\": { \"type\": \"literal\", \"value\": \"the-lord-of-the-rings-the-return-of-the-king-m100021048\" }, \"metacritic\": { \"type\": \"literal\", \"value\": \"movie/the-lord-of-the-rings-the-return-of-the-king\" }, \"letterbox\": { \"type\": \"literal\", \"value\": \"the-lord-of-the-rings-the-return-of-the-king\" }, \"port_hu\": { \"type\": \"literal\", \"value\": \"57193\" }, \"rotten_tomatoes\": { \"type\": \"literal\", \"value\": \"m/the_lord_of_the_rings_the_return_of_the_king\" }, \"tmdb\": { \"type\": \"literal\", \"value\": \"122\" }, \"tv_com\": { \"type\": \"literal\", \"value\": \"movies/the-lord-of-the-rings-the-return-of-the-king\" }, \"google_play_tv\": { \"type\": \"literal\", \"value\": \"SEUOCKcqXsM\" }, \"kinenote_jp\": { \"type\": \"literal\", \"value\": \"36968\" }, \"film_web_name_pl\": { \"type\": \"literal\", \"value\": \"Powrot.Krola\" } } ] } }";
+        //sparqlResponse = sparqlResponse.replaceAll("[\n\\]]", "")
+        //        .replaceAll(".+: \\[", "");
+        //sparqlResponse = sparqlResponse.substring(0, sparqlResponse.length() - 2);
+        //MovieReviewSource movieReviewSource = genericService.getMovieReviewSourceBasedOnColumns(movie, lookup, sparqlResponse);
+        //System.out.println(movieReviewSource);
+
+        Set <ReviewsSourcesLookup>asd = new HashSet<>();
+        Set<MovieReviewSource> reviewSources = apisReader.parseJSONWikiDataReviewSources(movie, reviewsSourcesLookups);
+        for (MovieReviewSource reviewSource : reviewSources); {
+            System.out.println(reviewSources);
+        }
         return "/test";
     }
 }

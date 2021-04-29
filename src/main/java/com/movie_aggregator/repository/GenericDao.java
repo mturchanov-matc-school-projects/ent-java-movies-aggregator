@@ -1,9 +1,6 @@
 package com.movie_aggregator.repository;
 
-import com.movie_aggregator.entity.Movie;
-import com.movie_aggregator.entity.ReviewSource;
-import com.movie_aggregator.entity.ReviewsSourcesLookup;
-import com.movie_aggregator.entity.Search;
+import com.movie_aggregator.entity.*;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -107,6 +104,21 @@ public class GenericDao {
         return lastSearch;
     }
 
+    public MovieReviewSource getMovieReviewSourceBasedOnColumns(int movieId, String reviewSourceName) {
+        MovieReviewSource movieReviewSource = null;
+        final Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery(
+                "select movie_source from MovieReviewSource movie_source " +
+                        "inner join movie_source.movie movie " +
+                        "inner join movie_source.reviewSource source " +
+                        "where movie.id=:id " +
+                        "AND source.name=:name");
+        query.setParameter("id", movieId);
+        query.setParameter("name", reviewSourceName);
+        movieReviewSource = (MovieReviewSource) query.uniqueResult();
+        return movieReviewSource;
+    }
+
     /**
      * Increment search number counter.
      *
@@ -146,7 +158,6 @@ public class GenericDao {
         String hquery = String.format("select m from Movie m " +
                 "inner join m.%s u " +
                 "where u.%s=:%s", propertyEntity, field, field);
-
         Query movies = session.createQuery(hquery);
         movies.setParameter(field, searchVal);
         //Query movies = session.createQuery(

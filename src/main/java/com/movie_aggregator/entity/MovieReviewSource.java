@@ -71,4 +71,14 @@ public class MovieReviewSource {
     public void setUrl(String url) {
         this.url = url;
     }
+
+    @Override
+    public String toString() {
+        return "MovieReviewSource{" +
+                "id=" + id +
+                ", reviewSource=" + reviewSource +
+                ", movie=" + movie +
+                ", url='" + url + '\'' +
+                '}';
+    }
 }

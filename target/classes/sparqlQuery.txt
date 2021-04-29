@@ -8,7 +8,8 @@ SELECT ?film ?film_web_id_pl ?film_web_name_pl ?all_cinema_jp
        ?anime_click ?imfdb ?mal ?trakt_tv ?anilist
 WHERE
 {
- ?film wdt:P2603 "%s";
+    OPTIONAL { ?film wdt:P2603 "%s" . }
+    OPTIONAL { ?film wdt:P345 "%s" . }
     OPTIONAL { ?film wdt:P2465 ?all_cinema_jp . }
     OPTIONAL { ?film wdt:P1265 ?allocine_fr . }
     OPTIONAL { ?film wdt:P3129 ?cine_gr . }

@@ -1,5 +1,6 @@
 package com.movie_aggregator.utils;
 
+import com.jayway.jsonpath.JsonPath;
 import com.movie_aggregator.entity.*;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -18,10 +19,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * The type Movie apis reader.
@@ -59,10 +57,14 @@ public class MovieApisReader implements PropertiesLoader {
      * @param searchType the search source
      * @param source     the search type
      * @param searchVal  the search val
+     * @param movie
      * @return the json from api
      * @throws IOException the io exception
      */
-    public String getJSONFromApi(String searchType, String source, String searchVal) {
+    public String getJSONFromApi(String searchType, String source, String searchVal, Movie movie) {
+        String ff = "SELECT ?film ?film_web_id_pl ?film_web_name_pl ?all_cinema_jp ?allocine_fr ?cine_gr ?cinema_de ?common_sense ?eiga_jp ?film_affinity ?filmfront_no ?film_tv_it ?google_play_tv ?kinenote_jp ?kvikmyndir_is ?ldif_de ?letterbox ?metacritic ?mrqe ?movie_walker_jp ?moviemeter_nl ?movies_anywhere ?mubi ?mymovies_it ?netflix ?port_hu ?quora_topic ?rotten_tomatoes ?scope_dk ?sratim_il ?tmdb ?tv_com ?anidb ?anime_news_newtwork ?anime_click ?imfdb ?mal ?trakt_tv ?anilist WHERE { OPTIONAL { ?film wdt:P2603 \"%s\" . } OPTIONAL { ?film wdt:P345 \"%s\" . } OPTIONAL { ?film wdt:P2465 ?all_cinema_jp . } OPTIONAL { ?film wdt:P1265 ?allocine_fr . } OPTIONAL { ?film wdt:P3129 ?cine_gr . } OPTIONAL { ?film wdt:P3933 ?cinema_de . } OPTIONAL { ?film wdt:P7091 ?common_sense . } OPTIONAL { ?film wdt:P7222 ?eiga_jp . } OPTIONAL { ?film wdt:P480 ?film_affinity . } OPTIONAL { ?film wdt:P7975 ?filmfront_no . } OPTIONAL { ?film wdt:P3107 ?ldif_de;  . } OPTIONAL { ?film wdt:P1874 ?netflix . } OPTIONAL { ?film wdt:P4780 ?mymovies_it;       . } OPTIONAL { ?film wdt:P7299 ?mubi;       . } OPTIONAL { ?film wdt:P5990 ?movies_anywhere;       . } OPTIONAL { ?film wdt:P1970 ?moviemeter_nl;       . } OPTIONAL { ?film wdt:P1970 ?movie_walker_jp;       . } OPTIONAL { ?film wdt:P8033 ?mrqe;       . } OPTIONAL { ?film wdt:P1712 ?metacritic;    . } OPTIONAL { ?film wdt:P6127 ?letterbox;   . } OPTIONAL { ?film wdt:P905  ?port_hu . } OPTIONAL { ?film wdt:P1258 ?rotten_tomatoes . } OPTIONAL { ?film wdt:P2518 ?scope_dk . } OPTIONAL { ?film wdt:P3145 ?sratim_il . } OPTIONAL { ?film wdt:P4947 ?tmdb . } OPTIONAL { ?film wdt:P2638 ?tv_com; . } OPTIONAL { ?film wdt:P5253 ?film_tv_it . } OPTIONAL { ?film wdt:P6562 ?google_play_tv . } OPTIONAL { ?film wdt:P2508 ?kinenote_jp . } OPTIONAL { ?film wdt:P3340 ?kvikmyndir_is . } OPTIONAL { ?film wdt:P3995 ?film_web_name_pl . } OPTIONAL { ?film wdt:P5032 ?film_web_id_pl . } OPTIONAL { ?film wdt:P5646 ?anidb . } OPTIONAL { ?film wdt:P6992 ?imfdb . } OPTIONAL { ?film wdt:P1985 ?anime_news_newtwork . } OPTIONAL { ?film wdt:P5845 ?anime_click . } OPTIONAL { ?film wdt:P4086 ?mal . } OPTIONAL { ?film wdt:P8013 ?trakt_tv . } OPTIONAL { ?film wdt:P4529 ?douban_cn . } OPTIONAL { ?film wdt:P8729 ?anilist . } }";
+        String ggg = String.format("%s%s", QUERY_WIKI_DATA, ff);
+
         searchVal = URLEncoder.encode(searchVal, StandardCharsets.UTF_8);
         OkHttpClient client = new OkHttpClient();
         String requestURL = null;
@@ -113,7 +115,7 @@ public class MovieApisReader implements PropertiesLoader {
                 } catch (IOException | URISyntaxException e) {
                     e.printStackTrace();
                 }
-                String sparqlQueryFormatted = String.format(sparqlWithoutId, searchVal);
+                String sparqlQueryFormatted = String.format(sparqlWithoutId, movie.getKinopoiskId(), movie.getImdbId());
                 requestURL = String.format("%s%s", QUERY_WIKI_DATA, sparqlQueryFormatted);
 
 
@@ -140,7 +142,7 @@ public class MovieApisReader implements PropertiesLoader {
 
     public List<Movie> parseGeneralKinopoiskMoviesJson(String searchVal) {
         //get general movie info json data
-        String JSONMovies = getJSONFromApi("general", "kinopoisk", searchVal);
+        String JSONMovies = getJSONFromApi("general", "kinopoisk", searchVal, null);
         if (JSONMovies == null) {
             return null;
         }
@@ -216,7 +218,7 @@ public class MovieApisReader implements PropertiesLoader {
     }
 
     public Movie parseSpecificKinopoiskMoviesJson(Movie movie) {
-        String movieDetails = getJSONFromApi("specific","kinopoisk", movie.getKinopoiskId());
+        String movieDetails = getJSONFromApi("specific","kinopoisk", movie.getKinopoiskId(), null);
         System.out.println("details: " + movieDetails);
         JSONObject movieDetailsJSON = new JSONObject(movieDetails);
         JSONObject movieDataJSON = movieDetailsJSON.getJSONObject("data");
@@ -264,7 +266,7 @@ public class MovieApisReader implements PropertiesLoader {
 
     public Movie loadFrames(Movie movie) {
         //TODO: handle if no kinopoisk id
-        String framesDetails = getJSONFromApi("frames","kinopoisk", movie.getKinopoiskId());
+        String framesDetails = getJSONFromApi("frames","kinopoisk", movie.getKinopoiskId(), null);
         if (!framesDetails.isEmpty()) {
             //StringBuilder framesSb = new StringBuilder();
             JSONObject framesDetailsJSON = new JSONObject(framesDetails);
@@ -287,7 +289,7 @@ public class MovieApisReader implements PropertiesLoader {
      * @return
      */
     public Movie parseSpecificImdbMovieJson(Movie movie) {
-        String JSONMovies = getJSONFromApi("specific", "omdb", movie.getImdbId());
+        String JSONMovies = getJSONFromApi("specific", "omdb", movie.getImdbId(), null);
         if (JSONMovies == null) {
             return null;
         }
@@ -348,19 +350,40 @@ public class MovieApisReader implements PropertiesLoader {
         return movie;
     }
 
-    public ReviewSource parseJSONWikiDataReviewSources(String kinopoiskId) {
-        String sourceReviewJSON = getJSONFromApi(null, "sparql", kinopoiskId);
-        System.out.println(sourceReviewJSON);
-        sourceReviewJSON = sourceReviewJSON.replaceAll("[\n\\]]", "")
+    public Set<MovieReviewSource> parseJSONWikiDataReviewSources(Movie movie, Set<ReviewsSourcesLookup> lookups) {
+        String sparqlResponseJSON = getJSONFromApi(null, "sparql", "null", movie);
+        System.out.println(sparqlResponseJSON);
+        sparqlResponseJSON = sparqlResponseJSON.replaceAll("[\n\\]]", "")
                 .replaceAll(".+: \\[", "");
-        sourceReviewJSON = sourceReviewJSON.substring(0, sourceReviewJSON.length() - 2);
-        System.out.println(sourceReviewJSON);
-        ReviewSource reviewSource = new ReviewSource(sourceReviewJSON);
-        return reviewSource;
+        sparqlResponseJSON = sparqlResponseJSON.substring(0, sparqlResponseJSON.length() - 2);
+        return generateAllMovieReviewSourcesForMovie(movie, lookups, sparqlResponseJSON);
+    }
+
+    private Set<MovieReviewSource> generateAllMovieReviewSourcesForMovie(Movie movie, Set<ReviewsSourcesLookup> lookups, String sparqlResponseJSON) {
+        Set<MovieReviewSource> movieReviewSources = new HashSet<>();
+        for (ReviewsSourcesLookup lookup : lookups) {
+            String reviewSourceName = lookup.getName();
+            if (sparqlResponseJSON.contains("film_web_name_pl") && reviewSourceName.equals("film_web_name_pl")) {       // check whether such review_source was requested
+                String filmName = JsonPath.read(sparqlResponseJSON, "$.film_web_name_pl.value");
+                String filmId =  JsonPath.read(sparqlResponseJSON, "$.film_web_id_pl.value");
+                String urlMovieIdentifier = String.format(reviewSourceName,
+                        filmName, movie.getYear(), filmId);
+                String movieReviewUrl = String.format(lookup.getUrl(), urlMovieIdentifier);
+                MovieReviewSource movieReviewSource = new MovieReviewSource(lookup, movie, movieReviewUrl);
+                movieReviewSources.add(movieReviewSource);
+            } else if (sparqlResponseJSON.contains(reviewSourceName)) {
+                String jsonPathExpression = String.format("$.%s.value", reviewSourceName);
+                String movieReviewIdentifier = JsonPath.read(sparqlResponseJSON, jsonPathExpression);
+                String movieReviewUrl = String.format(lookup.getUrl(), movieReviewIdentifier);
+                MovieReviewSource movieReviewSource = new MovieReviewSource(lookup, movie, movieReviewUrl);
+                movieReviewSources.add(movieReviewSource);
+            }
+        }
+        return movieReviewSources;
     }
 
     public List<Movie> parseGeneralImdbMoviesJson(String searchVal)  {
-        String JSONMovies = getJSONFromApi("general", "omdb", searchVal);
+        String JSONMovies = getJSONFromApi("general", "omdb", searchVal, null);
         if (JSONMovies == null) {
             return null;
         }
