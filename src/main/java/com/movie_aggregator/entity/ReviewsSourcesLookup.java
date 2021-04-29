@@ -34,6 +34,16 @@ public class ReviewsSourcesLookup {
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<MovieReviewSource> movieReviewSources = new HashSet<>();
 
+    public ReviewsSourcesLookup() {
+    }
+
+    public Set<MovieReviewSource> getMovieReviewSources() {
+        return movieReviewSources;
+    }
+
+    public void setMovieReviewSources(Set<MovieReviewSource> movieReviewSources) {
+        this.movieReviewSources = movieReviewSources;
+    }
 
     public int getId() {
         return id;
@@ -59,5 +69,12 @@ public class ReviewsSourcesLookup {
         this.url = url;
     }
 
-
+    @Override
+    public String toString() {
+        return "ReviewsSourcesLookup{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", url='" + url + '\'' +
+                '}';
+    }
 }

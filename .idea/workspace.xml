@@ -31,11 +31,23 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/controller/MyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/controller/MyController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/entity/MovieReviewSource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/entity/MovieReviewSource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/repository/GenericDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/repository/GenericDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/entity/ReviewsSourcesLookup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/entity/ReviewsSourcesLookup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/entity/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/service/GenericService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/service/GenericService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/utils/MovieApisReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/utils/MovieApisReader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/sparqlQuery.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/sparqlQuery.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/kin_movie.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/kin_movie.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/movie.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/movie.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/YourIndieProject.war" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject.war" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/controller/MyController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/controller/MyController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/entity/MovieReviewSource.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/entity/MovieReviewSource.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/entity/ReviewsSourcesLookup.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/entity/ReviewsSourcesLookup.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/entity/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/entity/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/service/GenericService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/com/movie_aggregator/service/GenericService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/controller/MyController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/controller/MyController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/entity/MovieReviewSource.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/entity/MovieReviewSource.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/entity/ReviewsSourcesLookup.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/entity/ReviewsSourcesLookup.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/entity/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/entity/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/movie_aggregator/service/GenericService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/movie_aggregator/service/GenericService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -219,17 +231,6 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -613,7 +614,9 @@
       <workItem from="1619572378068" duration="1802000" />
       <workItem from="1619574220671" duration="8807000" />
       <workItem from="1619663782664" duration="32000" />
-      <workItem from="1619663848299" duration="9410000" />
+      <workItem from="1619663848299" duration="16669000" />
+      <workItem from="1619682189400" duration="47000" />
+      <workItem from="1619682266459" duration="7393000" />
     </task>
     <task id="LOCAL-00001" summary="ERD image was updated(added users/roles table)">
       <created>1615338497654</created>
@@ -649,7 +652,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/movie_aggregator/service/GenericService.java</url>
-          <line>44</line>
+          <line>40</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -659,7 +662,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/com/movie_aggregator/utils/MovieApisReader.java</url>
-          <line>433</line>
+          <line>432</line>
           <properties class="com.movie_aggregator.utils.MovieApisReader">
             <option name="EMULATED" value="true" />
           </properties>
@@ -667,7 +670,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/com/movie_aggregator/utils/MovieApisReader.java</url>
-          <line>458</line>
+          <line>457</line>
           <properties class="com.movie_aggregator.utils.MovieApisReader" method="main">
             <option name="EMULATED" value="true" />
           </properties>

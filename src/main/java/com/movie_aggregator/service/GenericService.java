@@ -1,23 +1,19 @@
 package com.movie_aggregator.service;
 
-import com.jayway.jsonpath.JsonPath;
 import com.movie_aggregator.entity.*;
 import com.movie_aggregator.repository.GenericDao;
 import com.movie_aggregator.utils.MovieApisReader;
 
-import org.hibernate.Criteria;
-import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
-import java.io.IOException;
-import java.net.URISyntaxException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * The type Generic service.
@@ -273,8 +269,40 @@ public class GenericService {
         return genericDao.getLastSearch();
     }
 
+    public Set<ReviewsSourcesLookup> getMovieReviewSourcesForView(Set<ReviewsSourcesLookup> sourcesLookups, Movie movie) {
 
-    public MovieReviewSource getMovieReviewSourceBasedOnColumns(Movie movie, ReviewsSourcesLookup reviewSource, String sparqlResponseJSON) {
+        System.out.println("getMovieReviewSources size:" + movie.getMovieReviewSources().size());
+        System.out.println(movie.getMovieReviewSources().isEmpty());
+        Set<MovieReviewSource> reviewSources = new HashSet<>();
+
+        if (movie.getMovieReviewSources().isEmpty()) {
+            Set<ReviewsSourcesLookup> lookups = new HashSet<>(getAll(ReviewsSourcesLookup.class));
+           // lookups.forEach(lookup -> lookup.se);
+            reviewSources = movieApisReader.parseJSONWikiDataReviewSources(movie, lookups);
+            movie.setMovieReviewSources(reviewSources);
+            System.out.println(movie);
+            merge(movie); // or merge?
+        }
+        //TODO: decide how to take movieSource via forloop inside forloop or sql
+        for (ReviewsSourcesLookup lookup : sourcesLookups) {
+            //System.out.printf("id:%d, name: %s%n", movie.getId(), lookup.getName());
+
+            //MovieReviewSource movieReviewSource = getMovieReviewSourceBasedOnColumns(movie, lookup);
+            Optional<MovieReviewSource> matchingObject = reviewSources.stream().
+                    filter(p -> p.getMovie().getId() == movie.getId() && p.getReviewSource().getName().equals(lookup.getName())).
+                    findFirst();
+            MovieReviewSource reviewSource = matchingObject.orElse(null);
+            if (reviewSource == null) {
+                continue;
+            }
+
+            lookup.setUrl(reviewSource.getUrl());
+        }
+        return sourcesLookups;
+    }
+
+
+    public MovieReviewSource getMovieReviewSourceBasedOnColumns(Movie movie, ReviewsSourcesLookup reviewSource) {
         String reviewSourceName = reviewSource.getName();
         int movieId = movie.getId();
         //take movieReviewSource woth review url if already was such request
@@ -311,5 +339,6 @@ public class GenericService {
     public void incrementSearchNumberCounter(int id) {
         genericDao.incrementSearchNumberCounter(id);
     }
+
 
 }

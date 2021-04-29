@@ -62,9 +62,6 @@ public class MovieApisReader implements PropertiesLoader {
      * @throws IOException the io exception
      */
     public String getJSONFromApi(String searchType, String source, String searchVal, Movie movie) {
-        String ff = "SELECT ?film ?film_web_id_pl ?film_web_name_pl ?all_cinema_jp ?allocine_fr ?cine_gr ?cinema_de ?common_sense ?eiga_jp ?film_affinity ?filmfront_no ?film_tv_it ?google_play_tv ?kinenote_jp ?kvikmyndir_is ?ldif_de ?letterbox ?metacritic ?mrqe ?movie_walker_jp ?moviemeter_nl ?movies_anywhere ?mubi ?mymovies_it ?netflix ?port_hu ?quora_topic ?rotten_tomatoes ?scope_dk ?sratim_il ?tmdb ?tv_com ?anidb ?anime_news_newtwork ?anime_click ?imfdb ?mal ?trakt_tv ?anilist WHERE { OPTIONAL { ?film wdt:P2603 \"%s\" . } OPTIONAL { ?film wdt:P345 \"%s\" . } OPTIONAL { ?film wdt:P2465 ?all_cinema_jp . } OPTIONAL { ?film wdt:P1265 ?allocine_fr . } OPTIONAL { ?film wdt:P3129 ?cine_gr . } OPTIONAL { ?film wdt:P3933 ?cinema_de . } OPTIONAL { ?film wdt:P7091 ?common_sense . } OPTIONAL { ?film wdt:P7222 ?eiga_jp . } OPTIONAL { ?film wdt:P480 ?film_affinity . } OPTIONAL { ?film wdt:P7975 ?filmfront_no . } OPTIONAL { ?film wdt:P3107 ?ldif_de;  . } OPTIONAL { ?film wdt:P1874 ?netflix . } OPTIONAL { ?film wdt:P4780 ?mymovies_it;       . } OPTIONAL { ?film wdt:P7299 ?mubi;       . } OPTIONAL { ?film wdt:P5990 ?movies_anywhere;       . } OPTIONAL { ?film wdt:P1970 ?moviemeter_nl;       . } OPTIONAL { ?film wdt:P1970 ?movie_walker_jp;       . } OPTIONAL { ?film wdt:P8033 ?mrqe;       . } OPTIONAL { ?film wdt:P1712 ?metacritic;    . } OPTIONAL { ?film wdt:P6127 ?letterbox;   . } OPTIONAL { ?film wdt:P905  ?port_hu . } OPTIONAL { ?film wdt:P1258 ?rotten_tomatoes . } OPTIONAL { ?film wdt:P2518 ?scope_dk . } OPTIONAL { ?film wdt:P3145 ?sratim_il . } OPTIONAL { ?film wdt:P4947 ?tmdb . } OPTIONAL { ?film wdt:P2638 ?tv_com; . } OPTIONAL { ?film wdt:P5253 ?film_tv_it . } OPTIONAL { ?film wdt:P6562 ?google_play_tv . } OPTIONAL { ?film wdt:P2508 ?kinenote_jp . } OPTIONAL { ?film wdt:P3340 ?kvikmyndir_is . } OPTIONAL { ?film wdt:P3995 ?film_web_name_pl . } OPTIONAL { ?film wdt:P5032 ?film_web_id_pl . } OPTIONAL { ?film wdt:P5646 ?anidb . } OPTIONAL { ?film wdt:P6992 ?imfdb . } OPTIONAL { ?film wdt:P1985 ?anime_news_newtwork . } OPTIONAL { ?film wdt:P5845 ?anime_click . } OPTIONAL { ?film wdt:P4086 ?mal . } OPTIONAL { ?film wdt:P8013 ?trakt_tv . } OPTIONAL { ?film wdt:P4529 ?douban_cn . } OPTIONAL { ?film wdt:P8729 ?anilist . } }";
-        String ggg = String.format("%s%s", QUERY_WIKI_DATA, ff);
-
         searchVal = URLEncoder.encode(searchVal, StandardCharsets.UTF_8);
         OkHttpClient client = new OkHttpClient();
         String requestURL = null;
@@ -166,7 +163,8 @@ public class MovieApisReader implements PropertiesLoader {
             String year = movieJSON.has("year")
                     ? movieJSON.getString("year")
                     : "";
-            String director = shortInfo.substring(shortInfo.indexOf(' '), shortInfo.indexOf('('));
+           // String director = shortInfo.substring(shortInfo.indexOf(' '), shortInfo.indexOf('('));
+            String director = "director";
 
             String duration = movieJSON.has("filmLength")
                     ? movieJSON.getString("filmLength")
@@ -259,9 +257,9 @@ public class MovieApisReader implements PropertiesLoader {
                 "";
         String kinopoiskReviewsFormatted = String.format("%s(%s)", reviews, goodReviews);
         Movie updateMovie = new Movie(imdbId, description, imdbRating, ratingImdbVoteCount, boxOffice, audienceRating, kinopoiskReviewsFormatted);
-        merge(movie, updateMovie);
+        merge(updateMovie, movie);
         //processFramesAndReview(filmId, reviews, goodReviews, movie);
-        return movie;
+        return updateMovie;
     }
 
     public Movie loadFrames(Movie movie) {
@@ -345,14 +343,14 @@ public class MovieApisReader implements PropertiesLoader {
        Movie updateMovie = new Movie(description, imdbRating, imdbVotes, metacrtiticRating, rottenTomatoesRating,
                boxOffice, duration, genre, director, actors, language, country, metascore, awards, writer, released,
                production, audienceRating);
-        merge(movie, updateMovie);
+        merge(updateMovie, movie);
+        System.out.println("MODEL ID:" + movie.getId());
         //logger.info(movie);
-        return movie;
+        return updateMovie;
     }
 
     public Set<MovieReviewSource> parseJSONWikiDataReviewSources(Movie movie, Set<ReviewsSourcesLookup> lookups) {
         String sparqlResponseJSON = getJSONFromApi(null, "sparql", "null", movie);
-        System.out.println(sparqlResponseJSON);
         sparqlResponseJSON = sparqlResponseJSON.replaceAll("[\n\\]]", "")
                 .replaceAll(".+: \\[", "");
         sparqlResponseJSON = sparqlResponseJSON.substring(0, sparqlResponseJSON.length() - 2);
@@ -376,9 +374,11 @@ public class MovieApisReader implements PropertiesLoader {
                 String movieReviewIdentifier = JsonPath.read(sparqlResponseJSON, jsonPathExpression);
                 String movieReviewUrl = String.format(lookup.getUrl(), movieReviewIdentifier);
                 MovieReviewSource movieReviewSource = new MovieReviewSource(lookup, movie, movieReviewUrl);
-                movieReviewSources.add(movieReviewSource);
+                movieReviewSources.add(movieReviewSource);;
             }
         }
+        System.out.println(movieReviewSources);
+
         return movieReviewSources;
     }
 

@@ -54,6 +54,11 @@ public class User implements UserDetails {
     public User() {
     }
 
+    public User(String username, Set<ReviewsSourcesLookup> reviewsSourceLookups) {
+        this.username = username;
+        this.reviewsSourceLookups = reviewsSourceLookups;
+    }
+
     /**
      * Add movie to user.
      *

@@ -195,6 +195,22 @@
                 <details>
                     <summary>Show reviews urls</summary>
                     <div class="d-flex flex-wrap justify-content-center align-items-center">
+                        <table class="table table-bordered table-striped">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th>Name</th>
+                                <th>Url</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                    <c:forEach items="${reviewSources}" var="reviewSource">
+                        <tr>
+                            <td>${reviewSource.name}</td>
+                            <td>${reviewSource.url}</td>
+                        </tr>
+                    </c:forEach>
+</tbody>
+                        </table>
 
                     </div>
                 </details>
