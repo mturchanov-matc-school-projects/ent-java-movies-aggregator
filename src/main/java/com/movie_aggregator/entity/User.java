@@ -131,6 +131,7 @@ public class User implements UserDetails {
         this.reviewsSourceLookups = reviewsSourceLookups;
     }
 
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;

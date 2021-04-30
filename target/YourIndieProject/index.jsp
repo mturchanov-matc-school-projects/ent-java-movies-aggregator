@@ -10,35 +10,36 @@
 
 <main>
     <div class="container">
-
+<c:forEach items="${reviewsSources}" var="reviewSource">
+    <c:out value="${reviewSource}" />
+</c:forEach>
 
         <h1>Find movies quickly!</h1>
-        <form action="${pageContext.request.contextPath}/searchMovie"
-              method="get" class="">
+        <form action="${pageContext.request.contextPath}/searchMovie" method="get" class="">
             <div class="row">
+
                 <div class="card-header col-md-5">
                     <div class="card">
-                        <form action="${pageContext.request.contextPath}/searchMovie">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                                <p class="card-text">Some quick example text to build on the card title and make up the
-                                    bulk of the card's content.</p>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" value="imdb" name="movieSourceBase"
-                                           id="sourceBaseImdb" checked>
-                                    <label class="form-check-label" for="sourceBaseImdb">
-                                        IMDB
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" value="kinopoisk"
-                                           name="movieSourceBase" id="sourceBaseKinopoisk">
-                                    <label class="form-check-label" for="sourceBaseKinopoisk">
-                                        Kinopoisk
-                                    </label>
-                                </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                            <p class="card-text">Some quick example text to build on the card title and make up the
+                                bulk of the card's content.</p>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" value="imdb" name="movieSourceBase"
+                                       id="sourceBaseImdb" checked>
+                                <label class="form-check-label" for="sourceBaseImdb">
+                                    IMDB
+                                </label>
                             </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" value="kinopoisk"
+                                       name="movieSourceBase" id="sourceBaseKinopoisk">
+                                <label class="form-check-label" for="sourceBaseKinopoisk">
+                                    Kinopoisk
+                                </label>
+                            </div>
+                        </div>
                     </div>
 
                     <hr>
@@ -59,34 +60,46 @@
                     <a href="${pageContext.request.contextPath}/showReviewSources">123</a>
 
                     <hr>
-                    <div class="list-group d-flex justify-content-evenly flex-row flex-wrap">
+                    <c:choose>
+                        <c:when test="${empty allReviewSources}">
+                            none
+                        </c:when>
+                        <c:otherwise>
+                            <div class="list-group d-flex justify-content-evenly flex-row flex-wrap">
+                                <c:forEach items="${allReviewSources}" var="reviewSource">
 
-                        <c:forEach items="${reviewsSources}" var="reviewSource">
+                                    <label class="list-group-item list-group-item-action" aria-current="true">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h5 class="mb-1">${reviewSource.name}</h5>
+                                            <small>3 days ago</small>
+                                        </div>
+                                        <p class="mb-1">Some placeholder content in a paragraph.</p>
+                                        <input class="form-check-input me-1" name="reviewsSources" type="checkbox"
+                                               value="${reviewSource.name}"
+                                            <c:if test="${reviewSource.checked == true}"> checked </c:if> />
+                                        <small>And some small print.</small>
+                                    </label>
 
-                            <label class="list-group-item list-group-item-action" aria-current="true">
-                                <div class="d-flex w-100 justify-content-between">
-                                    <h5 class="mb-1">${reviewSource.name}</h5>
-                                    <small>3 days ago</small>
-                                </div>
-                                <p class="mb-1">Some placeholder content in a paragraph.
-                                    <input class="form-check-input me-1" name="reviewSources" type="checkbox"
-                                           value="${reviewSource.name}">
-                                </p>
-                                <small>And some small print.</small>
-                            </label>
+                                </c:forEach>
+                            </div>
+                        </c:otherwise>
 
-                        </c:forEach>
-                    </div>
+                    </c:choose>
+
                 </div>
+
             </div>
         </form>
     </div>
+
     </div>
 
 
 </main>
+<c:forEach items="${allReviewSources}" var="reviewSource">
+    <c:out value="${reviewSource}" />
+</c:forEach>
 
 
-<c:import url="includes/footer.jsp"/>
 </body>
 </html>

@@ -203,7 +203,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                    <c:forEach items="${reviewSources}" var="reviewSource">
+                    <c:forEach items="${reviewsSources}" var="reviewSource">
                         <tr>
                             <td>${reviewSource.name}</td>
                             <td>${reviewSource.url}</td>

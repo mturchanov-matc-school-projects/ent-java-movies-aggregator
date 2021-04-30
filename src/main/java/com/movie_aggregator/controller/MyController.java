@@ -4,7 +4,6 @@ import com.movie_aggregator.entity.*;
 import com.movie_aggregator.service.GenericService;
 import com.movie_aggregator.utils.MovieApisReader;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -134,34 +133,55 @@ public class MyController {
      */
     @RequestMapping("/searchMovie")
     public String searchMovie(@RequestParam(name = "movieSourceBase") String movieSourceBase,
-                              @RequestParam(name = "reviewSources", required = false) String[] reviewSources,
+                              @RequestParam(name = "reviewsSources", required = false) String[] reviewsSources,
                               @RequestParam("searchVal") String searchVal, Model model, HttpServletRequest request) {
 
         searchVal = searchVal.toLowerCase(Locale.ROOT);
+        HttpSession session = request.getSession();
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = null;
+        String username = null;
+        Set<ReviewsSourcesLookup> newUserPickedReviews = null;
+
+        //no results found with such search word(s)
         List<Movie> movies = genericService.getMovies(searchVal, movieSourceBase);
         if (movies == null) {
             model.addAttribute("headerTitle", String.format("Sorry, no result with '%s' input", searchVal));
             return "/index";
         }
 
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = null;
+
+        if (reviewsSources != null && reviewsSources.length > 0) { // new reviews sources were checked
+            newUserPickedReviews = genericService.generateNewPickedReviewSources(reviewsSources);
+        }
         if (principal instanceof UserDetails) {
             username = ((UserDetails)principal).getUsername();
+            user = genericService.getOneEntryByColumProperty("username", username, User.class);
         }
 
-        if (username != null) {
+
+        if (user != null && newUserPickedReviews != null) { //user's reviewsSources are updated
+            user.setReviewsSources(newUserPickedReviews);
+            genericService.merge(user);
+        } else {
+            user = new User("anonymous", newUserPickedReviews);
+        }
+
+        session.setAttribute("user", user);
+
+
+        // this and mapping('/addMovie') are connected
+        // particularly this flag is for view (when btn 'add' is clicked, next time no btn 'add' as option)
+        if (user.getUsername().equals("anonymous")) {
             List<Movie> userMovies = genericService.getMoviesByProperty("username", username, "users");
             for (Movie m : movies) {
-                if (userMovies.contains(m)) {
+                if (userMovies.contains(m)) { // if user has movie in list then no btn for view)
                     m.setAddedToUserList(true);
                 }
             }
         }
 
 
-        HttpSession session = request.getSession();
-        session.setAttribute("reviewsSources", reviewSources);
         model.addAttribute("movieSourceBase", movieSourceBase);
         model.addAttribute("movies", movies);
         return "/result";
@@ -178,38 +198,26 @@ public class MyController {
     public String getMovieInfo( @RequestParam int id, @RequestParam String movieSourceBase,
                                 HttpServletRequest request,
                                 Model model) {
-        Set<ReviewsSourcesLookup> lookups = null;
         HttpSession session = request.getSession();
-        String[] reviewSources = (String[]) session.getAttribute("reviewsSources");
+
 
         Movie movie = genericService.get(Movie.class, id);
-        System.out.println("before: " + movie.getId());
-
         if (movieSourceBase.equals("kinopoisk") && movie.getKinopoiskReviews() == null) {
             movie = apisReader.parseSpecificKinopoiskMoviesJson(movie);
         } else if (movieSourceBase.equals("imdb") && movie.getWriter() == null) {
             movie = apisReader.parseSpecificImdbMovieJson(movie);
         }
 
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails) {
-            String username = ((UserDetails)principal).getUsername();
-        }
+
+        User user = (User) session.getAttribute("user");
+        Set<ReviewsSourcesLookup> userReviews = user.getReviewsSources();
+
         Set<ReviewsSourcesLookup> reviewSourcesForView = null;
-        if (reviewSources.length > 0) {
-            lookups = new HashSet<>();
-            for (String checkboxRev : reviewSources) {
-                ReviewsSourcesLookup reviewsSourcesLookup =
-                        genericService.getOneEntryByColumProperty("name", checkboxRev, ReviewsSourcesLookup.class);
-                lookups.add(reviewsSourcesLookup);
-            }
-            reviewSourcesForView =  genericService.getMovieReviewSourcesForView(lookups, movie);
-            System.out.println(reviewSourcesForView);
+        if (userReviews != null && userReviews.size() > 0) {
+            reviewSourcesForView =  genericService.getMovieReviewSourcesForView(userReviews, movie);
         }
-
         model.addAttribute("movie", movie);
-        model.addAttribute("reviewSources", reviewSourcesForView);
-
+        model.addAttribute("reviewsSources", reviewSourcesForView);
         if (movieSourceBase.equals("kinopoisk")) {
             return "/kin_movie";
         }
@@ -220,8 +228,8 @@ public class MyController {
 
     @RequestMapping("/uploadImages")
     public String loadImages( @RequestParam int id, Model model)  {
-        //model.addAttribute("id", movieService.getMovie(id));
         Movie movie = genericService.get(Movie.class, id);
+        System.out.println("UPLOAD_MOVIE_ID: " + movie.getKinopoiskId());
         movie = apisReader.loadFrames(movie);
         genericService.merge(movie);
         model.addAttribute("movie", movie);
@@ -229,10 +237,30 @@ public class MyController {
     }
 
     @RequestMapping("/showReviewSources")
-    public String showReviewSources( Model model)  {
+    public String showReviewSources( Model model, HttpServletRequest request)  {
         List<ReviewsSourcesLookup> reviewsSourcesLookups =  genericService.getAll(ReviewsSourcesLookup.class);
-        model.addAttribute("reviewsSources", reviewsSourcesLookups);
+        HttpSession session = request.getSession();
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            setPickedReviewSources(model, reviewsSourcesLookups, user);
+        } else if (principal instanceof UserDetails) {
+            String username = ((UserDetails)principal).getUsername();
+            user = genericService.getOneEntryByColumProperty("username", username, User.class);
+            setPickedReviewSources(model, reviewsSourcesLookups, user);
+        }
+        model.addAttribute("allReviewSources", reviewsSourcesLookups);
         return "/index";
+    }
+
+    private void setPickedReviewSources(Model model, List<ReviewsSourcesLookup> reviewsSourcesLookups, User user) {
+        Set<ReviewsSourcesLookup> chosenLookups = user.getReviewsSources();
+        for (ReviewsSourcesLookup lookup : reviewsSourcesLookups) {
+            if (chosenLookups.contains(lookup)) {
+                lookup.setChecked(true);
+            }
+        }
+        model.addAttribute("reviewsSources2", chosenLookups);
     }
 
     /**

@@ -30,6 +30,8 @@ public class ReviewsSourcesLookup {
             inverseJoinColumns = @JoinColumn(name = "username") //write how bridge table get connected with other target table/entity
     )
     private Set<User> users;
+    @Transient
+    private boolean checked;
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<MovieReviewSource> movieReviewSources = new HashSet<>();
@@ -69,12 +71,35 @@ public class ReviewsSourcesLookup {
         this.url = url;
     }
 
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
+
     @Override
     public String toString() {
         return "ReviewsSourcesLookup{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", url='" + url + '\'' +
+                ", checked=" + checked +
                 '}';
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ReviewsSourcesLookup lookup = (ReviewsSourcesLookup) o;
+        return name.equals(lookup.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

@@ -5,15 +5,14 @@ import com.movie_aggregator.repository.GenericDao;
 import com.movie_aggregator.utils.MovieApisReader;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.CollectionUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * The type Generic service.
@@ -271,34 +270,35 @@ public class GenericService {
 
     public Set<ReviewsSourcesLookup> getMovieReviewSourcesForView(Set<ReviewsSourcesLookup> sourcesLookups, Movie movie) {
 
-        System.out.println("getMovieReviewSources size:" + movie.getMovieReviewSources().size());
-        System.out.println(movie.getMovieReviewSources().isEmpty());
         Set<MovieReviewSource> reviewSources = new HashSet<>();
 
         if (movie.getMovieReviewSources().isEmpty()) {
             Set<ReviewsSourcesLookup> lookups = new HashSet<>(getAll(ReviewsSourcesLookup.class));
-           // lookups.forEach(lookup -> lookup.se);
             reviewSources = movieApisReader.parseJSONWikiDataReviewSources(movie, lookups);
+
             movie.setMovieReviewSources(reviewSources);
-            System.out.println(movie);
-            merge(movie); // or merge?
+            merge(movie);
+        } else {
+            reviewSources = movie.getMovieReviewSources();
         }
         //TODO: decide how to take movieSource via forloop inside forloop or sql
+        Set<ReviewsSourcesLookup> result = new HashSet<>();
         for (ReviewsSourcesLookup lookup : sourcesLookups) {
-            //System.out.printf("id:%d, name: %s%n", movie.getId(), lookup.getName());
-
-            //MovieReviewSource movieReviewSource = getMovieReviewSourceBasedOnColumns(movie, lookup);
             Optional<MovieReviewSource> matchingObject = reviewSources.stream().
-                    filter(p -> p.getMovie().getId() == movie.getId() && p.getReviewSource().getName().equals(lookup.getName())).
+                    filter(p -> p.getMovie().getId() == movie.getId()
+                            && p.getReviewSource().getName().equals(lookup.getName())).
                     findFirst();
             MovieReviewSource reviewSource = matchingObject.orElse(null);
+            System.out.println(lookup.getName() + ":" + reviewSource);
             if (reviewSource == null) {
                 continue;
+            } else {
+                lookup.setUrl(reviewSource.getUrl());
+                result.add(lookup);
             }
-
-            lookup.setUrl(reviewSource.getUrl());
         }
-        return sourcesLookups;
+
+        return result;
     }
 
 
@@ -308,25 +308,6 @@ public class GenericService {
         //take movieReviewSource woth review url if already was such request
         MovieReviewSource movieReviewSource =
                 genericDao.getMovieReviewSourceBasedOnColumns(movieId, reviewSourceName);
-
-        // logic if there is no such movieReviewSource in db/no request was maiden
-        //if (movieReviewSource == null
-        //        && sparqlResponseJSON.contains("film_web_name_pl") // wikidata's response on film has such property
-        //        && reviewSourceName.equals("film_web_pl")) {       // check whether such review_source was requested
-        //    // film_web's final identifier is messed up - it's www/name-year-id, meh
-        //    String filmName = JsonPath.read(sparqlResponseJSON, "$.film_web_name_pl.value");
-        //    String filmId =  JsonPath.read(sparqlResponseJSON, "$.film_web_id_pl.value");
-        //    String urlMovieIdentifier = String.format(reviewSourceName,
-        //            filmName, movie.getYear(), filmId);
-        //    String movieReviewUrl = String.format(reviewSource.getUrl(), urlMovieIdentifier);
-        //    movieReviewSource = new MovieReviewSource(reviewSource, movie, movieReviewUrl);
-        //} else if (movieReviewSource == null
-        //        && sparqlResponseJSON.contains(reviewSourceName)) {
-        //    String jsonPathExpression = String.format("$.%s.value", reviewSourceName);
-        //    String urlMovieIdentifier = JsonPath.read(sparqlResponseJSON, jsonPathExpression);
-        //    String movieReviewUrl = String.format(reviewSource.getUrl(), urlMovieIdentifier);
-        //    movieReviewSource = new MovieReviewSource(reviewSource, movie, movieReviewUrl);
-        //}
         return movieReviewSource;
     }
 
@@ -341,4 +322,12 @@ public class GenericService {
     }
 
 
+    public Set<ReviewsSourcesLookup> generateNewPickedReviewSources(String[] reviewsSources) {
+        Set<ReviewsSourcesLookup> newPickedReviewSources = new HashSet<>();
+        for (String reviewSource : reviewsSources) {
+            ReviewsSourcesLookup reviewsSourcesLookup = getOneEntryByColumProperty("name", reviewSource, ReviewsSourcesLookup.class);
+            newPickedReviewSources.add(reviewsSourcesLookup);
+        }
+        return newPickedReviewSources;
+    }
 }

@@ -6,6 +6,7 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
+import com.sun.xml.bind.v2.runtime.output.SAXOutput;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.lang.NonNull;
@@ -20,6 +21,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * The type Movie apis reader.
@@ -88,11 +90,11 @@ public class MovieApisReader implements PropertiesLoader {
                 if (searchType.equals("general")) {
                     requestURL = String.format("%s%s%s%s", KINOPOISK_ROOT, "search-by-keyword?keyword=", searchVal, "&page=1");
                 } else if (searchType.equals("specific")) {
-                    String url = String.format("%s%s?append_to_response=BUDGET, RATING, REVIEW", KINOPOISK_ROOT, searchVal);
+                    String url = String.format("%s%s?append_to_response=BUDGET,RATING,REVIEW", KINOPOISK_ROOT, searchVal);
                     System.out.println("url: " + url);
                     requestURL = url;
                 } else if (searchType.equals("frames")) {
-                    System.out.println(requestURL.toString());
+                    requestURL = String.format("%s%s/frames", KINOPOISK_ROOT, searchVal);
                 }
                 request = new Request.Builder()
                         .url(requestURL)
@@ -190,7 +192,9 @@ public class MovieApisReader implements PropertiesLoader {
                 countries.append(ratingsJSON.getString("country"));
                 countries.append(",");
             }
-            countries.setLength(countries.length() - 1);
+            if (countries.length() > 1) {
+                countries.setLength(countries.length() - 1);
+            }
             JSONArray genresJSONArr = movieJSON.has("genres")
                     ? movieJSON.getJSONArray("genres")
                     : null;
@@ -264,6 +268,7 @@ public class MovieApisReader implements PropertiesLoader {
 
     public Movie loadFrames(Movie movie) {
         //TODO: handle if no kinopoisk id
+        System.out.println("KINOPOISK ID: " + movie.getKinopoiskId());
         String framesDetails = getJSONFromApi("frames","kinopoisk", movie.getKinopoiskId(), null);
         if (!framesDetails.isEmpty()) {
             //StringBuilder framesSb = new StringBuilder();
@@ -361,7 +366,9 @@ public class MovieApisReader implements PropertiesLoader {
         Set<MovieReviewSource> movieReviewSources = new HashSet<>();
         for (ReviewsSourcesLookup lookup : lookups) {
             String reviewSourceName = lookup.getName();
-            if (sparqlResponseJSON.contains("film_web_name_pl") && reviewSourceName.equals("film_web_name_pl")) {       // check whether such review_source was requested
+            if (sparqlResponseJSON.contains("film_web_id_pl")
+                    && sparqlResponseJSON.contains("film_web_name_pl")
+                    && reviewSourceName.equals("film_web_pl")) {       // check whether such review_source was requested
                 String filmName = JsonPath.read(sparqlResponseJSON, "$.film_web_name_pl.value");
                 String filmId =  JsonPath.read(sparqlResponseJSON, "$.film_web_id_pl.value");
                 String urlMovieIdentifier = String.format(reviewSourceName,
@@ -377,8 +384,8 @@ public class MovieApisReader implements PropertiesLoader {
                 movieReviewSources.add(movieReviewSource);;
             }
         }
-        System.out.println(movieReviewSources);
-
+        movieReviewSources = movieReviewSources.stream()
+                .filter(p -> !p.getUrl().contains("%s")).collect(Collectors.toSet());
         return movieReviewSources;
     }
 

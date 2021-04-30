@@ -62,10 +62,6 @@
         </div>
     </c:forEach>
 
-
-
-    <c:import url="includes/footer.jsp" />
-
 </div>
 
 </body>

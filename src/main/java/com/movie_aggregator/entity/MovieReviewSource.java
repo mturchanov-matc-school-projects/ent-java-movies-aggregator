@@ -79,7 +79,6 @@ public class MovieReviewSource {
         return "MovieReviewSource{" +
                 "id=" + id +
                 ", reviewSource=" + reviewSource +
-                ", movie=" + movie +
                 ", url='" + url + '\'' +
                 '}';
     }
