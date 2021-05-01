@@ -12,12 +12,13 @@ import java.util.Set;
 @Entity(name = "ReviewsSourcesLookup")
 public class ReviewsSourcesLookup {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
+    //@Id
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@Column(name = "id")
+    //private int id;
 
     @Column
+    @Id
     private String name;
 
     @Column
@@ -26,7 +27,7 @@ public class ReviewsSourcesLookup {
     @ManyToMany(cascade = {CascadeType.MERGE})
     @JoinTable(
             name = "user_review_source_lookup",
-            joinColumns = @JoinColumn(name = "review_source_id"), //write how bridge table get connected with this source table/entity
+            joinColumns = @JoinColumn(name = "review_source_name"), //write how bridge table get connected with this source table/entity
             inverseJoinColumns = @JoinColumn(name = "username") //write how bridge table get connected with other target table/entity
     )
     private Set<User> users;
@@ -47,13 +48,7 @@ public class ReviewsSourcesLookup {
         this.movieReviewSources = movieReviewSources;
     }
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -80,9 +75,21 @@ public class ReviewsSourcesLookup {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ReviewsSourcesLookup lookup = (ReviewsSourcesLookup) o;
+        return Objects.equals(name, lookup.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
+
+    @Override
     public String toString() {
         return "ReviewsSourcesLookup{" +
-                "id=" + id +
                 ", name='" + name + '\'' +
                 ", url='" + url + '\'' +
                 ", checked=" + checked +
@@ -90,16 +97,4 @@ public class ReviewsSourcesLookup {
     }
 
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ReviewsSourcesLookup lookup = (ReviewsSourcesLookup) o;
-        return name.equals(lookup.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name);
-    }
 }

@@ -27,7 +27,7 @@
                             <a class="nav-link lead" href="${pageContext.request.contextPath}/logout">Logout</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link lead" href="${pageContext.request.contextPath}/myMovies">My movies</a>
+                            <a class="nav-link lead" href="${pageContext.request.contextPath}/myMovies?movieSourceBase=">My movies</a>
                         </li>
                     </sec:authorize>
                     <li class="nav-item"><a class="nav-link lead" href="${pageContext.request.contextPath}/test">Test</a>

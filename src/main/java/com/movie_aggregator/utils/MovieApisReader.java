@@ -1,5 +1,6 @@
 package com.movie_aggregator.utils;
 
+import antlr.StringUtils;
 import com.jayway.jsonpath.JsonPath;
 import com.movie_aggregator.entity.*;
 import com.squareup.okhttp.OkHttpClient;
@@ -354,39 +355,47 @@ public class MovieApisReader implements PropertiesLoader {
         return updateMovie;
     }
 
-    public Set<MovieReviewSource> parseJSONWikiDataReviewSources(Movie movie, Set<ReviewsSourcesLookup> lookups) {
+    public Movie parseJSONWikiDataReviewSources(Movie movie, Set<ReviewsSourcesLookup> lookups) {
         String sparqlResponseJSON = getJSONFromApi(null, "sparql", "null", movie);
+        System.out.println("before:  " + sparqlResponseJSON);
         sparqlResponseJSON = sparqlResponseJSON.replaceAll("[\n\\]]", "")
                 .replaceAll(".+: \\[", "");
         sparqlResponseJSON = sparqlResponseJSON.substring(0, sparqlResponseJSON.length() - 2);
+        System.out.println("after:  " + sparqlResponseJSON);
+
         return generateAllMovieReviewSourcesForMovie(movie, lookups, sparqlResponseJSON);
     }
 
-    private Set<MovieReviewSource> generateAllMovieReviewSourcesForMovie(Movie movie, Set<ReviewsSourcesLookup> lookups, String sparqlResponseJSON) {
+    private Movie generateAllMovieReviewSourcesForMovie(Movie movie, Set<ReviewsSourcesLookup> lookups, String sparqlResponseJSON) {
         Set<MovieReviewSource> movieReviewSources = new HashSet<>();
         for (ReviewsSourcesLookup lookup : lookups) {
             String reviewSourceName = lookup.getName();
-            if (sparqlResponseJSON.contains("film_web_id_pl")
-                    && sparqlResponseJSON.contains("film_web_name_pl")
+            if (sparqlResponseJSON.contains("film_web_name_pl")
                     && reviewSourceName.equals("film_web_pl")) {       // check whether such review_source was requested
-                String filmName = JsonPath.read(sparqlResponseJSON, "$.film_web_name_pl.value");
-                String filmId =  JsonPath.read(sparqlResponseJSON, "$.film_web_id_pl.value");
-                String urlMovieIdentifier = String.format(reviewSourceName,
-                        filmName, movie.getYear(), filmId);
-                String movieReviewUrl = String.format(lookup.getUrl(), urlMovieIdentifier);
+                String filmId =  JsonPath.read(sparqlResponseJSON, "$.film_web_name_pl.value");
+                String movieReviewUrl = String.format(lookup.getUrl(), filmId);
                 MovieReviewSource movieReviewSource = new MovieReviewSource(lookup, movie, movieReviewUrl);
                 movieReviewSources.add(movieReviewSource);
             } else if (sparqlResponseJSON.contains(reviewSourceName)) {
                 String jsonPathExpression = String.format("$.%s.value", reviewSourceName);
                 String movieReviewIdentifier = JsonPath.read(sparqlResponseJSON, jsonPathExpression);
                 String movieReviewUrl = String.format(lookup.getUrl(), movieReviewIdentifier);
+                //System.out.printf("id: %s, name:%s, url:%s", movieReviewIdentifier, lookup.getName(), lookup.getUrl());;
+
                 MovieReviewSource movieReviewSource = new MovieReviewSource(lookup, movie, movieReviewUrl);
                 movieReviewSources.add(movieReviewSource);;
             }
         }
+        String kinId = movie.getKinopoiskId();
+        if (kinId==null && sparqlResponseJSON.contains("kinopoisk")) {
+            String filmId =  JsonPath.read(sparqlResponseJSON, "$.kinopoisk.value");
+            movie.setKinopoiskId(filmId);
+        }
+        System.out.println("\n\n00000000000000000000 -  kinId==null("+kinId == null+"),KID: " + movie.getKinopoiskId());
         movieReviewSources = movieReviewSources.stream()
                 .filter(p -> !p.getUrl().contains("%s")).collect(Collectors.toSet());
-        return movieReviewSources;
+        movie.setMovieReviewSources(movieReviewSources);
+        return movie;
     }
 
     public List<Movie> parseGeneralImdbMoviesJson(String searchVal)  {
@@ -470,6 +479,23 @@ public class MovieApisReader implements PropertiesLoader {
        // movie = reader.parseSpecificImdbMovieJson(movie);
        // System.out.println(movie);
         System.out.println(MovieApisReader.hashCode("test"));
+        Set<ReviewsSourcesLookup> sourcesLookups = new HashSet<>();
+        ReviewsSourcesLookup l1 = new ReviewsSourcesLookup();
+        ReviewsSourcesLookup l2 = new ReviewsSourcesLookup();
+        ReviewsSourcesLookup l3 = new ReviewsSourcesLookup();
+        l1.setName("1");
+        l2.setName("2");
+        l3.setName("3");
+        sourcesLookups.add(l1);
+        sourcesLookups.add(l2);
+        sourcesLookups.add(l3);
+
+
+        String[] names = sourcesLookups.stream().map(ReviewsSourcesLookup::getName).toArray(size -> new String[sourcesLookups.size()]);
+        for (String n : names) {
+            System.out.println(n);
+        }
+        System.out.println(Arrays.stream(names).anyMatch("5"::contains));
 
     }
 

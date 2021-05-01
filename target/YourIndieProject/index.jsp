@@ -10,9 +10,6 @@
 
 <main>
     <div class="container">
-<c:forEach items="${reviewsSources}" var="reviewSource">
-    <c:out value="${reviewSource}" />
-</c:forEach>
 
         <h1>Find movies quickly!</h1>
         <form action="${pageContext.request.contextPath}/searchMovie" method="get" class="">
@@ -96,9 +93,6 @@
 
 
 </main>
-<c:forEach items="${allReviewSources}" var="reviewSource">
-    <c:out value="${reviewSource}" />
-</c:forEach>
 
 
 </body>

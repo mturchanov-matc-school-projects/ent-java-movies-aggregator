@@ -5,7 +5,8 @@ SELECT ?film ?film_web_id_pl ?film_web_name_pl ?all_cinema_jp
        ?mrqe ?movie_walker_jp ?moviemeter_nl ?movies_anywhere ?mubi
        ?mymovies_it ?netflix ?port_hu ?quora_topic ?rotten_tomatoes
        ?scope_dk ?sratim_il ?tmdb ?tv_com ?anidb ?anime_news_newtwork
-       ?anime_click ?imfdb ?mal ?trakt_tv ?anilist
+       ?anime_click ?imfdb ?mal ?trakt_tv ?anilist ?kinopoisk ?kookoo
+
 WHERE
 {
     OPTIONAL { ?film wdt:P2603 "%s" . }
@@ -33,6 +34,7 @@ WHERE
     OPTIONAL { ?film wdt:P2518 ?scope_dk . }
     OPTIONAL { ?film wdt:P3145 ?sratim_il . }
     OPTIONAL { ?film wdt:P4947 ?tmdb . }
+    OPTIONAL {?film wdt:P2603 ?kinopoisk .}
     OPTIONAL { ?film wdt:P2638 ?tv_com; . }
     OPTIONAL { ?film wdt:P5253 ?film_tv_it . }
     OPTIONAL { ?film wdt:P6562 ?google_play_tv . }

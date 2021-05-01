@@ -44,7 +44,7 @@ public class User implements UserDetails {
     @JoinTable(
             name = "user_review_source_lookup",
             joinColumns = @JoinColumn(name = "username"), //write how bridge table get connected with this source table/entity
-            inverseJoinColumns = @JoinColumn(name = "review_source_id") //write how bridge table get connected with other target table/entity
+            inverseJoinColumns = @JoinColumn(name = "review_source_name") //write how bridge table get connected with other target table/entity
     )
     private Set<ReviewsSourcesLookup> reviewsSourceLookups;
 

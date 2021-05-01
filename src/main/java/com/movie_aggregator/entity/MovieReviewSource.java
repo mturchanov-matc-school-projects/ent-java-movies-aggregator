@@ -18,7 +18,7 @@ public class MovieReviewSource {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "review_source_id",
+    @JoinColumn(name = "review_source_name",
             foreignKey = @ForeignKey(name = "movie_review_source_ibfk_3"))
     private ReviewsSourcesLookup reviewSource;
 

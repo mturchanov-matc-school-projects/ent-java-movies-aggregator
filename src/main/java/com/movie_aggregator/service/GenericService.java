@@ -5,14 +5,12 @@ import com.movie_aggregator.repository.GenericDao;
 import com.movie_aggregator.utils.MovieApisReader;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.CollectionUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * The type Generic service.
@@ -268,36 +266,37 @@ public class GenericService {
         return genericDao.getLastSearch();
     }
 
-    public Set<ReviewsSourcesLookup> getMovieReviewSourcesForView(Set<ReviewsSourcesLookup> sourcesLookups, Movie movie) {
+    public Set<ReviewsSourcesLookup> getMovieReviewSourcesForView(Set<ReviewsSourcesLookup> pickedSourcesLookups, Movie movie) {
 
-        Set<MovieReviewSource> reviewSources = new HashSet<>();
+        Set<MovieReviewSource> reviewSources;
+        String[] names = pickedSourcesLookups.stream()
+                .map(ReviewsSourcesLookup::getName).toArray(size -> new String[pickedSourcesLookups.size()]);
 
         if (movie.getMovieReviewSources().isEmpty()) {
             Set<ReviewsSourcesLookup> lookups = new HashSet<>(getAll(ReviewsSourcesLookup.class));
-            reviewSources = movieApisReader.parseJSONWikiDataReviewSources(movie, lookups);
 
-            movie.setMovieReviewSources(reviewSources);
+            movie = movieApisReader.parseJSONWikiDataReviewSources(movie, lookups);
+            reviewSources = movie.getMovieReviewSources();
+            System.out.println("\n\nAFTER GENERATING REVIEWS: " + movie.getKinopoiskId());
+
+            //reviewSources = movieApisReader.parseJSONWikiDataReviewSources(movie, lookups);
+            //movie.setMovieReviewSources(reviewSources);
             merge(movie);
-        } else {
+        } else { // movie's reviews sources already in db by previous request
             reviewSources = movie.getMovieReviewSources();
         }
-        //TODO: decide how to take movieSource via forloop inside forloop or sql
         Set<ReviewsSourcesLookup> result = new HashSet<>();
-        for (ReviewsSourcesLookup lookup : sourcesLookups) {
-            Optional<MovieReviewSource> matchingObject = reviewSources.stream().
-                    filter(p -> p.getMovie().getId() == movie.getId()
-                            && p.getReviewSource().getName().equals(lookup.getName())).
-                    findFirst();
-            MovieReviewSource reviewSource = matchingObject.orElse(null);
-            System.out.println(lookup.getName() + ":" + reviewSource);
-            if (reviewSource == null) {
-                continue;
-            } else {
-                lookup.setUrl(reviewSource.getUrl());
-                result.add(lookup);
+
+        //preparing collection for view
+        for (MovieReviewSource movieReviewSource : reviewSources) {
+            String lookupName = movieReviewSource.getReviewSource().getName();
+            boolean isSourceAmongPickedSources = Arrays.stream(names).anyMatch(lookupName::contains);
+            if (isSourceAmongPickedSources) {
+                ReviewsSourcesLookup finalLookup = movieReviewSource.getReviewSource();
+                finalLookup.setUrl(movieReviewSource.getUrl());
+                result.add(finalLookup);
             }
         }
-
         return result;
     }
 

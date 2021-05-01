@@ -10,7 +10,6 @@
 
 <div class="container-fluid" id="wrapper">
     <h2>$Result </h2>
-
     <c:forEach items="${movies}" var="movie">
         <div class="container">
             <ul class="list-unstyled">
@@ -18,7 +17,6 @@
                     <c:choose>
                         <c:when test="${movieSourceBase == 'imdb'}">
                             <img class="mr-3 movieImg" src="<c:out value="${movie.imdbPoster}" />" alt="image" />
-
                         </c:when>
                         <c:when test="${movieSourceBase == 'kinopoisk'}">
                             <img class="mr-3 movieImg" src="<c:out value="${movie.kinopoiskImage}" />" alt="image" />
