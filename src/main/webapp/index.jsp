@@ -62,6 +62,12 @@
                             none
                         </c:when>
                         <c:otherwise>
+                            <div class="text-center py-2" id="checkboxBtns">
+                                <button id="checkAllBtn" type="button" class="btn btn-outline-success mx-1">Check All</button>
+                                <button id="resetAllBtn" type="button" class="btn btn-outline-danger mx-1">Reset</button>
+
+                            </div>
+
                             <div class="list-group d-flex justify-content-evenly flex-row flex-wrap">
                                 <c:forEach items="${allReviewSources}" var="reviewSource">
 
