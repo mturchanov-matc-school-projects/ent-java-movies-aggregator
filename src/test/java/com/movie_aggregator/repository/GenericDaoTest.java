@@ -18,6 +18,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 
+import java.sql.SQLException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -45,8 +46,9 @@ public class GenericDaoTest extends AbstractTest {
      * 2. Create any objects needed in the tests
      */
     @BeforeEach
-    void setUp() {
+    void setUp() throws SQLException {
         Database database = Database.getInstance();
+
         database.runSQL("cleandb.sql");
     }
 
@@ -55,9 +57,12 @@ public class GenericDaoTest extends AbstractTest {
      */
     @Test
     void getByIdSuccess() {
-        Search retrievedSearch = dao.get(Search.class, 1);
-        logger.info("TESTTEST");
-        assertEquals("Django", retrievedSearch.getName());
+       // Search retrievedSearch = dao.get(Search.class, 64);
+        //System.out.println(retrievedSearch);
+        Search s = dao.get(Search.class, 67);
+
+        System.out.println("last search id: " + s);
+        //assertEquals("SpringDevTest", retrievedSearch.getName());
     }
 
     /**

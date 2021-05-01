@@ -176,7 +176,6 @@ public class MyController {
             }
         }
 
-
         model.addAttribute("movieSourceBase", movieSourceBase);
         model.addAttribute("movies", movies);
         return "/result";
@@ -252,7 +251,7 @@ public class MyController {
         }
         List<Search> topSearches = genericService.getMostRecentSearches();
         model.addAttribute("allReviewSources", reviewsSourcesLookups);
-        session.setAttribute("topSearches", topSearches);
+        session.setAttribute("topSearches", topSearches); //init topSearches
         return "/index";
     }
 

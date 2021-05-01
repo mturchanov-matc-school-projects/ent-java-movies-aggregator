@@ -12,6 +12,10 @@ import java.util.*;
 @Entity(name = "Movie")
 public class Movie {
 
+    /**
+     * generating id manually based on en_title+year.
+     * it might be useful because app has 2 film versions(kinopoisk/imdb) -> easier to retrieve
+     */
     @Id
     private int id;
 

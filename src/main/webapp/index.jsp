@@ -103,7 +103,7 @@
                             <tbody>
                             <c:forEach items="${topSearches}" var="search">
                             <tr>
-                                 <td> <a href="/searchMovie?searchVal=${search.name}&movieSourceBase=imdb">${search.name}</a></td>
+                                 <td> <a href="${pageContext.request.contextPath}/searchMovie?searchVal=${search.name}&movieSourceBase=imdb">${search.name}</a></td>
                                 <td>${search.number}</td>
                             </tr>
                             </c:forEach>

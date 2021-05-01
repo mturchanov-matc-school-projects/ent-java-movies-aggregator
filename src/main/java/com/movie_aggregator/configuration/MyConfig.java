@@ -46,6 +46,7 @@ public class MyConfig implements WebMvcConfigurer {
         ComboPooledDataSource dataSource = new ComboPooledDataSource();
         try {
             //TODO: change user to a limited-read-only-user
+            System.out.println("PRODPROPDPROD");
             dataSource.setDriverClass("com.mysql.cj.jdbc.Driver");
             dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/ent_java_indiv_proj?useSSL=false&serverTimezone=UTC");
             dataSource.setUser("root");
@@ -67,6 +68,7 @@ public class MyConfig implements WebMvcConfigurer {
     public DataSource dataSourceForTest()  {
         ComboPooledDataSource dataSource = new ComboPooledDataSource();
         try {
+            System.out.println("TESTTESTTEST!!!!");
             dataSource.setDriverClass("com.mysql.cj.jdbc.Driver");
             dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/ent_java_indiv_proj_test?useSSL=false&serverTimezone=UTC");
             dataSource.setUser("root");

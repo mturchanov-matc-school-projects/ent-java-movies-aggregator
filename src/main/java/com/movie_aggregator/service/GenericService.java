@@ -112,32 +112,26 @@ public class GenericService {
 
     public List<Movie> getMovies(String searchVal, String movieSourceBase) {
         Search existedSearch = getOneEntryByColumProperty("name", searchVal, Search.class);
-
         searchVal = searchVal.trim().toLowerCase();
-        Search newSearch = null;
-        // Search existedSearch = getOneEntryByColumProperty(propertyName, searchVal, searchClass);
-        List<Movie> movies = null;
-        if (existedSearch != null
+        List<Movie> movies = getMoviesBasedOnSearchName(searchVal);
+        if (movies == null){ //
+            movies = recordNewMovies(searchVal, movieSourceBase);
+        } else if (existedSearch != null // update movies with kinopoisk data
                 && movieSourceBase.equals("kinopoisk")
-                && existedSearch.getIsKinopoiskLaunched() == 0 ) { //IF SEARCH IN DB THEN NO NEED FOR APIS REQUESTS
-
+                && existedSearch.getIsKinopoiskLaunched() == 0) {
             List<Movie> updateMovies = movieApisReader.parseGeneralKinopoiskMoviesJson(searchVal);
-            movies = getMoviesBasedOnSearchName(searchVal);
             MovieApisReader.merge1(updateMovies, movies);
             existedSearch.setIsKinopoiskLaunched(1);
-            genericDao.merge(existedSearch);
+            merge(existedSearch);
             for (Movie m : updateMovies) {
                 saveOrUpdate(m);
             }
             incrementSearchNumberCounter(existedSearch.getId()); // increment Search.number
-            return  updateMovies;
-
-        } else if (existedSearch != null
+            return updateMovies;
+        } else if (existedSearch != null // update movies with imdb data
                 && movieSourceBase.equals("imdb")
                 && existedSearch.getIsOmdbLaunched() == 0) {
-
             List<Movie> updateMovies = movieApisReader.parseGeneralImdbMoviesJson(searchVal);
-            movies = getMoviesBasedOnSearchName(searchVal);
             MovieApisReader.merge1(updateMovies, movies);
             existedSearch.setIsOmdbLaunched(1);
             genericDao.merge(existedSearch);
@@ -145,28 +139,25 @@ public class GenericService {
                 saveOrUpdate(m);
             }
             incrementSearchNumberCounter(existedSearch.getId()); // increment Search.number
-            return  updateMovies;
-        } else if(existedSearch != null) {
+            return updateMovies;
+        } else if (existedSearch != null) { // no updates needed for movie list
             movies = getMoviesBasedOnSearchName(searchVal);
             incrementSearchNumberCounter(existedSearch.getId()); // increment Search.number
         }
-            else {
-            movies = recordNewMovies(searchVal, movieSourceBase);
-            if (movies == null) return null;
-        }
-
         return movies;
     }
 
     private List<Movie> recordNewMovies(String searchVal, String movieSourceBase) {
         List<Movie> movies = null;
         Search newSearch;
+        //generating new search
         Search lastSearch = getLastSearch();
         int id = 1;
-        if (lastSearch != null) {
+        if (lastSearch != null) { // TODO: replace Search.id with Search.name
             id = lastSearch.getId() + 1;
         }
         newSearch = new Search(id, searchVal);
+        //generating movies from api request
         if (movieSourceBase.equals("kinopoisk")) {
             movies = movieApisReader.parseGeneralKinopoiskMoviesJson(searchVal);
             newSearch.setIsKinopoiskLaunched(1);
@@ -189,6 +180,7 @@ public class GenericService {
             String nameEn = movie.getEngName();
             String year = movie.getYear();
             String nameRu = movie.getRusName();
+            //generating
             if (!movie.getEngName().isEmpty()) {
                 filmId = MovieApisReader.hashCode(nameEn + year);
             } else {
