@@ -300,6 +300,10 @@ public class GenericService {
         return result;
     }
 
+    public List<Search> getMostRecentSearches() {
+        return genericDao.getMostRecentSearches();
+    }
+
 
     public MovieReviewSource getMovieReviewSourceBasedOnColumns(Movie movie, ReviewsSourcesLookup reviewSource) {
         String reviewSourceName = reviewSource.getName();

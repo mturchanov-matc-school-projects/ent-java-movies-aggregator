@@ -250,7 +250,9 @@ public class MyController {
             setPickedReviewSources(model, reviewsSourcesLookups, user);
             System.out.println("tutaj2");
         }
+        List<Search> topSearches = genericService.getMostRecentSearches();
         model.addAttribute("allReviewSources", reviewsSourcesLookups);
+        session.setAttribute("topSearches", topSearches);
         return "/index";
     }
 

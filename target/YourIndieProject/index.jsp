@@ -15,7 +15,7 @@
         <form action="${pageContext.request.contextPath}/searchMovie" method="get" class="">
             <div class="row">
 
-                <div class="card-header col-md-5">
+                <div class="card-header col-md-4">
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Card title</h5>
@@ -90,7 +90,28 @@
                     </c:choose>
 
                 </div>
+                <div class="col-md-1">
+                    <aside>
+                        <table class="table caption-top table-secondary" >
+                            <caption>Top searches</caption>
+                            <thead class="table-dark">
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Number</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <c:forEach items="${topSearches}" var="search">
+                            <tr>
+                                 <td> <a href="/searchMovie?searchVal=${search.name}&movieSourceBase=imdb">${search.name}</a></td>
+                                <td>${search.number}</td>
+                            </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
 
+                    </aside>
+                </div>
             </div>
         </form>
     </div>

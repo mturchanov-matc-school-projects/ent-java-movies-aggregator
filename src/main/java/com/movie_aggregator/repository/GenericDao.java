@@ -133,6 +133,15 @@ public class GenericDao {
         updateHits.executeUpdate();
     }
 
+    public List<Search> getMostRecentSearches() {
+        final Session session = sessionFactory.getCurrentSession();
+        Query topSearchesQuery = session.createQuery(
+                "SELECT search from Search  search " +
+                        "order by search.number desc" );
+        topSearchesQuery.setMaxResults(10);
+        return topSearchesQuery.list();
+    }
+
     /**
      * Gets movies by token.
      *
