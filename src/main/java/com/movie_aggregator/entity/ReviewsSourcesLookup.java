@@ -24,6 +24,19 @@ public class ReviewsSourcesLookup {
     @Column
     private String url;
 
+    @Column(name = "full_name")
+    private String fullName;
+
+    @Column
+    private String icon;
+
+    @Column
+    private String description;
+
+    @Column
+    private String feature;
+
+
     @ManyToMany(cascade = {CascadeType.MERGE})
     @JoinTable(
             name = "user_review_source_lookup",
@@ -31,6 +44,11 @@ public class ReviewsSourcesLookup {
             inverseJoinColumns = @JoinColumn(name = "username") //write how bridge table get connected with other target table/entity
     )
     private Set<User> users;
+
+    /**
+     * Transient variable that is used
+     * for view to mark user's chosen reviews
+     */
     @Transient
     private boolean checked;
 
@@ -68,6 +86,38 @@ public class ReviewsSourcesLookup {
 
     public boolean isChecked() {
         return checked;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getFeature() {
+        return feature;
+    }
+
+    public void setFeature(String feature) {
+        this.feature = feature;
     }
 
     public void setChecked(boolean checked) {

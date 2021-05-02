@@ -6,16 +6,18 @@
 <c:import url="includes/head.jsp"/>
 
 <c:import url="includes/header.jsp"/>
-
+<a href="#content">
+    <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+</a>
 
 <main>
-    <div class="container">
+    <div class="container" id="content">
 
         <h1>Find movies quickly!</h1>
         <form action="${pageContext.request.contextPath}/searchMovie" method="get" class="">
             <div class="row">
 
-                <div class="card-header col-md-4">
+                <div class="card-header col-md-12 " id="mainFunc" >
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Card title</h5>
@@ -50,13 +52,45 @@
                         <br>
                     </div>
                     <input type="submit" value="Search">
-                </div>
-
-
-                <div class="col-md-7">
-                    <a href="${pageContext.request.contextPath}/showReviewSources">123</a>
 
                     <hr>
+                    <div class="container-fluid extra-info">
+                        <div class="row">
+                            <div class="col-6 text-center">
+                                <button id="topSearchesBtn" type="button" class="btn btn-outline-info" >Show top searches</button>
+                            </div>
+                            <div class="col-6 text-center">
+                                <!--<a href="${pageContext.request.contextPath}/showReviewSources"> -->
+                                    <button id="reviewSourcesBtn" type="button" class="btn btn-outline-info text-center">Show review sources</button>
+                               <!-- </a> -->
+                            </div>
+
+                        </div>
+
+
+                        <table id="topSearches" class="table caption-top table-secondary extraInformation">
+                            <caption>Top searches</caption>
+                            <thead class="table-dark">
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Number</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <c:forEach items="${topSearches}" var="search">
+                                <tr>
+                                    <td> <a href="${pageContext.request.contextPath}/searchMovie?searchVal=${search.name}&movieSourceBase=imdb">${search.name}</a></td>
+                                    <td>${search.number}</td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                    </div>
+
+
+
+                <div class="col-md-8 extraInformation" id="reviewSources" >
                     <c:choose>
                         <c:when test="${empty allReviewSources}">
                             none
@@ -68,21 +102,29 @@
 
                             </div>
 
-                            <div class="list-group d-flex justify-content-evenly flex-row flex-wrap">
+                            <div class="list-group d-flex justify-content-evenly flex-row flex-wrap ">
                                 <c:forEach items="${allReviewSources}" var="reviewSource">
-
-                                    <label class="list-group-item list-group-item-action" aria-current="true">
+                                    <label class="list-group-item list-group-item-action my-2" style="width: 50%;"  aria-current="true">
                                         <div class="d-flex w-100 justify-content-between">
-                                            <h5 class="mb-1">${reviewSource.name}</h5>
-                                            <small>3 days ago</small>
+                                            <h5 class="mb-1">${reviewSource.fullName}</h5>
+                                            <small>${reviewSource.feature}</small>
                                         </div>
-                                        <p class="mb-1">Some placeholder content in a paragraph.</p>
-                                        <input class="form-check-input me-1" name="reviewsSources" type="checkbox"
-                                               value="${reviewSource.name}"
-                                            <c:if test="${reviewSource.checked == true}"> checked </c:if> />
-                                        <small>And some small print.</small>
-                                    </label>
+                                        <p class="mb-1">${reviewSource.description}</p>
 
+                                        <div class="container-fluid my-1">
+                                            <div class="row">
+                                                <div class="col-1 reviewSource">
+                                                    <input class="form-check-input me-1" name="reviewsSources" type="checkbox"
+                                                           value="${reviewSource.name}"
+                                                            <c:if test="${reviewSource.checked == true}"> checked </c:if> />
+                                                </div>
+                                                <div class="col-11 text-center">
+                                                    <small><img src="${reviewSource.name}" alt="${reviewSource.fullName} icon"></small>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </label>
                                 </c:forEach>
                             </div>
                         </c:otherwise>
@@ -90,34 +132,16 @@
                     </c:choose>
 
                 </div>
-                <div class="col-md-1">
-                    <aside>
-                        <table class="table caption-top table-secondary" >
-                            <caption>Top searches</caption>
-                            <thead class="table-dark">
-                            <tr>
-                                <th scope="col">Name</th>
-                                <th scope="col">Number</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <c:forEach items="${topSearches}" var="search">
-                            <tr>
-                                 <td> <a href="${pageContext.request.contextPath}/searchMovie?searchVal=${search.name}&movieSourceBase=imdb">${search.name}</a></td>
-                                <td>${search.number}</td>
-                            </tr>
-                            </c:forEach>
-                            </tbody>
-                        </table>
-
-                    </aside>
-                </div>
             </div>
         </form>
     </div>
 
     </div>
 
+
+    <script>
+
+    </script>
 
 </main>
 

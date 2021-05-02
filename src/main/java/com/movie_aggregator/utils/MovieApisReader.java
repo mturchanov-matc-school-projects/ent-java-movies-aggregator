@@ -1,13 +1,11 @@
 package com.movie_aggregator.utils;
 
-import antlr.StringUtils;
 import com.jayway.jsonpath.JsonPath;
 import com.movie_aggregator.entity.*;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
-import com.sun.xml.bind.v2.runtime.output.SAXOutput;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.lang.NonNull;
@@ -140,6 +138,7 @@ public class MovieApisReader implements PropertiesLoader {
         return  null;
 }
 
+
     public List<Movie> parseGeneralKinopoiskMoviesJson(String searchVal) {
         //get general movie info json data
         String JSONMovies = getJSONFromApi("general", "kinopoisk", searchVal, null);
@@ -262,7 +261,7 @@ public class MovieApisReader implements PropertiesLoader {
                 "";
         String kinopoiskReviewsFormatted = String.format("%s(%s)", reviews, goodReviews);
         Movie updateMovie = new Movie(imdbId, description, imdbRating, ratingImdbVoteCount, boxOffice, audienceRating, kinopoiskReviewsFormatted);
-        merge(updateMovie, movie);
+        mergeObjects(updateMovie, movie);
         //processFramesAndReview(filmId, reviews, goodReviews, movie);
         return updateMovie;
     }
@@ -349,7 +348,7 @@ public class MovieApisReader implements PropertiesLoader {
        Movie updateMovie = new Movie(description, imdbRating, imdbVotes, metacrtiticRating, rottenTomatoesRating,
                boxOffice, duration, genre, director, actors, language, country, metascore, awards, writer, released,
                production, audienceRating);
-        merge(updateMovie, movie);
+        mergeObjects(updateMovie, movie);
         System.out.println("MODEL ID:" + movie.getId());
         //logger.info(movie);
         return updateMovie;
@@ -426,11 +425,22 @@ public class MovieApisReader implements PropertiesLoader {
         return movies;
     }
 
+    public int getTotalPagesCount(String keyName, String json) {
+        JSONObject movieDetailsJSON = new JSONObject(json);
+        if (keyName.equals("totalResults")) {
+            String totalResults = movieDetailsJSON.getString(keyName);
+            return (Integer.parseInt(totalResults)) / 10;
+        } else if (keyName.equals("pagesCount")) {
+            return movieDetailsJSON.getInt("pagesCount");
+        }
+        return 0;
+    }
+
     public static int hashCode(@NonNull String string) {
         return string.hashCode() * PRIME;
     }
 
-    public static void merge(Object obj, Object update){
+    public static void mergeObjects(Object obj, Object update){
         if(!obj.getClass().isAssignableFrom(update.getClass())){
             return;
         }
@@ -453,11 +463,11 @@ public class MovieApisReader implements PropertiesLoader {
         }
     }
 
-    public static void merge1(List<Movie> movies, List<Movie> updateMovies){
+    public static void mergeLists(List<Movie> movies, List<Movie> updateMovies){
         for (Movie movie : movies) {
             for (Movie updateMovie : updateMovies){
                 if (movie.getId() == updateMovie.getId()) {
-                   merge(movie, updateMovie);
+                   mergeObjects(movie, updateMovie);
                     System.out.println(movie.getEngName());
                 }
             }

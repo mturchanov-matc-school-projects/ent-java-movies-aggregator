@@ -20,7 +20,6 @@ public class Movie {
     private int id;
 
 
-    //@ManyToMany(cascade = CascadeType.ALL)
     @ManyToMany(cascade = {CascadeType.PERSIST,  CascadeType.REFRESH, CascadeType.DETACH}
             , fetch = FetchType.EAGER)
     @JoinTable(
@@ -37,9 +36,6 @@ public class Movie {
     private Set<MovieReviewSource> movieReviewSources;
 
 
-
-    //@OneToOne(targetEntity=ReviewSource.class, mappedBy="movie",cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-    //private ReviewSource reviewSources;
     @OneToOne(mappedBy = "movie", cascade = {CascadeType.PERSIST,  CascadeType.REFRESH, CascadeType.MERGE})
     private ReviewSource reviewSources;
 
@@ -171,6 +167,10 @@ public class Movie {
     //@Column
     //private String images;
 
+    /**
+     * Transient variable that is
+     * in view for logged users (displaying add btn or not)
+     */
     @Transient
     private boolean isAddedToUserList;
 

@@ -16,7 +16,7 @@ function scrollFunction() {
 // When the user clicks on the button, scroll to the top of the document
 function topFunction() {
 
-    let details = document.getElementById("frames");
+    let details = document.querySelector("#frames");
 
     if (details.open && document.body.scrollTop === 0) {
         details.open = null;

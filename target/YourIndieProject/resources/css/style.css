@@ -62,3 +62,24 @@ div#pic_container img {
 .list-group-item-action{
     width: fit-content;
 }
+
+ .reviewSource .form-check-input {
+    width: 1.4em;
+    height: 1.4em;
+}
+
+div#extra-info {
+    padding: 0;
+}
+
+.extraInformation {
+    transition: opacity 1s ease-out;
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+.active {
+    opacity: 1;
+    height: auto;
+}

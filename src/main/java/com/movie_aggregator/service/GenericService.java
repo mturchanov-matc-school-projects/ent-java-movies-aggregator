@@ -122,7 +122,7 @@ public class GenericService {
                 && movieSourceBase.equals("kinopoisk")
                 && existedSearch.getIsKinopoiskLaunched() == 0) {
             List<Movie> updateMovies = movieApisReader.parseGeneralKinopoiskMoviesJson(searchVal);
-            MovieApisReader.merge1(updateMovies, movies);
+            MovieApisReader.mergeLists(updateMovies, movies);
             existedSearch.setIsKinopoiskLaunched(1);
             merge(existedSearch);
             for (Movie m : updateMovies) {
@@ -134,7 +134,7 @@ public class GenericService {
                 && movieSourceBase.equals("imdb")
                 && existedSearch.getIsOmdbLaunched() == 0) {
             List<Movie> updateMovies = movieApisReader.parseGeneralImdbMoviesJson(searchVal);
-            MovieApisReader.merge1(updateMovies, movies);
+            MovieApisReader.mergeLists(updateMovies, movies);
             existedSearch.setIsOmdbLaunched(1);
             genericDao.merge(existedSearch);
             for (Movie m : updateMovies) {
