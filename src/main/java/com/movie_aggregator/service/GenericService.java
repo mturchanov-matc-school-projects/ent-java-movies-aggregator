@@ -114,7 +114,9 @@ public class GenericService {
         Search existedSearch = getOneEntryByColumProperty("name", searchVal, Search.class);
         searchVal = searchVal.trim().toLowerCase();
         List<Movie> movies = getMoviesBasedOnSearchName(searchVal);
-        if (movies == null){ //
+        System.out.println("getMoviesBasedOnSearchName: " + movies);
+
+        if (movies == null || movies.isEmpty()){ //
             movies = recordNewMovies(searchVal, movieSourceBase);
         } else if (existedSearch != null // update movies with kinopoisk data
                 && movieSourceBase.equals("kinopoisk")
@@ -163,6 +165,7 @@ public class GenericService {
             newSearch.setIsKinopoiskLaunched(1);
         } else if (movieSourceBase.equals("imdb")) {
             movies = movieApisReader.parseGeneralImdbMoviesJson(searchVal);
+            System.out.println("recordNewMovies:" + movies);
             newSearch.setIsOmdbLaunched(1);
         }
 

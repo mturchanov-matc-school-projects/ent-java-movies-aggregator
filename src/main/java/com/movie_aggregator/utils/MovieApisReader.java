@@ -400,6 +400,7 @@ public class MovieApisReader implements PropertiesLoader {
 
     public List<Movie> parseGeneralImdbMoviesJson(String searchVal)  {
         String JSONMovies = getJSONFromApi("general", "omdb", searchVal, null);
+        System.out.println("parseGeneralImdbMoviesJson:" + JSONMovies);
         if (JSONMovies == null) {
             return null;
         }
