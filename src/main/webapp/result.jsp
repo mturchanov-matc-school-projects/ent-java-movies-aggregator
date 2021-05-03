@@ -8,32 +8,28 @@
 <body>
 <c:import url="includes/header.jsp" />
 
-<div class="container-fluid" id="wrapper">
+<div class="container" id="wrapper">
     <h2>$Result </h2>
-    <c:forEach items="${movies}" var="movie">
-        <div class="container">
-            <ul class="list-unstyled">
-                <li class="media w3-padding w3-container w3-round-large w3-light-gray">
-                    <c:choose>
-                        <c:when test="${movieSourceBase == 'imdb'}">
-                            <img class="mr-3 movieImg" src="<c:out value="${movie.imdbPoster}" />" alt="image" />
-                        </c:when>
-                        <c:when test="${movieSourceBase == 'kinopoisk'}">
-                            <img class="mr-3 movieImg" src="<c:out value="${movie.kinopoiskImage}" />" alt="image" />
-                        </c:when>
-                    </c:choose>
-                    <div class="media-body">
-                        <h3 class="mt-0 mb-1"><c:out value="${movie.engName}  ${movie.year}" /></h3>
-                        <h4 class="mt-0 mb-1"><c:out value="${movie.rusName}" /></h4>
-                        <h4 class="mt-0 mb-1"><a href="<c:out value="https://www.imdb.com/title/${movie.imdbId}"/>">imdb reviews</a></h4>
-                        <h4 class="mt-0 mb-1"><a href="<c:out value="https://www.kinopoisk.ru/film/${movie.kinopoiskId}/#user-reviews"/>">Kinopoisk reviews</a></h4>
-                        <h4 class="mt-0 mb-1"><c:out value="IMDB Rating ${movie.imdbRating}" /> </h4>
-                        <h4 class="mt-0 mb-1"><c:out value="Kinopoisk Rating ${movie.kinopoiskRating}" /> </h4>
-                        <h4 class="mt-0 mb-1"><c:out value="Metacritic Rating ${movie.metacriticRating}" /> </h4>
-                        <h4 class="mt-0 mb-1"><c:out value="rottenTomatoes Rating ${movie.rottenTomatoesRating}" /> </h4>
-                       <!-- TODO: delete --> <h4 class="mt-0 mb-1"><c:out value="isAdded  ${movie.addedToUserList}" /> </h4>
+<c:forEach items="${movies}" var="movie">
+    <div class="card mb-3">
+        <div class="row">
+            <div class="col-md-4">
+                <c:choose>
+                    <c:when test="${movie.imdbPoster == 'N/A'}">
+                        <img class="mr-3 movieImg" src="https://user-images.githubusercontent.com/24848110/33519396-7e56363c-d79d-11e7-969b-09782f5ccbab.png"
+                             alt="image ${movie.engName}" />
+                    </c:when>
+                    <c:when test="${movieSourceBase == 'imdb'}">
+                        <img class="mr-3 movieImg" src="<c:out value="${movie.imdbPoster}" />" alt="image ${movie.engName}" />
+                    </c:when>
 
-                    </div>
+                </c:choose>
+            </div>
+            <div class="col-md-7 text-center">
+                <div class="card-body">
+                    <h5 class="card-title">${movie.engName} (${movie.year})</h5>
+                    <p class="card-text">${movie.imdbDescription}</p>
+                    <a href="https://www.imdb.com/title/${movie.imdbId}/reviews?ref_=tt_ql_3">IMDb reviews</a>
                     <sec:authorize access="isAuthenticated()">
                         <c:choose>
                             <c:when test="${!movie.addedToUserList}">
@@ -50,17 +46,16 @@
                             </c:otherwise>
                         </c:choose>
                     </sec:authorize>
+                    <br>
 
-
-                    <a href="${pageContext.request.contextPath}/movie?id=${movie.id}&movieSourceBase=${movieSourceBase}">
-                        <button type="button" class="btn btn-info">More Info</button>
-                    </a>
-                </li>
-            </ul>
+                </div>
+            </div>
         </div>
-    </c:forEach>
+    </div>
+</c:forEach>
 
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
 
 </body>
 </html>

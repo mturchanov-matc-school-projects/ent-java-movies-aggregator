@@ -110,19 +110,22 @@
                                             <small>${reviewSource.feature}</small>
                                         </div>
                                         <p class="mb-1">${reviewSource.description}</p>
+                                        <div class="d-flex bd-highlight align-items-stretch" >
+                                            <div class="me-auto p-2 bd-highlight">
+                                                <input class="form-check-input me-1" name="reviewsSources" type="checkbox"
+                                                       value="${reviewSource.name}"
+                                                        <c:if test="${reviewSource.checked == true}"> checked </c:if> />
+                                            </div>
+                                            <div class="bd-highlight"></div>
+                                            <div class=" bd-highlight">
+                                                <small><img class="revImg" src="${reviewSource.icon}" alt="${reviewSource.fullName} icon"></small>
 
-                                        <div class="container-fluid my-1">
-                                            <div class="row">
-                                                <div class="col-1 reviewSource">
-                                                    <input class="form-check-input me-1" name="reviewsSources" type="checkbox"
-                                                           value="${reviewSource.name}"
-                                                            <c:if test="${reviewSource.checked == true}"> checked </c:if> />
-                                                </div>
-                                                <div class="col-11 text-center">
-                                                    <small><img src="${reviewSource.name}" alt="${reviewSource.fullName} icon"></small>
-                                                </div>
                                             </div>
                                         </div>
+
+
+
+
 
                                     </label>
                                 </c:forEach>

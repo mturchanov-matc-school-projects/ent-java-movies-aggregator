@@ -10,7 +10,6 @@
 
     <title>${title}</title>
     <!-- <base href="/"> -->
-
     <script src="${pageContext.request.contextPath}/resources/js/toTop.js"></script>
     <c:if test="${title == 'Movie Aggregator - Home'}">
         <script src="${pageContext.request.contextPath}/resources/js/checkboxTogglers.js"></script>
@@ -18,7 +17,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">    <link href="/docs/5.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     <link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet" type="text/css">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 
 </head>

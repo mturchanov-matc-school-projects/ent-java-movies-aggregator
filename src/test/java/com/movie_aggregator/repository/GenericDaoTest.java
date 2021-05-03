@@ -59,7 +59,7 @@ public class GenericDaoTest extends AbstractTest {
     void getByIdSuccess() {
        // Search retrievedSearch = dao.get(Search.class, 64);
         //System.out.println(retrievedSearch);
-        Search s = dao.get(Search.class, 67);
+        Search s = dao.get(Search.class, 39);
 
         System.out.println("last search id: " + s);
         //assertEquals("SpringDevTest", retrievedSearch.getName());

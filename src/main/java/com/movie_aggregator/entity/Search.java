@@ -12,6 +12,8 @@ import java.util.*;
 @Entity(name = "Search")
 public class Search {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //added identity to pass unit tests. app full func wasn't checked
+
     private int id;
 
     @Column(unique = true, nullable = false)

@@ -71,13 +71,11 @@ public class MovieApisReader implements PropertiesLoader {
         switch (source) {
             case "omdb": {
                 String apiKey = properties.getProperty("omdb_api");
-
                 if (searchType.equals("general")) {
                     requestURL = String.format("%s?s=%s&apiKey=%s&type=movie", OMDB_ROOT, searchVal, apiKey);
                 } else if (searchType.equals("specific")) {
                     requestURL = String.format("%s?i=%s&apiKey=%s&plot=full&type=movie", OMDB_ROOT, searchVal, apiKey);
                 }
-
                 request = new Request.Builder()
                         .url(requestURL)
                         .method("GET", null)
@@ -90,7 +88,6 @@ public class MovieApisReader implements PropertiesLoader {
                     requestURL = String.format("%s%s%s%s", KINOPOISK_ROOT, "search-by-keyword?keyword=", searchVal, "&page=1");
                 } else if (searchType.equals("specific")) {
                     String url = String.format("%s%s?append_to_response=BUDGET,RATING,REVIEW", KINOPOISK_ROOT, searchVal);
-                    System.out.println("url: " + url);
                     requestURL = url;
                 } else if (searchType.equals("frames")) {
                     requestURL = String.format("%s%s/frames", KINOPOISK_ROOT, searchVal);
@@ -125,7 +122,7 @@ public class MovieApisReader implements PropertiesLoader {
             }
         }
 
-        Response response = null;
+        Response response;
         try {
             response = client.newCall(request).execute();
             if (response == null) {

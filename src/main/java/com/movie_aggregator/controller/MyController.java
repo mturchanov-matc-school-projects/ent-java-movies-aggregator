@@ -234,7 +234,7 @@ public class MyController {
         return "/movie";
     }
 
-    @RequestMapping("/showReviewSources")
+    @RequestMapping(value={"/home", "/index", "/",})
     public String showReviewSources( Model model, HttpServletRequest request)  {
         List<ReviewsSourcesLookup> reviewsSourcesLookups =  genericService.getAll(ReviewsSourcesLookup.class);
         HttpSession session = request.getSession();
@@ -264,6 +264,14 @@ public class MyController {
         }
         model.addAttribute("reviewsSources2", chosenLookups);
     }
+
+
+
+    //@RequestMapping(value={"/home", "/index", "/",})
+   // String indexMultipleMapping(){
+//
+    //    return "index";
+   // }
 
     /**
      * Test string.

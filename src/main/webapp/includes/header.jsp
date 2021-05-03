@@ -12,7 +12,7 @@
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link active lead" aria-current="page"
-                           href="${pageContext.request.contextPath}/showReviewSources">Home</a>
+                           href="${pageContext.request.contextPath}/home">Home</a>
                     </li>
                     <sec:authorize access="!isAuthenticated()">
                         <li class="nav-item">

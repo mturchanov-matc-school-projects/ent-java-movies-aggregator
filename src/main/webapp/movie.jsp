@@ -205,8 +205,8 @@
                             <tbody>
                     <c:forEach items="${reviewsSources}" var="reviewSource">
                         <tr>
-                            <td>${reviewSource.name}</td>
-                            <td>${reviewSource.url}</td>
+                            <td>${reviewSource.fullName}</td>
+                            <td><a href="${reviewSource.url}">Read ${reviewSource.fullName}'s reviews</a></td>
                         </tr>
                     </c:forEach>
 </tbody>

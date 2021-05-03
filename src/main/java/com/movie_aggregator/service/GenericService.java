@@ -183,7 +183,7 @@ public class GenericService {
             String nameEn = movie.getEngName();
             String year = movie.getYear();
             String nameRu = movie.getRusName();
-            //generating
+            //generating unique film id
             if (!movie.getEngName().isEmpty()) {
                 filmId = MovieApisReader.hashCode(nameEn + year);
             } else {
