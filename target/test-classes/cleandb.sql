@@ -17,6 +17,8 @@ CREATE TABLE `authorities` (
                                CONSTRAINT `authorities_ibfk_1` FOREIGN KEY (`username`) REFERENCES `users` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+INSERT INTO `authorities` (`username`, `authority`)
+VALUES ('11', 'ROLE_TEST');
 
 DROP TABLE IF EXISTS `images`;
 CREATE TABLE `images` (
@@ -27,6 +29,12 @@ CREATE TABLE `images` (
                           KEY `movie_id` (`movie_id`),
                           CONSTRAINT `images_ibfk_1` FOREIGN KEY (`movie_id`) REFERENCES `movies` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+INSERT INTO `images` (`url`, `movie_id`) VALUES
+('https://avatars.mds.yandex.net/get-kinopoisk-image/1599028/bdad2d6f-ccc7-482f-87bf-1e4029ef4748/1680x1680', -1023705264);
+
+INSERT INTO `images` (`url`, `movie_id`) VALUES
+('https://avatars.mds.yandex.net/get-kinopoisk-image/1599028/c76ed328-978a-4960-871e-69561697a805/1680x1680', -1023705264);
 
 DROP TABLE IF EXISTS `movie_review_source`;
 CREATE TABLE `movie_review_source` (
@@ -40,6 +48,8 @@ CREATE TABLE `movie_review_source` (
                                        CONSTRAINT `movie_review_source_ibfk_1` FOREIGN KEY (`movie_id`) REFERENCES `movies` (`id`),
                                        CONSTRAINT `movie_review_source_ibfk_2` FOREIGN KEY (`review_source_name`) REFERENCES `reviews_sources_lookup` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
 
 DROP TABLE IF EXISTS `movie_search`;
 CREATE TABLE `movie_search` (
@@ -157,9 +167,11 @@ CREATE TABLE `search` (
 
 INSERT INTO `users` (`username`, `id`, `password`, `enabled`, `token`) VALUES
 ('11',	18,	'{bcrypt}$2a$10$T/vvZbepLSCyJUG.tOb7Per3W3.24Qdtn5S8jPOQM4c5oWDZkkvAW',	1,	NULL);
+INSERT INTO `users` (`username`, `id`, `password`, `enabled`, `token`) VALUES
+('12',	19,	'{bcrypt}$2a$10$T/vvZbepLSCyJUG.tOb7Per3W3.24Qdtn5S8jPOQM4c5oWDZkkvAW',	1,	NULL);
 
-INSERT INTO `authorities` (`username`, `id`, `authority`) VALUES
-('11',	1,	'ROLE_ADMIN');
+
+
 
 INSERT INTO `search` (`id`, `name`, `number`, `kinopoisk_source`, `imdb_source`) VALUES
 (1,	'Redemption',	1,	1,	0),
@@ -183,8 +195,7 @@ INSERT INTO `movie_search` (`movie_id`, `search_id`) VALUES
 (690018291,	1);
 
 INSERT INTO `movie_review_source` (`review_source_name`, `id`, `movie_id`, `url`) VALUES
-('all_cinema_jp',	534,	-1023705264,	'testUrl'),
+('all_cinema_jp',	534,	-1023705264,	'testUrl');
 
-INSERT INTO `images` (`url`, `movie_id`) VALUES
-    ('https://avatars.mds.yandex.net/get-kinopoisk-image/1599028/bdad2d6f-ccc7-482f-87bf-1e4029ef4748/1680x1680',	-1023705264),
-    ('https://avatars.mds.yandex.net/get-kinopoisk-image/1599028/c76ed328-978a-4960-871e-69561697a805/1680x1680',	-1023705264);
+INSERT INTO `movie_review_source` (`review_source_name`, `movie_id`, `url`) VALUES
+    ('all_cinema_jp',-597990361,'finalUrlToMovieSourceReviewOnSelectedMovie');

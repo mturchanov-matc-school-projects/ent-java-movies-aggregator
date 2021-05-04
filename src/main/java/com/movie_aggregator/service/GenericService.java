@@ -299,16 +299,6 @@ public class GenericService {
         return genericDao.getMostRecentSearches();
     }
 
-
-    public MovieReviewSource getMovieReviewSourceBasedOnColumns(Movie movie, ReviewsSourcesLookup reviewSource) {
-        String reviewSourceName = reviewSource.getName();
-        int movieId = movie.getId();
-        //take movieReviewSource woth review url if already was such request
-        MovieReviewSource movieReviewSource =
-                genericDao.getMovieReviewSourceBasedOnColumns(movieId, reviewSourceName);
-        return movieReviewSource;
-    }
-
     /**
      * Increment search number counter.
      *
@@ -319,8 +309,20 @@ public class GenericService {
         genericDao.incrementSearchNumberCounter(id);
     }
 
+    public Map<String, Long> getCountForEachReviewSource() {
+        List<Object[]> rows = genericDao.getCountForEachReviewSource();
+        Map<String, Long> reviewSourceCountMap = new HashMap<>();
+        for (Object[] row: rows) {
+           String name = (String) row[0];
+           Long count = (Long) row[1];
+           reviewSourceCountMap.put(name, count);
+            System.out.println(name + ":" + count);
+        }
+        return null;
+    }
 
-    public Set<ReviewsSourcesLookup> generateNewPickedReviewSources(String[] reviewsSources) {
+
+        public Set<ReviewsSourcesLookup> generateNewPickedReviewSources(String[] reviewsSources) {
         Set<ReviewsSourcesLookup> newPickedReviewSources = new HashSet<>();
         for (String reviewSource : reviewsSources) {
             ReviewsSourcesLookup reviewsSourcesLookup = getOneEntryByColumProperty("name", reviewSource, ReviewsSourcesLookup.class);

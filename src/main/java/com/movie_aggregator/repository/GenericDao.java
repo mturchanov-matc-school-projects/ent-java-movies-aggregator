@@ -41,7 +41,12 @@ public class GenericDao {
      * @return the int
      */
     public <T> int save(final T o) {
+
         return (Integer) sessionFactory.getCurrentSession().save(o);
+    }
+
+    public <T> void saveObject(final T o) {
+        sessionFactory.getCurrentSession().save(o);
     }
 
     /**
@@ -54,6 +59,10 @@ public class GenericDao {
     public <T> void  delete(final Class<T> type, Integer id){
         T object = get(type, id);
         sessionFactory.getCurrentSession().delete(object);
+    }
+
+    public <T> void  deleteObject(final T o){
+        sessionFactory.getCurrentSession().delete(o);
     }
 
     /**
@@ -104,20 +113,7 @@ public class GenericDao {
         return lastSearch;
     }
 
-    public MovieReviewSource getMovieReviewSourceBasedOnColumns(int movieId, String reviewSourceName) {
-        MovieReviewSource movieReviewSource = null;
-        final Session session = sessionFactory.getCurrentSession();
-        Query query = session.createQuery(
-                "select movie_source from MovieReviewSource movie_source " +
-                        "inner join movie_source.movie movie " +
-                        "inner join movie_source.reviewSource source " +
-                        "where movie.id=:id " +
-                        "AND source.name=:name");
-        query.setParameter("id", movieId);
-        query.setParameter("name", reviewSourceName);
-        movieReviewSource = (MovieReviewSource) query.uniqueResult();
-        return movieReviewSource;
-    }
+
 
     /**
      * Increment search number counter.
@@ -155,12 +151,22 @@ public class GenericDao {
                         "inner join m.users u " +
                         "where u.token=:token" );
         movies.setParameter("token", token);
-        //Query movies = session.createQuery(
-        //        "select * from movies \n" +
-       //                 "inner join movies_user on movies_user.movie_id= movies.id\n" +
-        //                "inner join users on movies_user.username=users.username where token='1'" );
        return movies.list();
     }
+
+
+    public List<Object[]> getCountForEachReviewSource() {
+        final Session session = sessionFactory.getCurrentSession();
+        Query revsSources = session.createQuery(
+                "select revMovieSource.reviewSource.fullName, count(revMovieSource.reviewSource.name) as countRevs" +
+                        " from MovieReviewSource revMovieSource " +
+                        "group by revMovieSource.reviewSource.fullName" +
+                        " order by countRevs desc" );
+         List<Object[]> rows = revsSources.setMaxResults(10).list();
+
+         return rows;
+    }
+
 
     public List<Movie> getMoviesByProperty(String field, String searchVal, String propertyEntity) {
         final Session session = sessionFactory.getCurrentSession();
@@ -169,10 +175,6 @@ public class GenericDao {
                 "where u.%s=:%s", propertyEntity, field, field);
         Query movies = session.createQuery(hquery);
         movies.setParameter(field, searchVal);
-        //Query movies = session.createQuery(
-        //        "select * from movies \n" +
-        //                 "inner join movies_user on movies_user.movie_id= movies.id\n" +
-        //                "inner join users on movies_user.username=users.username where token='1'" );
         return movies.list();
     }
 

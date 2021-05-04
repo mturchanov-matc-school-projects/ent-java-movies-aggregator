@@ -14,8 +14,8 @@ import javax.persistence.Table;
 @Table(name = "authorities")
 @Entity(name = "Authority")
 public class Authority {
-   // @Id
-    //private int id;
+    @Column
+    private int id;
 
     @Column
     @Id
@@ -38,6 +38,14 @@ public class Authority {
      */
     public String getUsername() {
         return username;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**

@@ -35,11 +35,6 @@ public class Movie {
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<MovieReviewSource> movieReviewSources;
 
-
-    @OneToOne(mappedBy = "movie", cascade = {CascadeType.PERSIST,  CascadeType.REFRESH, CascadeType.MERGE})
-    private ReviewSource reviewSources;
-
-
     @ManyToMany(cascade = {CascadeType.MERGE})
     @JoinTable(
             name = "movies_user",
@@ -48,9 +43,6 @@ public class Movie {
     )
     private Set<User> users;
 
-
-    //@OneToMany(targetEntity=ReviewsSources.class, mappedBy="movie",cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-    //private Set<ReviewsSources> reviewsSources;
 
 
     @Column(name = "eng_name")
@@ -164,8 +156,6 @@ public class Movie {
     @Column(name = "kinopoisk_reviews")
     private String kinopoiskReviews;
 
-    //@Column
-    //private String images;
 
     /**
      * Transient variable that is
@@ -916,13 +906,6 @@ public class Movie {
     }
 
 
-    public ReviewSource getReviewSources() {
-        return reviewSources;
-    }
-
-    public void setReviewSources(ReviewSource reviewSources) {
-        this.reviewSources = reviewSources;
-    }
 
     public Set<MovieReviewSource> getMovieReviewSources() {
         return movieReviewSources;

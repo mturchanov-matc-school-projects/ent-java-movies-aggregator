@@ -18,6 +18,10 @@ public class User implements UserDetails {
     @Id
     @Column(name = "username")
     private String username;
+    //@Id
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
 
     @Column(name = "password")
     private String password;
@@ -48,6 +52,8 @@ public class User implements UserDetails {
     )
     private Set<ReviewsSourcesLookup> reviewsSourceLookups;
 
+
+
     /**
      * Instantiates a new User.
      */
@@ -57,6 +63,15 @@ public class User implements UserDetails {
     public User(String username, Set<ReviewsSourcesLookup> reviewsSourceLookups) {
         this.username = username;
         this.reviewsSourceLookups = reviewsSourceLookups;
+    }
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**

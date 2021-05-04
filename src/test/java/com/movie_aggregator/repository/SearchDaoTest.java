@@ -64,8 +64,8 @@ public class SearchDaoTest extends AbstractTest{
     @Test
     void getByIdSuccess() {
         Search retrievedSearch = dao.get(Search.class, 1);
-        Search expectedSearch = new Search("Pink Floyd");
-        assertEquals(expectedSearch, retrievedSearch);
+        String expectedSearch = "Redemption";
+        assertEquals(expectedSearch, retrievedSearch.getName());
     }
 
     /**
@@ -84,6 +84,22 @@ public class SearchDaoTest extends AbstractTest{
     void getAllSuccess() {
         List<Search> searches = dao.getAll(Search.class);
         assertEquals(3, searches.size());
+    }
+
+    @Test
+    void getMostRecentSearches() {
+        List<Search> searches = dao.getMostRecentSearches();
+        assertEquals(3, searches.size());
+    }
+
+    @Test
+    void incrementSearchNumberCounter() {
+        Search retrievedSearch = dao.get(Search.class, 1);
+        dao.incrementSearchNumberCounter(retrievedSearch.getId());
+        Search updatedSearchNumber = dao.get(Search.class, 1);
+
+        assertEquals(retrievedSearch.getNumber() + 1, updatedSearchNumber.getNumber());
+
     }
 
     /**

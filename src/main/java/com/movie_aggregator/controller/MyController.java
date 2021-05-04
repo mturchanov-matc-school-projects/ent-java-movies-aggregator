@@ -37,29 +37,23 @@ public class MyController {
     @RequestMapping("/myMovies")
     public String getMyMovies(Model model) {
         List<Movie> userMovies;
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = null;
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
-        }
-
-        userMovies = genericService.getMoviesByProperty("username", username, "users");
+        User user = getUser();
+        userMovies = genericService.getMoviesByProperty("username", user.getUsername(), "users");
         for (Movie movie : userMovies) {
             movie.setAddedToUserList(true);
         }
+        for (Movie m : userMovies) {
+            System.out.println(m.getImdbPoster());
+        }
+        String resultTitle = String.format("%s's movies", user.getUsername());
+        model.addAttribute("resultTitle", resultTitle);
         model.addAttribute("movies", userMovies);
         return "/result";
     }
 
     @GetMapping(value = "/addMovie")
     public String addMovie(@RequestParam("movieId") int movieId, HttpServletRequest request) {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = null;
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
-        }
-
-        User user = genericService.getOneEntryByColumProperty("username", username, User.class);
+        User user = getUser();
         Movie movie = genericService.get(Movie.class, movieId);
 
         user.addMovieToUser(movie);
@@ -69,10 +63,21 @@ public class MyController {
         return "redirect:"+ referer;
     }
 
+    private User getUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = null;
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails)principal).getUsername();
+        }
+        User user = genericService.getOneEntryByColumProperty("username", username, User.class);
+        return user;
+    }
+
     @GetMapping(value = "/deleteMovie")
     public String deleteMovie(@RequestParam("movieId") int movieId, HttpServletRequest request) {
         HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
+        //User user = (User) session.getAttribute("user");
+        User user = getUser();
         Movie movie = genericService.get(Movie.class, movieId);
         user.removeMovieFromUser(movie);
         genericService.merge(user);
@@ -176,6 +181,7 @@ public class MyController {
             }
         }
 
+        model.addAttribute("resultTitle", "Found movies");
         model.addAttribute("movieSourceBase", movieSourceBase);
         model.addAttribute("movies", movies);
         return "/result";
@@ -284,7 +290,7 @@ public class MyController {
     public String test(Model model) throws IOException, URISyntaxException {
 
 
-        ReviewsSourcesLookup lookup = genericService.getOneEntryByColumProperty("name", "all_cinema_jp", ReviewsSourcesLookup.class);
+       // ReviewsSourcesLookup lookup = genericService.getOneEntryByColumProperty("name", "all_cinema_jp", ReviewsSourcesLookup.class);
         //Movie m1 = genericService.get(Movie.class, -1959952368);
         //MovieReviewSource movieReviewSource = new MovieReviewSource(lookup, m1, "testUrl");
         //Set<MovieReviewSource> set =new HashSet<>();
@@ -292,9 +298,9 @@ public class MyController {
         //m1.setMovieReviewSources(set);
         //genericService.merge(m1);
 
-        User user = genericService.getOneEntryByColumProperty("username", "11", User.class);
-        user.addReviewSourceToUser(lookup);
-        genericService.merge(user);
+        //User user = genericService.getOneEntryByColumProperty("username", "11", User.class);
+        //user.addReviewSourceToUser(lookup);
+        genericService.getCountForEachReviewSource();
 
         return "/test";
     }

@@ -20,10 +20,14 @@
                 <div class="card-header col-md-12 " id="mainFunc" >
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                            <p class="card-text">Some quick example text to build on the card title and make up the
-                                bulk of the card's content.</p>
+                            <h5 class="card-title">Search the movie</h5>
+
+                            <p class="card-text">Application has two movie sources on choice:</p>
+                            <ol>
+                                <li>IMDB movies source</li>
+                                <li>Kinopoisk movies source. Caution, results will be in <span class="text-danger">russian</span>. </li>
+                            </ol>
+
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" value="imdb" name="movieSourceBase"
                                        id="sourceBaseImdb" checked>
@@ -42,16 +46,21 @@
                     </div>
 
                     <hr>
-                    <div class="row mb-3">
-                        <label for="search">
-                            <input type="text" class="form-control form-control-lg" placeholder="Search for movies"
-                                   name="searchVal" id="search">
-                        </label>
-                        <p class="text-warning">${headerTitle}</p>
 
-                        <br>
+                    <div class="container-fluid">
+                        <div id="movieSearch" class="row mt-2">
+                            <div class="mb-3 col-md-8">
+                                <label for="search" style="display: block;">
+                                    <input type="text" class="form-control form-control-lg" placeholder="Search for movies"
+                                           name="searchVal" id="search">
+                                </label>
+                                <p class="text-warning">${headerTitle}</p>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <button class="btn btn-outline-success btn-lg" type="submit" value="Search">Search</button>
+                            </div>
+                        </div>
                     </div>
-                    <input type="submit" value="Search">
 
                     <hr>
                     <div class="container-fluid extra-info">
@@ -60,9 +69,7 @@
                                 <button id="topSearchesBtn" type="button" class="btn btn-outline-info" >Show top searches</button>
                             </div>
                             <div class="col-6 text-center">
-                                <!--<a href="${pageContext.request.contextPath}/showReviewSources"> -->
                                     <button id="reviewSourcesBtn" type="button" class="btn btn-outline-info text-center">Show review sources</button>
-                               <!-- </a> -->
                             </div>
 
                         </div>

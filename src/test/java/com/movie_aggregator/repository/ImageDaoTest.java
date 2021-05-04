@@ -73,8 +73,8 @@ public class ImageDaoTest extends AbstractTest{
      */
     @Test
     void deleteSuccess() {
-        dao.delete(Image.class, 47);
-        assertNull(dao.get(Image.class,47));
+        dao.delete(Image.class, 1);
+        assertNull(dao.get(Image.class,1));
     }
 
     /**
@@ -83,7 +83,7 @@ public class ImageDaoTest extends AbstractTest{
     @Test
     void getAllSuccess() {
         List<Image> searches = dao.getAll(Image.class);
-        assertEquals(3, searches.size());
+        assertEquals(2, searches.size());
     }
 
     /**
@@ -91,13 +91,15 @@ public class ImageDaoTest extends AbstractTest{
      */
     @Test
     void saveSuccess() {
-        Image newImage = new Image( "new Serch val");
-        int searchId = dao.save(newImage);
-        System.out.println(searchId);
-        Image insertedImage = dao.get(Image.class, searchId);
+        Movie movie = new Movie(12, "title", "image", "tea", "year");
+        Image newImage = new Image( "new picture url");
+        newImage.setMovie(movie);
+        movie.addImageToMovie(newImage);
+        dao.save(movie);
+        Image insertedImage = dao.getFirstEntryBasedOnAnotherTableColumnProperty("url", "new picture url", Image.class);
         System.out.println(insertedImage);
         assertNotNull(insertedImage);
-        assertEquals(insertedImage, newImage);
+        assertEquals(insertedImage.getUrl(), newImage.getUrl());
     }
 
     /**
@@ -105,10 +107,10 @@ public class ImageDaoTest extends AbstractTest{
      */
     @Test
     void saveOrUpdateTest() {
-        Image getImage = dao.get(Image.class, 47);
+        Image getImage = dao.get(Image.class, 1);
         getImage.setUrl("modifiedUrl");
         dao.saveOrUpdate(getImage);
-        Image updatedImage = dao.get(Image.class, 47);
+        Image updatedImage = dao.get(Image.class, 1);
         assertEquals("modifiedUrl", updatedImage.getUrl());
     }
 
@@ -123,7 +125,7 @@ public class ImageDaoTest extends AbstractTest{
     @Test
     void getFirstEntryBasedOnAnotherTableColumnPropertyTest() {
         Image Image = dao.getFirstEntryBasedOnAnotherTableColumnProperty
-                ("url", "Stargate", Image.class);
-        assertEquals(2, Image.getId());
+                ("url", "https://avatars.mds.yandex.net/get-kinopoisk-image/1599028/bdad2d6f-ccc7-482f-87bf-1e4029ef4748/1680x1680", Image.class);
+        assertEquals("https://avatars.mds.yandex.net/get-kinopoisk-image/1599028/bdad2d6f-ccc7-482f-87bf-1e4029ef4748/1680x1680", Image.getUrl());
     }
 }

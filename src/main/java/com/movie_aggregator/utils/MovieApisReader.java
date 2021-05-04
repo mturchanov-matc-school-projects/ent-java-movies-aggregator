@@ -413,6 +413,9 @@ public class MovieApisReader implements PropertiesLoader {
             String imdbId = movieJSON.getString("imdbID");
             String name = movieJSON.getString("Title");
             String imdbPoster = movieJSON.getString("Poster");
+            if (imdbPoster != null && imdbPoster.equals("N/A")) {
+                imdbPoster = "https://user-images.githubusercontent.com/24848110/33519396-7e56363c-d79d-11e7-969b-09782f5ccbab.png";
+            }
             String year = movieJSON.getString("Year");
             int filmId = hashCode(name + year);
 

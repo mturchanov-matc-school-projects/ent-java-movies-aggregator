@@ -102,3 +102,12 @@ div#extra-info {
     clip-path: inset(50%);
     border: 0;
 }
+
+.btn-outline-info {
+    color: #000
+}
+
+
+div#movieSearch button {
+    align-self: center;
+}
