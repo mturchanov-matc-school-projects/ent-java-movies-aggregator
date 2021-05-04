@@ -138,32 +138,15 @@ public class GenericDao {
         return topSearchesQuery.list();
     }
 
-    /**
-     * Gets movies by token.
-     *
-     * @param token the token
-     * @return the movies by token
-     */
-    public List<Movie> getMoviesByToken(String token) {
-        final Session session = sessionFactory.getCurrentSession();
-        Query movies = session.createQuery(
-                "select m from Movie m " +
-                        "inner join m.users u " +
-                        "where u.token=:token" );
-        movies.setParameter("token", token);
-       return movies.list();
-    }
+
 
 
     public List<Object[]> getCountForEachReviewSource() {
         final Session session = sessionFactory.getCurrentSession();
-        Query revsSources = session.createQuery(
-                "select revMovieSource.reviewSource.fullName, count(revMovieSource.reviewSource.name) as countRevs" +
-                        " from MovieReviewSource revMovieSource " +
-                        "group by revMovieSource.reviewSource.fullName" +
-                        " order by countRevs desc" );
-         List<Object[]> rows = revsSources.setMaxResults(10).list();
-
+        List<Object[]> rows =session.createNativeQuery
+                ("select review_source_name, count(review_source_name) as rev_count " +
+                "from user_review_source_lookup " +
+                "group by review_source_name order by rev_count desc limit 10;").list();
          return rows;
     }
 

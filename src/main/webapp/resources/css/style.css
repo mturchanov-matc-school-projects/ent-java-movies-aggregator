@@ -64,8 +64,9 @@ div#pic_container img {
 }
 
  .reviewSource .form-check-input {
-    width: 1.4em;
-    height: 1.4em;
+    width: 1.8em;
+    height: 1.8em;
+
 }
 
 div#extra-info {
@@ -73,19 +74,21 @@ div#extra-info {
 }
 
 .extraInformation {
-    transition: opacity 1s ease-out;
+    /** transition: opacity 1s ease-out;
     opacity: 0;
     height: 0;
-    overflow: hidden;
+    overflow: hidden; **/
+    display: none;
 }
 
 .active {
-    opacity: 1;
-    height: auto;
+    /** opacity: 1;
+    height: auto; **/
+    display: block;
+
 }
 
 .revImg {
-    width:50%;
     max-width: 6.5em;
 }
 
@@ -110,4 +113,13 @@ div#extra-info {
 
 div#movieSearch button {
     align-self: center;
+}
+
+.tables-adjust{
+    padding-left: 0;
+    padding-right:0;
+}
+
+div#revContent {
+    border-left: solid 2px #b7b7b7;
 }

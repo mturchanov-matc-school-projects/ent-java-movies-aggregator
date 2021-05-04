@@ -199,3 +199,7 @@ INSERT INTO `movie_review_source` (`review_source_name`, `id`, `movie_id`, `url`
 
 INSERT INTO `movie_review_source` (`review_source_name`, `movie_id`, `url`) VALUES
     ('all_cinema_jp',-597990361,'finalUrlToMovieSourceReviewOnSelectedMovie');
+
+
+INSERT INTO `user_review_source_lookup` (`username`, `review_source_name`) VALUES
+('11', 'all_cinema_jp');

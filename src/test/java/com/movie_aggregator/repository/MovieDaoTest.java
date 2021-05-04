@@ -8,6 +8,7 @@ package com.movie_aggregator.repository;
 import com.movie_aggregator.AbstractTest;
 import com.movie_aggregator.configuration.MyConfig;
 import com.movie_aggregator.configuration.MyWebInitializer;
+import com.movie_aggregator.entity.Image;
 import com.movie_aggregator.entity.Movie;
 import com.movie_aggregator.entity.Movie;
 import com.movie_aggregator.testUtils.Database;
@@ -121,6 +122,24 @@ public class MovieDaoTest extends AbstractTest{
         dao.saveOrUpdate(getMovie);
         Movie updatedMovie = dao.get(Movie.class, -597990361);
         assertEquals("modifiedTitle", updatedMovie.getEngName());
+    }
+
+    @Test
+    void mergeTest() {
+        Movie getMovie = dao.get(Movie.class, -597990361);
+        Image image = new Image("url1");
+        Image image2 = new Image("url2");
+        image.setMovie(getMovie);
+        image2.setMovie(getMovie);
+        getMovie.addImageToMovie(image);
+        getMovie.addImageToMovie(image2);
+        dao.merge(getMovie);
+        Image mergedImage1 = dao.getFirstEntryBasedOnAnotherTableColumnProperty
+                ("url", image.getUrl(), Image.class);
+        Image mergedImage2 = dao.getFirstEntryBasedOnAnotherTableColumnProperty
+                ("url", image2.getUrl(), Image.class);
+        assertNotNull(mergedImage1);
+        assertNotNull(mergedImage2);
     }
 
 

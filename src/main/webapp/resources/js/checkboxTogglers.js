@@ -17,12 +17,14 @@ window.onload = () => {
     let btnResetAll = document.querySelector("#resetAllBtn");
     let topSearchesBtn = document.querySelector('#topSearchesBtn');
     let revShowBtn = document.querySelector('#reviewSourcesBtn');
+    let topRevsBtn = document.querySelector('#topRevsBtn');
 
+    topRevs
     btnCheckAll.addEventListener("click", toggle);
     btnResetAll.addEventListener("click", reset);
     topSearchesBtn.addEventListener("click", showHideTopSearches);
     revShowBtn.addEventListener("click", showRevs);
-
+    topRevsBtn.addEventListener("click", showHideTopRevSources);
 }
 
 
@@ -53,6 +55,19 @@ const showHideTopSearches = ()  => {
         topSearches.classList.add('active');
     } else {
         topSearchesBtn.innerHTML = "Show top searches"
+        topSearches.classList.remove('active');
+    }
+}
+
+const showHideTopRevSources = ()  => {
+    let topSearches = document.querySelector('table#topRevs');
+    let topSearchesBtn = document.querySelector('#topRevsBtn');
+
+    if (!topSearches.classList.contains("active")) {
+        topSearchesBtn.innerHTML = "Hide top review sources"
+        topSearches.classList.add('active');
+    } else {
+        topSearchesBtn.innerHTML = "Show top review sources"
         topSearches.classList.remove('active');
     }
 }

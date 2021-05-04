@@ -96,15 +96,7 @@ public class GenericService {
     }
 
 
-    /**
-     * Gets movies by token.
-     *
-     * @param token the token
-     * @return the movies by token
-     */
-    public List<Movie> getMoviesByToken(String token) {
-        return genericDao.getMoviesByToken(token);
-    }
+
 
     public List<Movie> getMoviesByProperty(String field, String searchVal, String propertyEntity) {
         return genericDao.getMoviesByProperty(field, searchVal, propertyEntity);
@@ -172,7 +164,7 @@ public class GenericService {
         if (movies == null) {
             return null;
         }
-        saveOrUpdate(newSearch); // save new search manually because only once needed
+        save(newSearch); // save new search manually because only once needed
 
         for (Movie movie : movies) { // update movie_search via cascade
             movie.addSearchToMovie(newSearch); //1search-manyMovies case
@@ -272,10 +264,6 @@ public class GenericService {
 
             movie = movieApisReader.parseJSONWikiDataReviewSources(movie, lookups);
             reviewSources = movie.getMovieReviewSources();
-            System.out.println("\n\nAFTER GENERATING REVIEWS: " + movie.getKinopoiskId());
-
-            //reviewSources = movieApisReader.parseJSONWikiDataReviewSources(movie, lookups);
-            //movie.setMovieReviewSources(reviewSources);
             merge(movie);
         } else { // movie's reviews sources already in db by previous request
             reviewSources = movie.getMovieReviewSources();
@@ -309,23 +297,24 @@ public class GenericService {
         genericDao.incrementSearchNumberCounter(id);
     }
 
-    public Map<String, Long> getCountForEachReviewSource() {
+    public Map<String, Object> getCountForEachReviewSource() {
         List<Object[]> rows = genericDao.getCountForEachReviewSource();
-        Map<String, Long> reviewSourceCountMap = new HashMap<>();
+        Map<String, Object> reviewSourceCountMap = new HashMap<>();
         for (Object[] row: rows) {
            String name = (String) row[0];
-           Long count = (Long) row[1];
-           reviewSourceCountMap.put(name, count);
-            System.out.println(name + ":" + count);
+
+           reviewSourceCountMap.put(name, row[1]);
+            //System.out.println(name + ":" + count);
         }
-        return null;
+        return reviewSourceCountMap;
     }
 
 
         public Set<ReviewsSourcesLookup> generateNewPickedReviewSources(String[] reviewsSources) {
         Set<ReviewsSourcesLookup> newPickedReviewSources = new HashSet<>();
         for (String reviewSource : reviewsSources) {
-            ReviewsSourcesLookup reviewsSourcesLookup = getOneEntryByColumProperty("name", reviewSource, ReviewsSourcesLookup.class);
+            ReviewsSourcesLookup reviewsSourcesLookup = getOneEntryByColumProperty("name",
+                    reviewSource, ReviewsSourcesLookup.class);
             newPickedReviewSources.add(reviewsSourcesLookup);
         }
         return newPickedReviewSources;

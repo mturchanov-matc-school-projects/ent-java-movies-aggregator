@@ -100,12 +100,12 @@ public class MovieApisReader implements PropertiesLoader {
                 break;
             }
             case "sparql": {
-                URL resourceCustomersCsvUrl = MovieApisReader.class.getResource("/sparqlQuery.txt");
+                URL sparqlQueryRaw = MovieApisReader.class.getResource("/sparqlQuery.txt");
                 String filePathForSparqlQuery = null;
                 String sparqlWithoutId = null;
 
                 try {
-                    filePathForSparqlQuery = Paths.get(resourceCustomersCsvUrl.toURI()).toFile().getAbsolutePath();
+                    filePathForSparqlQuery = Paths.get(sparqlQueryRaw.toURI()).toFile().getAbsolutePath();
                     sparqlWithoutId = new String(Files.readAllBytes(Paths.get(filePathForSparqlQuery)));
                 } catch (IOException | URISyntaxException e) {
                     e.printStackTrace();
@@ -163,7 +163,7 @@ public class MovieApisReader implements PropertiesLoader {
                     ? movieJSON.getString("year")
                     : "";
            // String director = shortInfo.substring(shortInfo.indexOf(' '), shortInfo.indexOf('('));
-            String director = "director";
+            String director = "";
 
             String duration = movieJSON.has("filmLength")
                     ? movieJSON.getString("filmLength")
@@ -179,7 +179,7 @@ public class MovieApisReader implements PropertiesLoader {
                     : "";
             String image = movieJSON.has("posterUrlPreview")
                     ? movieJSON.getString("posterUrlPreview")
-                    : "";
+                    : "https://user-images.githubusercontent.com/24848110/33519396-7e56363c-d79d-11e7-969b-09782f5ccbab.png";
             JSONArray countriesJSONArr = movieJSON.has("countries")
                     ? movieJSON.getJSONArray("countries")
                     : null;
@@ -423,17 +423,6 @@ public class MovieApisReader implements PropertiesLoader {
             movies.add(movie);
         }
         return movies;
-    }
-
-    public int getTotalPagesCount(String keyName, String json) {
-        JSONObject movieDetailsJSON = new JSONObject(json);
-        if (keyName.equals("totalResults")) {
-            String totalResults = movieDetailsJSON.getString(keyName);
-            return (Integer.parseInt(totalResults)) / 10;
-        } else if (keyName.equals("pagesCount")) {
-            return movieDetailsJSON.getInt("pagesCount");
-        }
-        return 0;
     }
 
     public static int hashCode(@NonNull String string) {

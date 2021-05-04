@@ -253,11 +253,13 @@ public class MyController {
             String username = ((UserDetails)principal).getUsername();
             user = genericService.getOneEntryByColumProperty("username", username, User.class);
             setPickedReviewSources(model, reviewsSourcesLookups, user);
-            System.out.println("tutaj2");
         }
         List<Search> topSearches = genericService.getMostRecentSearches();
+        Map<String, Object> topReviewSources = genericService.getCountForEachReviewSource();
         model.addAttribute("allReviewSources", reviewsSourcesLookups);
         session.setAttribute("topSearches", topSearches); //init topSearches
+        session.setAttribute("topRevs", topReviewSources); //init topReviewSources
+        System.out.println(topReviewSources);
         return "/index";
     }
 

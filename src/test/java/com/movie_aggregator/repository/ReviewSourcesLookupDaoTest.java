@@ -25,6 +25,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -118,7 +120,14 @@ public class ReviewSourcesLookupDaoTest extends AbstractTest{
                 updatedlookup.getFullName());
     }
 
-
+    @Test
+    void getCountForEachReviewSourceTest() {
+        List<Object[]> rows = dao.getCountForEachReviewSource();
+        String revSource = (String) rows.get(0)[0];
+        BigInteger count = (BigInteger) rows.get(0)[1];
+        assertEquals("all_cinema_jp", revSource);
+        assertEquals(new BigInteger(String.valueOf(1)), count);
+    }
 
 
 

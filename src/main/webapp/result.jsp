@@ -18,20 +18,33 @@
                     <c:when test="${movieSourceBase == 'imdb'}">
                         <img class="mr-3 movieImg" src="<c:out value="${movie.imdbPoster}" />" alt="image ${movie.engName}" />
                     </c:when>
+                    <c:when test="${movieSourceBase == 'kinopoisk'}">
+                        <img class="mr-3 movieImg" src="<c:out value="${movie.kinopoiskImage}" />" alt="image ${movie.rusName}" />
+                    </c:when>
                     <c:when test="${movie.imdbPoster != null}">
                         <img class="mr-3 movieImg" src="<c:out value='${movie.imdbPoster}' />" alt="image ${movie.engName}" />
                     </c:when>
                     <c:when test="${movie.kinopoiskImage != null}">
-                        <img class="mr-3 movieImg" src="<c:out value="${movie.kinopoiskImage}" />" alt="image ${movie.engName}" />
+                        <img class="mr-3 movieImg" src="<c:out value="${movie.kinopoiskImage}" />" alt="image ${movie.rusName}" />
                     </c:when>
                 </c:choose>
             </div>
             <div class="col-md-7 text-center">
                 <div class="card-body">
-
                     <h5 class="card-title">${movie.engName} (${movie.year})</h5>
-                    <p class="card-text">${movie.imdbDescription}</p>
-                    <a href="https://www.imdb.com/title/${movie.imdbId}/reviews?ref_=tt_ql_3">IMDb reviews</a>
+
+                    <c:choose>
+                    <c:when test="${movieSourceBase == 'imdb'}">
+                        <p class="card-text">${movie.imdbDescription}</p>
+                        <a href="https://www.imdb.com/title/${movie.imdbId}/reviews?ref_=tt_ql_3">IMDb reviews</a>
+                    </c:when>
+                    <c:when test="${movieSourceBase == 'kinopoisk'}">
+                        <h6 class="card-title">${movie.rusName}</h6>
+                        <p class="card-text">${movie.kinopoiskDescription}</p>
+                        <a href="https://www.kinopoisk.ru/film/${movie.kinopoiskId}/reviews/?ord=rating">Kinopoisk reviews</a>
+                    </c:when>
+                    </c:choose>
+
                     <sec:authorize access="isAuthenticated()">
                         <c:choose>
                             <c:when test="${!movie.addedToUserList}">

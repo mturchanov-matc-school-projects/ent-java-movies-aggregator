@@ -37,9 +37,9 @@
                 </div>
             </div>
             <hr>
-            <c:if test="${movie.imdbRating != null} && ${movie.kinopoiskRating != null}">
+            <c:if test="${movie.imdbRating != null && movie.kinopoiskRating != null}">
                 <div class="row" id="imdbKinopoiskRatings">
-                    <c:if test="${movie.imdbRating != null}">
+                    <c:if test="${not empty movie.imdbRating }">
                         <div class="col-md-5 col-sm-12" class="mainRatingVal">
                             <img class="sourceIcon" src="resources/images/imdb_icon.svg" alt="imdb-icon">
                             <span class="mainSourcesRatingValue">${movie.imdbRating}</span>/10 (${movie.imdbVotes}) <br>
@@ -48,7 +48,7 @@
                         </div>
                     </c:if>
 
-                    <c:if test="${movie.kinopoiskRating != null}">
+                    <c:if test="${not empty movie.kinopoiskRating}">
                         <div class="col-md-5 col-sm-12" class="mainRatingVal">
                             <img class="sourceIcon"
                                  src="${pageContext.request.contextPath}/resources/images/kinopoisk_icon.png"
@@ -70,7 +70,7 @@
                         <table class="table table-bordered table-striped">
                             <tr>
                                 <thead class="thdead-dark">
-                                <th>Other ratings</th>
+                                <th>Ratings</th>
                                 </thead>
                             </tr>
                             <tbody>
@@ -182,8 +182,8 @@
                             <tbody>
                             <c:forEach items="${reviewsSources}" var="reviewSource">
                                 <tr>
-                                    <td>${reviewSource.name}</td>
-                                    <td>${reviewSource.url}</td>
+                                    <td>${reviewSource.fullName}</td>
+                                    <td><a href="${reviewSource.url}">Read ${reviewSource.fullName}'s reviews</a></td>
                                 </tr>
                             </c:forEach>
                             </tbody>
@@ -195,11 +195,6 @@
             </div>
         </div>
     </div>
-
-
-
-
-
     <div class="card">
         <h5 class="card-header">Images</h5>
         <div class="card-body">

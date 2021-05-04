@@ -73,15 +73,18 @@ div#extra-info {
 }
 
 .extraInformation {
-    transition: opacity 1s ease-out;
+    /** transition: opacity 1s ease-out;
     opacity: 0;
     height: 0;
-    overflow: hidden;
+    overflow: hidden; **/
+    display: none;
 }
 
 .active {
-    opacity: 1;
-    height: auto;
+    /** opacity: 1;
+    height: auto; **/
+    display: block;
+
 }
 
 .revImg {
@@ -110,4 +113,9 @@ div#extra-info {
 
 div#movieSearch button {
     align-self: center;
+}
+
+.tables-adjust{
+    padding-left: 0;
+    padding-right:0;
 }
