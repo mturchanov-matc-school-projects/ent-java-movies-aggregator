@@ -19,16 +19,17 @@ window.onload = () => {
     let revShowBtn = document.querySelector('#reviewSourcesBtn');
     let topRevsBtn = document.querySelector('#topRevsBtn');
 
-    topRevs
     btnCheckAll.addEventListener("click", toggle);
     btnResetAll.addEventListener("click", reset);
     topSearchesBtn.addEventListener("click", showHideTopSearches);
     revShowBtn.addEventListener("click", showRevs);
     topRevsBtn.addEventListener("click", showHideTopRevSources);
+    console.log("event loads revs");
 }
 
 
 const showRevs = () => {
+    console.log("show revs");
     let mainFunctionality = document.querySelector('div#mainFunc');
     let revShowBtn = document.querySelector('#reviewSourcesBtn');
     let reviewSources = document.querySelector('div#reviewSources');

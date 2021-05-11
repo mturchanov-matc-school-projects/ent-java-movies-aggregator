@@ -16,7 +16,7 @@
 <h4 id="warning-sign-up">${warning}</h4>
 
 
-<div class="container">
+<div class="container" style="width: 30%;">
     <form:form id="formSignUp" method="POST"
                action="registrationProcessing" class="form-signin" modelAttribute="user">
         <h2 class="form-signin-heading">Please sign up</h2>

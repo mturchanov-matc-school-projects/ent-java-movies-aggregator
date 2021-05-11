@@ -6,11 +6,13 @@
 <c:import url="includes/head.jsp"/>
 
 <c:import url="includes/header.jsp"/>
+
 <a href="#content">
     <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 </a>
 
-<main>
+<main id="main">
+
     <div class="container" id="content">
 
         <h1>Find movies quickly!</h1>
@@ -111,7 +113,7 @@
                                 </table>
                                 </div>
                                <!-- <div class="col-2"></div> -->
-                                <div class="col-6-sm tables-adjust" style="width: auto;"">
+                                <div class="col-6-sm tables-adjust" style="width: auto;">
                                 <table id="topRevs" class="table caption-top table-secondary extraInformation col-md-6">
                                     <caption>Top review sources</caption>
                                     <thead class="table-dark">

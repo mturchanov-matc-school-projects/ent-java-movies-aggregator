@@ -39,7 +39,7 @@ div#pic_container img {
 }
 
 #myBtn {
-    display: none;
+    /** display: none; **/
     position: fixed;
     bottom: 20px;
     right: 30px;
@@ -64,8 +64,9 @@ div#pic_container img {
 }
 
  .reviewSource .form-check-input {
-    width: 1.4em;
-    height: 1.4em;
+    width: 1.8em;
+    height: 1.8em;
+
 }
 
 div#extra-info {
@@ -84,11 +85,9 @@ div#extra-info {
     /** opacity: 1;
     height: auto; **/
     display: block;
-
 }
 
 .revImg {
-    width:50%;
     max-width: 6.5em;
 }
 
@@ -118,4 +117,12 @@ div#movieSearch button {
 .tables-adjust{
     padding-left: 0;
     padding-right:0;
+}
+
+div#revContent {
+    border-left: solid 2px #b7b7b7;
+}
+
+body {
+    font-size: 120%;
 }

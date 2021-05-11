@@ -5,6 +5,9 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 
 /**
+ * This class represents movie review source
+ * bridge table entity
+ *
  * @author mturchanov
  */
 

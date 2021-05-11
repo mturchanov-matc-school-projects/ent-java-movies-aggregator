@@ -48,10 +48,10 @@
                         </div>
                     </c:if>
 
-                    <c:if test="${not empty movie.kinopoiskRating}">
+                    <c:if test="${movie.kinopoiskRating != null}">
                         <div class="col-md-5 col-sm-12" class="mainRatingVal">
                             <img class="sourceIcon"
-                                 src="${pageContext.request.contextPath}/resources/images/imdb_icon.svg"
+                                 src="${pageContext.request.contextPath}/resources/images/kinopoisk_icon.png"
                                  alt="imdb-icon">
                             <span class="mainSourcesRatingValue">${movie.kinopoiskRating}</span>/10
                             (${movie.kinopoiskVotes})

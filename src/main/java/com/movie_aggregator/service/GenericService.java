@@ -10,10 +10,15 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.util.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * The type Generic service.
+ * Includes business logic
+ * that is done with dao
  *
  * @author mturchanov
  */
@@ -24,7 +29,7 @@ public class GenericService {
     private GenericDao genericDao;
     @Autowired
     private MovieApisReader movieApisReader;
-    //private final Logger logger = LogManager.getLogger(this.getClass());
+    private final Logger logger = LogManager.getLogger(this.getClass());
 
 
     /**
@@ -102,15 +107,24 @@ public class GenericService {
         return genericDao.getMoviesByProperty(field, searchVal, propertyEntity);
     }
 
+    /**
+     * Gets movies either by generating new ones from apis
+     * if they are not in db, otherwise by
+     * retrieving them from db
+     *
+     * @param searchVal
+     * @param movieSourceBase
+     * @returnlist list of genereated movies
+     */
     public List<Movie> getMovies(String searchVal, String movieSourceBase) {
         Search existedSearch = getOneEntryByColumProperty("name", searchVal, Search.class);
         searchVal = searchVal.trim().toLowerCase();
         List<Movie> movies = getMoviesBasedOnSearchName(searchVal);
         System.out.println("getMoviesBasedOnSearchName: " + movies);
 
-        if (movies == null || movies.isEmpty()){ //
+        if (movies == null || movies.isEmpty()){ // generating new movies
             movies = recordNewMovies(searchVal, movieSourceBase);
-        } else if (existedSearch != null // update movies with kinopoisk data
+        } else if (existedSearch != null // movies are in db but not kinopoisk version -> update needed
                 && movieSourceBase.equals("kinopoisk")
                 && existedSearch.getIsKinopoiskLaunched() == 0) {
             List<Movie> updateMovies = movieApisReader.parseGeneralKinopoiskMoviesJson(searchVal);
@@ -122,7 +136,7 @@ public class GenericService {
             }
             incrementSearchNumberCounter(existedSearch.getId()); // increment Search.number
             return updateMovies;
-        } else if (existedSearch != null // update movies with imdb data
+        } else if (existedSearch != null // // movies are in db but not imdb version -> update needed
                 && movieSourceBase.equals("imdb")
                 && existedSearch.getIsOmdbLaunched() == 0) {
             List<Movie> updateMovies = movieApisReader.parseGeneralImdbMoviesJson(searchVal);
@@ -134,23 +148,32 @@ public class GenericService {
             }
             incrementSearchNumberCounter(existedSearch.getId()); // increment Search.number
             return updateMovies;
-        } else if (existedSearch != null) { // no updates needed for movie list
+        } else if (existedSearch != null) { // needed movies version is in db -> retrieve them
             movies = getMoviesBasedOnSearchName(searchVal);
             incrementSearchNumberCounter(existedSearch.getId()); // increment Search.number
         }
         return movies;
     }
 
+    /**
+     * Records new movies to db
+     * making needed api requests based on chosen movieSourceBase
+     *
+     * @param searchVal
+     * @param movieSourceBase
+     * @returnlist list of genereated movies
+     */
     private List<Movie> recordNewMovies(String searchVal, String movieSourceBase) {
         List<Movie> movies = null;
         Search newSearch;
         //generating new search
         Search lastSearch = getLastSearch();
         int id = 1;
-        if (lastSearch != null) { // TODO: replace Search.id with Search.name
+        if (lastSearch != null) {
             id = lastSearch.getId() + 1;
         }
         newSearch = new Search(id, searchVal);
+
         //generating movies from api request
         if (movieSourceBase.equals("kinopoisk")) {
             movies = movieApisReader.parseGeneralKinopoiskMoviesJson(searchVal);
@@ -161,7 +184,7 @@ public class GenericService {
             newSearch.setIsOmdbLaunched(1);
         }
 
-        if (movies == null) {
+        if (movies == null) { // no movies found with selected search name/movie source -> exit
             return null;
         }
         save(newSearch); // save new search manually because only once needed
@@ -194,7 +217,7 @@ public class GenericService {
     }
 
     /**
-     * Merge t.
+     * Merge object.
      *
      * @param <T> the type parameter
      * @param o   the o
@@ -205,7 +228,8 @@ public class GenericService {
     }
 
     /**
-     * Save user int.
+     * Save user with default user-role.
+     * Provides bcrypt encryption for password
      *
      * @param user the user
      * @return the int
@@ -220,13 +244,11 @@ public class GenericService {
         PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         String encodedPassword = encoder.encode(user.getPassword());
 
-        //String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
 
         Authority authority = new Authority();
         authority.setUsername(user.getUsername());
         authority.setAuthority("ROLE_USER");
-        //authority.setAuthority("ROLE_ADMIN");
 
         user.addAuthorityToUser(authority);
         saveOrUpdate(user);
@@ -239,7 +261,6 @@ public class GenericService {
      * @param searchName the search name
      * @return the movies based on search name
      */
-//TODO: make it generic
     public List<Movie> getMoviesBasedOnSearchName(String searchName) {
         return genericDao.getMoviesBasedOnSearchName(searchName);
     }
@@ -253,6 +274,11 @@ public class GenericService {
         return genericDao.getLastSearch();
     }
 
+    /**
+     * Gets last search.
+     *
+     * @return the last search
+     */
     public Set<ReviewsSourcesLookup> getMovieReviewSourcesForView(Set<ReviewsSourcesLookup> pickedSourcesLookups, Movie movie) {
 
         Set<MovieReviewSource> reviewSources;
@@ -292,24 +318,29 @@ public class GenericService {
      *
      * @param id the id
      */
-//TODO: make it generic
     public void incrementSearchNumberCounter(int id) {
         genericDao.incrementSearchNumberCounter(id);
     }
 
-    public Map<String, Object> getCountForEachReviewSource() {
+    public Map<String, Integer> getCountForEachReviewSource() {
         List<Object[]> rows = genericDao.getCountForEachReviewSource();
-        Map<String, Object> reviewSourceCountMap = new HashMap<>();
+        Map<String, Integer> reviewSourceCountMap = new TreeMap<>();
         for (Object[] row: rows) {
            String name = (String) row[0];
-
-           reviewSourceCountMap.put(name, row[1]);
-            //System.out.println(name + ":" + count);
+            BigInteger count = (BigInteger) row[1];
+            Integer finalCount = Integer.parseInt(count.toString());
+           reviewSourceCountMap.put(name, finalCount);
         }
         return reviewSourceCountMap;
     }
 
-
+    /**
+     * Generates user's picked review sources
+     * based on string array
+     *
+     * @param reviewsSources review sources array
+     * @return set of user's new picked review sources
+     */
         public Set<ReviewsSourcesLookup> generateNewPickedReviewSources(String[] reviewsSources) {
         Set<ReviewsSourcesLookup> newPickedReviewSources = new HashSet<>();
         for (String reviewSource : reviewsSources) {

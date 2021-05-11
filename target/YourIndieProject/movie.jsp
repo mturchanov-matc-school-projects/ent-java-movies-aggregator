@@ -37,7 +37,7 @@
                 </div>
             </div>
             <hr>
-            <c:if test="${movie.imdbRating != null} && ${movie.kinopoiskRating != null}">
+            <c:if test="${movie.imdbRating != null && movie.kinopoiskRating != null}">
                 <div class="row" id="imdbKinopoiskRatings">
                     <c:if test="${movie.imdbRating != null}">
                         <div class="col-md-5 col-sm-12" class="mainRatingVal">
@@ -51,7 +51,7 @@
                     <c:if test="${movie.kinopoiskRating != null}">
                         <div class="col-md-5 col-sm-12" class="mainRatingVal">
                             <img class="sourceIcon"
-                                 src="${pageContext.request.contextPath}/resources/images/imdb_icon.svg"
+                                 src="${pageContext.request.contextPath}/resources/images/kinopoisk_icon.png"
                                  alt="imdb-icon">
                             <span class="mainSourcesRatingValue">${movie.kinopoiskRating}</span>/10
                             (${movie.kinopoiskVotes})
@@ -65,7 +65,7 @@
             </c:if>
             <hr>
             <div class="row" id="movieTableInfo">
-                <c:if test="${movie.imdbPoster != null}">
+                <c:if test="${not empty movie.imdbPoster}">
                     <div class="col-lg-4 col-sm-12">
                         <table class="table table-bordered table-striped">
                             <tr>

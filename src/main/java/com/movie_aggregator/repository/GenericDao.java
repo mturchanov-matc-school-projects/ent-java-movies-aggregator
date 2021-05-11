@@ -1,16 +1,14 @@
 package com.movie_aggregator.repository;
 
 import com.movie_aggregator.entity.*;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -22,15 +20,11 @@ import java.util.List;
  */
 @Repository
 @Transactional
-//TODO: when release enable foreign key checks
-//     SET FOREIGN_KEY_CHECKS=0;
-//     SET GLOBAL FOREIGN_KEY_CHECKS=0;
 public class GenericDao {
 
     @Autowired
     private SessionFactory sessionFactory;
-
-   // private final Logger logger = LogManager.getLogger(this.getClass());
+    private final Logger logger = LogManager.getLogger(this.getClass());
 
 
     /**
@@ -45,6 +39,12 @@ public class GenericDao {
         return (Integer) sessionFactory.getCurrentSession().save(o);
     }
 
+    /**
+     * Save object.
+     *
+     * @param <T> the type parameter
+     * @param o   the o
+     */
     public <T> void saveObject(final T o) {
         sessionFactory.getCurrentSession().save(o);
     }
@@ -61,6 +61,12 @@ public class GenericDao {
         sessionFactory.getCurrentSession().delete(object);
     }
 
+    /**
+     * Delete object.
+     *
+     * @param <T> the type parameter
+     * @param o   the o
+     */
     public <T> void  deleteObject(final T o){
         sessionFactory.getCurrentSession().delete(o);
     }
@@ -105,7 +111,6 @@ public class GenericDao {
      *
      * @return the last search
      */
-//TODO: change from specific Type to Generic
     public Search getLastSearch() {
         final Session session = sessionFactory.getCurrentSession();
         Search lastSearch =  (Search) session.createQuery("from Search ORDER BY id DESC")
@@ -114,13 +119,11 @@ public class GenericDao {
     }
 
 
-
     /**
      * Increment search number counter.
      *
      * @param id the id
      */
-//TODO: make it generic
     public void incrementSearchNumberCounter(int id) {
         final Session session = sessionFactory.getCurrentSession();
         Query updateHits = session.createQuery(
@@ -129,6 +132,11 @@ public class GenericDao {
         updateHits.executeUpdate();
     }
 
+    /**
+     * Gets most recent searches.
+     *
+     * @return the most recent searches
+     */
     public List<Search> getMostRecentSearches() {
         final Session session = sessionFactory.getCurrentSession();
         Query topSearchesQuery = session.createQuery(
@@ -139,8 +147,11 @@ public class GenericDao {
     }
 
 
-
-
+    /**
+     * Gets count for each review source.
+     *
+     * @return the count for each review source
+     */
     public List<Object[]> getCountForEachReviewSource() {
         final Session session = sessionFactory.getCurrentSession();
         List<Object[]> rows =session.createNativeQuery
@@ -151,6 +162,14 @@ public class GenericDao {
     }
 
 
+    /**
+     * Gets movies by property.
+     *
+     * @param field          the field
+     * @param searchVal      the search val
+     * @param propertyEntity the property entity
+     * @return the movies by property
+     */
     public List<Movie> getMoviesByProperty(String field, String searchVal, String propertyEntity) {
         final Session session = sessionFactory.getCurrentSession();
         String hquery = String.format("select m from Movie m " +
@@ -167,7 +186,6 @@ public class GenericDao {
      * @param searchName the search name
      * @return the movies based on search name
      */
-//TODO: make it generic
     public List<Movie> getMoviesBasedOnSearchName(String searchName) {
         final Session session = sessionFactory.getCurrentSession();
         Query mList = session.createQuery(
@@ -200,8 +218,6 @@ public class GenericDao {
         //session.close();
         return tableEntity;
     }
-
-
 
 
     /**

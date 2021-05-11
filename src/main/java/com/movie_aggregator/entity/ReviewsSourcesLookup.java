@@ -6,16 +6,14 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
+ * This class represents review source
+ * lookup
+ *
  * @author mturchanov
  */
 @Table(name = "reviews_sources_lookup")
 @Entity(name = "ReviewsSourcesLookup")
 public class ReviewsSourcesLookup {
-
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@Column(name = "id")
-    //private int id;
 
     @Column
     @Id

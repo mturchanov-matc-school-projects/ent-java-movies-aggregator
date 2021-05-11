@@ -17,9 +17,12 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
- * The type My controller.
+ * Controller where
+ * all application's endpoints are provided
  *
  * @author mturchanov
  */
@@ -30,10 +33,10 @@ public class MyController {
     private GenericService genericService;
     @Autowired
     private MovieApisReader apisReader;
+    private final Logger logger = LogManager.getLogger(this.getClass());
 
 
 
-    //TODO: take somehow username if user is logged in -> put filtered movies to model
     @RequestMapping("/myMovies")
     public String getMyMovies(Model model) {
         List<Movie> userMovies;
@@ -41,9 +44,6 @@ public class MyController {
         userMovies = genericService.getMoviesByProperty("username", user.getUsername(), "users");
         for (Movie movie : userMovies) {
             movie.setAddedToUserList(true);
-        }
-        for (Movie m : userMovies) {
-            System.out.println(m.getImdbPoster());
         }
         String resultTitle = String.format("%s's movies", user.getUsername());
         model.addAttribute("resultTitle", resultTitle);
@@ -60,14 +60,14 @@ public class MyController {
         genericService.merge(user);
 
         String referer = request.getHeader("Referer");
-        return "redirect:"+ referer;
+        return "redirect:" + referer;
     }
 
     private User getUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = null;
         if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
+            username = ((UserDetails) principal).getUsername();
         }
         User user = genericService.getOneEntryByColumProperty("username", username, User.class);
         return user;
@@ -82,20 +82,15 @@ public class MyController {
         user.removeMovieFromUser(movie);
         genericService.merge(user);
         String referer = request.getHeader("Referer");
-        return "redirect:"+ referer;
+        return "redirect:" + referer;
     }
 
     @RequestMapping(value = "/registrationProcessing", method = RequestMethod.POST)
     public String registrationProcessing(final @Valid @ModelAttribute("user") User newUser,
                                          final BindingResult bindingResult,
                                          final Model model) {
-        if (bindingResult.hasErrors()) {
-            System.out.println(bindingResult.hasErrors());
-            System.out.println("existing username?");
-            return "/test";
-        }
 
-        int isSaved =  genericService.saveUser(newUser);
+        int isSaved = genericService.saveUser(newUser);
         if (isSaved == 0) { // if no saved then such username already exists
             model.addAttribute("warning", "Such username already in use! Try again");
             return "redirect:/registrationProcessing";
@@ -115,7 +110,7 @@ public class MyController {
     }
 
 
-        @GetMapping("/registrationProcessing")
+    @GetMapping("/registrationProcessing")
     public String registrationProcessing(Model model, @ModelAttribute("warning") String warning) {
         model.addAttribute("user", new User());
         model.addAttribute("warning", warning);
@@ -139,7 +134,7 @@ public class MyController {
         searchVal = searchVal.toLowerCase(Locale.ROOT);
         HttpSession session = request.getSession();
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = null;
+        User user = getUser();
         Set<ReviewsSourcesLookup> newUserPickedReviews = new HashSet<>();
 
         //no results found with such search word(s)
@@ -152,10 +147,6 @@ public class MyController {
 
         if (reviewsSources != null && reviewsSources.length > 0) { // new reviews sources were checked
             newUserPickedReviews = genericService.generateNewPickedReviewSources(reviewsSources);
-        }
-        if (principal instanceof UserDetails) {
-            String username = ((UserDetails)principal).getUsername();
-            user = genericService.getOneEntryByColumProperty("username", username, User.class);
         }
 
 
@@ -176,6 +167,7 @@ public class MyController {
             List<Movie> userMovies = genericService.getMoviesByProperty("username", user.getUsername(), "users");
             for (Movie m : movies) {
                 if (userMovies.contains(m)) { // if user has movie in list then no btn for view)
+                    System.out.println("m.setAddedToUserList(true);");
                     m.setAddedToUserList(true);
                 }
             }
@@ -195,9 +187,9 @@ public class MyController {
      * @return the movie info
      */
     @RequestMapping("/movie")
-    public String getMovieInfo( @RequestParam int id, @RequestParam String movieSourceBase,
-                                HttpServletRequest request,
-                                Model model) {
+    public String getMovieInfo(@RequestParam int id, @RequestParam String movieSourceBase,
+                               HttpServletRequest request,
+                               Model model) {
         HttpSession session = request.getSession();
 
 
@@ -216,7 +208,7 @@ public class MyController {
 
         Set<ReviewsSourcesLookup> reviewSourcesForView = null;
         if (userReviews != null && userReviews.size() > 0) {
-            reviewSourcesForView =  genericService.getMovieReviewSourcesForView(userReviews, movie);
+            reviewSourcesForView = genericService.getMovieReviewSourcesForView(userReviews, movie);
         }
         model.addAttribute("movie", movie);
         //session preferred because if /uploadImages(reload of the page) all binded data will disappear
@@ -232,7 +224,7 @@ public class MyController {
 
 
     @RequestMapping("/uploadImages")
-    public String loadImages( @RequestParam int id, Model model)  {
+    public String loadImages(@RequestParam int id, Model model) {
         Movie movie = genericService.get(Movie.class, id);
         movie = apisReader.loadFrames(movie);
         genericService.merge(movie);
@@ -240,9 +232,9 @@ public class MyController {
         return "/movie";
     }
 
-    @RequestMapping(value={"/home", "/index", "/",})
-    public String showReviewSources( Model model, HttpServletRequest request)  {
-        List<ReviewsSourcesLookup> reviewsSourcesLookups =  genericService.getAll(ReviewsSourcesLookup.class);
+    @RequestMapping("/home")
+    public String showReviewSources(Model model, HttpServletRequest request) {
+        List<ReviewsSourcesLookup> reviewsSourcesLookups = genericService.getAll(ReviewsSourcesLookup.class);
         HttpSession session = request.getSession();
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = (User) session.getAttribute("user");
@@ -250,17 +242,18 @@ public class MyController {
             setPickedReviewSources(model, reviewsSourcesLookups, user);
             System.out.println(user.getReviewsSources());
         } else if (principal instanceof UserDetails) { //first time index with checked checkboxes based on user
-            String username = ((UserDetails)principal).getUsername();
+            String username = ((UserDetails) principal).getUsername();
             user = genericService.getOneEntryByColumProperty("username", username, User.class);
             setPickedReviewSources(model, reviewsSourcesLookups, user);
         }
         List<Search> topSearches = genericService.getMostRecentSearches();
-        Map<String, Object> topReviewSources = genericService.getCountForEachReviewSource();
+        Map<String, Integer> topReviewSources = genericService.getCountForEachReviewSource();
         model.addAttribute("allReviewSources", reviewsSourcesLookups);
         session.setAttribute("topSearches", topSearches); //init topSearches
         session.setAttribute("topRevs", topReviewSources); //init topReviewSources
         System.out.println(topReviewSources);
-        return "/index";
+        logger.info("test /home");
+        return "index";
     }
 
     private void setPickedReviewSources(Model model, List<ReviewsSourcesLookup> reviewsSourcesLookups, User user) {
@@ -274,12 +267,11 @@ public class MyController {
     }
 
 
-
     //@RequestMapping(value={"/home", "/index", "/",})
-   // String indexMultipleMapping(){
-//
+    //String indexMultipleMapping(){
+    //    System.out.println("asdasjasnfjkhsajf sadfjk sajlfa jlas jkjklam,sf");
     //    return "index";
-   // }
+    //}
 
     /**
      * Test string.
@@ -292,7 +284,7 @@ public class MyController {
     public String test(Model model) throws IOException, URISyntaxException {
 
 
-       // ReviewsSourcesLookup lookup = genericService.getOneEntryByColumProperty("name", "all_cinema_jp", ReviewsSourcesLookup.class);
+        // ReviewsSourcesLookup lookup = genericService.getOneEntryByColumProperty("name", "all_cinema_jp", ReviewsSourcesLookup.class);
         //Movie m1 = genericService.get(Movie.class, -1959952368);
         //MovieReviewSource movieReviewSource = new MovieReviewSource(lookup, m1, "testUrl");
         //Set<MovieReviewSource> set =new HashSet<>();
@@ -307,7 +299,6 @@ public class MyController {
         return "/test";
     }
 }
-
 
 
 

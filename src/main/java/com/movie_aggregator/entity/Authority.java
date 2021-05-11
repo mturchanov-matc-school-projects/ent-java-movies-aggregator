@@ -21,7 +21,7 @@ public class Authority {
     @Id
     private String username;
 
-    @Column
+    @ColumnMySecurityConfig
     private String authority = "ROLE_USER";
 
     /**

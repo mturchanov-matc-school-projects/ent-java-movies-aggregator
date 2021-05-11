@@ -22,8 +22,13 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * The type Movie apis reader.
+ * Includes all operations/requests with
+ * api(s)/services
  *
  * @author mturchanov
  */
@@ -40,8 +45,11 @@ public class MovieApisReader implements PropertiesLoader {
      */
     public static final String OMDB_ROOT = "http://www.omdbapi.com/";
 
+    /**
+     * The constant QUERY_WIKI_DATA.
+     */
     public static final String QUERY_WIKI_DATA = "https://query.wikidata.org/sparql?format=json&query=";
-    //private final Logger logger = LogManager.getLogger(this.getClass());
+    private final Logger logger = LogManager.getLogger(this.getClass());
 
 
     /**
@@ -53,12 +61,17 @@ public class MovieApisReader implements PropertiesLoader {
 
 
     /**
-     * Gets json from api.
+     * Gets json from api/service
+     * For movies api hndles
+     * search requests that provide general information
+     * and requests for specific movie that provides full info,
+     * In addition, handles request for receiving movie's frames
+     * and request from sparql query
      *
      * @param searchType the search source
      * @param source     the search type
      * @param searchVal  the search val
-     * @param movie
+     * @param movie      the movie
      * @return the json from api
      * @throws IOException the io exception
      */
@@ -132,10 +145,16 @@ public class MovieApisReader implements PropertiesLoader {
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
-        return  null;
-}
+        return null;
+    }
 
 
+    /**
+     * Parse general kinopoisk movies json list.
+     *
+     * @param searchVal the search val
+     * @return the list
+     */
     public List<Movie> parseGeneralKinopoiskMoviesJson(String searchVal) {
         //get general movie info json data
         String JSONMovies = getJSONFromApi("general", "kinopoisk", searchVal, null);
@@ -158,11 +177,13 @@ public class MovieApisReader implements PropertiesLoader {
                     : null;
             if ((!nameEn.isEmpty() && !nameEn.toLowerCase(Locale.ROOT).contains(searchVal))
                     || nameEn.contains("(видео)")
-            ) {   continue;  }
+            ) {
+                continue;
+            }
             String year = movieJSON.has("year")
                     ? movieJSON.getString("year")
                     : "";
-           // String director = shortInfo.substring(shortInfo.indexOf(' '), shortInfo.indexOf('('));
+            // String director = shortInfo.substring(shortInfo.indexOf(' '), shortInfo.indexOf('('));
             String director = "";
 
             String duration = movieJSON.has("filmLength")
@@ -216,9 +237,15 @@ public class MovieApisReader implements PropertiesLoader {
         return movies;
     }
 
+    /**
+     * Parse specific kinopoisk movies json movie.
+     *
+     * @param movie the movie
+     * @return the movie
+     */
     public Movie parseSpecificKinopoiskMoviesJson(Movie movie) {
-        String movieDetails = getJSONFromApi("specific","kinopoisk", movie.getKinopoiskId(), null);
-        System.out.println("details: " + movieDetails);
+        String movieDetails = getJSONFromApi("specific", "kinopoisk", movie.getKinopoiskId(), null);
+        logger.info("details: " + movieDetails);
         JSONObject movieDetailsJSON = new JSONObject(movieDetails);
         JSONObject movieDataJSON = movieDetailsJSON.getJSONObject("data");
         String description = !movieDataJSON.isNull("description")
@@ -237,24 +264,24 @@ public class MovieApisReader implements PropertiesLoader {
         String ratingAgeLimits = !movieDetailsJSON.isNull("ratingAgeLimits")
                 ? String.valueOf(movieDetailsJSON.getInt("ratingAgeLimits"))
                 : "";
-        audienceRating = !ratingAgeLimits.isEmpty() ? audienceRating += "("+ratingAgeLimits +")" : audienceRating;
+        audienceRating = !ratingAgeLimits.isEmpty() ? audienceRating += "(" + ratingAgeLimits + ")" : audienceRating;
 
         JSONObject reviewJSON = movieDetailsJSON.getJSONObject("review");
         int reviews = !reviewJSON.isNull("reviewsCount")
-                ? reviewJSON.getInt("reviewsCount"):
+                ? reviewJSON.getInt("reviewsCount") :
                 0;
         int goodReviews = !reviewJSON.isNull("ratingGoodReviewVoteCount")
-                ? reviewJSON.getInt("ratingGoodReviewVoteCount"):
+                ? reviewJSON.getInt("ratingGoodReviewVoteCount") :
                 0;
         String imdbRating = !reviewJSON.isNull("ratingImdb")
-                ? String.valueOf(reviewJSON.getInt("ratingImdb")):
+                ? String.valueOf(reviewJSON.getInt("ratingImdb")) :
                 "";
         String ratingImdbVoteCount = !reviewJSON.isNull("ratingImdbVoteCount")
-                ? String.valueOf(reviewJSON.getInt("ratingImdbVoteCount")):
+                ? String.valueOf(reviewJSON.getInt("ratingImdbVoteCount")) :
                 "";
         JSONObject budgetJSON = movieDetailsJSON.getJSONObject("budget");
         String boxOffice = !budgetJSON.isNull("grossWorld")
-                ? String.valueOf(budgetJSON.getInt("grossWorld")):
+                ? String.valueOf(budgetJSON.getInt("grossWorld")) :
                 "";
         String kinopoiskReviewsFormatted = String.format("%s(%s)", reviews, goodReviews);
         Movie updateMovie = new Movie(imdbId, description, imdbRating, ratingImdbVoteCount, boxOffice, audienceRating, kinopoiskReviewsFormatted);
@@ -263,10 +290,16 @@ public class MovieApisReader implements PropertiesLoader {
         return updateMovie;
     }
 
+    /**
+     * Load frames movie.
+     *
+     * @param movie the movie
+     * @return the movie
+     */
     public Movie loadFrames(Movie movie) {
         //TODO: handle if no kinopoisk id
-        System.out.println("KINOPOISK ID: " + movie.getKinopoiskId());
-        String framesDetails = getJSONFromApi("frames","kinopoisk", movie.getKinopoiskId(), null);
+        logger.info("KINOPOISK ID: " + movie.getKinopoiskId());
+        String framesDetails = getJSONFromApi("frames", "kinopoisk", movie.getKinopoiskId(), null);
         if (!framesDetails.isEmpty()) {
             //StringBuilder framesSb = new StringBuilder();
             JSONObject framesDetailsJSON = new JSONObject(framesDetails);
@@ -285,8 +318,8 @@ public class MovieApisReader implements PropertiesLoader {
     /**
      * parses imdb movie JSON
      *
-     * @param movie
-     * @return
+     * @param movie the movie
+     * @return movie
      */
     public Movie parseSpecificImdbMovieJson(Movie movie) {
         String JSONMovies = getJSONFromApi("specific", "omdb", movie.getImdbId(), null);
@@ -296,7 +329,7 @@ public class MovieApisReader implements PropertiesLoader {
         JSONObject movieDetailsJSON = new JSONObject(JSONMovies);
         //JSONObject movieDetailsJSON = new JSONObject(imdbData);
         String isWorking = movieDetailsJSON.getString("Response");
-        if(isWorking.equals("False")) {
+        if (isWorking.equals("False")) {
             return movie;
         }
         String description = movieDetailsJSON.getString("Plot");
@@ -335,40 +368,48 @@ public class MovieApisReader implements PropertiesLoader {
         String rottenTomatoesRating = null;
         for (int j = 0; j < ratingsArrayJSON.length(); j++) {
             JSONObject ratingsJSON = ratingsArrayJSON.getJSONObject(j);
-           if (ratingsJSON.getString("Source").equals("Rotten Tomatoes")) {
+            if (ratingsJSON.getString("Source").equals("Rotten Tomatoes")) {
                 metacrtiticRating = ratingsJSON.getString("Value");
             } else if (ratingsJSON.getString("Source").equals("Metacritic")) {
-               rottenTomatoesRating = ratingsJSON.getString("Value");
+                rottenTomatoesRating = ratingsJSON.getString("Value");
             }
         }
 
-       Movie updateMovie = new Movie(description, imdbRating, imdbVotes, metacrtiticRating, rottenTomatoesRating,
-               boxOffice, duration, genre, director, actors, language, country, metascore, awards, writer, released,
-               production, audienceRating);
+        Movie updateMovie = new Movie(description, imdbRating, imdbVotes, metacrtiticRating, rottenTomatoesRating,
+                boxOffice, duration, genre, director, actors, language, country, metascore, awards, writer, released,
+                production, audienceRating);
         mergeObjects(updateMovie, movie);
-        System.out.println("MODEL ID:" + movie.getId());
+        logger.info("MODEL ID:" + movie.getId());
         //logger.info(movie);
         return updateMovie;
     }
 
+    /**
+     * Parse json wiki data review sources movie.
+     *
+     * @param movie   the movie
+     * @param lookups the lookups
+     * @return the movie
+     */
     public Movie parseJSONWikiDataReviewSources(Movie movie, Set<ReviewsSourcesLookup> lookups) {
         String sparqlResponseJSON = getJSONFromApi(null, "sparql", "null", movie);
-        System.out.println("before:  " + sparqlResponseJSON);
+        logger.info("before:  " + sparqlResponseJSON);
         sparqlResponseJSON = sparqlResponseJSON.replaceAll("[\n\\]]", "")
                 .replaceAll(".+: \\[", "");
         sparqlResponseJSON = sparqlResponseJSON.substring(0, sparqlResponseJSON.length() - 2);
-        System.out.println("after:  " + sparqlResponseJSON);
+        logger.info("after:  " + sparqlResponseJSON);
 
         return generateAllMovieReviewSourcesForMovie(movie, lookups, sparqlResponseJSON);
     }
 
-    private Movie generateAllMovieReviewSourcesForMovie(Movie movie, Set<ReviewsSourcesLookup> lookups, String sparqlResponseJSON) {
+    private Movie generateAllMovieReviewSourcesForMovie(Movie movie, Set<ReviewsSourcesLookup> lookups,
+                                                        String sparqlResponseJSON) {
         Set<MovieReviewSource> movieReviewSources = new HashSet<>();
         for (ReviewsSourcesLookup lookup : lookups) {
             String reviewSourceName = lookup.getName();
             if (sparqlResponseJSON.contains("film_web_name_pl")
                     && reviewSourceName.equals("film_web_pl")) {       // check whether such review_source was requested
-                String filmId =  JsonPath.read(sparqlResponseJSON, "$.film_web_name_pl.value");
+                String filmId = JsonPath.read(sparqlResponseJSON, "$.film_web_name_pl.value");
                 String movieReviewUrl = String.format(lookup.getUrl(), filmId);
                 MovieReviewSource movieReviewSource = new MovieReviewSource(lookup, movie, movieReviewUrl);
                 movieReviewSources.add(movieReviewSource);
@@ -379,24 +420,31 @@ public class MovieApisReader implements PropertiesLoader {
                 //System.out.printf("id: %s, name:%s, url:%s", movieReviewIdentifier, lookup.getName(), lookup.getUrl());;
 
                 MovieReviewSource movieReviewSource = new MovieReviewSource(lookup, movie, movieReviewUrl);
-                movieReviewSources.add(movieReviewSource);;
+                movieReviewSources.add(movieReviewSource);
+                ;
             }
         }
         String kinId = movie.getKinopoiskId();
-        if (kinId==null && sparqlResponseJSON.contains("kinopoisk")) {
-            String filmId =  JsonPath.read(sparqlResponseJSON, "$.kinopoisk.value");
+        if (kinId == null && sparqlResponseJSON.contains("kinopoisk")) {
+            String filmId = JsonPath.read(sparqlResponseJSON, "$.kinopoisk.value");
             movie.setKinopoiskId(filmId);
         }
-        System.out.println("\n\n00000000000000000000 -  kinId==null("+kinId == null+"),KID: " + movie.getKinopoiskId());
+        logger.info("\n\n00000000000000000000 -  kinId==null(" + kinId == null + "),KID: " + movie.getKinopoiskId());
         movieReviewSources = movieReviewSources.stream()
                 .filter(p -> !p.getUrl().contains("%s")).collect(Collectors.toSet());
         movie.setMovieReviewSources(movieReviewSources);
         return movie;
     }
 
-    public List<Movie> parseGeneralImdbMoviesJson(String searchVal)  {
+    /**
+     * Parse general imdb movies json list.
+     *
+     * @param searchVal the search val
+     * @return the list
+     */
+    public List<Movie> parseGeneralImdbMoviesJson(String searchVal) {
         String JSONMovies = getJSONFromApi("general", "omdb", searchVal, null);
-        System.out.println("parseGeneralImdbMoviesJson:" + JSONMovies);
+        logger.info("parseGeneralImdbMoviesJson:" + JSONMovies);
         if (JSONMovies == null) {
             return null;
         }
@@ -425,24 +473,36 @@ public class MovieApisReader implements PropertiesLoader {
         return movies;
     }
 
+    /**
+     * Hash code int.
+     *
+     * @param string the string
+     * @return the int
+     */
     public static int hashCode(@NonNull String string) {
         return string.hashCode() * PRIME;
     }
 
-    public static void mergeObjects(Object obj, Object update){
-        if(!obj.getClass().isAssignableFrom(update.getClass())){
+    /**
+     * Merge objects.
+     *
+     * @param obj    the obj
+     * @param update the update
+     */
+    public static void mergeObjects(Object obj, Object update) {
+        if (!obj.getClass().isAssignableFrom(update.getClass())) {
             return;
         }
         Method[] methods = obj.getClass().getMethods();
-        for(Method fromMethod: methods){
-            if(fromMethod.getDeclaringClass().equals(obj.getClass())
-                    && fromMethod.getName().startsWith("get")){
+        for (Method fromMethod : methods) {
+            if (fromMethod.getDeclaringClass().equals(obj.getClass())
+                    && fromMethod.getName().startsWith("get")) {
                 String fromName = fromMethod.getName();
                 String toName = fromName.replace("get", "set");
                 try {
                     Method toMetod = obj.getClass().getMethod(toName, fromMethod.getReturnType());
-                    Object value = fromMethod.invoke(update, (Object[])null);
-                    if(value != null){
+                    Object value = fromMethod.invoke(update, (Object[]) null);
+                    if (value != null) {
                         toMetod.invoke(obj, value);
                     }
                 } catch (Exception e) {
@@ -452,12 +512,17 @@ public class MovieApisReader implements PropertiesLoader {
         }
     }
 
-    public static void mergeLists(List<Movie> movies, List<Movie> updateMovies){
+    /**
+     * Merge lists.
+     *
+     * @param movies       the movies
+     * @param updateMovies the update movies
+     */
+    public static void mergeLists(List<Movie> movies, List<Movie> updateMovies) {
         for (Movie movie : movies) {
-            for (Movie updateMovie : updateMovies){
+            for (Movie updateMovie : updateMovies) {
                 if (movie.getId() == updateMovie.getId()) {
-                   mergeObjects(movie, updateMovie);
-                    System.out.println(movie.getEngName());
+                    mergeObjects(movie, updateMovie);
                 }
             }
         }
@@ -465,40 +530,8 @@ public class MovieApisReader implements PropertiesLoader {
     }
 
 
-    /**
-     * The entry point of application.
-     *
-     * @param args the input arguments
-     * @throws IOException the io exception
-     */
-//dirty and rough testing
-    public static void main(String[] args) {
-       // MovieApisReader reader = new MovieApisReader();
-       // Movie movie = new Movie("test", "test", "test");
-       // movie.setImdbId("tt0111161");
-       // movie = reader.parseSpecificImdbMovieJson(movie);
-       // System.out.println(movie);
-        System.out.println(MovieApisReader.hashCode("test"));
-        Set<ReviewsSourcesLookup> sourcesLookups = new HashSet<>();
-        ReviewsSourcesLookup l1 = new ReviewsSourcesLookup();
-        ReviewsSourcesLookup l2 = new ReviewsSourcesLookup();
-        ReviewsSourcesLookup l3 = new ReviewsSourcesLookup();
-        l1.setName("1");
-        l2.setName("2");
-        l3.setName("3");
-        sourcesLookups.add(l1);
-        sourcesLookups.add(l2);
-        sourcesLookups.add(l3);
-
-
-        String[] names = sourcesLookups.stream().map(ReviewsSourcesLookup::getName).toArray(size -> new String[sourcesLookups.size()]);
-        for (String n : names) {
-            System.out.println(n);
-        }
-        System.out.println(Arrays.stream(names).anyMatch("5"::contains));
-
-    }
-
 }
+
+
 
 

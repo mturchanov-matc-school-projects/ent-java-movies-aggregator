@@ -1,3 +1,6 @@
+
+
+
 //Get the button
 var mybutton = document.getElementById("myBtn");
 
@@ -5,7 +8,7 @@ var mybutton = document.getElementById("myBtn");
 window.onscroll = function() {scrollFunction()};
 
 function scrollFunction() {
-    if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
+    if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
         mybutton.style.display = "block";
     } else {
         mybutton.style.display = "none";
@@ -16,9 +19,10 @@ function scrollFunction() {
 // When the user clicks on the button, scroll to the top of the document
 function topFunction() {
 
-    let details = document.querySelector("#frames");
+    let details = document.querySelector("#main");
 
     if (details.open && document.body.scrollTop === 0) {
         details.open = null;
     }
 }
+

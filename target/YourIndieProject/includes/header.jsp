@@ -30,8 +30,8 @@
                             <a class="nav-link lead" href="${pageContext.request.contextPath}/myMovies?movieSourceBase=">My movies</a>
                         </li>
                     </sec:authorize>
-                    <li class="nav-item"><a class="nav-link lead" href="${pageContext.request.contextPath}/test">Test</a>
-                    </li>
+                   <!-- <li class="nav-item"><a class="nav-link lead" href="/test">Test</a>
+                    </li> -->
                 </ul>
             </div>
         </div>

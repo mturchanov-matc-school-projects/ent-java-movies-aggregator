@@ -12,7 +12,8 @@ import java.util.*;
 @Entity(name = "Search")
 public class Search {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //added identity to pass unit tests. app full func wasn't checked
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //added identity to pass unit tests. app full func wasn't checked
 
     private int id;
 
@@ -22,7 +23,6 @@ public class Search {
     private Integer isKinopoiskLaunched = 0;
     @Column(name = "imdb_source")
     private Integer isOmdbLaunched = 0;
-    //@ManyToMany(cascade = CascadeType.ALL)
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinTable(
             name = "movie_search",
@@ -159,7 +159,7 @@ public class Search {
      * @param movie the movie
      */
     public void addMovieToSearch(Movie movie) {
-        if(movies == null) {
+        if (movies == null) {
             movies = new HashSet<>();
         }
         movies.add(movie);

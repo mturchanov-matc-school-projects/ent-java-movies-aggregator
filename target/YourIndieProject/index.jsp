@@ -6,11 +6,13 @@
 <c:import url="includes/head.jsp"/>
 
 <c:import url="includes/header.jsp"/>
+
 <a href="#content">
     <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 </a>
 
-<main>
+<main id="main">
+
     <div class="container" id="content">
 
         <h1>Find movies quickly!</h1>
@@ -80,7 +82,7 @@
                                 </button>
                             </div>
                             <div class="col-4 text-center">
-                                <button id="reviewSourcesBtn" type="button" class="btn btn-outline-success btn-lg">
+                                <button id="reviewSourcesBtn" type="button" class="btn btn-outline-primary btn-lg">
                                     Show review sources
                                 </button>
                             </div>
@@ -111,7 +113,7 @@
                                 </table>
                                 </div>
                                <!-- <div class="col-2"></div> -->
-                                <div class="col-6-sm tables-adjust" style="width: auto;"">
+                                <div class="col-6-sm tables-adjust" style="width: auto;">
                                 <table id="topRevs" class="table caption-top table-secondary extraInformation col-md-6">
                                     <caption>Top review sources</caption>
                                     <thead class="table-dark">
@@ -149,7 +151,7 @@
 
                             </div>
 
-                            <div class="list-group d-flex justify-content-evenly flex-row flex-wrap ">
+                            <div class="list-group d-flex justify-content-evenly flex-row flex-wrap " id="revContent">
                                 <c:forEach items="${allReviewSources}" var="reviewSource">
                                     <label class="list-group-item list-group-item-action my-2" style="width: 50%;"
                                            aria-current="true">

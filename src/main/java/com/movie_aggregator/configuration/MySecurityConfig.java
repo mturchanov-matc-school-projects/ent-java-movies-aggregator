@@ -10,10 +10,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import javax.sql.DataSource;
 
 /**
- * @author mturchanov
+ * MySecurityConfig where authorization is
+ * are adjusted
  */
 
-@EnableWebSecurity //check this class that is responsible for security configuration
+@EnableWebSecurity
 public class MySecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -31,16 +32,11 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
         // http builder configurations for authorize requests and form login
         http.authorizeRequests()
                 .antMatchers("/").hasAnyRole("ADMIN", "USER")  // main page('/') can see emp, hr, managers
-               // .antMatchers("/api/**").hasRole("ADMIN")
                 .antMatchers("/resultUserList/**").hasRole("USER")
                 .antMatchers("/test").hasRole("USER")
                 .and()
                 .formLogin()
-                //.loginPage("/login.html")
-                //.loginProcessingUrl("/login")
-                //.defaultSuccessUrl("/", true)
                 .and()
-               // .failureUrl("/login.html?error=true")
                 .logout().logoutSuccessUrl("/").permitAll()
                 .permitAll(); // ask for login/password for all urls
 

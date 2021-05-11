@@ -20,7 +20,7 @@ public class Movie {
     private int id;
 
 
-    @ManyToMany(cascade = {CascadeType.PERSIST,  CascadeType.REFRESH, CascadeType.DETACH}
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH}
             , fetch = FetchType.EAGER)
     @JoinTable(
             name = "movie_search",
@@ -29,7 +29,7 @@ public class Movie {
     )
     private Set<Search> searches;
 
-    @OneToMany(targetEntity=Image.class, mappedBy="movie",cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = Image.class, mappedBy = "movie", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Image> images;
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
@@ -42,7 +42,6 @@ public class Movie {
             inverseJoinColumns = @JoinColumn(name = "username") //write how bridge table get connected with other target table/entity
     )
     private Set<User> users;
-
 
 
     @Column(name = "eng_name")
@@ -140,12 +139,12 @@ public class Movie {
     private String released;
     @Column
     private String production;
-    @Column(name="audience_rating")
+    @Column(name = "audience_rating")
     private String audienceRating;
 
-    @Column(name="imdb_distributor")
+    @Column(name = "imdb_distributor")
     private String imdbDistributor;
-    @Column(name="kinopoisk_distributor")
+    @Column(name = "kinopoisk_distributor")
     private String kinopoiskDistributor;
 
     /**
@@ -173,17 +172,15 @@ public class Movie {
     /**
      * Instantiates a new Movie.
      *
-     * @param engName  the name
+     * @param engName        the name
      * @param kinopoiskImage the image
-     * @param year  the year
+     * @param year           the year
      */
     public Movie(String engName, String kinopoiskImage, String year) {
         this.engName = engName;
         this.kinopoiskImage = kinopoiskImage;
         this.year = year;
     }
-
-    //filmId, nameEn, nameRu, year, director, duration, rating, image, kVotes, countries.toString(), genres.toString())
 
     public Movie(int id, String engName, String rusName, String kinopoiskRating, String duration,
                  String kinopoiskGenre, String kinopoiskDirector, String kinopoiskCountry,
@@ -215,10 +212,10 @@ public class Movie {
     /**
      * Instantiates a new Movie.
      *
-     * @param id    the id
-     * @param engName  the name
-     * @param image the image
-     * @param year  the year
+     * @param id      the id
+     * @param engName the name
+     * @param image   the image
+     * @param year    the year
      */
     public Movie(int id, String engName, String image, String year, String imdbId) {
         this.id = id;
@@ -231,9 +228,9 @@ public class Movie {
     /**
      * Instantiates a new Movie.
      *
-     * @param engName            the name
+     * @param engName         the name
      * @param kinopoiskId     the kinopoisk id
-     * @param rusName     the eastern name
+     * @param rusName         the eastern name
      * @param kinopoiskRating the kinopoisk rating
      * @param year            the year
      */
@@ -245,7 +242,6 @@ public class Movie {
         this.kinopoiskRating = kinopoiskRating;
         this.year = year;
     }
-
 
 
     public Movie(String imdbDescription, String imdbRating, String imdbVotes, String metacriticRating,
@@ -275,16 +271,16 @@ public class Movie {
     /**
      * Instantiates a new Movie.
      *
-     * @param nameEn      the name en
-     * @param nameRu      the name ru
-     * @param imdbId      the imdb id
-     * @param filmId      the film id
-     * @param shortDesc   the short desc
-     * @param duration    the duration
-     * @param year        the year
-     * @param kVotes      the k votes
-     * @param rating      the rating
-     * @param kinopoiskImage       the image
+     * @param nameEn          the name en
+     * @param nameRu          the name ru
+     * @param imdbId          the imdb id
+     * @param filmId          the film id
+     * @param shortDesc       the short desc
+     * @param duration        the duration
+     * @param year            the year
+     * @param kVotes          the k votes
+     * @param rating          the rating
+     * @param kinopoiskImage  the image
      * @param imdbDescription the description
      */
     public Movie(String nameEn, String nameRu, String imdbId, String filmId,
@@ -891,7 +887,7 @@ public class Movie {
      * @param search the search
      */
     public void addSearchToMovie(Search search) {
-        if(searches == null) {
+        if (searches == null) {
             searches = new HashSet<>();
         }
         searches.add(search);
@@ -899,12 +895,11 @@ public class Movie {
 
 
     public void addImageToMovie(Image image) {
-        if(images == null) {
+        if (images == null) {
             images = new HashSet<>();
         }
         images.add(image);
     }
-
 
 
     public Set<MovieReviewSource> getMovieReviewSources() {
@@ -925,8 +920,6 @@ public class Movie {
     }
 
 
-
-    //TODO: fix equals for test.repositary.GenericDaoTest
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

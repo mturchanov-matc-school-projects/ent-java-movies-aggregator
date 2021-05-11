@@ -4,6 +4,8 @@ import javax.persistence.*;
 
 
 /**
+ * This class represents image
+ *
  * @author mturchanov
  */
 
