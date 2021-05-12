@@ -47,7 +47,7 @@ As a result, user can save time because all needed reviews are gathered in one p
     * [Kinopoisk Unofficial Api](https://kinopoiskapiunofficial.tech/)
     * [SPARQL](https://www.wikidata.org/wiki/Wikidata:SPARQL_tutorial)
 * Unit Testing
-    * JUnit tests to achieve 80%+ code coverage in persistence package
+    * JUnit tests to achieve covergae on most business logic methods and repository class(dao)
 * IDE: IntelliJ IDEA
 * Spring Framework
     * Spring Security
