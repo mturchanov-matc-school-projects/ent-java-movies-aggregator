@@ -1,41 +1,62 @@
 # Movies aggregator
 ### Presentation Description/Overview
 #### Problem
-Before watching a movie many people look at rating/reviews on various resources. 
-For example, I check around 2-3 resources before deciding.
+Before watching a movie many people look at reviews on various resources.  
+An average person has several movie sources where he/she checks reviews.  
+As a result, a person needs to visit each movie source,  
+find a movie that user would like to read about  
+and finally visit movie's review page.
 
-1. Movies are rated very differently on various platforms(IMDb, rotted tomatoes)
-2. If you check a niche-genre or subgenre usually it is better to check reviews/rating
-on a special platform(e.g eastern movies-kinopoisk, anime-mal, polish movies-filmweb.pl and more).
-3. Some unpopular movies often have low information(reviews, votes, etc.) on popular common source movie platforms; 
-moreover, such a movie could be absent.
+Why all movies' reviews can be checked on a single movie source?
+
+1. Movies are rated very differently on various platforms(IMDb, rotted tomatoes, etc)
+   based on country, genre, typer  and more.
+    * For example, a niche-genre or subgenre movie is better to check  
+      on a special platform(eastern movies-kinopoisk, anime-mal, polish movies-filmweb.pl and more).
+2. Any single movie source cannot provide full information/reviews on each movie.
+
 
 #### Solution
-A website that gathers a rating of a searched movie from different movie source platforms + general info(frames,actors, etc) + useful links(reviews)
+A website that gathers reviews from most popular movie sources.  
+The application provides brief information of searched movie and provides  
+links to the chosen/favorite movie sources' review page.  
+As a result, user can save time because all needed reviews are gathered in one place.
 
-#### Pages and functionality:
-###### Index
-* searchbar
-* check movies
-* add movies to my_list if logged
-* delete movies from my_list if logged
-* add a note/review regarding a moview
+## Project Technologies (WIP, more will be added during development)
 
-###### Logic on search
-1. checks whether such search word is in DB
-1.1 if no such word in db then app calls APIs requests. 
-   It parses JSONs, adds to DB and display results
-1.2 If there is such word then app just gets movie(s) associated the searchword from DB
-   
-As a result, it will increase loading speed + will record movie info that can be
-  used later in REST service
+* Project Design
+    * Figma for screen design / wireframes
+* Security/Authentication
+    * Tomcat's JDBC Realm Authentication
+* Database
+    * MySQL 8.0.22
+* ORM Framework
+    * Hibernate 5
+* Build Tool & Dependency Management
+    * Gradle
+* CSS
+    * Bootstrap
+* Data Validation
+    * Bootstrap Validator for front end
+* Logging
+    * Log4J2
+* Hosting
+    * AWS
+* Used APIs/sercices to gather information
+    * [OMDB API](https://www.omdbapi.com/)
+    * [Kinopoisk Unofficial Api](https://kinopoiskapiunofficial.tech/)
+    * [SPARQL](https://www.wikidata.org/wiki/Wikidata:SPARQL_tutorial)
+* Unit Testing
+    * JUnit tests to achieve 80%+ code coverage in persistence package
+* IDE: IntelliJ IDEA
+* Spring Framework
+    * Spring Security
+    * Spring MVC
+    * Spring DI & IoC
 
-###### Login/Signup
-* login/signup to access my movie list
 
-### Supporting Materials
-* omdb api - http://www.omdbapi.com/
-* unofficail kinopoisk api - https://kinopoiskapiunofficial.tech/
-### Journal
+## Useful Links
+[**Database Design**](designDocs/updated_final_urd.png)  
+[**Video Demo of Basic Application Functionality**](https://youtu.be/9wRx-UV7kys)  
+[**Link to the journal**](Journal.md)  
 
-[Link to the journal](Journal.md)
