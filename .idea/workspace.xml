@@ -27,19 +27,11 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b4add5ff-e70d-4f2b-bb88-aba2066d226f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/${filepath}/MovieAggregator.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/${filepath}/hibernate.log" beforeDir="false" />
+    <list default="true" id="b4add5ff-e70d-4f2b-bb88-aba2066d226f" name="Default Changelist" comment="ERD image was updated(added users/roles table)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/movies_aggregator.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/configuration/MyWebInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/configuration/MyWebInitializer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/service/GenericService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/movie_aggregator/service/GenericService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/log4j2.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/log4j2.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/movie_aggregator/repository/GenericDaoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/movie_aggregator/repository/GenericDaoTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/YourIndieProject.war" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject.war" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/log4j2.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/WEB-INF/classes/log4j2.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/log4j2.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/log4j2.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/com/movie_aggregator/repository/GenericDaoTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/movie_aggregator/repository/GenericDaoTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/YourIndieProject/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/YourIndieProject/index.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/movies_aggregator.war" beforeDir="false" afterPath="$PROJECT_DIR$/target/movies_aggregator.war" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,7 +41,12 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="HTML File" />
         <option value="Interface" />
+        <option value="CSS File" />
+        <option value="Enum" />
+        <option value="SCSS File" />
+        <option value="JavaScript File" />
         <option value="Class" />
       </list>
     </option>
@@ -57,7 +54,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="test" />
+        <entry key="$PROJECT_DIR$" value="clean-up-code" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -70,12 +67,24 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/main/webapp/result.jsp" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/movie_aggregator/repository/GenericDao.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/webapp/index.jsp" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/webapp/sign-up.jsp" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/movie_aggregator/configuration/MyConfig.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/movie_aggregator/utils/MovieApisReader.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/movie_aggregator/service/GenericService.java" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="LogFilters">
     <option name="FILTER_ERRORS" value="false" />
     <option name="FILTER_WARNINGS" value="false" />
     <option name="FILTER_INFO" value="false" />
     <option name="FILTER_DEBUG" value="false" />
     <option name="CUSTOM_FILTER" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedIndex" value="1" />
   </component>
   <component name="ProjectId" id="1nfiojXiJiRkzp59tIcu1BwSA5r" />
   <component name="ProjectLevelVcsManager">
@@ -87,6 +96,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="DatabaseDriversLRU" value="mysql" />
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RequestMappingsPanelOrder0" value="0" />
     <property name="RequestMappingsPanelOrder1" value="1" />
     <property name="RequestMappingsPanelWidth0" value="75" />
@@ -95,22 +105,28 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/test/resources" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="list.type.of.created.stylesheet" value="SCSS" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="configurable.group.editor" />
+    <property name="settings.editor.selected.configurable" value="shared-indexes" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/designDocs" />
+      <recent name="$PROJECT_DIR$/src/main/webapp/resources/images" />
+      <recent name="$PROJECT_DIR$/src/main/webapp" />
       <recent name="$PROJECT_DIR$/src/test/resources" />
       <recent name="$PROJECT_DIR$/designDocs/screens" />
-      <recent name="$PROJECT_DIR$/src/main/resources" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/main/webapp/WEB-INF" />
-      <recent name="$PROJECT_DIR$/src/main/webapp/WEB-INF/view" />
+      <recent name="$PROJECT_DIR$/src/main/webapp" />
+      <recent name="$PROJECT_DIR$/src/main/resources/static/style" />
+      <recent name="$PROJECT_DIR$/src/main/webapp/resourses" />
+      <recent name="$PROJECT_DIR$/src/main/resources/static" />
+      <recent name="$PROJECT_DIR$/src/main/resources" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="java.com.movie_aggregator.testUtils" />
@@ -178,30 +194,6 @@
     </option>
   </component>
   <component name="RunManager" selected="Tomcat Server.Tomcat 9.0.41">
-    <configuration name="MovieApisReader" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.movie_aggregator.utils.MovieApisReader" />
-      <module name="yourindieproject" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.movie_aggregator.utils.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="All in yourindieproject" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="yourindieproject" />
       <option name="PACKAGE_NAME" value="" />
@@ -210,7 +202,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="GenericDaoTest.getByIdSuccess" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="MovieDaoTest.getByIdSuccess" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="yourindieproject" />
       <extension name="coverage">
         <pattern>
@@ -219,14 +211,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="com.movie_aggregator.repository" />
-      <option name="MAIN_CLASS_NAME" value="com.movie_aggregator.repository.GenericDaoTest" />
+      <option name="MAIN_CLASS_NAME" value="com.movie_aggregator.repository.MovieDaoTest" />
       <option name="METHOD_NAME" value="getByIdSuccess" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="GenericDaoTest.incrementSearchNumberCounterTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="MovieDaoTest.mergeTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="yourindieproject" />
       <extension name="coverage">
         <pattern>
@@ -235,14 +227,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="com.movie_aggregator.repository" />
-      <option name="MAIN_CLASS_NAME" value="com.movie_aggregator.repository.GenericDaoTest" />
-      <option name="METHOD_NAME" value="incrementSearchNumberCounterTest" />
+      <option name="MAIN_CLASS_NAME" value="com.movie_aggregator.repository.MovieDaoTest" />
+      <option name="METHOD_NAME" value="mergeTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="GenericDaoTest.saveSuccess" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ReviewSourcesLookupDaoTest.getCountForEachReviewSourceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="yourindieproject" />
       <extension name="coverage">
         <pattern>
@@ -251,8 +243,24 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="com.movie_aggregator.repository" />
-      <option name="MAIN_CLASS_NAME" value="com.movie_aggregator.repository.GenericDaoTest" />
-      <option name="METHOD_NAME" value="saveSuccess" />
+      <option name="MAIN_CLASS_NAME" value="com.movie_aggregator.repository.ReviewSourcesLookupDaoTest" />
+      <option name="METHOD_NAME" value="getCountForEachReviewSourceTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ServiceTest.getMoviesKinopoiskTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="yourindieproject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.movie_aggregator.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.movie_aggregator.service" />
+      <option name="MAIN_CLASS_NAME" value="com.movie_aggregator.service.ServiceTest" />
+      <option name="METHOD_NAME" value="getMoviesKinopoiskTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -346,7 +354,7 @@
         </artifact>
       </deployment>
       <server-settings>
-        <option name="BASE_DIRECTORY_NAME" value="8af48272-8480-4298-9b12-427f30cdeffb" />
+        <option name="BASE_DIRECTORY_NAME" value="7c17e46a-23c4-4d35-9f9b-8bf8448b075a" />
       </server-settings>
       <predefined_log_file enabled="true" id="Tomcat" />
       <predefined_log_file enabled="true" id="Tomcat Catalina" />
@@ -488,19 +496,19 @@
     </configuration>
     <list>
       <item itemvalue="JUnit.All in yourindieproject" />
-      <item itemvalue="JUnit.GenericDaoTest.incrementSearchNumberCounterTest" />
-      <item itemvalue="JUnit.GenericDaoTest.getByIdSuccess" />
-      <item itemvalue="JUnit.GenericDaoTest.saveSuccess" />
+      <item itemvalue="JUnit.MovieDaoTest.mergeTest" />
+      <item itemvalue="JUnit.MovieDaoTest.getByIdSuccess" />
+      <item itemvalue="JUnit.ServiceTest.getMoviesKinopoiskTest" />
+      <item itemvalue="JUnit.ReviewSourcesLookupDaoTest.getCountForEachReviewSourceTest" />
       <item itemvalue="Tomcat Server.Tomcat 9.0.41" />
-      <item itemvalue="Application.MovieApisReader" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.GenericDaoTest.getByIdSuccess" />
         <item itemvalue="JUnit.All in yourindieproject" />
-        <item itemvalue="Application.MovieApisReader" />
-        <item itemvalue="JUnit.GenericDaoTest.saveSuccess" />
-        <item itemvalue="JUnit.GenericDaoTest.incrementSearchNumberCounterTest" />
+        <item itemvalue="JUnit.ReviewSourcesLookupDaoTest.getCountForEachReviewSourceTest" />
+        <item itemvalue="JUnit.ServiceTest.getMoviesKinopoiskTest" />
+        <item itemvalue="JUnit.MovieDaoTest.getByIdSuccess" />
+        <item itemvalue="JUnit.MovieDaoTest.mergeTest" />
       </list>
     </recent_temporary>
   </component>
@@ -538,8 +546,98 @@
       <workItem from="1615144398356" duration="24458000" />
       <workItem from="1615231557977" duration="18460000" />
       <workItem from="1615262935990" duration="14902000" />
-      <workItem from="1615328198388" duration="3651000" />
+      <workItem from="1615328198388" duration="9310000" />
+      <workItem from="1615511259170" duration="756000" />
+      <workItem from="1615512089019" duration="1498000" />
+      <workItem from="1615516186108" duration="52000" />
+      <workItem from="1615516270637" duration="802000" />
+      <workItem from="1615521676507" duration="8334000" />
+      <workItem from="1615777091535" duration="7072000" />
+      <workItem from="1615788688086" duration="599000" />
+      <workItem from="1615863406008" duration="1570000" />
+      <workItem from="1616337691374" duration="14466000" />
+      <workItem from="1616354304213" duration="408000" />
+      <workItem from="1616354906319" duration="20298000" />
+      <workItem from="1616546655131" duration="21790000" />
+      <workItem from="1616688799817" duration="5549000" />
+      <workItem from="1616711754255" duration="2553000" />
+      <workItem from="1616952456330" duration="7341000" />
+      <workItem from="1616991592898" duration="12940000" />
+      <workItem from="1617055072604" duration="646000" />
+      <workItem from="1617133646690" duration="11991000" />
+      <workItem from="1617394454682" duration="4965000" />
+      <workItem from="1617479171326" duration="7869000" />
+      <workItem from="1617553736675" duration="4445000" />
+      <workItem from="1617748715183" duration="6519000" />
+      <workItem from="1617841927382" duration="612000" />
+      <workItem from="1618000611764" duration="338000" />
+      <workItem from="1618001004524" duration="1874000" />
+      <workItem from="1618181881186" duration="347000" />
+      <workItem from="1618182291413" duration="598000" />
+      <workItem from="1618196352373" duration="35000" />
+      <workItem from="1618196434334" duration="612000" />
+      <workItem from="1618447896897" duration="141000" />
+      <workItem from="1618448134702" duration="14875000" />
+      <workItem from="1618685675881" duration="46000" />
+      <workItem from="1618685770862" duration="3054000" />
+      <workItem from="1618806393225" duration="650000" />
+      <workItem from="1618807103554" duration="372000" />
+      <workItem from="1618807769988" duration="127000" />
+      <workItem from="1618807934794" duration="18001000" />
+      <workItem from="1619158083529" duration="9824000" />
+      <workItem from="1619192431790" duration="9621000" />
+      <workItem from="1619240037762" duration="38863000" />
+      <workItem from="1619482345829" duration="6529000" />
+      <workItem from="1619492692079" duration="11205000" />
+      <workItem from="1619506998371" duration="174000" />
+      <workItem from="1619507210711" duration="3085000" />
+      <workItem from="1619511150877" duration="96000" />
+      <workItem from="1619511281323" duration="21270000" />
+      <workItem from="1619539536553" duration="609000" />
+      <workItem from="1619540853241" duration="14654000" />
+      <workItem from="1619572378068" duration="1802000" />
+      <workItem from="1619574220671" duration="8807000" />
+      <workItem from="1619663782664" duration="32000" />
+      <workItem from="1619663848299" duration="16669000" />
+      <workItem from="1619682189400" duration="47000" />
+      <workItem from="1619682266459" duration="23603000" />
+      <workItem from="1619759249563" duration="66000" />
+      <workItem from="1619759350645" duration="3997000" />
+      <workItem from="1619763776802" duration="31000" />
+      <workItem from="1619763840718" duration="7185000" />
+      <workItem from="1619804035066" duration="89000" />
+      <workItem from="1619804165318" duration="11866000" />
+      <workItem from="1619816853440" duration="15466000" />
+      <workItem from="1619926960636" duration="13620000" />
+      <workItem from="1619978092308" duration="1048000" />
+      <workItem from="1619979200638" duration="752000" />
+      <workItem from="1619982581784" duration="10757000" />
+      <workItem from="1620015427394" duration="35910000" />
+      <workItem from="1620137814006" duration="5754000" />
+      <workItem from="1620143951989" duration="11425000" />
+      <workItem from="1620167078080" duration="11832000" />
+      <workItem from="1620313524623" duration="1821000" />
+      <workItem from="1620690138573" duration="682000" />
+      <workItem from="1620690868138" duration="228000" />
+      <workItem from="1620691133821" duration="10608000" />
+      <workItem from="1620765944427" duration="3258000" />
+      <workItem from="1620770073841" duration="843000" />
+      <workItem from="1620770975863" duration="363000" />
+      <workItem from="1620771385844" duration="151000" />
+      <workItem from="1620771558265" duration="705000" />
+      <workItem from="1620772746391" duration="51000" />
+      <workItem from="1620773310408" duration="5058000" />
+      <workItem from="1620779417822" duration="382000" />
+      <workItem from="1620779844727" duration="3876000" />
     </task>
+    <task id="LOCAL-00001" summary="ERD image was updated(added users/roles table)">
+      <created>1615338497654</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1615338497654</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -557,34 +655,83 @@
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="ERD image was updated(added users/roles table)" />
+    <option name="LAST_COMMIT_MESSAGE" value="ERD image was updated(added users/roles table)" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/movie_aggregator/service/GenericService.java</url>
-          <line>28</line>
+          <line>42</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/movie_aggregator/utils/MovieApisReader.java</url>
-          <line>78</line>
-          <option name="timeStamp" value="6" />
+          <line>33</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/movie_aggregator/configuration/MyConfig.java</url>
+          <line>81</line>
+          <option name="timeStamp" value="15" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/test/java/com/movie_aggregator/repository/GenericDaoTest.java</url>
-          <line>82</line>
-          <properties class="com.movie_aggregator.repository.GenericDaoTest">
+          <url>file://$PROJECT_DIR$/src/main/java/com/movie_aggregator/utils/MovieApisReader.java</url>
+          <line>525</line>
+          <properties class="com.movie_aggregator.utils.MovieApisReader">
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/test/java/com/movie_aggregator/repository/GenericDaoTest.java</url>
-          <line>105</line>
-          <properties class="com.movie_aggregator.repository.GenericDaoTest">
+          <url>file://$PROJECT_DIR$/src/test/java/com/movie_aggregator/repository/SearchDaoTest.java</url>
+          <line>108</line>
+          <properties class="com.movie_aggregator.repository.SearchDaoTest" method="saveSuccess">
             <option name="EMULATED" value="true" />
           </properties>
-          <option name="timeStamp" value="5" />
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/test/java/com/movie_aggregator/repository/AuthorityDaoTest.java</url>
+          <line>86</line>
+          <properties class="com.movie_aggregator.repository.AuthorityDaoTest" method="saveSuccess">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/test/java/com/movie_aggregator/repository/MovieDaoTest.java</url>
+          <line>90</line>
+          <properties class="com.movie_aggregator.repository.MovieDaoTest" method="getMoviesByProperty">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/test/java/com/movie_aggregator/repository/UserDaoTest.java</url>
+          <line>90</line>
+          <properties class="com.movie_aggregator.repository.UserDaoTest" method="saveSuccess">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/test/java/com/movie_aggregator/repository/SearchDaoTest.java</url>
+          <line>64</line>
+          <properties class="com.movie_aggregator.repository.SearchDaoTest" method="getByIdSuccess">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/test/java/com/movie_aggregator/utils/MovieApiReaderTest.java</url>
+          <line>95</line>
+          <properties class="com.movie_aggregator.utils.MovieApiReaderTest" method="mergeListsTest">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="19" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -592,5 +739,14 @@
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
     <select />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/movies_aggregator$MovieApiReaderTest.ic" NAME="MovieApiReaderTest Coverage Results" MODIFIED="1620147628888" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.movie_aggregator.utils.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/movies_aggregator$RestGetRequestsTest_testGetAllMoviesbySearch.ic" NAME="RestGetRequestsTest.testGetAllMoviesbySearch Coverage Results" MODIFIED="1615778153957" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.movie_aggregator.repository.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/movies_aggregator$All_in_yourindieproject.ic" NAME="All in yourindieproject Coverage Results" MODIFIED="1620147650048" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

@@ -1,17 +1,14 @@
 package com.movie_aggregator.repository;
 
-import com.movie_aggregator.entity.Movie;
-import com.movie_aggregator.entity.Search;
+import com.movie_aggregator.entity.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -23,14 +20,10 @@ import java.util.List;
  */
 @Repository
 @Transactional
-//TODO: when release enable foreign key checks
-//     SET FOREIGN_KEY_CHECKS=0;
-//     SET GLOBAL FOREIGN_KEY_CHECKS=0;
 public class GenericDao {
 
     @Autowired
     private SessionFactory sessionFactory;
-
     private final Logger logger = LogManager.getLogger(this.getClass());
 
 
@@ -42,7 +35,18 @@ public class GenericDao {
      * @return the int
      */
     public <T> int save(final T o) {
+
         return (Integer) sessionFactory.getCurrentSession().save(o);
+    }
+
+    /**
+     * Save object.
+     *
+     * @param <T> the type parameter
+     * @param o   the o
+     */
+    public <T> void saveObject(final T o) {
+        sessionFactory.getCurrentSession().save(o);
     }
 
     /**
@@ -55,6 +59,16 @@ public class GenericDao {
     public <T> void  delete(final Class<T> type, Integer id){
         T object = get(type, id);
         sessionFactory.getCurrentSession().delete(object);
+    }
+
+    /**
+     * Delete object.
+     *
+     * @param <T> the type parameter
+     * @param o   the o
+     */
+    public <T> void  deleteObject(final T o){
+        sessionFactory.getCurrentSession().delete(o);
     }
 
     /**
@@ -97,7 +111,6 @@ public class GenericDao {
      *
      * @return the last search
      */
-//TODO: change from specific Type to Generic
     public Search getLastSearch() {
         final Session session = sessionFactory.getCurrentSession();
         Search lastSearch =  (Search) session.createQuery("from Search ORDER BY id DESC")
@@ -105,12 +118,12 @@ public class GenericDao {
         return lastSearch;
     }
 
+
     /**
      * Increment search number counter.
      *
      * @param id the id
      */
-//TODO: make it generic
     public void incrementSearchNumberCounter(int id) {
         final Session session = sessionFactory.getCurrentSession();
         Query updateHits = session.createQuery(
@@ -120,12 +133,59 @@ public class GenericDao {
     }
 
     /**
+     * Gets most recent searches.
+     *
+     * @return the most recent searches
+     */
+    public List<Search> getMostRecentSearches() {
+        final Session session = sessionFactory.getCurrentSession();
+        Query topSearchesQuery = session.createQuery(
+                "SELECT search from Search  search " +
+                        "order by search.number desc" );
+        topSearchesQuery.setMaxResults(10);
+        return topSearchesQuery.list();
+    }
+
+
+    /**
+     * Gets count for each review source.
+     *
+     * @return the count for each review source
+     */
+    public List<Object[]> getCountForEachReviewSource() {
+        final Session session = sessionFactory.getCurrentSession();
+        List<Object[]> rows =session.createNativeQuery
+                ("select review_source_name, count(review_source_name) as rev_count " +
+                "from user_review_source_lookup " +
+                "group by review_source_name order by rev_count desc limit 10;").list();
+         return rows;
+    }
+
+
+    /**
+     * Gets movies by property.
+     *
+     * @param field          the field
+     * @param searchVal      the search val
+     * @param propertyEntity the property entity
+     * @return the movies by property
+     */
+    public List<Movie> getMoviesByProperty(String field, String searchVal, String propertyEntity) {
+        final Session session = sessionFactory.getCurrentSession();
+        String hquery = String.format("select m from Movie m " +
+                "inner join m.%s u " +
+                "where u.%s=:%s", propertyEntity, field, field);
+        Query movies = session.createQuery(hquery);
+        movies.setParameter(field, searchVal);
+        return movies.list();
+    }
+
+    /**
      * Gets movies based on search name.
      *
      * @param searchName the search name
      * @return the movies based on search name
      */
-//TODO: make it generic
     public List<Movie> getMoviesBasedOnSearchName(String searchName) {
         final Session session = sessionFactory.getCurrentSession();
         Query mList = session.createQuery(
@@ -145,7 +205,7 @@ public class GenericDao {
      * @return the first entry based on another table column property
      */
     public <T> T getFirstEntryBasedOnAnotherTableColumnProperty(String propertyName, String searchVal, Class<T> type) {
-        Session session = sessionFactory.openSession();
+        final Session session = sessionFactory.getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<T> query = builder.createQuery(type);
         Root<T> root = query.from(type);
@@ -157,5 +217,17 @@ public class GenericDao {
                 .orElse(null);
         //session.close();
         return tableEntity;
+    }
+
+
+    /**
+     * Merge t.
+     *
+     * @param <T> the type parameter
+     * @param o   the o
+     * @return the t
+     */
+    public <T> T merge(final T o)   {
+        return (T) sessionFactory.getCurrentSession().merge(o);
     }
 }

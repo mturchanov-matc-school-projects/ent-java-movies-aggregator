@@ -1,0 +1,4 @@
+com/movie_aggregator/testUtils/Database.class
+com/movie_aggregator/AbstractTest.class
+com/movie_aggregator/repository/RestGetRequestsTest.class
+com/movie_aggregator/repository/GenericDaoTest.class

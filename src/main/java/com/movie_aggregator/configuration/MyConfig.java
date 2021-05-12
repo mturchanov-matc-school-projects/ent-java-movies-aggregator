@@ -1,33 +1,38 @@
 package com.movie_aggregator.configuration;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
-import com.movie_aggregator.entity.Movie;
-import com.movie_aggregator.entity.Search;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
-import org.springframework.orm.jpa.JpaVendorAdapter;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
 import java.util.Properties;
 
+/**
+ * The config where db, view resolver,
+ * session factory and profiles for test/prod are adjusted.
+ */
 @Configuration
 @ComponentScan(basePackages = "com.movie_aggregator")
 @EnableWebMvc
 @EnableTransactionManagement
-public class MyConfig {
+@RequestMapping("/")
+public class MyConfig implements WebMvcConfigurer {
 
+    /**
+     * Data source data source.
+     *
+     * @return the data source
+     */
     @Bean
     @Profile("prod")
     public DataSource dataSource()  {
@@ -44,6 +49,11 @@ public class MyConfig {
         return dataSource;
     }
 
+    /**
+     * Data source for test data source.
+     *
+     * @return the data source
+     */
     @Profile("dev")
     @Bean(name = "dataSource")
     public DataSource dataSourceForTest()  {
@@ -60,8 +70,11 @@ public class MyConfig {
         return dataSource;
     }
 
-
-
+    /**
+     * Session factory local session factory bean.
+     *
+     * @return the local session factory bean
+     */
     @Bean
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
@@ -75,6 +88,11 @@ public class MyConfig {
         return sessionFactory;
     }
 
+    /**
+     * Transaction manager hibernate transaction manager.
+     *
+     * @return the hibernate transaction manager
+     */
     @Bean
     public HibernateTransactionManager transactionManager() {
         HibernateTransactionManager transactionManager = new HibernateTransactionManager();
@@ -82,13 +100,20 @@ public class MyConfig {
         return transactionManager;
     }
 
-    /** shortcut for controller mapping to view **/
+    /**
+     * shortcut for controller mapping to view  @return the view resolver
+     */
     @Bean
     public ViewResolver viewResolver() {
         InternalResourceViewResolver internalResourceViewResolver =
                 new InternalResourceViewResolver();
-        internalResourceViewResolver.setPrefix("/WEB-INF/");
+        internalResourceViewResolver.setPrefix("/");
         internalResourceViewResolver.setSuffix(".jsp");
         return  internalResourceViewResolver;
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
     }
 }

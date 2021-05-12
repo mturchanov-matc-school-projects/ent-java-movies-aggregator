@@ -1,0 +1,16 @@
+-------------------------------------------------------------------------------
+Test set: com.movie_aggregator.repository.RestGetRequestsTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 0, Errors: 3, Skipped: 0, Time elapsed: 3.52 sec <<< FAILURE! - in com.movie_aggregator.repository.RestGetRequestsTest
+testGetMovieById  Time elapsed: 0.38 sec  <<< ERROR!
+javax.ws.rs.InternalServerErrorException: HTTP 500 Internal Server Error
+	at com.movie_aggregator.repository.RestGetRequestsTest.testGetMovieById(RestGetRequestsTest.java:75)
+
+testGetAllMoviesbySearch  Time elapsed: 0.059 sec  <<< ERROR!
+javax.ws.rs.InternalServerErrorException: HTTP 500 Internal Server Error
+	at com.movie_aggregator.repository.RestGetRequestsTest.testGetAllMoviesbySearch(RestGetRequestsTest.java:54)
+
+testGetAllMovies  Time elapsed: 0.03 sec  <<< ERROR!
+javax.ws.rs.InternalServerErrorException: HTTP 500 Internal Server Error
+	at com.movie_aggregator.repository.RestGetRequestsTest.testGetAllMovies(RestGetRequestsTest.java:65)
+

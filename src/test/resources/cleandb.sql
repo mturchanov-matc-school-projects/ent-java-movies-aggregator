@@ -1,8 +1,3 @@
-delete from movie_search;
-delete from search;
-delete from movies;
-
-
 -- Adminer 4.7.7 MySQL dump
 
 SET NAMES utf8;
@@ -12,37 +7,199 @@ SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
 SET NAMES utf8mb4;
 
+DROP TABLE IF EXISTS `authorities`;
+CREATE TABLE `authorities` (
+                               `username` varchar(50) NOT NULL,
+                               `id` int NOT NULL AUTO_INCREMENT,
+                               `authority` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'ROLE_USER',
+                               PRIMARY KEY (`id`),
+                               KEY `ix_auth_username` (`username`,`authority`),
+                               CONSTRAINT `authorities_ibfk_1` FOREIGN KEY (`username`) REFERENCES `users` (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+INSERT INTO `authorities` (`username`, `authority`)
+VALUES ('11', 'ROLE_TEST');
+
+DROP TABLE IF EXISTS `images`;
+CREATE TABLE `images` (
+                          `id` int NOT NULL AUTO_INCREMENT,
+                          `url` varchar(400) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                          `movie_id` int NOT NULL,
+                          PRIMARY KEY (`id`),
+                          KEY `movie_id` (`movie_id`),
+                          CONSTRAINT `images_ibfk_1` FOREIGN KEY (`movie_id`) REFERENCES `movies` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+INSERT INTO `images` (`url`, `movie_id`) VALUES
+('https://avatars.mds.yandex.net/get-kinopoisk-image/1599028/bdad2d6f-ccc7-482f-87bf-1e4029ef4748/1680x1680', -1023705264);
+
+INSERT INTO `images` (`url`, `movie_id`) VALUES
+('https://avatars.mds.yandex.net/get-kinopoisk-image/1599028/c76ed328-978a-4960-871e-69561697a805/1680x1680', -1023705264);
+
+DROP TABLE IF EXISTS `movie_review_source`;
+CREATE TABLE `movie_review_source` (
+                                       `review_source_name` varchar(200) NOT NULL,
+                                       `id` int NOT NULL AUTO_INCREMENT,
+                                       `movie_id` int NOT NULL,
+                                       `url` varchar(200) NOT NULL,
+                                       PRIMARY KEY (`id`),
+                                       KEY `movie_id` (`movie_id`),
+                                       KEY `review_source_name` (`review_source_name`),
+                                       CONSTRAINT `movie_review_source_ibfk_1` FOREIGN KEY (`movie_id`) REFERENCES `movies` (`id`),
+                                       CONSTRAINT `movie_review_source_ibfk_2` FOREIGN KEY (`review_source_name`) REFERENCES `reviews_sources_lookup` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+
+DROP TABLE IF EXISTS `movie_search`;
+CREATE TABLE `movie_search` (
+                                `movie_id` int NOT NULL,
+                                `search_id` int NOT NULL,
+                                PRIMARY KEY (`movie_id`,`search_id`),
+                                KEY `movie_id` (`movie_id`),
+                                KEY `search_id` (`search_id`),
+                                CONSTRAINT `movie_search_ibfk_7` FOREIGN KEY (`search_id`) REFERENCES `search` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+                                CONSTRAINT `movie_search_ibfk_8` FOREIGN KEY (`movie_id`) REFERENCES `movies` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+DROP TABLE IF EXISTS `movies`;
+CREATE TABLE `movies` (
+                          `id` int NOT NULL AUTO_INCREMENT,
+                          `imdb_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+                          `kinopoisk_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+                          `imdb_rating` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+                          `imdb_votes` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+                          `eng_name` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                          `rus_name` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+                          `imdb_description` varchar(3000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+                          `duration` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+                          `imdb_director` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+                          `kinopoisk_director` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+                          `actors` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+                          `language` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+                          `imdb_country` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+                          `metascore` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+                          `imdb_genre` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+                          `box_office` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+                          `metacritic_rating` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+                          `movie_db_rating` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+                          `rotten_tomatoes_rating` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+                          `tv_com_rating` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+                          `film_affinity_rating` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+                          `kinopoisk_rating` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+                          `kinopoisk_votes` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+                          `kinopoisk_poster` varchar(5000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+                          `imdb_poster` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+                          `year` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+                          `kinopoisk_reviews` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+                          `awards` varchar(350) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+                          `writer` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+                          `released` varchar(350) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+                          `audience_rating` varchar(350) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+                          `production` varchar(350) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+                          `kinopoisk_distibutor` varchar(350) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+                          `kinopoisk_country` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+                          `imdb_distributor` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+                          `kinopoisk_distributor` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+                          `kinopoisk_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+                          `kinopoisk_genre` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+                          PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+
+DROP TABLE IF EXISTS `reviews_sources_lookup`;
+CREATE TABLE `reviews_sources_lookup` (
+  `name` varchar(200) NOT NULL,
+  `full_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `feature` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `url` varchar(200) NOT NULL,
+  `icon` varchar(2002) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `description` varchar(350) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  PRIMARY KEY (`name`),
+  KEY `name` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+DROP TABLE IF EXISTS `search`;
+CREATE TABLE `search` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `number` int DEFAULT '1',
+  `kinopoisk_source` int DEFAULT '0',
+  `imdb_source` int DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+DROP TABLE IF EXISTS `user_review_source_lookup`;
+CREATE TABLE `user_review_source_lookup` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `review_source_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `username` (`username`),
+  KEY `review_source_name` (`review_source_name`),
+  CONSTRAINT `user_review_source_lookup_ibfk_1` FOREIGN KEY (`username`) REFERENCES `users` (`username`),
+  CONSTRAINT `user_review_source_lookup_ibfk_2` FOREIGN KEY (`review_source_name`) REFERENCES `reviews_sources_lookup` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users` (
+  `username` varchar(50) NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `password` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `enabled` tinyint(1) NOT NULL DEFAULT '0',
+  `token` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`username`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+DROP TABLE IF EXISTS `search`;
+CREATE TABLE `search` (
+                          `id` int NOT NULL AUTO_INCREMENT,
+                          `name` varchar(100) NOT NULL,
+                          `number` int DEFAULT '1',
+                          `kinopoisk_source` int DEFAULT '0',
+                          `imdb_source` int DEFAULT '0',
+                          PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+INSERT INTO `users` (`username`, `id`, `password`, `enabled`, `token`) VALUES
+('11',	18,	'{bcrypt}$2a$10$T/vvZbepLSCyJUG.tOb7Per3W3.24Qdtn5S8jPOQM4c5oWDZkkvAW',	1,	NULL);
+INSERT INTO `users` (`username`, `id`, `password`, `enabled`, `token`) VALUES
+('12',	19,	'{bcrypt}$2a$10$T/vvZbepLSCyJUG.tOb7Per3W3.24Qdtn5S8jPOQM4c5oWDZkkvAW',	1,	NULL);
+
+
+
+
+INSERT INTO `search` (`id`, `name`, `number`, `kinopoisk_source`, `imdb_source`) VALUES
+(1,	'Redemption',	1,	1,	0),
+(2,	'Stargate',	2,	1,	0),
+(47,	'Pink Floyd',	1,	0,	0);
+
+INSERT INTO `reviews_sources_lookup` (`name`, `full_name`, `feature`, `url`, `icon`, `description`) VALUES
+('all_cinema_jp',	'Allcinema',	'Japan',	'https://www.allcinema.net/cinema/%s#usercomments',	'https://pbs.twimg.com/profile_images/1190137310882521090/CiI1nupk_400x400.png',	'An online database of movies released in Japan . It has been operated by Sting Ray Co., Ltd. since 2003');
+
+INSERT INTO `movies` (`id`, `imdb_id`, `kinopoisk_id`, `imdb_rating`, `imdb_votes`, `eng_name`, `rus_name`, `imdb_description`, `duration`, `imdb_director`, `kinopoisk_director`, `actors`, `language`, `imdb_country`, `metascore`, `imdb_genre`, `box_office`, `metacritic_rating`, `movie_db_rating`, `rotten_tomatoes_rating`, `tv_com_rating`, `film_affinity_rating`, `kinopoisk_rating`, `kinopoisk_votes`, `kinopoisk_poster`, `imdb_poster`, `year`, `kinopoisk_reviews`, `awards`, `writer`, `released`, `audience_rating`, `production`, `kinopoisk_distibutor`, `kinopoisk_country`, `imdb_distributor`, `kinopoisk_distributor`, `kinopoisk_description`, `kinopoisk_genre`) VALUES
+(-1023705264,	NULL,	'402614',	NULL,	NULL,	'Undisputed III: Redemption',	'Неоспоримый 3 (видео)',	NULL,	'1:36',	NULL,	'director',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	'7.6',	'38452',	'https://kinopoiskapiunofficial.tech/images/posters/kp_small/402614.jpg',	NULL,	'2010',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	'США',	NULL,	NULL,	NULL,	'боевик,драма,криминал'),
+(-597990361,	'tt0929629',	'307419',	NULL,	NULL,	'Stargate: Continuum',	'Звездные врата: Континуум',	NULL,	'1:38',	NULL,	'director',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	'7.4',	'4706',	'https://kinopoiskapiunofficial.tech/images/posters/kp_small/307419.jpg',	'https://m.media-amazon.com/images/M/MV5BMjE4MTc1NTYyNF5BMl5BanBnXkFtZTcwMjExNDI3NA@@._V1_SX300.jpg',	'2008',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	'Канада,США',	NULL,	NULL,	NULL,	'фантастика,фэнтези,боевик'),
+(-91925579,	'tt0084503',	'23712',	NULL,	NULL,	'Pink Floyd: The Wall',	'Стена',	NULL,	'1:39',	NULL,	' Алан Паркер',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	'8.1',	'35955',	'https://kinopoiskapiunofficial.tech/images/posters/kp_small/23712.jpg',	'https://m.media-amazon.com/images/M/MV5BZDhlZTYxOTYtYTk3Ny00ZDljLTk3ZmItZTcxZWU5YTIyYmFkXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg',	'1982',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	'Великобритания',	NULL,	NULL,	NULL,	'мюзиклдрама'),
+(690018291,	'tt10863666',	NULL,	NULL,	NULL,	'Tomás Klus: Redemption',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	'https://m.media-amazon.com/images/M/MV5BNTFlZTcyMzUtMzg2MC00NjQ2LTk4ZGMtZmI3MmZkNzlhMzE2XkEyXkFqcGdeQXVyMjIxMzMyMQ@@._V1_SX300.jpg',	'2018',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL);
+
+
 INSERT INTO `movie_search` (`movie_id`, `search_id`) VALUES
-(14512,	1),
-(77394,	1),
-(79817,	1),
-(79900,	1),
-(110902, 1),
-(230260, 1),
-(267352, 1),
-(270561, 1),
-(271836, 1),
-(586397, 1),
-(1008657, 1),
-(1272234, 1);
+(-1023705264,	1),
+(-597990361,	2),
+(-91925579,	47),
+(690018291,	1);
 
-INSERT INTO `movies` (`id`, `imdb_id`, `kinopoisk_id`, `imdb_rating`, `imdb_votes`, `name`, `eastern_name`, `description`, `duration`, `director`, `actors`, `language`, `country`, `metascore`, `genre`, `box_office`, `metacritic_rating`, `movie_db_rating`, `rotten_tomatoes_rating`, `tv_com_rating`, `film_affinity_rating`, `kinopoisk_rating`, `kinopoisk_votes`, `image`, `year`) VALUES
-(14512,	'tt0060315',	'14512',	'7.2',	'24,995',	'Django 2 - Il grande ritorno',	'Джанго 2: Возвращение',	'In the opening scene a lone man walks, behind him he drags a coffin. That man is Django. He rescues a woman from bandits and, later, arrives in a town ravaged by the same bandits. The scene for confrontation is set. But why does he drag that coffin everywhere and who, or what, is in it?',	'1:28',	'Sergio Corbucci',	'Franco Nero, José Bódalo, Loredana Nusciak, Ángel Álvarez',	'Italian',	'Italy, Spain',	'75',	'Action, Western',	'$25,916',	'75/100',	'7.2/10',	'92%',	NULL,	NULL,	'5.7',	'427',	'https://kinopoiskapiunofficial.tech/images/posters/kp_small/77394.jpg',	'1987'),
-(77394,	'tt0060315',	'77394',	'7.2',	'24,995',	'Django',	'Джанго',	'In the opening scene a lone man walks, behind him he drags a coffin. That man is Django. He rescues a woman from bandits and, later, arrives in a town ravaged by the same bandits. The scene for confrontation is set. But why does he drag that coffin everywhere and who, or what, is in it?',	'1:31',	'Sergio Corbucci',	'Franco Nero, José Bódalo, Loredana Nusciak, Ángel Álvarez',	'Italian',	'Italy, Spain',	'75',	'Action, Western',	'$25,916',	'75/100',	'7.2/10',	'92%',	NULL,	NULL,	'7.5',	'6339',	'https://kinopoiskapiunofficial.tech/images/posters/kp_small/77394.jpg',	'1966'),
-(79817,	'tt0060315',	'79817',	'7.2',	'24,995',	'Django il bastardo',	'Ублюдок Джанго',	'In the opening scene a lone man walks, behind him he drags a coffin. That man is Django. He rescues a woman from bandits and, later, arrives in a town ravaged by the same bandits. The scene for confrontation is set. But why does he drag that coffin everywhere and who, or what, is in it?',	'1:47',	'Sergio Corbucci',	'Franco Nero, José Bódalo, Loredana Nusciak, Ángel Álvarez',	'Italian',	'Italy, Spain',	'75',	'Action, Western',	'$25,916',	'75/100',	'7.2/10',	'92%',	NULL,	NULL,	'5.9',	'201',	'https://kinopoiskapiunofficial.tech/images/posters/kp_small/77394.jpg',	'1969'),
-(79900,	'tt0060315',	'79900',	'7.2',	'24,995',	'Pochi dollari per Django',	'Джанго, эта пуля для тебя!',	'In the opening scene a lone man walks, behind him he drags a coffin. That man is Django. He rescues a woman from bandits and, later, arrives in a town ravaged by the same bandits. The scene for confrontation is set. But why does he drag that coffin everywhere and who, or what, is in it?',	'1:25',	'Sergio Corbucci',	'Franco Nero, José Bódalo, Loredana Nusciak, Ángel Álvarez',	'Italian',	'Italy, Spain',	'75',	'Action, Western',	'$25,916',	'75/100',	'7.2/10',	'92%',	NULL,	NULL,	'5.7',	'90',	'https://kinopoiskapiunofficial.tech/images/posters/kp_small/77394.jpg',	'1966'),
-(110902,	'tt0060315',	'110902',	'7.2',	'24,995',	'W Django!',	'Вива, Джанго!',	'In the opening scene a lone man walks, behind him he drags a coffin. That man is Django. He rescues a woman from bandits and, later, arrives in a town ravaged by the same bandits. The scene for confrontation is set. But why does he drag that coffin everywhere and who, or what, is in it?',	'1:30',	'Sergio Corbucci',	'Franco Nero, José Bódalo, Loredana Nusciak, Ángel Álvarez',	'Italian',	'Italy, Spain',	'75',	'Action, Western',	'$25,916',	'75/100',	'7.2/10',	'92%',	NULL,	NULL,	'',	'n/a',	'https://kinopoiskapiunofficial.tech/images/posters/kp_small/77394.jpg',	'1971'),
-(230260,	'tt0060315',	'230260',	'7.2',	'24,995',	'Django spara per primo',	'Джанго стреляет первым',	'In the opening scene a lone man walks, behind him he drags a coffin. That man is Django. He rescues a woman from bandits and, later, arrives in a town ravaged by the same bandits. The scene for confrontation is set. But why does he drag that coffin everywhere and who, or what, is in it?',	'1:23',	'Sergio Corbucci',	'Franco Nero, José Bódalo, Loredana Nusciak, Ángel Álvarez',	'Italian',	'Italy, Spain',	'75',	'Action, Western',	'$25,916',	'75/100',	'7.2/10',	'92%',	NULL,	NULL,	'',	'n/a',	'https://kinopoiskapiunofficial.tech/images/posters/kp_small/77394.jpg',	'1966'),
-(267352,	'tt0060315',	'267352',	'7.2',	'24,995',	'Non aspettare Django, spara',	'Не медли, Джанго... Стреляй!',	'In the opening scene a lone man walks, behind him he drags a coffin. That man is Django. He rescues a woman from bandits and, later, arrives in a town ravaged by the same bandits. The scene for confrontation is set. But why does he drag that coffin everywhere and who, or what, is in it?',	'1:28',	'Sergio Corbucci',	'Franco Nero, José Bódalo, Loredana Nusciak, Ángel Álvarez',	'Italian',	'Italy, Spain',	'75',	'Action, Western',	'$25,916',	'75/100',	'7.2/10',	'92%',	NULL,	NULL,	'',	'n/a',	'https://kinopoiskapiunofficial.tech/images/posters/kp_small/77394.jpg',	'1967'),
-(270561,	'tt0060315',	'270561',	'7.2',	'24,995',	'Django',	'',	'In the opening scene a lone man walks, behind him he drags a coffin. That man is Django. He rescues a woman from bandits and, later, arrives in a town ravaged by the same bandits. The scene for confrontation is set. But why does he drag that coffin everywhere and who, or what, is in it?',	'n/a',	'Sergio Corbucci',	'Franco Nero, José Bódalo, Loredana Nusciak, Ángel Álvarez',	'Italian',	'Italy, Spain',	'75',	'Action, Western',	'$25,916',	'75/100',	'7.2/10',	'92%',	NULL,	NULL,	'',	'n/a',	'https://kinopoiskapiunofficial.tech/images/posters/kp_small/77394.jpg',	'1999'),
-(271836,	'tt0060315',	'271836',	'7.2',	'24,995',	'Sukiyaki Western Django',	'Сукияки Вестерн Джанго',	'In the opening scene a lone man walks, behind him he drags a coffin. That man is Django. He rescues a woman from bandits and, later, arrives in a town ravaged by the same bandits. The scene for confrontation is set. But why does he drag that coffin everywhere and who, or what, is in it?',	'1:36',	'Sergio Corbucci',	'Franco Nero, José Bódalo, Loredana Nusciak, Ángel Álvarez',	'Italian',	'Italy, Spain',	'75',	'Action, Western',	'$25,916',	'75/100',	'7.2/10',	'92%',	NULL,	NULL,	'6.0',	'4092',	'https://kinopoiskapiunofficial.tech/images/posters/kp_small/77394.jpg',	'2007'),
-(586397,	'tt0060315',	'586397',	'7.2',	'24,995',	'Django Unchained',	'Джанго освобожденный',	'In the opening scene a lone man walks, behind him he drags a coffin. That man is Django. He rescues a woman from bandits and, later, arrives in a town ravaged by the same bandits. The scene for confrontation is set. But why does he drag that coffin everywhere and who, or what, is in it?',	'2:45',	'Sergio Corbucci',	'Franco Nero, José Bódalo, Loredana Nusciak, Ángel Álvarez',	'Italian',	'Italy, Spain',	'75',	'Action, Western',	'$25,916',	'75/100',	'7.2/10',	'92%',	NULL,	NULL,	'8.2',	'455187',	'https://kinopoiskapiunofficial.tech/images/posters/kp_small/77394.jpg',	'2012'),
-(1008657,	'tt0060315',	'1008657',	'7.2',	'24,995',	'Django',	'Джанго',	'In the opening scene a lone man walks, behind him he drags a coffin. That man is Django. He rescues a woman from bandits and, later, arrives in a town ravaged by the same bandits. The scene for confrontation is set. But why does he drag that coffin everywhere and who, or what, is in it?',	'1:57',	'Sergio Corbucci',	'Franco Nero, José Bódalo, Loredana Nusciak, Ángel Álvarez',	'Italian',	'Italy, Spain',	'75',	'Action, Western',	'$25,916',	'75/100',	'7.2/10',	'92%',	NULL,	NULL,	'5.9',	'130',	'https://kinopoiskapiunofficial.tech/images/posters/kp_small/77394.jpg',	'2017'),
-(1272234,	'tt0060315',	'1272234',	'7.2',	'24,995',	'Django/Zorro',	'',	'In the opening scene a lone man walks, behind him he drags a coffin. That man is Django. He rescues a woman from bandits and, later, arrives in a town ravaged by the same bandits. The scene for confrontation is set. But why does he drag that coffin everywhere and who, or what, is in it?',	'n/a',	'Sergio Corbucci',	'Franco Nero, José Bódalo, Loredana Nusciak, Ángel Álvarez',	'Italian',	'Italy, Spain',	'75',	'Action, Western',	'$25,916',	'75/100',	'7.2/10',	'92%',	NULL,	NULL,	'97%',	'1142',	'https://kinopoiskapiunofficial.tech/images/posters/kp_small/77394.jpg',	'2022');
+INSERT INTO `movie_review_source` (`review_source_name`, `id`, `movie_id`, `url`) VALUES
+('all_cinema_jp',	534,	-1023705264,	'testUrl');
 
-INSERT INTO `search` (`id`, `name`, `number`) VALUES
-(1,	'Django',	2);
-
--- 2021-03-09 03:33:21
+INSERT INTO `movie_review_source` (`review_source_name`, `movie_id`, `url`) VALUES
+    ('all_cinema_jp',-597990361,'finalUrlToMovieSourceReviewOnSelectedMovie');
 
 
+INSERT INTO `user_review_source_lookup` (`username`, `review_source_name`) VALUES
+('11', 'all_cinema_jp');

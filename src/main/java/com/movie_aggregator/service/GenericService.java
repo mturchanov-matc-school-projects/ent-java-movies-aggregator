@@ -1,20 +1,24 @@
 package com.movie_aggregator.service;
 
-import com.movie_aggregator.entity.Movie;
-import com.movie_aggregator.entity.Search;
+import com.movie_aggregator.entity.*;
 import com.movie_aggregator.repository.GenericDao;
 import com.movie_aggregator.utils.MovieApisReader;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-import java.io.IOException;
-import java.util.List;
+import java.math.BigInteger;
+import java.util.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * The type Generic service.
+ * Includes business logic
+ * that is done with dao
  *
  * @author mturchanov
  */
@@ -23,6 +27,8 @@ public class GenericService {
 
     @Autowired
     private GenericDao genericDao;
+    @Autowired
+    private MovieApisReader movieApisReader;
     private final Logger logger = LogManager.getLogger(this.getClass());
 
 
@@ -33,8 +39,7 @@ public class GenericService {
      * @param o   the o
      * @return the int
      */
-    public <T> int save(final T o)
-    {
+    public <T> int save(final T o) {
         return (Integer) genericDao.save(o);
     }
 
@@ -45,8 +50,8 @@ public class GenericService {
      * @param type the type
      * @param id   the id
      */
-    public <T> void  delete(final Class<T> type, Integer id){
-      genericDao.delete(type, id);
+    public <T> void delete(final Class<T> type, Integer id) {
+        genericDao.delete(type, id);
     }
 
     /**
@@ -68,7 +73,7 @@ public class GenericService {
      * @param o   the o
      */
     public <T> void saveOrUpdate(final T o) {
-       genericDao.saveOrUpdate(o);
+        genericDao.saveOrUpdate(o);
     }
 
     /**
@@ -95,49 +100,159 @@ public class GenericService {
         return genericDao.getFirstEntryBasedOnAnotherTableColumnProperty(propertyName, searchVal, type);
     }
 
+
+
+
+    public List<Movie> getMoviesByProperty(String field, String searchVal, String propertyEntity) {
+        return genericDao.getMoviesByProperty(field, searchVal, propertyEntity);
+    }
+
     /**
-     * Gets movies.
+     * Gets movies either by generating new ones from apis
+     * if they are not in db, otherwise by
+     * retrieving them from db
      *
-     * @param existedSearch the existed search
-     * @param searchVal     the search val
-     * @return the movies
-     * @throws IOException the io exception
+     * @param searchVal
+     * @param movieSourceBase
+     * @returnlist list of genereated movies
      */
-    public List<Movie> getMovies (Search existedSearch, String searchVal) throws IOException {
-       // Search existedSearch = getOneEntryByColumProperty(propertyName, searchVal, searchClass);
-        List<Movie> movies = null;
-        if (existedSearch != null) { //IF SEARCH IN DB THEN NO NEED FOR APIS REQUESTS
-            // GET movies from DB
+    public List<Movie> getMovies(String searchVal, String movieSourceBase) {
+        Search existedSearch = getOneEntryByColumProperty("name", searchVal, Search.class);
+        searchVal = searchVal.trim().toLowerCase();
+        List<Movie> movies = getMoviesBasedOnSearchName(searchVal);
+        logger.info("getMoviesBasedOnSearchName: " + movies);
+
+        if (movies == null || movies.isEmpty()){ // generating new movies
+            movies = recordNewMovies(searchVal, movieSourceBase);
+        } else if (existedSearch != null // movies are in db but not kinopoisk version -> update needed
+                && movieSourceBase.equals("kinopoisk")
+                && existedSearch.getIsKinopoiskLaunched() == 0) {
+            List<Movie> updateMovies = movieApisReader.parseGeneralKinopoiskMoviesJson(searchVal);
+            MovieApisReader.mergeLists(updateMovies, movies);
+            existedSearch.setIsKinopoiskLaunched(1);
+            merge(existedSearch);
+            for (Movie m : updateMovies) {
+                saveOrUpdate(m);
+            }
+            incrementSearchNumberCounter(existedSearch.getId()); // increment Search.number
+            return updateMovies;
+        } else if (existedSearch != null // // movies are in db but not imdb version -> update needed
+                && movieSourceBase.equals("imdb")
+                && existedSearch.getIsOmdbLaunched() == 0) {
+            List<Movie> updateMovies = movieApisReader.parseGeneralImdbMoviesJson(searchVal);
+            MovieApisReader.mergeLists(updateMovies, movies);
+            existedSearch.setIsOmdbLaunched(1);
+            genericDao.merge(existedSearch);
+            for (Movie m : updateMovies) {
+                saveOrUpdate(m);
+            }
+            incrementSearchNumberCounter(existedSearch.getId()); // increment Search.number
+            return updateMovies;
+        } else if (existedSearch != null) { // needed movies version is in db -> retrieve them
             movies = getMoviesBasedOnSearchName(searchVal);
             incrementSearchNumberCounter(existedSearch.getId()); // increment Search.number
-        } else  {
-            MovieApisReader movieApisReader = new MovieApisReader();
-            movies = movieApisReader.parseJSONKinopoiskMovies(searchVal);
-            Search lastSearch = getLastSearch();
-            int id = 1;
-            if (lastSearch != null) {
-                id = lastSearch.getId() + 1;
-            }
-            save(new Search(id, searchVal));
+        }
+        return movies;
+    }
 
-            for (Movie movie : movies) {
-                movie.addSearchToMovie(new Search(id, searchVal));
-            }
+    /**
+     * Records new movies to db
+     * making needed api requests based on chosen movieSourceBase
+     *
+     * @param searchVal
+     * @param movieSourceBase
+     * @returnlist list of genereated movies
+     */
+    private List<Movie> recordNewMovies(String searchVal, String movieSourceBase) {
+        List<Movie> movies = null;
+        Search newSearch;
+        //generating new search
+        Search lastSearch = getLastSearch();
+        int id = 1;
+        if (lastSearch != null) {
+            id = lastSearch.getId() + 1;
+        }
+        newSearch = new Search(id, searchVal);
 
-            for (Movie movie : movies) {
-                // check if movie was added to db by different search
-                Movie getMovie = getOneEntryByColumProperty("kinopoiskId",
-                        movie.getKinopoiskId(), Movie.class);
-                if (getMovie != null) {
-                    getMovie.addSearchToMovie(new Search(searchVal));
-                    genericDao.saveOrUpdate(getMovie);
-                    continue;
-                }
-                genericDao.saveOrUpdate(movie);
-            }
+        //generating movies from api request
+        if (movieSourceBase.equals("kinopoisk")) {
+            movies = movieApisReader.parseGeneralKinopoiskMoviesJson(searchVal);
+            newSearch.setIsKinopoiskLaunched(1);
+        } else if (movieSourceBase.equals("imdb")) {
+            movies = movieApisReader.parseGeneralImdbMoviesJson(searchVal);
+            System.out.println("recordNewMovies:" + movies);
+            newSearch.setIsOmdbLaunched(1);
         }
 
+        if (movies == null) { // no movies found with selected search name/movie source -> exit
+            return null;
+        }
+        save(newSearch); // save new search manually because only once needed
+
+        for (Movie movie : movies) { // update movie_search via cascade
+            movie.addSearchToMovie(newSearch); //1search-manyMovies case
+        }
+        // check if movie was added to db by different search -> update movie_search via cascade
+        for (Movie movie : movies) {
+            int filmId = 0;
+            String nameEn = movie.getEngName();
+            String year = movie.getYear();
+            String nameRu = movie.getRusName();
+            //generating unique film id
+            if (!movie.getEngName().isEmpty()) {
+                filmId = MovieApisReader.hashCode(nameEn + year);
+            } else {
+                filmId = MovieApisReader.hashCode(nameRu + year);
+            }
+
+            Movie getMovie = get(Movie.class, filmId);
+            if (getMovie != null) { //if movie in db then it was added via another search
+                getMovie.addSearchToMovie(newSearch);
+                genericDao.merge(getMovie); // update movie_search -> 1movie-manySearches case
+                continue;
+            }
+            genericDao.saveOrUpdate(movie);
+        }
         return movies;
+    }
+
+    /**
+     * Merge object.
+     *
+     * @param <T> the type parameter
+     * @param o   the o
+     * @return the t
+     */
+    public <T> T merge(final T o) {
+        return (T) genericDao.merge(o);
+    }
+
+    /**
+     * Save user with default user-role.
+     * Provides bcrypt encryption for password
+     *
+     * @param user the user
+     * @return the int
+     */
+    public int saveUser(User user) {
+        User existedUserWithTheSameUsername = getOneEntryByColumProperty("username", user.getUsername(), User.class);
+        if (existedUserWithTheSameUsername != null) {
+            return 0;
+        }
+        user.setEnabled(1);
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        String encodedPassword = encoder.encode(user.getPassword());
+
+        user.setPassword(encodedPassword);
+
+        Authority authority = new Authority();
+        authority.setUsername(user.getUsername());
+        authority.setAuthority("ROLE_USER");
+
+        user.addAuthorityToUser(authority);
+        saveOrUpdate(user);
+        return 1;
     }
 
     /**
@@ -146,9 +261,8 @@ public class GenericService {
      * @param searchName the search name
      * @return the movies based on search name
      */
-    //TODO: make it generic
     public List<Movie> getMoviesBasedOnSearchName(String searchName) {
-       return genericDao.getMoviesBasedOnSearchName(searchName);
+        return genericDao.getMoviesBasedOnSearchName(searchName);
     }
 
     /**
@@ -161,14 +275,79 @@ public class GenericService {
     }
 
     /**
+     * Gets last search.
+     *
+     * @return the last search
+     */
+    public Set<ReviewsSourcesLookup> getMovieReviewSourcesForView(Set<ReviewsSourcesLookup> pickedSourcesLookups, Movie movie) {
+
+        Set<MovieReviewSource> reviewSources;
+        String[] names = pickedSourcesLookups.stream()
+                .map(ReviewsSourcesLookup::getName).toArray(size -> new String[pickedSourcesLookups.size()]);
+
+        if (movie.getMovieReviewSources().isEmpty()) {
+            Set<ReviewsSourcesLookup> lookups = new HashSet<>(getAll(ReviewsSourcesLookup.class));
+
+            movie = movieApisReader.parseJSONWikiDataReviewSources(movie, lookups);
+            reviewSources = movie.getMovieReviewSources();
+            merge(movie);
+        } else { // movie's reviews sources already in db by previous request
+            reviewSources = movie.getMovieReviewSources();
+        }
+        Set<ReviewsSourcesLookup> result = new HashSet<>();
+
+        //preparing collection for view
+        for (MovieReviewSource movieReviewSource : reviewSources) {
+            String lookupName = movieReviewSource.getReviewSource().getName();
+            boolean isSourceAmongPickedSources = Arrays.stream(names).anyMatch(lookupName::contains);
+            if (isSourceAmongPickedSources) {
+                ReviewsSourcesLookup finalLookup = movieReviewSource.getReviewSource();
+                finalLookup.setUrl(movieReviewSource.getUrl());
+                result.add(finalLookup);
+            }
+        }
+        return result;
+    }
+
+    public List<Search> getMostRecentSearches() {
+        return genericDao.getMostRecentSearches();
+    }
+
+    /**
      * Increment search number counter.
      *
      * @param id the id
      */
-    //TODO: make it generic
     public void incrementSearchNumberCounter(int id) {
-       genericDao.incrementSearchNumberCounter(id);
+        genericDao.incrementSearchNumberCounter(id);
     }
 
+    public Map<String, Integer> getCountForEachReviewSource() {
+        List<Object[]> rows = genericDao.getCountForEachReviewSource();
+        Map<String, Integer> reviewSourceCountMap = new TreeMap<>();
+        for (Object[] row: rows) {
+           String name = (String) row[0];
+            BigInteger count = (BigInteger) row[1];
+            Integer finalCount = Integer.parseInt(count.toString());
+           reviewSourceCountMap.put(name, finalCount);
+        }
+        return reviewSourceCountMap;
+    }
 
+    /**
+     * Generates user's picked review sources
+     * based on string array
+     *
+     * @param reviewsSources review sources array
+     * @return set of user's new picked review sources
+     */
+        public Set<ReviewsSourcesLookup> generateNewPickedReviewSources(String[] reviewsSources) {
+        Set<ReviewsSourcesLookup> newPickedReviewSources = new HashSet<>();
+        for (String reviewSource : reviewsSources) {
+            ReviewsSourcesLookup reviewsSourcesLookup = getOneEntryByColumProperty("name",
+                    reviewSource, ReviewsSourcesLookup.class);
+            newPickedReviewSources.add(reviewsSourcesLookup);
+        }
+        return newPickedReviewSources;
+    }
 }

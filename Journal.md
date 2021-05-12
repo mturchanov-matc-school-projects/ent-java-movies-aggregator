@@ -90,5 +90,49 @@ Tasks Completed:
        `@GeneratedValue`s are removed  
 
   
-  
+   3/8/2021 ~ 4 hours  
+   Tasks Completed:
+   * small updated everywhere
+   * starting setting up unit tests
+   * @manyToMany related classes updated
+
+
+   3/9/2021 ~ 2 hours  
+   Tasks Completed:
+   * unit tests for GenereicDao implemented
+   * souts changed to log.info
+   * javadocs added
+   * junk comments/code cleaned
+
+   3/14/2021   
+   Tasks Completed:
+   * updated controller + get/delete for generic dao
+
+   3/21/2021   
+   Tasks Completed:
+   * updating tests
+   * display all movie info if clicked on individual item in view
+   * setting up spring security auth for rest endpoints
+
+   3/24/2021 
+   Tasks Completed:
+   * rest updated - get movies by token is working (setup for user_list)
+   * password encryption for registered user
+   * service logic for signing up new user
+   * login + signup functionality updated
+   * db updated -- userMovie relationship is esteblished
+   * logout functionality added
+   * get movies by token functionality updated
+
+
+
+   3/25/2021 - 3/29/2021 
+   Tasks Completed:
+   * setting up/wrapping up application for deployment
+   * debugging deployment error
+
+   3/30/2021 
+   Tasks Completed:
+   * updating journal
+   * updated javadocs
  

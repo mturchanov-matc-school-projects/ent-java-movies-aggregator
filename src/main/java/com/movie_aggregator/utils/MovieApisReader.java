@@ -1,29 +1,40 @@
 package com.movie_aggregator.utils;
 
-import com.movie_aggregator.entity.Movie;
+import com.jayway.jsonpath.JsonPath;
+import com.movie_aggregator.entity.*;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.Column;
 import java.io.IOException;
+import java.lang.reflect.Method;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * The type Movie apis reader.
+ * Includes all operations/requests with
+ * api(s)/services
  *
  * @author mturchanov
  */
+@Component
 public class MovieApisReader implements PropertiesLoader {
+    private static final int PRIME = 31;
     private Properties properties;
     /**
      * The constant KINOPOISK_ROOT.
@@ -33,6 +44,11 @@ public class MovieApisReader implements PropertiesLoader {
      * The constant OMDB_ROOT.
      */
     public static final String OMDB_ROOT = "http://www.omdbapi.com/";
+
+    /**
+     * The constant QUERY_WIKI_DATA.
+     */
+    public static final String QUERY_WIKI_DATA = "https://query.wikidata.org/sparql?format=json&query=";
     private final Logger logger = LogManager.getLogger(this.getClass());
 
 
@@ -45,25 +61,34 @@ public class MovieApisReader implements PropertiesLoader {
 
 
     /**
-     * Gets json from api.
+     * Gets json from api/service
+     * For movies api hndles
+     * search requests that provide general information
+     * and requests for specific movie that provides full info,
+     * In addition, handles request for receiving movie's frames
+     * and request from sparql query
      *
-     * @param searchSource the search source
-     * @param searchType   the search type
-     * @param searchVal    the search val
+     * @param searchType the search source
+     * @param source     the search type
+     * @param searchVal  the search val
+     * @param movie      the movie
      * @return the json from api
      * @throws IOException the io exception
      */
-    public String getJSONFromApi(String searchSource , String searchType, String searchVal)
-            throws IOException {
-        searchVal =  URLEncoder.encode(searchVal, StandardCharsets.UTF_8);
+    public String getJSONFromApi(String searchType, String source, String searchVal, Movie movie) {
+        searchVal = URLEncoder.encode(searchVal, StandardCharsets.UTF_8);
         OkHttpClient client = new OkHttpClient();
         String requestURL = null;
         Request request = null;
 
-        switch (searchType) {
+        switch (source) {
             case "omdb": {
                 String apiKey = properties.getProperty("omdb_api");
-                requestURL = String.format("%s?i=%s&apiKey=%s&plot=full", OMDB_ROOT, searchVal, apiKey);
+                if (searchType.equals("general")) {
+                    requestURL = String.format("%s?s=%s&apiKey=%s&type=movie", OMDB_ROOT, searchVal, apiKey);
+                } else if (searchType.equals("specific")) {
+                    requestURL = String.format("%s?i=%s&apiKey=%s&plot=full&type=movie", OMDB_ROOT, searchVal, apiKey);
+                }
                 request = new Request.Builder()
                         .url(requestURL)
                         .method("GET", null)
@@ -72,10 +97,13 @@ public class MovieApisReader implements PropertiesLoader {
             }
             case "kinopoisk": {
                 String apiKey = properties.getProperty("kinopoisk_unofficial_api");
-                if (searchSource.equals("general")) {
+                if (searchType.equals("general")) {
                     requestURL = String.format("%s%s%s%s", KINOPOISK_ROOT, "search-by-keyword?keyword=", searchVal, "&page=1");
-                } else if (searchSource.equals("specific")) {
-                    requestURL = String.format("%s%s", KINOPOISK_ROOT, searchVal);
+                } else if (searchType.equals("specific")) {
+                    String url = String.format("%s%s?append_to_response=BUDGET,RATING,REVIEW", KINOPOISK_ROOT, searchVal);
+                    requestURL = url;
+                } else if (searchType.equals("frames")) {
+                    requestURL = String.format("%s%s/frames", KINOPOISK_ROOT, searchVal);
                 }
                 request = new Request.Builder()
                         .url(requestURL)
@@ -83,32 +111,56 @@ public class MovieApisReader implements PropertiesLoader {
                         .method("GET", null)
                         .build();
                 break;
+            }
+            case "sparql": {
+                URL sparqlQueryRaw = MovieApisReader.class.getResource("/sparqlQuery.txt");
+                String filePathForSparqlQuery = null;
+                String sparqlWithoutId = null;
 
+                try {
+                    filePathForSparqlQuery = Paths.get(sparqlQueryRaw.toURI()).toFile().getAbsolutePath();
+                    sparqlWithoutId = new String(Files.readAllBytes(Paths.get(filePathForSparqlQuery)));
+                } catch (IOException | URISyntaxException e) {
+                    e.printStackTrace();
+                }
+                String sparqlQueryFormatted = String.format(sparqlWithoutId, movie.getKinopoiskId(), movie.getImdbId());
+                requestURL = String.format("%s%s", QUERY_WIKI_DATA, sparqlQueryFormatted);
+
+
+                request = new Request.Builder()
+                        .url(requestURL)
+                        .method("GET", null)
+                        .build();
+                break;
             }
         }
 
-        Response response = null;
+        Response response;
         try {
             response = client.newCall(request).execute();
+            if (response == null) {
+                return null;
+            }
+            return response.body().string();
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
-        return response.body().string();
+        return null;
     }
 
+
     /**
-     * Parse json kinopoisk movies list.
+     * Parse general kinopoisk movies json list.
      *
      * @param searchVal the search val
      * @return the list
      */
-//TODO: run only kinopoisk if ASCII has russian characters
-    public List<Movie> parseJSONKinopoiskMovies(String searchVal) {
+    public List<Movie> parseGeneralKinopoiskMoviesJson(String searchVal) {
         //get general movie info json data
-        //String JSONMovies = getJSONFromApi("general", "kinopoisk", searchVal);
-        //test
-        String JSONMovies = "{\"keyword\":\"Django\",\"pagesCount\":5,\"films\":[{\"filmId\":77394,\"nameRu\":\"Джанго\",\"nameEn\":\"Django\",\"type\":\"UNKNOWN\",\"year\":\"1966\",\"description\":\"Италия, Серджио Корбуччи(боевик)\",\"filmLength\":\"1:31\",\"countries\":[{\"country\":\"Италия\"},{\"country\":\"Испания\"}],\"genres\":[{\"genre\":\"боевик\"},{\"genre\":\"вестерн\"}],\"rating\":\"7.5\",\"ratingVoteCount\":6339,\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/77394.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/77394.jpg\"},{\"filmId\":586397,\"nameRu\":\"Джанго освобожденный\",\"nameEn\":\"Django Unchained\",\"type\":\"UNKNOWN\",\"year\":\"2012\",\"description\":\"США, Квентин Тарантино(вестерн)\",\"filmLength\":\"2:45\",\"countries\":[{\"country\":\"США\"}],\"genres\":[{\"genre\":\"вестерн\"},{\"genre\":\"боевик\"},{\"genre\":\"драма\"}],\"rating\":\"8.2\",\"ratingVoteCount\":455187,\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/586397.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/586397.jpg\"},{\"filmId\":1008657,\"nameRu\":\"Джанго\",\"nameEn\":\"Django\",\"type\":\"UNKNOWN\",\"year\":\"2017\",\"description\":\"Франция, Этьен Комар(драма)\",\"filmLength\":\"1:57\",\"countries\":[{\"country\":\"Франция\"}],\"genres\":[{\"genre\":\"драма\"},{\"genre\":\"военный\"},{\"genre\":\"биография\"}],\"rating\":\"5.9\",\"ratingVoteCount\":130,\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/1008657.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/1008657.jpg\"},{\"filmId\":4367759,\"nameRu\":\"\",\"nameEn\":\"Django (сериал)\",\"type\":\"UNKNOWN\",\"year\":\"2022-...\",\"description\":\"Франция, Франческа Коменчини(драма)\",\"countries\":[{\"country\":\"Франция\"}],\"genres\":[{\"genre\":\"драма\"},{\"genre\":\"вестерн\"}],\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/4367759.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/4367759.jpg\"},{\"filmId\":79817,\"nameRu\":\"Ублюдок Джанго\",\"nameEn\":\"Django il bastardo\",\"type\":\"UNKNOWN\",\"year\":\"1969\",\"description\":\"Италия, Серджо Гарроне(вестерн)\",\"filmLength\":\"1:47\",\"countries\":[{\"country\":\"Италия\"}],\"genres\":[{\"genre\":\"вестерн\"}],\"rating\":\"5.9\",\"ratingVoteCount\":201,\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/79817.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/79817.jpg\"},{\"filmId\":1272234,\"nameRu\":\"\",\"nameEn\":\"Django/Zorro\",\"type\":\"UNKNOWN\",\"year\":\"2022\",\"description\":\"США(драма)\",\"countries\":[{\"country\":\"США\"}],\"genres\":[{\"genre\":\"драма\"},{\"genre\":\"приключения\"},{\"genre\":\"вестерн\"}],\"rating\":\"97%\",\"ratingVoteCount\":1142,\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/1272234.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/1272234.jpg\"},{\"filmId\":91547,\"nameRu\":\"Кеома\",\"nameEn\":\"Keoma\",\"type\":\"UNKNOWN\",\"year\":\"1976\",\"description\":\"Италия, Энцо Дж. Кастеллари(драма)\",\"filmLength\":\"1:45\",\"countries\":[{\"country\":\"Италия\"}],\"genres\":[{\"genre\":\"драма\"},{\"genre\":\"вестерн\"}],\"rating\":\"6.9\",\"ratingVoteCount\":451,\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/91547.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/91547.jpg\"},{\"filmId\":271836,\"nameRu\":\"Сукияки Вестерн Джанго\",\"nameEn\":\"Sukiyaki Western Django\",\"type\":\"UNKNOWN\",\"year\":\"2007\",\"description\":\"Япония, Такаси Миике(боевик)\",\"filmLength\":\"1:36\",\"countries\":[{\"country\":\"Япония\"}],\"genres\":[{\"genre\":\"боевик\"},{\"genre\":\"вестерн\"}],\"rating\":\"6.0\",\"ratingVoteCount\":4092,\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/271836.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/271836.jpg\"},{\"filmId\":152269,\"nameRu\":\"Чаманго\",\"nameEn\":\"Cjamango\",\"type\":\"UNKNOWN\",\"year\":\"1967\",\"description\":\"Италия, Эдуардо Мулагрия(вестерн)\",\"filmLength\":\"1:30\",\"countries\":[{\"country\":\"Италия\"}],\"genres\":[{\"genre\":\"вестерн\"}],\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/152269.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/152269.jpg\"},{\"filmId\":270561,\"nameRu\":\"\",\"nameEn\":\"Django\",\"type\":\"UNKNOWN\",\"year\":\"1999\",\"description\":\"США, Гарри Максон\",\"countries\":[{\"country\":\"США\"}],\"genres\":[],\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/270561.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/270561.jpg\"},{\"filmId\":14512,\"nameRu\":\"Джанго 2: Возвращение\",\"nameEn\":\"Django 2 - Il grande ritorno\",\"type\":\"UNKNOWN\",\"year\":\"1987\",\"description\":\"Италия, Нелло Россати(вестерн)\",\"filmLength\":\"1:28\",\"countries\":[{\"country\":\"Италия\"}],\"genres\":[{\"genre\":\"вестерн\"}],\"rating\":\"5.7\",\"ratingVoteCount\":427,\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/14512.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/14512.jpg\"},{\"filmId\":221920,\"nameRu\":\"Головорезы\",\"nameEn\":\"El desperado\",\"type\":\"UNKNOWN\",\"year\":\"1967\",\"description\":\"Италия, Франко Россетти(вестерн)\",\"filmLength\":\"1:43\",\"countries\":[{\"country\":\"Италия\"},{\"country\":\"Испания\"}],\"genres\":[{\"genre\":\"вестерн\"}],\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/221920.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/221920.jpg\"},{\"filmId\":110902,\"nameRu\":\"Вива, Джанго!\",\"nameEn\":\"W Django!\",\"type\":\"UNKNOWN\",\"year\":\"1971\",\"description\":\"Италия, Эдуардо Мулагрия(вестерн)\",\"filmLength\":\"1:30\",\"countries\":[{\"country\":\"Италия\"}],\"genres\":[{\"genre\":\"вестерн\"}],\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/110902.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/110902.jpg\"},{\"filmId\":79900,\"nameRu\":\"Джанго, эта пуля для тебя!\",\"nameEn\":\"Pochi dollari per Django\",\"type\":\"UNKNOWN\",\"year\":\"1966\",\"description\":\"Италия, Леон Климовский(криминал)\",\"filmLength\":\"1:25\",\"countries\":[{\"country\":\"Италия\"},{\"country\":\"Испания\"}],\"genres\":[{\"genre\":\"криминал\"},{\"genre\":\"вестерн\"}],\"rating\":\"5.7\",\"ratingVoteCount\":90,\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/79900.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/79900.jpg\"},{\"filmId\":1378064,\"nameRu\":\"\",\"nameEn\":\"Django\",\"type\":\"UNKNOWN\",\"year\":\"2014\",\"description\":\"Ливан, Scarlett Saad(короткометражка)\",\"filmLength\":\"0:18\",\"countries\":[{\"country\":\"Ливан\"}],\"genres\":[{\"genre\":\"короткометражка\"},{\"genre\":\"мюзикл\"}],\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/1378064.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/1378064.jpg\"},{\"filmId\":230260,\"nameRu\":\"Джанго стреляет первым\",\"nameEn\":\"Django spara per primo\",\"type\":\"UNKNOWN\",\"year\":\"1966\",\"description\":\"Италия, Альберто Де Мартино(мелодрама)\",\"filmLength\":\"1:23\",\"countries\":[{\"country\":\"Италия\"}],\"genres\":[{\"genre\":\"мелодрама\"},{\"genre\":\"вестерн\"}],\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/230260.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/230260.jpg\"},{\"filmId\":267352,\"nameRu\":\"Не медли, Джанго... Стреляй!\",\"nameEn\":\"Non aspettare Django, spara\",\"type\":\"UNKNOWN\",\"year\":\"1967\",\"description\":\"Италия, Эдуардо Мулагрия(боевик)\",\"filmLength\":\"1:28\",\"countries\":[{\"country\":\"Италия\"}],\"genres\":[{\"genre\":\"боевик\"},{\"genre\":\"вестерн\"}],\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/267352.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/267352.jpg\"},{\"filmId\":115100,\"nameRu\":\"Метис\",\"nameEn\":\"Mestizo\",\"type\":\"UNKNOWN\",\"year\":\"1966\",\"description\":\"Испания, Хулио Бучс(вестерн)\",\"filmLength\":\"1:35\",\"countries\":[{\"country\":\"Испания\"}],\"genres\":[{\"genre\":\"вестерн\"}],\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/115100.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/115100.jpg\"},{\"filmId\":448711,\"nameRu\":\"Кид Монтана\",\"nameEn\":\"Gunless\",\"type\":\"UNKNOWN\",\"year\":\"2010\",\"description\":\"Канада, Уильям Филлипс(боевик)\",\"filmLength\":\"1:29\",\"countries\":[{\"country\":\"Канада\"}],\"genres\":[{\"genre\":\"боевик\"},{\"genre\":\"драма\"},{\"genre\":\"комедия\"}],\"rating\":\"6.7\",\"ratingVoteCount\":981,\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/448711.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/448711.jpg\"},{\"filmId\":740489,\"nameRu\":\"\",\"nameEn\":\"Scenes from Django Unchained - UK Winner\",\"type\":\"UNKNOWN\",\"year\":\"2013\",\"description\":\"Великобритания, Тоби Робертс(короткометражка)\",\"filmLength\":\"0:05\",\"countries\":[{\"country\":\"Великобритания\"}],\"genres\":[{\"genre\":\"короткометражка\"},{\"genre\":\"вестерн\"}],\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/740489.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/740489.jpg\"}],\"searchFilmsCountResult\":100}";
-        //String JSONMovies = "{\"keyword\":\"test\",\"pagesCount\":68,\"films\":[{\"filmId\":709570,\"nameRu\":\"Тест\",\"nameEn\":\"Test\",\"type\":\"UNKNOWN\",\"year\":\"2013\",\"description\":\"США, Кристофер Мэйсон Джонсон(драма)\",\"filmLength\":\"1:30\",\"countries\":[{\"country\":\"США\"}],\"genres\":[{\"genre\":\"драма\"}],\"rating\":\"6.5\",\"ratingVoteCount\":313,\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/709570.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/709570.jpg\"},{\"filmId\":5446,\"nameRu\":\"Завещание\",\"nameEn\":\"Testament\",\"type\":\"UNKNOWN\",\"year\":\"1983\",\"description\":\"США, Линн Литман(драма)\",\"filmLength\":\"1:30\",\"countries\":[{\"country\":\"США\"}],\"genres\":[{\"genre\":\"драма\"}],\"rating\":\"5.8\",\"ratingVoteCount\":693,\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/5446.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/5446.jpg\"},{\"filmId\":437979,\"nameRu\":\"Подопытные (сериал)\",\"nameEn\":\"Testees\",\"type\":\"UNKNOWN\",\"year\":\"2008-2008\",\"description\":\"США, Самир Реэм(комедия)\",\"filmLength\":\"0:22\",\"countries\":[{\"country\":\"США\"}],\"genres\":[{\"genre\":\"комедия\"}],\"rating\":\"7.0\",\"ratingVoteCount\":835,\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/437979.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/437979.jpg\"},{\"filmId\":1073042,\"nameRu\":\"\",\"nameEn\":\"Test\",\"type\":\"UNKNOWN\",\"year\":\"2019\",\"description\":\"США, Умашанкар(драма)\",\"filmLength\":\"1:46\",\"countries\":[{\"country\":\"США\"}],\"genres\":[{\"genre\":\"драма\"}],\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/1073042.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/1073042.jpg\"},{\"filmId\":840470,\"nameRu\":\"Новейший завет\",\"nameEn\":\"Le tout nouveau testament\",\"type\":\"UNKNOWN\",\"year\":\"2015\",\"description\":\"Бельгия, Жако ван Дормель(фэнтези)\",\"filmLength\":\"1:54\",\"countries\":[{\"country\":\"Бельгия\"},{\"country\":\"Франция\"},{\"country\":\"Люксембург\"}],\"genres\":[{\"genre\":\"фэнтези\"},{\"genre\":\"комедия\"}],\"rating\":\"6.9\",\"ratingVoteCount\":32225,\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/840470.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/840470.jpg\"},{\"filmId\":77600,\"nameRu\":\"Свидетельство\",\"nameEn\":\"Testimony\",\"type\":\"UNKNOWN\",\"year\":\"1987\",\"description\":\"Нидерланды, Тони Палмер(драма)\",\"filmLength\":\"2:37\",\"countries\":[{\"country\":\"Нидерланды\"},{\"country\":\"Великобритания\"},{\"country\":\"Дания\"}],\"genres\":[{\"genre\":\"драма\"},{\"genre\":\"биография\"},{\"genre\":\"история\"}],\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/77600.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/77600.jpg\"},{\"filmId\":1045615,\"nameRu\":\"Тест на беременность 2 (сериал)\",\"nameEn\":\"\",\"type\":\"UNKNOWN\",\"year\":\"2019-...\",\"description\":\"Россия, Клим Шипенко(мелодрама)\",\"filmLength\":\"0:48\",\"countries\":[{\"country\":\"Россия\"}],\"genres\":[{\"genre\":\"мелодрама\"}],\"rating\":\"7.3\",\"ratingVoteCount\":7410,\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/1045615.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/1045615.jpg\"},{\"filmId\":47379,\"nameRu\":\"Тестостерон\",\"nameEn\":\"Testosterone\",\"type\":\"UNKNOWN\",\"year\":\"2003\",\"description\":\"Аргентина, Дэвид Моретоун(драма)\",\"filmLength\":\"1:45\",\"countries\":[{\"country\":\"Аргентина\"},{\"country\":\"США\"}],\"genres\":[{\"genre\":\"драма\"},{\"genre\":\"мелодрама\"},{\"genre\":\"комедия\"}],\"rating\":\"6.2\",\"ratingVoteCount\":89,\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/47379.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/47379.jpg\"},{\"filmId\":682688,\"nameRu\":\"Воспоминания о будущем\",\"nameEn\":\"Testament of Youth\",\"type\":\"UNKNOWN\",\"year\":\"2014\",\"description\":\"Великобритания, Джеймс Кент(драма)\",\"filmLength\":\"2:09\",\"countries\":[{\"country\":\"Великобритания\"},{\"country\":\"Дания\"}],\"genres\":[{\"genre\":\"драма\"},{\"genre\":\"военный\"},{\"genre\":\"биография\"}],\"rating\":\"7.6\",\"ratingVoteCount\":20586,\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/682688.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/682688.jpg\"},{\"filmId\":973455,\"nameRu\":\"О теле и душе\",\"nameEn\":\"Testről és Lélekről\",\"type\":\"UNKNOWN\",\"year\":\"2017\",\"description\":\"Венгрия, Ильдико Эньеди(фэнтези)\",\"filmLength\":\"1:56\",\"countries\":[{\"country\":\"Венгрия\"}],\"genres\":[{\"genre\":\"фэнтези\"},{\"genre\":\"драма\"},{\"genre\":\"мелодрама\"}],\"rating\":\"7.2\",\"ratingVoteCount\":10125,\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/973455.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/973455.jpg\"},{\"filmId\":112870,\"nameRu\":\"Тестостерон\",\"nameEn\":\"Testosteroni\",\"type\":\"UNKNOWN\",\"year\":\"2004\",\"description\":\"Греция, Йоргос Панусопулос(комедия)\",\"filmLength\":\"1:32\",\"countries\":[{\"country\":\"Греция\"}],\"genres\":[{\"genre\":\"комедия\"}],\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/112870.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/112870.jpg\"},{\"filmId\":1313399,\"nameRu\":\"Альфа-тест\",\"nameEn\":\"The Alpha Test\",\"type\":\"UNKNOWN\",\"year\":\"2020\",\"description\":\"США, Аарон Миртес(фантастика)\",\"filmLength\":\"1:27\",\"countries\":[{\"country\":\"США\"}],\"genres\":[{\"genre\":\"фантастика\"}],\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/1313399.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/1313399.jpg\"},{\"filmId\":94824,\"nameRu\":\"Тесты для настоящих мужчин\",\"nameEn\":\"\",\"type\":\"UNKNOWN\",\"year\":\"1998\",\"description\":\"Россия, Андрей Разенков(драма)\",\"filmLength\":\"1:09\",\"countries\":[{\"country\":\"Россия\"}],\"genres\":[{\"genre\":\"драма\"}],\"rating\":\"7.4\",\"ratingVoteCount\":2530,\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/94824.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/94824.jpg\"},{\"filmId\":826743,\"nameRu\":\"Тест на беременность (сериал)\",\"nameEn\":\"\",\"type\":\"UNKNOWN\",\"year\":\"2014\",\"description\":\"Россия, Михаил Вайнберг(мелодрама)\",\"filmLength\":\"0:52\",\"countries\":[{\"country\":\"Россия\"}],\"genres\":[{\"genre\":\"мелодрама\"}],\"rating\":\"8.1\",\"ratingVoteCount\":49665,\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/826743.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/826743.jpg\"},{\"filmId\":1009402,\"nameRu\":\"Тесть\",\"nameEn\":\"\",\"type\":\"UNKNOWN\",\"year\":\"2015\",\"description\":\"Россия, Андрей Митёшин(короткометражка)\",\"filmLength\":\"0:19\",\"countries\":[{\"country\":\"Россия\"}],\"genres\":[{\"genre\":\"короткометражка\"}],\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/1009402.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/1009402.jpg\"},{\"filmId\":42234,\"nameRu\":\"Дознание пилота Пиркса\",\"nameEn\":\"Test pilota Pirxa\",\"type\":\"UNKNOWN\",\"year\":\"1978\",\"description\":\"Польша, Марек Пестрак(фантастика)\",\"filmLength\":\"1:40\",\"countries\":[{\"country\":\"Польша\"},{\"country\":\"СССР\"}],\"genres\":[{\"genre\":\"фантастика\"},{\"genre\":\"драма\"}],\"rating\":\"7.0\",\"ratingVoteCount\":2310,\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/42234.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/42234.jpg\"},{\"filmId\":1311768,\"nameRu\":\"Небеременная\",\"nameEn\":\"Unpregnant\",\"type\":\"UNKNOWN\",\"year\":\"2020\",\"description\":\"США, Рэйчел Голденберг(драма)\",\"filmLength\":\"1:43\",\"countries\":[{\"country\":\"США\"}],\"genres\":[{\"genre\":\"драма\"},{\"genre\":\"комедия\"}],\"rating\":\"6.5\",\"ratingVoteCount\":343,\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/1311768.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/1311768.jpg\"},{\"filmId\":418762,\"nameRu\":\"Экзамен\",\"nameEn\":\"Exam\",\"type\":\"UNKNOWN\",\"year\":\"2009\",\"description\":\"Великобритания, Стюарт Хэзелдайн(триллер)\",\"filmLength\":\"1:41\",\"countries\":[{\"country\":\"Великобритания\"}],\"genres\":[{\"genre\":\"триллер\"},{\"genre\":\"детектив\"}],\"rating\":\"7.1\",\"ratingVoteCount\":93493,\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/418762.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/418762.jpg\"},{\"filmId\":4917,\"nameRu\":\"Святые из Бундока\",\"nameEn\":\"The Boondock Saints\",\"type\":\"UNKNOWN\",\"year\":\"1999\",\"description\":\"США, Трой Даффи(боевик)\",\"filmLength\":\"1:49\",\"countries\":[{\"country\":\"США\"},{\"country\":\"Канада\"}],\"genres\":[{\"genre\":\"боевик\"},{\"genre\":\"триллер\"},{\"genre\":\"драма\"}],\"rating\":\"7.9\",\"ratingVoteCount\":114499,\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/4917.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/4917.jpg\"},{\"filmId\":698047,\"nameRu\":\"Испытайте свой мозг (сериал)\",\"nameEn\":\"Test Your Brain\",\"type\":\"UNKNOWN\",\"year\":\"2011\",\"description\":\"США, Джереми Кроуэлл(документальный)\",\"filmLength\":\"0:45\",\"countries\":[{\"country\":\"США\"}],\"genres\":[{\"genre\":\"документальный\"}],\"rating\":\"8.1\",\"ratingVoteCount\":416,\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/698047.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/698047.jpg\"}],\"searchFilmsCountResult\":1354}";
+        String JSONMovies = getJSONFromApi("general", "kinopoisk", searchVal, null);
+        if (JSONMovies == null) {
+            return null;
+        }
         ArrayList<Movie> movies = new ArrayList<>();
 
         JSONObject obj = new JSONObject(JSONMovies);
@@ -116,77 +168,170 @@ public class MovieApisReader implements PropertiesLoader {
 
         for (int i = 0; i < films.length(); i++) {
             JSONObject movieJSON = films.getJSONObject(i);
-            String filmId = String.valueOf(movieJSON.getInt("filmId"));
             String nameRu = movieJSON.getString("nameRu");
-            String nameEn = movieJSON.getString("nameEn");
-            String shortDesc = movieJSON.getString("description");
-
-            if(!nameEn.contains(searchVal) || nameEn.contains("(сериал)")
-                    || shortDesc.contains("короткометражка")
-                    || nameRu.contains("(ТВ)")
+            String nameEn = movieJSON.has("nameEn")
+                    ? movieJSON.getString("nameEn")
+                    : "";
+            String shortInfo = movieJSON.has("description")
+                    ? movieJSON.getString("description")
+                    : null;
+            if ((!nameEn.isEmpty() && !nameEn.toLowerCase(Locale.ROOT).contains(searchVal))
+                    || nameEn.contains("(видео)")
             ) {
                 continue;
             }
+            String year = movieJSON.has("year")
+                    ? movieJSON.getString("year")
+                    : "";
+            // String director = shortInfo.substring(shortInfo.indexOf(' '), shortInfo.indexOf('('));
+            String director = "";
+
             String duration = movieJSON.has("filmLength")
                     ? movieJSON.getString("filmLength")
                     : "n/a";
-            String year = movieJSON.has("year")
-                    ? movieJSON.getString("year")
-                    : "n/a";
             String kVotes = movieJSON.has("ratingVoteCount")
                     ? String.valueOf(movieJSON.getInt("ratingVoteCount"))
-                    : "n/a";
-
+                    : "";
+            String kinopoiskId = movieJSON.has("filmId")
+                    ? String.valueOf(movieJSON.getInt("filmId"))
+                    : "";
             String rating = movieJSON.has("rating")
                     ? movieJSON.getString("rating")
                     : "";
-
-            //make requests to get json with kinopoisk movie details
-            //String movieDetails = getJSONFromApi("specific","kinopoisk", filmId);
-
-            //test
-            String movieDetails = "{\"data\":{\"filmId\":77394,\"nameRu\":\"Джанго\",\"nameEn\":\"Django\",\"webUrl\":\"http://www.kinopoisk.ru/film/77394/\",\"posterUrl\":\"https://kinopoiskapiunofficial.tech/images/posters/kp/77394.jpg\",\"posterUrlPreview\":\"https://kinopoiskapiunofficial.tech/images/posters/kp_small/77394.jpg\",\"year\":\"1966\",\"filmLength\":\"1:31\",\"slogan\":\"The movie that spawned a genre.\",\"description\":\"Как всегда, Дикий Запад наполнен бандитами и головорезами. Терроризм процветает на территории небольшого городка, пока в нем не появляется защитник слабых и угнетенных Джанго. Он появляется ниоткуда, притащив за собой на веревке гроб с «секретом». Трудна миссия по защите угнетенных, но, как всегда, выполнима, тем более, если за дело берется Джанго.\",\"type\":\"FILM\",\"ratingMpaa\":\"R\",\"ratingAgeLimits\":16,\"premiereRu\":null,\"distributors\":null,\"premiereWorld\":\"1966-04-06\",\"premiereDigital\":null,\"premiereWorldCountry\":\"Италия\",\"premiereDvd\":\"2002-09-26\",\"premiereBluRay\":null,\"distributorRelease\":\"DVD Магия\",\"countries\":[{\"country\":\"Испания\"},{\"country\":\"Италия\"}],\"genres\":[{\"genre\":\"боевик\"},{\"genre\":\"вестерн\"}],\"facts\":[\"Пулемёт Джанго - фальшивка. Это гибрид между французской «митральезой де Реффи», орудием Гатлинга и пулемётом Максима с водяным охлаждением. Пулемётная лента не движется и патроны есть с обеих сторон оружия. Как минимум с другой стороны должна быть пустая лента. Лента так же размещена слишком далеко от механизма пулемёта.\",\"Японский режиссер Такаси Миике снял фильм «Сукияки Вестерн Джанго» (2007) с явной отсылкой к фильму Серджио Корбуччи. В частности, в японском фильме также присутствует гроб.\",\"В картине Квентина Тарантино «Джанго освобождённый» Франко Неро исполнил эпизодическую роль с иронической отсылкой к его роли в фильме «Джанго».\",\"В финальной сцене есть ляп: револьвер, из которого стреляет Джанго, делает семь выстрелов, немотря на то, что емкость барабана - шесть патронов.\"],\"seasons\":[]},\"externalId\":{\"imdbId\":\"tt0060315\"},\"rating\":{\"rating\":7.5,\"ratingVoteCount\":6105,\"ratingImdb\":7.2,\"ratingImdbVoteCount\":24319,\"ratingFilmCritics\":\"92%\",\"ratingFilmCriticsVoteCount\":13,\"ratingAwait\":\"‒\",\"ratingAwaitCount\":0,\"ratingRfCritics\":\"\",\"ratingRfCriticsVoteCount\":0},\"budget\":{\"grossRu\":null,\"grossUsa\":25916,\"grossWorld\":null,\"budget\":null,\"marketing\":null},\"review\":{\"reviewsCount\":19,\"ratingGoodReview\":\"92%\",\"ratingGoodReviewVoteCount\":16}}";
-
-            JSONObject movieDetailsJSON = new JSONObject(movieDetails);
-            JSONObject movieDataJSON = movieDetailsJSON.getJSONObject("data");
-            String image = movieDataJSON.getString("posterUrlPreview");
-            String description = !movieDataJSON.isNull("description")
-                    ? movieDataJSON.getString("description")
-                    : "";
-            JSONObject externalIdObj = movieDetailsJSON.getJSONObject("externalId");
-            String imdbId = !externalIdObj.isNull("imdbId")
-                    ? externalIdObj.getString("imdbId")
-                    : "null";
-
-            Movie movie = new Movie(nameEn, nameRu,imdbId, filmId, shortDesc, duration, year, kVotes, rating, image, description);
-            //JSONObject movieReview = movieDetailsJSON.getJSONObject("review");
-            // trying to fix exc
-            movie.setId(Integer.parseInt(filmId));
-            if (!imdbId.equals("null")) {
-                //make requests to get json with imdb movie details
-                //String imdbDataJSON = getJSONFromApi("specific", "omdb", imdbId);
-                //test
-                String imdbDataJSON = "{\"Title\":\"Django\",\"Year\":\"1966\",\"Rated\":\"Not Rated\",\"Released\":\"01 Dec 1966\",\"Runtime\":\"91 min\",\"Genre\":\"Action, Western\",\"Director\":\"Sergio Corbucci\",\"Writer\":\"Sergio Corbucci (story), Bruno Corbucci (story), Sergio Corbucci (screenplay), Bruno Corbucci (screenplay), Franco Rossetti (screenplay in collaboration with), Piero Vivarelli (screenplay in collaboration with), Geoffrey Copleston (English version by)\",\"Actors\":\"Franco Nero, José Bódalo, Loredana Nusciak, Ángel Álvarez\",\"Plot\":\"In the opening scene a lone man walks, behind him he drags a coffin. That man is Django. He rescues a woman from bandits and, later, arrives in a town ravaged by the same bandits. The scene for confrontation is set. But why does he drag that coffin everywhere and who, or what, is in it?\",\"Language\":\"Italian\",\"Country\":\"Italy, Spain\",\"Awards\":\"N/A\",\"Poster\":\"https://m.media-amazon.com/images/M/MV5BMTA4M2NmZTgtOGJlOS00NDExLWE4MzItNWQxNTRmYzIzYmM0L2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyNjc1NTYyMjg@._V1_SX300.jpg\",\"Ratings\":[{\"Source\":\"Internet Movie Database\",\"Value\":\"7.2/10\"},{\"Source\":\"Rotten Tomatoes\",\"Value\":\"92%\"},{\"Source\":\"Metacritic\",\"Value\":\"75/100\"}],\"Metascore\":\"75\",\"imdbRating\":\"7.2\",\"imdbVotes\":\"24,995\",\"imdbID\":\"tt0060315\",\"Type\":\"movie\",\"DVD\":\"07 Jun 2017\",\"BoxOffice\":\"$25,916\",\"Production\":\"B.R.C. Produzione S.r.l.\",\"Website\":\"N/A\",\"Response\":\"True\"}";
-
-                //logger.info(imdbDataJSON);
-                //String imdbDataJSON = "{\"Title\":\"Matrix\",\"Year\":\"1993\",\"Rated\":\"N/A\",\"Released\":\"01 Mar 1993\",\"Runtime\":\"60 min\",\"Genre\":\"Action, Drama, Fantasy, Thriller\",\"Director\":\"N/A\",\"Writer\":\"Grenville Case\",\"Actors\":\"Nick Mancuso, Phillip Jarrett, Carrie-Anne Moss, John Vernon\",\"Plot\":\"Steven Matrix is one of the underworld's foremost hitmen until his luck runs out, and someone puts a contract out on him. Shot in the forehead by a .22 pistol, Matrix \\\"dies\\\" and finds ...\",\"Language\":\"English\",\"Country\":\"Canada\",\"Awards\":\"1 win.\",\"Poster\":\"https://m.media-amazon.com/images/M/MV5BYzUzOTA5ZTMtMTdlZS00MmQ5LWFmNjEtMjE5MTczN2RjNjE3XkEyXkFqcGdeQXVyNTc2ODIyMzY@._V1_SX300.jpg\",\"Ratings\":[{\"Source\":\"Internet Movie Database\",\"Value\":\"7.9/10\"}],\"Metascore\":\"N/A\",\"imdbRating\":\"7.9\",\"imdbVotes\":\"138\",\"imdbID\":\"tt0106062\",\"Type\":\"series\",\"totalSeasons\":\"N/A\",\"Response\":\"True\"}";
-                movies.add(parseJSONImdbMovie(imdbDataJSON, movie));
-                continue;
+            String image = movieJSON.has("posterUrlPreview")
+                    ? movieJSON.getString("posterUrlPreview")
+                    : "https://user-images.githubusercontent.com/24848110/33519396-7e56363c-d79d-11e7-969b-09782f5ccbab.png";
+            JSONArray countriesJSONArr = movieJSON.has("countries")
+                    ? movieJSON.getJSONArray("countries")
+                    : null;
+            StringBuilder countries = new StringBuilder();
+            for (int j = 0; j < countriesJSONArr.length(); j++) {
+                JSONObject ratingsJSON = countriesJSONArr.getJSONObject(j);
+                countries.append(ratingsJSON.getString("country"));
+                countries.append(",");
             }
-            logger.info("sout parseJSONKinopoiskMovies(): single movie: " + movie);
+            if (countries.length() > 1) {
+                countries.setLength(countries.length() - 1);
+            }
+            JSONArray genresJSONArr = movieJSON.has("genres")
+                    ? movieJSON.getJSONArray("genres")
+                    : null;
+            StringBuilder genres = new StringBuilder();
+            for (int j = 0; j < genresJSONArr.length(); j++) {
+                JSONObject ratingsJSON = genresJSONArr.getJSONObject(j);
+                genres.append(ratingsJSON.getString("genre"));
+                genres.append(",");
+            }
+            if (genres.length() > 1) {
+                genres.setLength(genres.length() - 1);
+            }
+            int filmId;
+            if (!nameEn.isEmpty()) {
+                filmId = hashCode(nameEn + year);
+            } else {
+                filmId = hashCode(nameRu + year);
+            }
+
+            Movie movie = new Movie(filmId, nameEn, nameRu, rating, duration, genres.toString(),
+                    director, countries.toString(), image, year, kVotes, kinopoiskId);
             movies.add(movie);
         }
-        logger.info("sout parseJSONKinopoiskMovies: movie list: " + movies);
         return movies;
     }
 
-    private Movie parseJSONImdbMovie(String imdbData, Movie movie) {
-        JSONObject movieDetailsJSON = new JSONObject(imdbData);
-//                JSONObject movieDetailsJSON = new JSONObject("{\"Title\":\"The Lord of the Rings: The Return of the King\",\"Year\":\"2003\",\"Rated\":\"PG-13\",\"Released\":\"17 Dec 2003\",\"Runtime\":\"201 min\",\"Genre\":\"Action, Adventure, Drama, Fantasy\",\"Director\":\"Peter Jackson\",\"Writer\":\"J.R.R. Tolkien (novel), Fran Walsh (screenplay), Philippa Boyens (screenplay), Peter Jackson (screenplay)\",\"Actors\":\"Noel Appleby, Ali Astin, Sean Astin, David Aston\",\"Plot\":\"The final confrontation between the forces of good and evil fighting for control of the future of Middle-earth. Hobbits: Frodo and Sam reach Mordor in their quest to destroy the \\\"one ring\\\", while Aragorn leads the forces of good against Sauron's evil army at the stone city of Minas Tirith.\",\"Language\":\"English, Quenya, Old English, Sindarin\",\"Country\":\"New Zealand, USA\",\"Awards\":\"Won 11 Oscars. Another 199 wins & 124 nominations.\",\"Poster\":\"https://m.media-amazon.com/images/M/MV5BNzA5ZDNlZWMtM2NhNS00NDJjLTk4NDItYTRmY2EwMWZlMTY3XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg\",\"Ratings\":[{\"Source\":\"Internet Movie Database\",\"Value\":\"8.9/10\"},{\"Source\":\"Rotten Tomatoes\",\"Value\":\"93%\"},{\"Source\":\"Metacritic\",\"Value\":\"94/100\"}],\"Metascore\":\"94\",\"imdbRating\":\"8.9\",\"imdbVotes\":\"1,645,871\",\"imdbID\":\"tt0167260\",\"Type\":\"movie\",\"DVD\":\"N/A\",\"BoxOffice\":\"$377,845,905\",\"Production\":\"New Line Cinema, Saul Zaentz Company\",\"Website\":\"N/A\",\"Response\":\"True\"}");
-//                System.out.println(movieDetaiulsString);
+    /**
+     * Parse specific kinopoisk movies json movie.
+     *
+     * @param movie the movie
+     * @return the movie
+     */
+    public Movie parseSpecificKinopoiskMoviesJson(Movie movie) {
+        String movieDetails = getJSONFromApi("specific", "kinopoisk", movie.getKinopoiskId(), null);
+        logger.info("details: " + movieDetails);
+        JSONObject movieDetailsJSON = new JSONObject(movieDetails);
+        JSONObject movieDataJSON = movieDetailsJSON.getJSONObject("data");
+        String description = !movieDataJSON.isNull("description")
+                ? movieDataJSON.getString("description")
+                : "";
+        JSONObject externalIdObj = movieDetailsJSON.getJSONObject("externalId");
+        String imdbId = !externalIdObj.isNull("imdbId")
+                ? externalIdObj.getString("imdbId")
+                : "";
+        String audienceRating = !movieDetailsJSON.isNull("ratingMpaa")
+                ? movieDataJSON.getString("ratingMpaa")
+                : "";
+        String distributors = !movieDetailsJSON.isNull("distributors")
+                ? movieDataJSON.getString("distributors")
+                : "";
+        String ratingAgeLimits = !movieDetailsJSON.isNull("ratingAgeLimits")
+                ? String.valueOf(movieDetailsJSON.getInt("ratingAgeLimits"))
+                : "";
+        audienceRating = !ratingAgeLimits.isEmpty() ? audienceRating += "(" + ratingAgeLimits + ")" : audienceRating;
 
+        JSONObject reviewJSON = movieDetailsJSON.getJSONObject("review");
+        int reviews = !reviewJSON.isNull("reviewsCount")
+                ? reviewJSON.getInt("reviewsCount") :
+                0;
+        int goodReviews = !reviewJSON.isNull("ratingGoodReviewVoteCount")
+                ? reviewJSON.getInt("ratingGoodReviewVoteCount") :
+                0;
+        String imdbRating = !reviewJSON.isNull("ratingImdb")
+                ? String.valueOf(reviewJSON.getInt("ratingImdb")) :
+                "";
+        String ratingImdbVoteCount = !reviewJSON.isNull("ratingImdbVoteCount")
+                ? String.valueOf(reviewJSON.getInt("ratingImdbVoteCount")) :
+                "";
+        JSONObject budgetJSON = movieDetailsJSON.getJSONObject("budget");
+        String boxOffice = !budgetJSON.isNull("grossWorld")
+                ? String.valueOf(budgetJSON.getInt("grossWorld")) :
+                "";
+        String kinopoiskReviewsFormatted = String.format("%s(%s)", reviews, goodReviews);
+        Movie updateMovie = new Movie(imdbId, description, imdbRating, ratingImdbVoteCount, boxOffice, audienceRating, kinopoiskReviewsFormatted);
+        mergeObjects(updateMovie, movie);
+        //processFramesAndReview(filmId, reviews, goodReviews, movie);
+        return updateMovie;
+    }
+
+    /**
+     * Load frames movie.
+     *
+     * @param movie the movie
+     * @return the movie
+     */
+    public Movie loadFrames(Movie movie) {
+        //TODO: handle if no kinopoisk id
+        logger.info("KINOPOISK ID: " + movie.getKinopoiskId());
+        String framesDetails = getJSONFromApi("frames", "kinopoisk", movie.getKinopoiskId(), null);
+        if (!framesDetails.isEmpty()) {
+            //StringBuilder framesSb = new StringBuilder();
+            JSONObject framesDetailsJSON = new JSONObject(framesDetails);
+            JSONArray frames = framesDetailsJSON.getJSONArray("frames");
+            for (int j = 0; j < frames.length(); j++) {
+                JSONObject frameJSON = frames.getJSONObject(j);
+                String frame = frameJSON.getString("image");
+                if (!frame.isEmpty()) {
+                    movie.addImageToMovie(new Image(movie, frame));
+                }
+            }
+        }
+        return movie;
+    }
+
+    /**
+     * parses imdb movie JSON
+     *
+     * @param movie the movie
+     * @return movie
+     */
+    public Movie parseSpecificImdbMovieJson(Movie movie) {
+        String JSONMovies = getJSONFromApi("specific", "omdb", movie.getImdbId(), null);
+        if (JSONMovies == null) {
+            return null;
+        }
+        JSONObject movieDetailsJSON = new JSONObject(JSONMovies);
+        //JSONObject movieDetailsJSON = new JSONObject(imdbData);
         String isWorking = movieDetailsJSON.getString("Response");
-        if(isWorking.equals("False")) {
+        if (isWorking.equals("False")) {
             return movie;
         }
         String description = movieDetailsJSON.getString("Plot");
@@ -200,57 +345,195 @@ public class MovieApisReader implements PropertiesLoader {
         String imdbVotes = movieDetailsJSON.getString("imdbVotes");
         String boxOffice = movieDetailsJSON.has("BoxOffice")
                 ? movieDetailsJSON.getString("BoxOffice")
-                : "n/a";
-
-        movie.setGenre(genre);
-        movie.setDescription(description);
-        movie.setDirector(director);
-        movie.setActors(actors);
-        movie.setLanguage(language);
-        movie.setCountry(country);
-        movie.setMetascore(metascore);
-        movie.setImdbRating(imdbRating);
-        movie.setImdbVotes(imdbVotes);
-        movie.setBoxOffice(boxOffice);
+                : null;
+        String awards = movieDetailsJSON.has("Awards")
+                ? movieDetailsJSON.getString("Awards")
+                : null;
+        String production = movieDetailsJSON.has("Production")
+                ? movieDetailsJSON.getString("Production")
+                : null;
+        String released = movieDetailsJSON.getString("Released");
+        String writer = movieDetailsJSON.has("Writer")
+                ? movieDetailsJSON.getString("Writer")
+                : null;
+        String audienceRating = movieDetailsJSON.has("Rated")
+                ? movieDetailsJSON.getString("Rated")
+                : null;
+        String duration = movieDetailsJSON.has("Runtime")
+                ? movieDetailsJSON.getString("Runtime")
+                : null;
 
         JSONArray ratingsArrayJSON = movieDetailsJSON.has("Ratings")
                 ? movieDetailsJSON.getJSONArray("Ratings")
                 : null;
-
-            for (int j = 0; j < ratingsArrayJSON.length(); j++) {
-                JSONObject ratingsJSON = ratingsArrayJSON.getJSONObject(j);
-                if (ratingsJSON.getString("Source").equals("Internet Movie Database")) {
-                    movie.setTheMovieDbRating(ratingsJSON.getString("Value"));
-                } else if (ratingsJSON.getString("Source").equals("Rotten Tomatoes")) {
-                    movie.setRottenTomatoesRating(ratingsJSON.getString("Value"));
-                } else if (ratingsJSON.getString("Source").equals("Metacritic")) {
-                    movie.setMetacriticRating(ratingsJSON.getString("Value"));
-                }
+        String metacrtiticRating = null;
+        String rottenTomatoesRating = null;
+        for (int j = 0; j < ratingsArrayJSON.length(); j++) {
+            JSONObject ratingsJSON = ratingsArrayJSON.getJSONObject(j);
+            if (ratingsJSON.getString("Source").equals("Rotten Tomatoes")) {
+                metacrtiticRating = ratingsJSON.getString("Value");
+            } else if (ratingsJSON.getString("Source").equals("Metacritic")) {
+                rottenTomatoesRating = ratingsJSON.getString("Value");
             }
-        logger.info(movie);
+        }
+
+        Movie updateMovie = new Movie(description, imdbRating, imdbVotes, metacrtiticRating, rottenTomatoesRating,
+                boxOffice, duration, genre, director, actors, language, country, metascore, awards, writer, released,
+                production, audienceRating);
+        mergeObjects(updateMovie, movie);
+        logger.info("MODEL ID:" + movie.getId());
+        //logger.info(movie);
+        return updateMovie;
+    }
+
+    /**
+     * Parse json wiki data review sources movie.
+     *
+     * @param movie   the movie
+     * @param lookups the lookups
+     * @return the movie
+     */
+    public Movie parseJSONWikiDataReviewSources(Movie movie, Set<ReviewsSourcesLookup> lookups) {
+        String sparqlResponseJSON = getJSONFromApi(null, "sparql", "null", movie);
+        logger.info("before:  " + sparqlResponseJSON);
+        sparqlResponseJSON = sparqlResponseJSON.replaceAll("[\n\\]]", "")
+                .replaceAll(".+: \\[", "");
+        sparqlResponseJSON = sparqlResponseJSON.substring(0, sparqlResponseJSON.length() - 2);
+        logger.info("after:  " + sparqlResponseJSON);
+
+        return generateAllMovieReviewSourcesForMovie(movie, lookups, sparqlResponseJSON);
+    }
+
+    private Movie generateAllMovieReviewSourcesForMovie(Movie movie, Set<ReviewsSourcesLookup> lookups,
+                                                        String sparqlResponseJSON) {
+        Set<MovieReviewSource> movieReviewSources = new HashSet<>();
+        for (ReviewsSourcesLookup lookup : lookups) {
+            String reviewSourceName = lookup.getName();
+            if (sparqlResponseJSON.contains("film_web_name_pl")
+                    && reviewSourceName.equals("film_web_pl")) {       // check whether such review_source was requested
+                String filmId = JsonPath.read(sparqlResponseJSON, "$.film_web_name_pl.value");
+                String movieReviewUrl = String.format(lookup.getUrl(), filmId);
+                MovieReviewSource movieReviewSource = new MovieReviewSource(lookup, movie, movieReviewUrl);
+                movieReviewSources.add(movieReviewSource);
+            } else if (sparqlResponseJSON.contains(reviewSourceName)) {
+                String jsonPathExpression = String.format("$.%s.value", reviewSourceName);
+                String movieReviewIdentifier = JsonPath.read(sparqlResponseJSON, jsonPathExpression);
+                String movieReviewUrl = String.format(lookup.getUrl(), movieReviewIdentifier);
+                //System.out.printf("id: %s, name:%s, url:%s", movieReviewIdentifier, lookup.getName(), lookup.getUrl());;
+
+                MovieReviewSource movieReviewSource = new MovieReviewSource(lookup, movie, movieReviewUrl);
+                movieReviewSources.add(movieReviewSource);
+                ;
+            }
+        }
+        String kinId = movie.getKinopoiskId();
+        if (kinId == null && sparqlResponseJSON.contains("kinopoisk")) {
+            String filmId = JsonPath.read(sparqlResponseJSON, "$.kinopoisk.value");
+            movie.setKinopoiskId(filmId);
+        }
+        logger.info("\n\n00000000000000000000 -  kinId==null(" + kinId == null + "),KID: " + movie.getKinopoiskId());
+        movieReviewSources = movieReviewSources.stream()
+                .filter(p -> !p.getUrl().contains("%s")).collect(Collectors.toSet());
+        movie.setMovieReviewSources(movieReviewSources);
         return movie;
     }
 
+    /**
+     * Parse general imdb movies json list.
+     *
+     * @param searchVal the search val
+     * @return the list
+     */
+    public List<Movie> parseGeneralImdbMoviesJson(String searchVal) {
+        String JSONMovies = getJSONFromApi("general", "omdb", searchVal, null);
+        logger.info("parseGeneralImdbMoviesJson:" + JSONMovies);
+        if (JSONMovies == null) {
+            return null;
+        }
+        ArrayList<Movie> movies = new ArrayList<>();
+        JSONObject obj = new JSONObject(JSONMovies);
+        JSONArray films = obj.has("Search")
+                ? obj.getJSONArray("Search")
+                : null;
+        if (films == null) {
+            return null;
+        }
+        for (int i = 0; i < films.length(); i++) {
+            JSONObject movieJSON = films.getJSONObject(i);
+            String imdbId = movieJSON.getString("imdbID");
+            String name = movieJSON.getString("Title");
+            String imdbPoster = movieJSON.getString("Poster");
+            if (imdbPoster != null && imdbPoster.equals("N/A")) {
+                imdbPoster = "https://user-images.githubusercontent.com/24848110/33519396-7e56363c-d79d-11e7-969b-09782f5ccbab.png";
+            }
+            String year = movieJSON.getString("Year");
+            int filmId = hashCode(name + year);
+
+            Movie movie = new Movie(filmId, name, imdbPoster, year, imdbId);
+            movies.add(movie);
+        }
+        return movies;
+    }
 
     /**
-     * The entry point of application.
+     * Hash code int.
      *
-     * @param args the input arguments
-     * @throws IOException the io exception
+     * @param string the string
+     * @return the int
      */
-//dirty and rough testing
-    public static void main(String[] args) throws IOException {
-        MovieApisReader reader = new MovieApisReader();
-        //test
-        List<Movie> movies = reader.parseJSONKinopoiskMovies("Django");
+    public static int hashCode(@NonNull String string) {
+        return string.hashCode() * PRIME;
+    }
 
-        // test with requests for apis
-        //List<Movie> movies = reader.parseJSONKinopoiskMovies("Django");
-        for (Movie m : movies) {
-            System.out.println(m);
+    /**
+     * Merge objects.
+     *
+     * @param obj    the obj
+     * @param update the update
+     */
+    public static void mergeObjects(Object obj, Object update) {
+        if (!obj.getClass().isAssignableFrom(update.getClass())) {
+            return;
+        }
+        Method[] methods = obj.getClass().getMethods();
+        for (Method fromMethod : methods) {
+            if (fromMethod.getDeclaringClass().equals(obj.getClass())
+                    && fromMethod.getName().startsWith("get")) {
+                String fromName = fromMethod.getName();
+                String toName = fromName.replace("get", "set");
+                try {
+                    Method toMetod = obj.getClass().getMethod(toName, fromMethod.getReturnType());
+                    Object value = fromMethod.invoke(update, (Object[]) null);
+                    if (value != null) {
+                        toMetod.invoke(obj, value);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
+    /**
+     * Merge lists.
+     *
+     * @param movies       the movies
+     * @param updateMovies the update movies
+     */
+    public static void mergeLists(List<Movie> movies, List<Movie> updateMovies) {
+        for (Movie movie : movies) {
+            for (Movie updateMovie : updateMovies) {
+                if (movie.getId() == updateMovie.getId()) {
+                    mergeObjects(movie, updateMovie);
+                }
+            }
+        }
+
+    }
+
+
 }
+
+
 
 
