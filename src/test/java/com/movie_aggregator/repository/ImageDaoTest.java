@@ -97,7 +97,7 @@ public class ImageDaoTest extends AbstractTest{
         movie.addImageToMovie(newImage);
         dao.save(movie);
         Image insertedImage = dao.getFirstEntryBasedOnAnotherTableColumnProperty("url", "new picture url", Image.class);
-        System.out.println(insertedImage);
+        logger.info(insertedImage);
         assertNotNull(insertedImage);
         assertEquals(insertedImage.getUrl(), newImage.getUrl());
     }

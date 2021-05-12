@@ -140,7 +140,7 @@ public class Database {
             }
 
         } catch (SQLException se) {
-            System.out.println("SQL Exception" + se);
+            logger.error("SQL Exception" + se);
         } catch (Exception e) {
             System.out.println("Exception" + e);
         } finally {

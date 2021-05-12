@@ -47,7 +47,7 @@
 
                     <sec:authorize access="isAuthenticated()">
                         <c:choose>
-                            <c:when test="${movie.addedToUserList == false}">
+                            <c:when test="${movie.addedToUserList != true}">
                                 <form class="mt-3 mx-auto" action="${pageContext.request.contextPath}/addMovie" method="get">
                                     <button type="submit" class="btn btn-outline-success">Add</button>
                                     <input type="hidden" name="movieId" value="${movie.id}" />

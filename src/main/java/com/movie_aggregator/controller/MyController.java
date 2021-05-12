@@ -69,8 +69,7 @@ public class MyController {
         if (principal instanceof UserDetails) {
             username = ((UserDetails) principal).getUsername();
         }
-        User user = genericService.getOneEntryByColumProperty("username", username, User.class);
-        return user;
+        return genericService.getOneEntryByColumProperty("username", username, User.class);
     }
 
     @GetMapping(value = "/deleteMovie")
@@ -155,7 +154,7 @@ public class MyController {
             genericService.merge(user);
         } else {
             user = new User("anonymous", newUserPickedReviews);
-            System.out.println("anon set: " + newUserPickedReviews);
+            logger.info("anon set: " + newUserPickedReviews);
         }
 
         session.setAttribute("user", user);
@@ -163,19 +162,25 @@ public class MyController {
 
         // this and mapping('/addMovie') are connected
         // particularly this flag is for view (when btn 'add' is clicked, next time no btn 'add' as option)
-        if (!user.getUsername().equals("anonymous")) {
-            List<Movie> userMovies = genericService.getMoviesByProperty("username", user.getUsername(), "users");
+        List<Movie> userMovies;
+        User user1 = getUser();
+        if (user1 != null) {
+            userMovies = genericService.getMoviesByProperty("username", user1.getUsername(), "users");
             for (Movie m : movies) {
                 if (userMovies.contains(m)) { // if user has movie in list then no btn for view)
-                    System.out.println("m.setAddedToUserList(true);");
+                    logger.info("m.setAddedToUserList(true);");
                     m.setAddedToUserList(true);
                 }
             }
         }
 
+
         model.addAttribute("resultTitle", "Found movies");
         model.addAttribute("movieSourceBase", movieSourceBase);
         model.addAttribute("movies", movies);
+        if(movieSourceBase == "kinopoisk") {
+            return "kin_result";
+        }
         return "/result";
     }
 
@@ -240,7 +245,7 @@ public class MyController {
         User user = (User) session.getAttribute("user");
         if (user != null && !user.getReviewsSources().isEmpty()) { // multiuse + some view reviews were checked
             setPickedReviewSources(model, reviewsSourcesLookups, user);
-            System.out.println(user.getReviewsSources());
+            logger.info(user.getReviewsSources());
         } else if (principal instanceof UserDetails) { //first time index with checked checkboxes based on user
             String username = ((UserDetails) principal).getUsername();
             user = genericService.getOneEntryByColumProperty("username", username, User.class);
@@ -251,9 +256,9 @@ public class MyController {
         model.addAttribute("allReviewSources", reviewsSourcesLookups);
         session.setAttribute("topSearches", topSearches); //init topSearches
         session.setAttribute("topRevs", topReviewSources); //init topReviewSources
-        System.out.println(topReviewSources);
+        logger.info(topReviewSources);
         logger.info("test /home");
-        return "index";
+        return "revs";
     }
 
     private void setPickedReviewSources(Model model, List<ReviewsSourcesLookup> reviewsSourcesLookups, User user) {
@@ -266,13 +271,6 @@ public class MyController {
         model.addAttribute("reviewsSources2", chosenLookups);
     }
 
-
-    //@RequestMapping(value={"/home", "/index", "/",})
-    //String indexMultipleMapping(){
-    //    System.out.println("asdasjasnfjkhsajf sadfjk sajlfa jlas jkjklam,sf");
-    //    return "index";
-    //}
-
     /**
      * Test string.
      *
@@ -280,24 +278,12 @@ public class MyController {
      * @return the string
      */
 //Testing time
-    @RequestMapping("/test")
-    public String test(Model model) throws IOException, URISyntaxException {
-
-
-        // ReviewsSourcesLookup lookup = genericService.getOneEntryByColumProperty("name", "all_cinema_jp", ReviewsSourcesLookup.class);
-        //Movie m1 = genericService.get(Movie.class, -1959952368);
-        //MovieReviewSource movieReviewSource = new MovieReviewSource(lookup, m1, "testUrl");
-        //Set<MovieReviewSource> set =new HashSet<>();
-        //set.add(movieReviewSource);
-        //m1.setMovieReviewSources(set);
-        //genericService.merge(m1);
-
-        //User user = genericService.getOneEntryByColumProperty("username", "11", User.class);
-        //user.addReviewSourceToUser(lookup);
-        genericService.getCountForEachReviewSource();
-
-        return "/test";
-    }
+//    @RequestMapping("/test")
+//    public String test(Model model) throws IOException, URISyntaxException {
+//        genericService.getCountForEachReviewSource();
+//
+//        return "/test";
+//    }
 }
 
 

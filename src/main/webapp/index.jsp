@@ -19,7 +19,7 @@
         <form action="${pageContext.request.contextPath}/searchMovie" method="get" class="">
             <div class="row">
 
-                <div class="card-header col-md-12 " id="mainFunc">
+                <div class="card-header col-md-12 active" id="mainFunc">
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Search the movie</h5>
@@ -71,20 +71,10 @@
                     <div class="container-fluid extra-info tables-adjust">
                         <div class="row">
                             <div class="col-4 text-center">
-                                <button id="topSearchesBtn" type="button" class="btn btn-outline-info">Show top
-                                    searches
-                                </button>
-                            </div>
-
-                            <div class="col-4 text-center">
-                                <button id="topRevsBtn" type="button" class="btn btn-outline-info text-center">
-                                    Top review sources
-                                </button>
-                            </div>
-                            <div class="col-4 text-center">
+                                <a href="${pageContext.request.contextPath}/home">
                                 <button id="reviewSourcesBtn" type="button" class="btn btn-outline-primary btn-lg">
                                     Show review sources
-                                </button>
+                                </button></a>
                             </div>
 
                         </div>

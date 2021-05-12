@@ -109,9 +109,9 @@ public class SearchDaoTest extends AbstractTest{
     void saveSuccess() {
         Search newSearch = new Search( "new Serch val");
         int searchId = dao.save(newSearch);
-        System.out.println(searchId);
+        logger.info("saveSuccess:" + searchId);
         Search insertedSearch = dao.get(Search.class, searchId);
-        System.out.println(insertedSearch);
+        logger.info(insertedSearch);
         assertNotNull(insertedSearch);
         assertEquals(insertedSearch, newSearch);
     }

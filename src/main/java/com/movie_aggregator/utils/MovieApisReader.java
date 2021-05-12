@@ -222,7 +222,9 @@ public class MovieApisReader implements PropertiesLoader {
                 genres.append(ratingsJSON.getString("genre"));
                 genres.append(",");
             }
-            genres.setLength(genres.length() - 1);
+            if (genres.length() > 1) {
+                genres.setLength(genres.length() - 1);
+            }
             int filmId;
             if (!nameEn.isEmpty()) {
                 filmId = hashCode(nameEn + year);

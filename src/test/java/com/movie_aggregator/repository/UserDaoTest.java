@@ -68,7 +68,7 @@ public class UserDaoTest extends AbstractTest{
     void deleteSuccess() {
         User user =
                 dao.getFirstEntryBasedOnAnotherTableColumnProperty("username", "12", User.class);
-        System.out.println(user);
+        logger.info(user);
         dao.deleteObject(user);
         User deleted = dao.getFirstEntryBasedOnAnotherTableColumnProperty
                 ("username", "12", User.class);

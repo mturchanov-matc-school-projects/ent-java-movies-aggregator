@@ -100,7 +100,7 @@ public class ReviewSourcesLookupDaoTest extends AbstractTest{
         dao.saveObject(lookup);
         ReviewsSourcesLookup insertedLookup = dao.getFirstEntryBasedOnAnotherTableColumnProperty(
                 "name", "movieReviewSoruce", ReviewsSourcesLookup.class);
-        System.out.println(insertedLookup);
+        logger.info(insertedLookup);
         assertNotNull(insertedLookup);
         assertEquals(insertedLookup.getName(), lookup.getName());
     }

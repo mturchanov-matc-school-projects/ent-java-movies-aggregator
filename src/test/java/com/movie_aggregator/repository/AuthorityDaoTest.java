@@ -91,7 +91,7 @@ public class AuthorityDaoTest extends AbstractTest{
         dao.saveObject(newAuthority);
         Authority insertedAuthority = dao.getFirstEntryBasedOnAnotherTableColumnProperty("username", "11", Authority.class);
 
-        System.out.println(insertedAuthority);
+        logger.info(insertedAuthority);
         assertNotNull(insertedAuthority);
         assertEquals(insertedAuthority.getUsername(), newAuthority.getUsername());
     }

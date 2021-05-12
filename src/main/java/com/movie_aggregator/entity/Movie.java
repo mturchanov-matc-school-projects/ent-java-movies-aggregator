@@ -919,47 +919,60 @@ public class Movie {
         this.kinopoiskReviews = kinopoiskReviews;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Movie movie = (Movie) o;
-        return id == movie.id && Objects.equals(engName, movie.engName)
-                && Objects.equals(searches, movie.searches)
-                && Objects.equals(imdbId, movie.imdbId)
-                && Objects.equals(kinopoiskId, movie.kinopoiskId)
-                && Objects.equals(imdbDescription, movie.imdbDescription)
-                && Objects.equals(imdbRating, movie.imdbRating)
-                && Objects.equals(imdbVotes, movie.imdbVotes)
-                && Objects.equals(metacriticRating, movie.metacriticRating)
-                && Objects.equals(theMovieDbRating, movie.theMovieDbRating)
-                && Objects.equals(rottenTomatoesRating, movie.rottenTomatoesRating)
-                && Objects.equals(tV_comRating, movie.tV_comRating)
-                && Objects.equals(filmAffinityRating, movie.filmAffinityRating)
-                && Objects.equals(rusName, movie.rusName)
-                && Objects.equals(kinopoiskRating, movie.kinopoiskRating)
-                && Objects.equals(boxOffice, movie.boxOffice)
-                && Objects.equals(duration, movie.duration)
-                && Objects.equals(imdbGenre, movie.imdbGenre)
-                && Objects.equals(imdbDirector, movie.imdbDirector)
-                && Objects.equals(actors, movie.actors)
-                && Objects.equals(language, movie.language)
-                && Objects.equals(imdbCountry, movie.imdbCountry)
-                && Objects.equals(metascore, movie.metascore)
-                && Objects.equals(kinopoiskImage, movie.kinopoiskImage)
-                && Objects.equals(year, movie.year)
-                && Objects.equals(kinopoiskVotes, movie.kinopoiskVotes);
+        return id == movie.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, engName, searches, imdbId, kinopoiskId, imdbDescription,
-                imdbRating, imdbVotes, metacriticRating, theMovieDbRating,
-                rottenTomatoesRating, tV_comRating, filmAffinityRating, rusName,
-                kinopoiskRating, boxOffice, duration, imdbGenre, imdbDirector, actors, language,
-                imdbCountry, metascore, kinopoiskImage, year, kinopoiskVotes);
+        return Objects.hash(id);
     }
+
+
+    //@Override
+    //public boolean equals(Object o) {
+    //    if (this == o) return true;
+    //    if (o == null || getClass() != o.getClass()) return false;
+    //    Movie movie = (Movie) o;
+    //    return id == movie.id && Objects.equals(engName, movie.engName)
+    //            && Objects.equals(searches, movie.searches)
+    //            && Objects.equals(imdbId, movie.imdbId)
+    //            && Objects.equals(kinopoiskId, movie.kinopoiskId)
+    //            && Objects.equals(imdbDescription, movie.imdbDescription)
+    //            && Objects.equals(imdbRating, movie.imdbRating)
+    //            && Objects.equals(imdbVotes, movie.imdbVotes)
+    //            && Objects.equals(metacriticRating, movie.metacriticRating)
+    //            && Objects.equals(theMovieDbRating, movie.theMovieDbRating)
+    //            && Objects.equals(rottenTomatoesRating, movie.rottenTomatoesRating)
+    //            && Objects.equals(tV_comRating, movie.tV_comRating)
+    //            && Objects.equals(filmAffinityRating, movie.filmAffinityRating)
+    //            && Objects.equals(rusName, movie.rusName)
+    //            && Objects.equals(kinopoiskRating, movie.kinopoiskRating)
+    //            && Objects.equals(boxOffice, movie.boxOffice)
+    //            && Objects.equals(duration, movie.duration)
+    //            && Objects.equals(imdbGenre, movie.imdbGenre)
+    //            && Objects.equals(imdbDirector, movie.imdbDirector)
+    //            && Objects.equals(actors, movie.actors)
+    //            && Objects.equals(language, movie.language)
+    //            && Objects.equals(imdbCountry, movie.imdbCountry)
+    //            && Objects.equals(metascore, movie.metascore)
+    //            && Objects.equals(kinopoiskImage, movie.kinopoiskImage)
+    //            && Objects.equals(year, movie.year)
+    //            && Objects.equals(kinopoiskVotes, movie.kinopoiskVotes);
+    //}
+//
+    //@Override
+    //public int hashCode() {
+    //    return Objects.hash(id, engName, searches, imdbId, kinopoiskId, imdbDescription,
+    //            imdbRating, imdbVotes, metacriticRating, theMovieDbRating,
+    //            rottenTomatoesRating, tV_comRating, filmAffinityRating, rusName,
+    //            kinopoiskRating, boxOffice, duration, imdbGenre, imdbDirector, actors, language,
+    //            imdbCountry, metascore, kinopoiskImage, year, kinopoiskVotes);
+    //}
 
     @Override
     public String toString() {

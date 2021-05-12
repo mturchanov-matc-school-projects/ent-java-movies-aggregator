@@ -120,7 +120,7 @@ public class GenericService {
         Search existedSearch = getOneEntryByColumProperty("name", searchVal, Search.class);
         searchVal = searchVal.trim().toLowerCase();
         List<Movie> movies = getMoviesBasedOnSearchName(searchVal);
-        System.out.println("getMoviesBasedOnSearchName: " + movies);
+        logger.info("getMoviesBasedOnSearchName: " + movies);
 
         if (movies == null || movies.isEmpty()){ // generating new movies
             movies = recordNewMovies(searchVal, movieSourceBase);
