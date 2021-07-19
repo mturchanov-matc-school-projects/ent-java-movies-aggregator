@@ -1,4 +1,4 @@
-# Movies aggregator
+# Movie reviews aggregator
 ### Presentation Description/Overview
 #### Problem
 Before watching a movie many people look at reviews on various resources.  
