@@ -42,7 +42,7 @@ As a result, user can save time because all needed reviews are gathered in one p
     * Log4J2
 * Hosting
     * AWS
-* Used APIs/sercices to gather information
+* Used APIs/services to gather information
     * [OMDB API](https://www.omdbapi.com/)
     * [Kinopoisk Unofficial Api](https://kinopoiskapiunofficial.tech/)
     * [SPARQL](https://www.wikidata.org/wiki/Wikidata:SPARQL_tutorial)
